@@ -23,21 +23,6 @@ Tato stránka slouží k přístupu k dokumentům a informacím týkajícím se 
 - **script.js:** JavaScriptový soubor pro další funkcionalitu.
 - **config.php:** Soubor pro připojení k databázi a provedení dotazů.
 
-## Funkce
-1. **Dynamický Kalendář:**
-   - Zobrazuje zápisy ze schůzek s odpovídajícími daty.
-   - Každý zápis je odkázán na PDF dokument pro další podrobnosti.
-
-2. **Integrace Databáze:**
-   - Využívá databázi MySQL k ukládání a získávání informací.
-   - Načítá a zobrazuje dynamický obsah na základě záznamů v databázi.
-
-3. **Nakládání Překryvem:**
-   - Poskytuje vizuální překryv během načítání stránky.
-
-4. **Téma a Ikona Stránky:**
-   - Definuje barvu tématu webové stránky.
-   - Používá vlastní ikonu pro značení stránky.
 
 ## Jak Používat
 1. Klonujte repozitář.
