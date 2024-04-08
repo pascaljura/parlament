@@ -15,7 +15,8 @@ $sql = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
-    $zapis = str_replace(PHP_EOL, "=", $zapis);
+    $lines = explode(PHP_EOL, $zapis);
+    $zapis = implode("=", $lines);
     $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '$zapis')";
     if ($conn->query($sql) === TRUE) {
         header("Location: ./main.php");
@@ -101,6 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </button>
                 </div>
             </form>
+            main title = //main title// (Tučný modrý text na středu stránky) 
+            odrížka = -odrážka
+            pododrážka = --podorážka
             header = /header/ (Tučný modrý nadpis uprostřed a zároveň zápatí)<br>
             italics = *italics* (kurzíva)<br>
             bold = **bold** (tučný text)<br>
@@ -127,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Vyhodnocení PHP kódu
                 ob_start();
-                eval('?>' . $phpCode);
+                eval ('?>' . $phpCode);
                 $text = ob_get_clean();
 
                 // Výpis HTML s dynamickým obsahem

@@ -1,5 +1,10 @@
 <?php
 include '../config.php';
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ./index.php");
+    exit();
+}
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
     $result = $conn->query("SELECT * FROM zapis WHERE id = $id");
@@ -76,7 +81,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         </div>
         <div style="display: flex; flex-direction: column;">
             <div style="color: #000; font-family: sans-serif;">
-            <hr color="#3e6181" style="height: 20px; border: none;" />
+                <hr color="#3e6181" style="height: 20px; border: none;" />
                 <?php
                 if (!empty($textInLomitkach)) {
                     $textSklon = getSklonovanyText($textInLomitkach);
@@ -131,7 +136,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         ?>
     </div>
     <script src="../script.js">    </script>
-            <script>
+    <script>
         function downloadPDF(directoryName) {
             var link = document.createElement('a');
             link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.pdf';
