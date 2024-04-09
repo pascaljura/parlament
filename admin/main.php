@@ -15,6 +15,7 @@ $sql = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
+    $zapis = str_replace(PHP_EOL, "=", $zapis);
     $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '$zapis')";
     if ($conn->query($sql) === TRUE) {
         header("Location: ./main.php");
@@ -32,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="https://www.alba-rosa.cz/parlament/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
@@ -100,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </button>
                 </div>
             </form>
-            main title = //main title// (Tučný modrý text na středu stránky) 
+            main title = //main title// (Tučný modrý text na středu stránky)
             odrížka = -odrážka
             pododrážka = --podorážka
             header = /header/ (Tučný modrý nadpis uprostřed a zároveň zápatí)<br>

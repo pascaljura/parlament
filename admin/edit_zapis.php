@@ -70,8 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="https://www.alba-rosa.cz/parlament/logo.png" type="image/x-icon">
-    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon"> <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
