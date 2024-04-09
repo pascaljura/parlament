@@ -91,7 +91,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 }
                 ?>
             </div>
-            <div style="color: #000; font-family: sans-serif;">
+            <div style="color: #000; font-family: sans-serif; font-size: 24px;">
                 <?php echo $datum; ?>
             </div>
         </div>
