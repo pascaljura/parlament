@@ -85,9 +85,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 <?php
                 if (!empty($textInLomitkach)) {
                     $textSklon = getSklonovanyText($textInLomitkach);
-                    echo '<div style="color: #000; font-family: sans-serif;">' . $textSklon . '</div>';
+                    echo '<div style="color: #000; font-family: sans-serif; font-size: 24px;">' . $textSklon . '</div>';
                 } else {
-                    echo '<div style="color: #000; font-family: sans-serif;">' . "Týdenní schůze školního Parlamentu" . '</div>';
+                    echo '<div style="color: #000; font-family: sans-serif; font-size: 24px;">' . "Týdenní schůze školního Parlamentu" . '</div>';
                 }
                 ?>
             </div>
