@@ -15,8 +15,9 @@ $sql = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
-    $lines = explode(PHP_EOL, $zapis);
-    $zapis = implode("=", $lines);
+   $zapis = str_replace(PHP_EOL, '=', $zapis);
+$zapis = str_replace("\n", '=', $zapis); // Pokud se PHP_EOL nepoužije všude
+$zapis = str_replace("\r", '=', $zapis); // Pro starší systémy);
     $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '$zapis')";
     if ($conn->query($sql) === TRUE) {
         header("Location: ./main.php");
