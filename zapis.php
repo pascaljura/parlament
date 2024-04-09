@@ -72,9 +72,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <?php echo '<img src="./logo.png" width="140px" height="200">'; ?>
         </div>
         <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
-            <p style="overflow: auto; font-family: sans-serif;">
-                <?php echo $zapis; ?>
-            </p>
+        <pre style="overflow: auto;  font-family: sans-serif;"><?php echo $zapis; ?>
+        </pre>
         </div>
         <hr color="#3e6181" style="height: 20px; border: none;" />
         <div style="display: flex; flex-direction: column; font-size: 24px;">
