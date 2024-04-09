@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                 <div style="display: flex; flex-direction: column;">
                     <textarea name="zapis" rows="4" required
-                        style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; resize: vertical; white-space: nowrap;"></textarea>
+                        style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea>
                 </div>
                 <div class="button-container" id="buttonContainer">
                     <button type="submit">
