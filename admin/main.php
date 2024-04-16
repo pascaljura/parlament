@@ -101,9 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </button>
                 </div>
             </form>
-            main title = //main title// (Tučný modrý text na středu stránky)
-            odrížka = -odrážka
-            pododrážka = --podorážka
+            main title = //main title// (Tučný modrý text na středu stránky) <br>
+            odrížka = -odrážka <br>
+            pododrážka = --podorážka<br>
             header = /header/ (Tučný modrý nadpis uprostřed a zároveň zápatí)<br>
             italics = *italics* (kurzíva)<br>
             bold = **bold** (tučný text)<br>
