@@ -110,7 +110,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 echo '<button>';
                 echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
                 echo '</button>';
-                echo '</a>'; ?>
+                echo '</a>';
+                echo '<button onclick="deleteZapis(' . $id . ')">';
+                echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
+                echo '</button>';
+                ?>
             </div>
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
@@ -153,6 +157,34 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             link.click();
             document.body.removeChild(link);
         }
+        function deleteZapis(id) {
+            if (confirm("Opravdu chcete smazat tento zápis?")) {
+                // Vytvoření instance XMLHttpRequest objektu
+                var xhttp = new XMLHttpRequest();
+                // Nastavení metody a URL pro požadavek
+                xhttp.open("POST", "delete_zapis.php", true);
+                // Nastavení hlavičky požadavku
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // Nastavení callback funkce pro zpracování odpovědi
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Zpracování odpovědi
+                        if (this.responseText === "success") {
+                            // Pokud je odpověď "success", přesměrujeme uživatele na main.php
+                            window.location.replace("main.php?message=Zápis+byl+úspěšně+smazán.");
+                        } else {
+                            // Pokud je odpověď něco jiného než "success", zobrazíme chybovou zprávu
+                            alert("Nastala chyba při mazání zápisu.");
+                        }
+                    }
+                };
+                // Odeslání požadavku s id záznamu
+                xhttp.send("id=" + id);
+            }
+        }
+
+
+
     </script>
 
 </body>

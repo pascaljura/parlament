@@ -51,6 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div id="calendar">
+        <?php
+        // Zpráva o úspěchu
+        if (isset($_GET['message'])) {
+            echo '<div class="success-message">' . htmlspecialchars($_GET['message']) . '</div>';
+        }
+        ?>
+
         <div class="table-heading">
             <?php echo $headerText2; ?>
         </div>

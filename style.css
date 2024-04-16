@@ -20,6 +20,15 @@ body::before {
     position: fixed;
 }
 
+.success-message {
+    background-color: #55acee;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
 #container {
     text-align: center;
 }
