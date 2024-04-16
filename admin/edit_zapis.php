@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 required>
             <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Zápis:</label>
             <textarea name="zapis" id="zapis" rows="10"
-                style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; resize: vertical; white-space: nowrap;"
+                style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
                 required><?php echo $zapis; ?></textarea>
         </form>
         <div class="button-container" id="buttonContainer">
