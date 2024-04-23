@@ -92,14 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         ?>
         <div style="display: flex; flex-direction: column;">
-            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="myForm"
-                style="width: 80%; max-width: 400px; margin-bottom: 5px;">
+            <form method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px;">
                 <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
-                <input type="date" name="datum" required
+                <input type="date" name="datum" id="datumInput"
                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                 <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                 <div style="display: flex; flex-direction: column;">
-                    <textarea name="zapis" rows="4" required
+                    <textarea name="zapis" id="zapisInput" rows="4"
                         style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea>
                 </div>
                 <div class="button-container" id="buttonContainer">
@@ -180,6 +179,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
     </div>
     <script src="../script.js">
+    </script>
+    <script>
+        // Funkce pro ukládání dat do local storage
+        function ulozitDoLocalStorage() {
+            const datum = document.getElementById('datumInput').value;
+            const zapis = document.getElementById('zapisInput').value;
+            if (datum.trim() !== '') {
+                localStorage.setItem('datum', datum);
+            }
+            if (zapis.trim() !== '') {
+                localStorage.setItem('zapis', zapis);
+            }
+        }
+
+        // Zavolání funkce pro načtení dat při načtení stránky
+        window.onload = function () {
+            const datum = localStorage.getItem('datum');
+            const zapis = localStorage.getItem('zapis');
+            if (datum) {
+                document.getElementById('datumInput').value = datum;
+            }
+            if (zapis) {
+                document.getElementById('zapisInput').value = zapis;
+            }
+        };
+
+        // Zavolání funkce pro ukládání dat při jakékoli změně v polích formuláře
+        document.getElementById('datumInput').addEventListener('input', ulozitDoLocalStorage);
+        document.getElementById('zapisInput').addEventListener('input', ulozitDoLocalStorage);
+
+        // Zavolání funkce pro uložení dat při načtení stránky
+        ulozitDoLocalStorage();
     </script>
 </body>
 
