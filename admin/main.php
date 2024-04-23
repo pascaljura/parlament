@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById('zapisInput').value = zapis;
             }
         };
-
+s
         // Zavolání funkce pro ukládání dat při jakékoli změně v polích formuláře
         document.getElementById('datumInput').addEventListener('input', ulozitDoLocalStorage);
         document.getElementById('zapisInput').addEventListener('input', ulozitDoLocalStorage);
