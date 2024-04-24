@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
         // Zpráva o úspěchu
         if (isset($_GET['message'])) {
-            echo '<div class="success-message">' . htmlspecialchars($_GET['message']) . '</div>';
+            echo '<div class="success-message"><i class="fa fa-check"></i> ' . htmlspecialchars($_GET['message']) . '</div>';
         }
         ?>
 
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <?php
         if ($sql != "" && $conn->query($sql) === TRUE) {
-            echo '<div style="color: #008000; margin-bottom: 5px;">Zápis byl úspěšně uložen.</div>';
+            echo '<div style="color: #008000; margin-bottom: 5px;"><i class="fa fa-check"></i> Zápis byl úspěšně uložen.</div>';
         } elseif ($sql != "") {
             echo "Chyba: " . $sql . "<br>" . $conn->error;
         }
