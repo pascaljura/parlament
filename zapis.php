@@ -9,8 +9,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
         $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = str_replace("<br>--", "&#160;&#160;&#9702;", $zapis);
-        $zapis = str_replace("<br>-", "&#8226;", $zapis);
+        $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
+        $zapis = str_replace("<br>-", "<br>&#8226;", $zapis);
         function getSklonovanyText($text)
         {
             $posledniZnak = mb_substr($text, -1);
