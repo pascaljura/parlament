@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
     $zapis = str_replace(array("\n", "\r"), '=', $zapis);
-    $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '$zapis')";
+    $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '=$zapis')";
     if ($conn->query($sql) === TRUE) {
         header("Location: ./main.php");
         exit();

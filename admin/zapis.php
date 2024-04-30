@@ -14,8 +14,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
         $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = str_replace("--", "&#160;&#160;&#9702;", $zapis);
-        $zapis = str_replace("-", "&#8226;", $zapis);
+        $zapis = str_replace("<br>--", "&#160;&#160;&#9702;", $zapis);
+        $zapis = str_replace("<br>-", "&#8226;", $zapis);
         function getSklonovanyText($text)
         {
             $posledniZnak = mb_substr($text, -1);
@@ -59,14 +59,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="../logo.png" type="image/x-icon">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../style.css">
+    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
-    <meta content="../logo.png" property="og:image" />
+    <meta content="../logo.ico" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
 

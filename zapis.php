@@ -9,8 +9,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
         $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = str_replace("--", "&#160;&#160;&#9702;", $zapis);
-        $zapis = str_replace("-", "&#8226;", $zapis);
+        $zapis = str_replace("<br>--", "&#160;&#160;&#9702;", $zapis);
+        $zapis = str_replace("<br>-", "&#8226;", $zapis);
         function getSklonovanyText($text)
         {
             $posledniZnak = mb_substr($text, -1);
@@ -54,7 +54,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="./logo.ico" type="image/x-icon"> 
+    <link rel="shortcut icon" href="./logo.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./style.css">
@@ -72,7 +72,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             <?php echo '<img src="./logo.png" width="140px" height="200">'; ?>
         </div>
         <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
-        <pre style="overflow: auto;  font-family: sans-serif;"><?php echo $zapis; ?></pre>
+            <pre style="overflow: auto;  font-family: sans-serif;"><?php echo $zapis; ?></pre>
         </div>
         <hr color="#3e6181" style="height: 20px; border: none;" />
         <div style="display: flex; flex-direction: column; font-size: 24px;">
