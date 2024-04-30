@@ -67,7 +67,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
-    <meta content="../logo.ico" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
 
