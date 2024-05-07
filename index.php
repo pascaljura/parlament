@@ -45,7 +45,6 @@ include './assets/php/config.php';
             } else {
                 echo "Žádná data nebyla nalezena.";
             }
-            $conn->close();
             ?>
         </div>
         <?php
