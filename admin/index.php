@@ -1,5 +1,5 @@
 <?php
-include '../config.php';
+include '../assets/php/config.php';
 session_start();
 
 // Kontrola, zda je uživatel již přihlášen
@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 }
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +33,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="shortcut icon" href="../assets/img/logo.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
@@ -75,7 +74,6 @@ $conn->close();
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        include '../config.php'; // Připojení k databázi
         
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id = 1";
@@ -91,11 +89,9 @@ $conn->close();
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
 
-        // Uzavření připojení k databázi
-        mysqli_close($conn);
         ?>
     </div>
-    <script src="../script.js">
+    <script src="../assets/js/script.js">
     </script>
 </body>
 

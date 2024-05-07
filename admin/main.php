@@ -1,5 +1,5 @@
 <?php
-include '../config.php';
+include '../assets/php/config.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: ./index.php");
@@ -32,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="shortcut icon" href="../assets/img/logo.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
@@ -63,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="button-container" id="buttonContainer">
             <?php
-            include '../config.php';
             $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -78,7 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 echo "Žádná data nebyla nalezena.";
             }
-            $conn->close();
             ?>
         </div>
         <div class="table-heading">
@@ -121,7 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             underline bold italics = __***underline bold italics***__ (podtržený text + tučný text + kurzíva)
         </div>
         <?php
-        include '../config.php'; // Připojení k databázi
         
         // Získání dat z tabulky
         $query = "SELECT * FROM other WHERE id = 3";
@@ -147,8 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
 
-        // Uzavření připojení k databázi
-        mysqli_close($conn);
         ?>
         <div class="button-container" id="buttonContainer">
             <form method="post">
@@ -158,7 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        include '../config.php'; // Připojení k databázi
         
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id = 1";
@@ -173,12 +167,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
-
-        // Uzavření připojení k databázi
-        mysqli_close($conn);
         ?>
     </div>
-    <script src="../script.js">
+    <script src="../assets/js/script.js">
     </script>
     <script>
         // Funkce pro ukládání dat do local storage

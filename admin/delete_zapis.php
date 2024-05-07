@@ -1,5 +1,5 @@
 <?php
-include '../config.php';
+include '../assets/php/config.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: ./index.php");
@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
     // Spuštění dotazu
     if ($stmt->execute()) {
         // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
-        echo "success";
+        echo "Success";
         exit();
     } else {
         // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu

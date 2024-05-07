@@ -1,5 +1,5 @@
 <?php
-include '../config.php';
+include '../assets/php/config.php';
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: ./index.php");
@@ -69,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="shortcut icon" href="../logo.ico" type="image/x-icon"> <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="shortcut icon" href="../assets/img/logo.ico" type="image/x-icon"> <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
@@ -100,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        include '../config.php'; // Připojení k databázi
         
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id = 1";
@@ -116,8 +115,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
 
-        // Uzavření připojení k databázi
-        mysqli_close($conn);
         ?>
     </div>
 </body>
