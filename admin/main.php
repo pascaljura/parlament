@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea>
                 </div>
                 <div class="button-container" id="buttonContainer">
-                    <button type="submit">
+                    <button type="submit" onclick="smazatZLocalStorage()">
                         Uložit
                     </button>
                 </div>
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             underline bold italics = __***underline bold italics***__ (podtržený text + tučný text + kurzíva)
         </div>
         <?php
-        
+
         // Získání dat z tabulky
         $query = "SELECT * FROM other WHERE id = 3";
         $result = mysqli_query($conn, $query);
@@ -153,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        
+
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id = 1";
         $result = mysqli_query($conn, $query);
@@ -182,6 +182,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (zapis.trim() !== '') {
                 localStorage.setItem('zapis', zapis);
             }
+        }
+
+        // Funkce pro mazání dat z local storage
+        function smazatZLocalStorage() {
+            localStorage.removeItem('datum');
+            localStorage.removeItem('zapis');
         }
 
         // Zavolání funkce pro načtení dat při načtení stránky
