@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
 
         <div class="table-heading">
-            <?php echo $headerText2; ?>
+        <b> <?php echo $headerText2; ?> </b>
         </div>
         <div class="button-container" id="buttonContainer">
             <?php
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
         </div>
         <div class="table-heading">
-            <?php echo $headerText1; ?>
+        <b>  <?php echo $headerText1; ?> </b>
         </div>
         <?php
         if ($sql != "" && $conn->query($sql) === TRUE) {

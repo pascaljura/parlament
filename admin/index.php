@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div id="calendar">
         <div class="table-heading">
-            <?php echo $headerText; ?>
+           <b> <?php echo $headerText; ?> </b>
         </div>
         <?php
         if (isset($loginError)) {
