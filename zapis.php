@@ -54,14 +54,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="./assets/img/logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
-    <meta content="./assets/img/logo.ico" property="og:image" />
+    <meta content="favicon.ico" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
 
@@ -69,7 +69,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
         <div class="table-heading" style="text-align: center;">
-            <?php echo '<img src="./assets/img/logo.png" width="140px" height="200">'; ?>
+            <?php echo '<img src="favicon.ico" width="180px" height="200">'; ?>
         </div>
         <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
             <pre style="overflow: auto;  font-family: sans-serif;"><?php echo $zapis; ?></pre>
