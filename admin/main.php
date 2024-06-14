@@ -88,16 +88,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ($sql != "") {
             echo "Chyba: " . $sql . "<br>" . $conn->error;
         }
+        $currentDate = date('Y-m-d');
         ?>
         <div style="display: flex; flex-direction: column;">
             <form method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px;">
                 <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                 <input type="date" name="datum" id="datumInput"
-                    style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                    style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
+                    value="<?php echo $currentDate; ?>" required>
                 <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                 <div style="display: flex; flex-direction: column;">
                     <textarea name="zapis" id="zapisInput" rows="4"
-                        style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea>
+                        style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
+                        required></textarea>
                 </div>
                 <div class="button-container" id="buttonContainer">
                     <button type="submit" onclick="smazatZLocalStorage()">
