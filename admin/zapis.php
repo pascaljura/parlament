@@ -74,7 +74,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
         <div class="table-heading" style="text-align: center;">
-            <?php echo '<img src="../favicon.ico" width="1/0px" height="200">'; ?>
+            <?php echo '<img src="../favicon.ico" width="200px" height="200">'; ?>
         </div>
         <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
             <pre style="overflow: auto; font-family: sans-serif;"><?php echo $zapis; ?></pre>
