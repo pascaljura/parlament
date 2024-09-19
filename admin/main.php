@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
     <?php
     $headerText1 = '&#x1F499;・Nový zápis・2023/2024';
-    $headerText2 = '&#x1F499;・Zápisy・2023/2024';
     $footerText = '&#x1F499;・Aktuálně・2023/2024';
     ?>
 </head>
@@ -57,22 +56,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<div class="success-message"><i class="fa fa-check"></i> ' . htmlspecialchars($_GET['message']) . '</div>';
         }
         ?>
-
-        <div class="table-heading">
-        <b> <?php echo $headerText2; ?> </b>
-        </div>
         <div class="button-container" id="buttonContainer">
             <?php
+            // Inicializujeme prázdné pole pro seskupení dat podle roků
+            $grouped_data = [];
+
+            // Načteme data z databáze
             $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
+
             if ($result->num_rows > 0) {
+                // Projdeme všechny záznamy
                 while ($row = $result->fetch_assoc()) {
                     $id = $row['id'];
-                    $datum = date('d.m.Y', strtotime($row['datum']));
-                    echo '<a href="./zapis.php?id=' . $id . '" target="_blank">';
-                    echo '<button>';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $datum;
-                    echo '</button>';
-                    echo '</a>';
+                    $datum = $row['datum'];
+                    $year = date('Y', strtotime($datum)); // Extrahujeme rok
+            
+                    // Vytvoříme skupiny podle roku
+                    if (!isset($grouped_data[$year])) {
+                        $grouped_data[$year] = []; // Pokud rok ještě neexistuje, vytvoříme prázdné pole
+                    }
+
+                    // Přidáme záznam do pole příslušného roku
+                    $grouped_data[$year][] = [
+                        'id' => $id,
+                        'datum' => date('d.m.Y', strtotime($datum))
+                    ];
+                }
+
+                // Vypíšeme data podle roku
+                foreach ($grouped_data as $year => $items) {
+                    echo '<div class="year-container">';
+                    echo '<div class="table-heading"><b>';
+                    echo '&#x1F499;・Zápisy・' . $year;
+                    echo '</b></div>';
+                    echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
+                    foreach ($items as $item) {
+                        echo '<a href="./zapis.php?id=' . $item['id'] . '" target="_blank">';
+                        echo '<button>';
+                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
+                        echo '</button>';
+                        echo '</a>';
+                    }
+                    echo '</div>'; // Uzavřeme kontejner pro tlačítka
+                    echo '</div>'; // Uzavřeme kontejner pro rok
                 }
             } else {
                 echo "Žádná data nebyla nalezena.";
@@ -80,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
         </div>
         <div class="table-heading">
-        <b>  <?php echo $headerText1; ?> </b>
+            <b> <?php echo $headerText1; ?> </b>
         </div>
         <?php
         if ($sql != "" && $conn->query($sql) === TRUE) {

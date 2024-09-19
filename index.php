@@ -26,68 +26,95 @@ include './assets/php/config.php';
 
 <body>
     <div id="calendar">
-        <div class="table-heading">
-            <b><?php echo $headerText; ?></b>
-        </div>
-        <div class="button-container" id="buttonContainer">
-            <?php
-            $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $id = $row['id'];
-                    $datum = date('d.m.Y', strtotime($row['datum']));
-                    echo '<a href="./zapis.php?id=' . $id . '" target="_blank">';
+        <?php
+        // Inicializujeme prázdné pole pro seskupení dat podle roků
+        $grouped_data = [];
+
+        // Načteme data z databáze
+        $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
+
+        if ($result->num_rows > 0) {
+            // Projdeme všechny záznamy
+            while ($row = $result->fetch_assoc()) {
+                $id = $row['id'];
+                $datum = $row['datum'];
+                $year = date('Y', strtotime($datum)); // Extrahujeme rok
+        
+                // Vytvoříme skupiny podle roku
+                if (!isset($grouped_data[$year])) {
+                    $grouped_data[$year] = []; // Pokud rok ještě neexistuje, vytvoříme prázdné pole
+                }
+
+                // Přidáme záznam do pole příslušného roku
+                $grouped_data[$year][] = [
+                    'id' => $id,
+                    'datum' => date('d.m.Y', strtotime($datum))
+                ];
+            }
+
+            // Vypíšeme data podle roku
+            foreach ($grouped_data as $year => $items) {
+                echo '<div class="year-container">';
+                echo '<div class="table-heading"><b>';
+                echo '&#x1F499;・Zápisy・' . $year;
+                echo '</b></div>';
+                echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
+                foreach ($items as $item) {
+                    echo '<a href="./zapis.php?id=' . $item['id'] . '" target="_blank">';
                     echo '<button>';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $datum;
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';
                     echo '</a>';
                 }
-            } else {
-                echo "Žádná data nebyla nalezena.";
-            }
-            ?>
-        </div>
-        <?php
-
-        // Získání dat z tabulky
-        $query = "SELECT * FROM other WHERE id = 2";
-        $result = mysqli_query($conn, $query);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-
-            // Kontrola hodnoty id
-            if ($row['aktivni'] == 1) {
-                $phpCode = $row['text'];
-
-                // Vyhodnocení PHP kódu
-                ob_start();
-                eval ('?>' . $phpCode);
-                $text = ob_get_clean();
-
-                // Výpis HTML s dynamickým obsahem
-                echo $text;
-            } else {
+                echo '</div>'; // Uzavřeme kontejner pro tlačítka
+                echo '</div>'; // Uzavřeme kontejner pro rok
             }
         } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+            echo "Žádná data nebyla nalezena.";
         }
         ?>
-        <hr color="#3e6181" style="height: 2px; border: none;" />
-        <?php
 
-        // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id = 1";
-        $result = mysqli_query($conn, $query);
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $text = $row['text'];
+    <?php
+
+    // Získání dat z tabulky
+    $query = "SELECT * FROM other WHERE id = 2";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+
+        // Kontrola hodnoty id
+        if ($row['aktivni'] == 1) {
+            $phpCode = $row['text'];
+
+            // Vyhodnocení PHP kódu
+            ob_start();
+            eval ('?>' . $phpCode);
+            $text = ob_get_clean();
+
             // Výpis HTML s dynamickým obsahem
-            echo "$text";
+            echo $text;
         } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
-        ?>
+    } else {
+        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+    }
+    ?>
+    <hr color="#3e6181" style="height: 2px; border: none;" />
+    <?php
+
+    // Získání dat z tabulky
+    $query = "SELECT text FROM other WHERE id = 1";
+    $result = mysqli_query($conn, $query);
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        $text = $row['text'];
+        // Výpis HTML s dynamickým obsahem
+        echo "$text";
+    } else {
+        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+    }
+    ?>
     </div>
     <script src="./assets/js/script.js">
     </script>
