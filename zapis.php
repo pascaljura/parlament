@@ -1,27 +1,24 @@
 <?php
 include './assets/php/config.php';
+
 if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     $id_zapis = $_GET['id_zapis'];
+
+    // Získání záznamu ze schůze
     $result = $conn->query("SELECT * FROM zapis WHERE id_zapis = $id_zapis");
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('d.m.Y', strtotime($row['datum']));
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
+        $id_users = $row['id_users']; // předpokládám, že id_users je sloupec v tabulce zapis
+
+        // Nahrazení a formátování textu
         $zapis = str_replace("=", "<br>", $zapis);
         $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
         $zapis = str_replace("<br>-", "<br>&#8226;", $zapis);
-        function getSklonovanyText($text)
-        {
-            $posledniZnak = mb_substr($text, -1);
-            switch ($posledniZnak) {
-                case 'a':
-                case 'í':
-                    return $text;
-                default:
-                    return $text;
-            }
-        }
+
         function ziskatTextVLomitkach($zapis)
         {
             $textInLomitka = "";
@@ -30,13 +27,24 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
             }
             return $textInLomitka;
         }
+
         $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; text-align: center; font-size: 34px">$1</div>', $zapis); // custom style
-        $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis); // bold italics
-        $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis); // bold
-        $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis); // italics
-        $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
-        $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; text-align: center; font-size: 34px">$1</div>', $zapis);
+        $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis);
+        $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis);
+        $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis);
+        $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis);
+        $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis);
+
+        // Získání jména uživatele na základě id_users
+        $resultUser = $conn->query("SELECT name FROM users WHERE id_users = $id_users");
+        if ($resultUser->num_rows > 0) {
+            $rowUser = $resultUser->fetch_assoc();
+            $userName = $rowUser['name'];
+        } else {
+            $userName = 'Neznámý uživatel';
+        }
+
     } else {
         echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
         exit();
@@ -71,27 +79,16 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         <div class="table-heading" style="text-align: center;">
             <?php echo '<img src="favicon.ico" width="180px" height="200">'; ?>
         </div>
-        <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
-            <pre style="overflow: auto;  font-family: sans-serif;"><?php echo $zapis; ?></pre>
-        </div>
-        <hr color="#3e6181" style="height: 20px; border: none;" />
         <div style="display: flex; flex-direction: column; font-size: 24px;">
             <div style="color: #000; font-family: sans-serif;">
-                <?php
-                if (!empty($textInLomitkach)) {
-                    $textSklon = getSklonovanyText($textInLomitkach);
-                    echo '<div style="color: #000; font-family: sans-serif;">' . $textSklon . '</div>';
-                } else {
-                    echo '<div style="color: #000; font-family: sans-serif; ">' . "Týdenní schůze školního Parlamentu" . '</div>';
-                }
-                ?>
-            </div>
-            <div style="color: #000; font-family: sans-serif; font-size: 24px;">
-                <?php echo $datum; ?>
+                <?php echo "<u>" . $datum . " | Zapsal: <b>" . $userName . "</b></u>" ?>
             </div>
         </div>
+        <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
+            <pre style="overflow: auto; font-family: sans-serif;"><?php echo $zapis; ?></pre>
+        </div>
 
-        <hr color="#3e6181" style="height: 2px; border: none;" />
+        
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
@@ -104,9 +101,9 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
                 ?>
             </div>
         </div>
-        <hr color="#3e6181" style="height: 2px; border: none;" />
+        <br>
         <?php
-        
+
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
@@ -123,8 +120,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
 
         ?>
     </div>
-    <script src="./assets/js/script.js">
-    </script>
+    <script src="./assets/js/script.js"></script>
     <script>
         function downloadPDF(directoryName) {
             var link = document.createElement('a');

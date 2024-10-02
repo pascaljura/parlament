@@ -12,6 +12,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         $row = $result->fetch_assoc();
         $datum = date('d.m.Y', strtotime($row['datum']));
         $directoryName = date('d_m_Y', strtotime($row['datum']));
+        $id_users = $row['id_users'];
         $zapis = $row['zapis'];
         $zapis = str_replace("=", "<br>", $zapis);
         $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
@@ -42,6 +43,14 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis); // italics
         $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
         $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
+
+        $resultUser = $conn->query("SELECT name FROM users WHERE id_users = $id_users");
+        if ($resultUser->num_rows > 0) {
+            $rowUser = $resultUser->fetch_assoc();
+            $userName = $rowUser['name'];
+        } else {
+            $userName = 'Neznámý uživatel';
+        }
     } else {
         echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
         exit();
@@ -76,66 +85,57 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         <div class="table-heading" style="text-align: center;">
             <?php echo '<img src="../favicon.ico" width="200px" height="200">'; ?>
         </div>
+        <div style="display: flex; flex-direction: column; font-size: 24px;">
+            <div style="color: #000; font-family: sans-serif;">
+                <?php echo "<u>" . $datum . " | Zapsal: <b>" . $userName . "</b></u>" ?>
+            </div>
+        </div>
         <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
             <pre style="overflow: auto; font-family: sans-serif;"><?php echo $zapis; ?></pre>
         </div>
         <div style="display: flex; flex-direction: column;">
-            <div style="color: #000; font-family: sans-serif;">
-                <hr color="#3e6181" style="height: 20px; border: none;" />
-                <?php
-                if (!empty($textInLomitkach)) {
-                    $textSklon = getSklonovanyText($textInLomitkach);
-                    echo '<div style="color: #000; font-family: sans-serif; font-size: 24px;">' . $textSklon . '</div>';
-                } else {
-                    echo '<div style="color: #000; font-family: sans-serif; font-size: 24px;">' . "Týdenní schůze školního Parlamentu" . '</div>';
-                }
-                ?>
+
+
+            <div style="display: flex; justify-content: space-between;">
+                <div class="table-heading button-container">
+                    <?php
+                    echo '<button onclick="downloadPDF(\'' . $directoryName . '\')">';
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout PDF';
+                    echo '</button>';
+                    echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                    echo '</button>';
+                    echo '<a href="./edit_zapis.php?id_zapis=' . $id_zapis . '">';
+                    echo '<button>';
+                    echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
+                    echo '</button>';
+                    echo '</a>';
+                    echo '<button onclick="deleteZapis(' . $id_zapis . ')">';
+                    echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
+                    echo '</button>';
+                    ?>
+                </div>
             </div>
-            <div style="color: #000; font-family: sans-serif; font-size: 24px;">
-                <?php echo $datum; ?>
-            </div>
+            <br>
+            <?php
+
+            // Získání dat z tabulky
+            $query = "SELECT text FROM other WHERE id_other = 1";
+            $result = mysqli_query($conn, $query);
+
+            if ($result) {
+                $row = mysqli_fetch_assoc($result);
+                $text = $row['text'];
+
+                // Výpis HTML s dynamickým obsahem
+                echo "$text";
+            } else {
+                echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+            }
+
+            // Uzavření připojení k databázi
+            ?>
         </div>
-
-        <hr color="#3e6181" style="height: 2px; border: none;" />
-        <div style="display: flex; justify-content: space-between;">
-            <div class="table-heading button-container">
-                <?php
-                echo '<button onclick="downloadPDF(\'' . $directoryName . '\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout PDF';
-                echo '</button>';
-                echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
-                echo '</button>';
-                echo '<a href="./edit_zapis.php?id_zapis=' . $id_zapis . '">';
-                echo '<button>';
-                echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
-                echo '</button>';
-                echo '</a>';
-                echo '<button onclick="deleteZapis(' . $id_zapis . ')">';
-                echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
-                echo '</button>';
-                ?>
-            </div>
-        </div>
-        <hr color="#3e6181" style="height: 2px; border: none;" />
-        <?php
-        
-        // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id_other = 1";
-        $result = mysqli_query($conn, $query);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $text = $row['text'];
-
-            // Výpis HTML s dynamickým obsahem
-            echo "$text";
-        } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-        }
-
-        // Uzavření připojení k databázi
-        ?>
     </div>
     <script src="../assets/js/script.js">    </script>
     <script>

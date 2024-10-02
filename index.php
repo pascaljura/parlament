@@ -60,7 +60,7 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./zapis.php?id=' . $item['id_zapis'] . '" target="_blank">';
+                    echo '<a href="./zapis.php?id_zapis=' . $item['id_zapis'] . '" target="_blank">';
                     echo '<button>';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';
@@ -74,47 +74,47 @@ include './assets/php/config.php';
         }
         ?>
 
-    <?php
+        <?php
 
-    // Získání dat z tabulky
-    $query = "SELECT * FROM other WHERE id_other = 2";
-    $result = mysqli_query($conn, $query);
+        // Získání dat z tabulky
+        $query = "SELECT * FROM other WHERE id_other = 2";
+        $result = mysqli_query($conn, $query);
 
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
 
-        // Kontrola hodnoty id
-        if ($row['aktivni'] == 1) {
-            $phpCode = $row['text'];
+            // Kontrola hodnoty id
+            if ($row['aktivni'] == 1) {
+                $phpCode = $row['text'];
 
-            // Vyhodnocení PHP kódu
-            ob_start();
-            eval ('?>' . $phpCode);
-            $text = ob_get_clean();
+                // Vyhodnocení PHP kódu
+                ob_start();
+                eval ('?>' . $phpCode);
+                $text = ob_get_clean();
 
-            // Výpis HTML s dynamickým obsahem
-            echo $text;
+                // Výpis HTML s dynamickým obsahem
+                echo $text;
+            } else {
+            }
         } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
-    } else {
-        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-    }
-    ?>
-    <hr color="#3e6181" style="height: 2px; border: none;" />
-    <?php
+        ?>
+        <hr color="#3e6181" style="height: 2px; border: none;" />
+        <?php
 
-    // Získání dat z tabulky
-    $query = "SELECT text FROM other WHERE id_other = 1";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $text = $row['text'];
-        // Výpis HTML s dynamickým obsahem
-        echo "$text";
-    } else {
-        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-    }
-    ?>
+        // Získání dat z tabulky
+        $query = "SELECT text FROM other WHERE id_other = 1";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $text = $row['text'];
+            // Výpis HTML s dynamickým obsahem
+            echo "$text";
+        } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+        }
+        ?>
     </div>
     <script src="./assets/js/script.js">
     </script>

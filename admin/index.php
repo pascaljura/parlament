@@ -11,12 +11,16 @@ if (isset($_SESSION['id_users'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredUsername = $_POST["username"];
     $enteredPassword = $_POST["password"];
-    $stmt = $conn->prepare("SELECT id_users FROM users WHERE name = ? AND password = ?");
+
+    // Připravíme SQL dotaz pro získání id_users na základě uživatelského jména a hesla
+    $stmt = $conn->prepare("SELECT id_users FROM users WHERE username = ? AND password = ?");
     $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
     $stmt->execute();
     $stmt->store_result();
     if ($stmt->num_rows > 0) {
-        $_SESSION['id_users'] = 1;
+        $stmt->bind_result($id_users);
+        $stmt->fetch();
+        $_SESSION['id_users'] = $id_users;
         header("Location: ./main.php");
         exit();
     } else {
@@ -24,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $stmt->close();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div id="calendar">
         <div class="table-heading">
-           <b> <?php echo $headerText; ?> </b>
+            <b> <?php echo $headerText; ?> </b>
         </div>
         <?php
         if (isset($loginError)) {
@@ -74,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        
+
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
