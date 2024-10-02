@@ -13,17 +13,38 @@ if (isset($_POST['logout'])) {
 }
 $sql = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Získání vstupů od uživatele
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
+    // Nahrazení nových řádků v zápisu rovnítkem
     $zapis = str_replace(array("\n", "\r"), '=', $zapis);
-    $sql = "INSERT INTO zapis (datum, zapis) VALUES ('$datum', '=$zapis')";
-    if ($conn->query($sql) === TRUE) {
-        header("Location: ./main.php");
-        exit();
+
+    // Připravení SQL dotazu s parametry
+    $sql = "INSERT INTO zapis (id_users, datum, zapis) VALUES (?, ?, ?)";
+
+    // Příprava dotazu
+    if ($stmt = $conn->prepare($sql)) {
+        // Navázání parametrů k dotazu
+        $stmt->bind_param("iss", $_SESSION['id_users'], $datum, $zapis);
+
+        // Provedení dotazu
+        if ($stmt->execute()) {
+            // Přesměrování na hlavní stránku po úspěšném uložení
+            header("Location: ./main.php?message=Uloženo.");
+            exit();
+        } else {
+            // Zobrazení chyby při provádění dotazu
+            echo "Chyba při ukládání záznamu: " . $stmt->error;
+        }
+
+        // Uzavření připraveného dotazu
+        $stmt->close();
     } else {
-        echo "Chyba: " . $sql . "<br>" . $conn->error;
+        // Zobrazení chyby při přípravě dotazu
+        echo "Chyba při přípravě dotazu: " . $conn->error;
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
