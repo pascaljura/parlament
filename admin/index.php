@@ -3,7 +3,7 @@ include '../assets/php/config.php';
 session_start();
 
 // Kontrola, zda je uživatel již přihlášen
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['id_users'])) {
     header("Location: ./main.php");
     exit();
 }
@@ -11,12 +11,12 @@ if (isset($_SESSION['user_id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredUsername = $_POST["username"];
     $enteredPassword = $_POST["password"];
-    $stmt = $conn->prepare("SELECT id FROM users WHERE name = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT id_users FROM users WHERE name = ? AND password = ?");
     $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
     $stmt->execute();
     $stmt->store_result();
     if ($stmt->num_rows > 0) {
-        $_SESSION['user_id'] = 1;
+        $_SESSION['id_users'] = 1;
         header("Location: ./main.php");
         exit();
     } else {
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
         
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id = 1";
+        $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {

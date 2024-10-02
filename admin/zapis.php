@@ -1,13 +1,13 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_users'])) {
     header("Location: ./index.php");
     exit();
 }
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = $_GET['id'];
-    $result = $conn->query("SELECT * FROM zapis WHERE id = $id");
+if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
+    $id_zapis = $_GET['id_zapis'];
+    $result = $conn->query("SELECT * FROM zapis WHERE id_zapis = $id_zapis");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('d.m.Y', strtotime($row['datum']));
@@ -43,11 +43,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
         $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
     } else {
-        echo "Záznam s ID $id nebyl nalezen.";
+        echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné ID v URL.";
+    echo "Chybějící nebo neplatné id_zapis v URL.";
     exit();
 }
 ?>
@@ -106,12 +106,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
                 echo '</button>';
-                echo '<a href="./edit_zapis.php?id=' . $id . '">';
+                echo '<a href="./edit_zapis.php?id_zapis=' . $id_zapis . '">';
                 echo '<button>';
                 echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
                 echo '</button>';
                 echo '</a>';
-                echo '<button onclick="deleteZapis(' . $id . ')">';
+                echo '<button onclick="deleteZapis(' . $id_zapis . ')">';
                 echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
                 echo '</button>';
                 ?>
@@ -121,7 +121,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         <?php
         
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id = 1";
+        $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
@@ -155,7 +155,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             link.click();
             document.body.removeChild(link);
         }
-        function deleteZapis(id) {
+        function deleteZapis(id_zapis) {
             if (confirm("Opravdu chcete smazat tento zápis?")) {
                 // Vytvoření instance XMLHttpRequest objektu
                 var xhttp = new XMLHttpRequest();
@@ -177,7 +177,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                     }
                 };
                 // Odeslání požadavku s id záznamu
-                xhttp.send("id=" + id);
+                xhttp.send("id_zapis=" + id_zapis);
             }
         }
 

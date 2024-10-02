@@ -31,12 +31,12 @@ include './assets/php/config.php';
         $grouped_data = [];
 
         // Načteme data z databáze
-        $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
+        $result = $conn->query("SELECT * FROM zapis ORDER BY datum DESC");
 
         if ($result->num_rows > 0) {
             // Projdeme všechny záznamy
             while ($row = $result->fetch_assoc()) {
-                $id = $row['id'];
+                $id_zapis = $row['id_zapis'];
                 $datum = $row['datum'];
                 $year = date('Y', strtotime($datum)); // Extrahujeme rok
         
@@ -47,7 +47,7 @@ include './assets/php/config.php';
 
                 // Přidáme záznam do pole příslušného roku
                 $grouped_data[$year][] = [
-                    'id' => $id,
+                    'id_zapis' => $id_zapis,
                     'datum' => date('d.m.Y', strtotime($datum))
                 ];
             }
@@ -60,7 +60,7 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./zapis.php?id=' . $item['id'] . '" target="_blank">';
+                    echo '<a href="./zapis.php?id=' . $item['id_zapis'] . '" target="_blank">';
                     echo '<button>';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';
@@ -77,7 +77,7 @@ include './assets/php/config.php';
     <?php
 
     // Získání dat z tabulky
-    $query = "SELECT * FROM other WHERE id = 2";
+    $query = "SELECT * FROM other WHERE id_other = 2";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -104,7 +104,7 @@ include './assets/php/config.php';
     <?php
 
     // Získání dat z tabulky
-    $query = "SELECT text FROM other WHERE id = 1";
+    $query = "SELECT text FROM other WHERE id_other = 1";
     $result = mysqli_query($conn, $query);
     if ($result) {
         $row = mysqli_fetch_assoc($result);

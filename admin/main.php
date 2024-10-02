@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_users'])) {
     header("Location: ./index.php");
     exit();
 }
@@ -62,12 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $grouped_data = [];
 
             // Načteme data z databáze
-            $result = $conn->query("SELECT id, datum FROM zapis ORDER BY datum DESC");
+            $result = $conn->query("SELECT id_zapis, datum FROM zapis ORDER BY datum DESC");
 
             if ($result->num_rows > 0) {
                 // Projdeme všechny záznamy
                 while ($row = $result->fetch_assoc()) {
-                    $id = $row['id'];
+                    $id_zapis = $row['id_zapis'];
                     $datum = $row['datum'];
                     $year = date('Y', strtotime($datum)); // Extrahujeme rok
             
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     // Přidáme záznam do pole příslušného roku
                     $grouped_data[$year][] = [
-                        'id' => $id,
+                        'id_zapis' => $id_zapis,
                         'datum' => date('d.m.Y', strtotime($datum))
                     ];
                 }
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '</b></div>';
                     echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                     foreach ($items as $item) {
-                        echo '<a href="./zapis.php?id=' . $item['id'] . '" target="_blank">';
+                        echo '<a href="./zapis.php?id_zapis=' . $item['id_zapis'] . '" target="_blank">';
                         echo '<button>';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                         echo '</button>';
@@ -150,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT * FROM other WHERE id = 3";
+        $query = "SELECT * FROM other WHERE id_other = 3";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id = 1";
+        $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {

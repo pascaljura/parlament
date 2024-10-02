@@ -7,16 +7,16 @@ if (!isset($_SESSION['user_id'])) {
 } else {
 
     // Ošetření parametru ID
-    if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
-        echo "Chybějící nebo neplatné ID záznamu.";
+    if (!isset($_POST['id_zapis']) || !is_numeric($_POST['id'])) {
+        echo "Chybějící nebo neplatné id_zapis záznamu.";
         exit();
     }
 
-    $id = $_POST['id'];
+    $id_zapis = $_POST['id_zapis'];
 
     // Příprava dotazu s parametrem
-    $stmt = $conn->prepare("DELETE FROM zapis WHERE id = ?");
-    $stmt->bind_param("i", $id);
+    $stmt = $conn->prepare("DELETE FROM zapis WHERE id_zapis = ?");
+    $stmt->bind_param("i", $id_zapis);
 
     // Spuštění dotazu
     if ($stmt->execute()) {

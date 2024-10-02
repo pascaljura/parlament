@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_users'])) {
     header("Location: ./index.php");
     exit();
 }
@@ -17,10 +17,10 @@ function nahraditMarkdown($text)
 {
     return $text;
 }
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id = $_GET['id'];
+if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
+    $id_zapis = $_GET['id_zapis'];
 
-    $result = $conn->query("SELECT * FROM zapis WHERE id = $id");
+    $result = $conn->query("SELECT * FROM zapis WHERE id_zapis = $id_zapis");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('Y-m-d', strtotime($row['datum']));
@@ -29,11 +29,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $textInLomitkach = ziskatTextVLomitkach($zapis);
         $zapis = nahraditMarkdown($zapis);
     } else {
-        echo "Záznam s ID $id nebyl nalezen.";
+        echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné ID v URL.";
+    echo "Chybějící nebo neplatné id_zapis v URL.";
     exit();
 }
 function getSklonovanyText($text)
@@ -48,14 +48,14 @@ function getSklonovanyText($text)
     }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST["id"];
+    $id_zapis = $_POST["id_zapis"];
     $datum = $_POST["datum"];
     $zapisText = $_POST["zapis"];
     $zapisText = str_replace(["\r\n", "\r", "\n"], "=", $zapisText);
     $zapisText = nahraditMarkdown($zapisText);
-    $sql = "UPDATE zapis SET datum='$datum', zapis='$zapisText' WHERE id=$id";
+    $sql = "UPDATE zapis SET datum='$datum', zapis='$zapisText' WHERE id_zapis = $id_zapis";
     if ($conn->query($sql) === TRUE) {
-        header("Location: zapis.php?id=$id");
+        header("Location: zapis.php?id_zapis=$id_zapis");
         exit();
     } else {
         echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
         </div>
         <form action="" method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px;">
-            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <input type="hidden" name="id_zapis" value="<?php echo $id_zapis; ?>">
             <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
             <input type="date" name="datum" id="datum" value="<?php echo $datum; ?>"
                 style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
@@ -96,13 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <div class="button-container" id="buttonContainer">
             <button type="submit" form="myForm">Uložit změny</button>
-            <a href="zapis.php?id=<?php echo $id; ?>"><button>Opustit stránku beze změn</button></a>
+            <a href="zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button>Opustit stránku beze změn</button></a>
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
         
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id = 1";
+        $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
