@@ -7,6 +7,10 @@ body {
   position: relative;
 }
 
+a {
+  text-decoration: none;
+}
+
 body::before {
   content: "";
   top: 0;
@@ -93,6 +97,27 @@ body::before {
   animation: spin 1s infinite linear;
 }
 
+#footer-text.visible {
+  opacity: 1;
+}
+
+#footer-text {
+  opacity: 1;
+}
+
+#responsive-image {
+  margin: 5px;
+  width: 10%;
+  border-radius: 3%;
+}
+
+@media (max-width: 767px), (max-width: 560px) {
+  #responsive-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
 @keyframes spin {
   0% {
     transform: rotate(360deg);
@@ -101,12 +126,4 @@ body::before {
   100% {
     transform: rotate(0deg);
   }
-}
-
-#footer-text.visible {
-  opacity: 1;
-}
-
-#footer-text {
-  opacity: 1;
 }
