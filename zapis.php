@@ -139,6 +139,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
             document.body.removeChild(link);
         }
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
 </body>
 
 </html>

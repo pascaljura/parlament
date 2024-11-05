@@ -219,6 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         ?>
     </div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script src="../assets/js/script.js">
     </script>
     <script>

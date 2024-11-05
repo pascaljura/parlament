@@ -118,6 +118,7 @@ include './assets/php/config.php';
     </div>
     <script src="./assets/js/script.js">
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
 </body>
 
 </html>

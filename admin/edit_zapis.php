@@ -70,7 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon"> <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
@@ -100,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
-        
+
         // Získání dat z tabulky
         $query = "SELECT text FROM other WHERE id_other = 1";
         $result = mysqli_query($conn, $query);
@@ -118,5 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
     </div>
 </body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+<script src="../assets/js/script.js">
+</script>
 
 </html>

@@ -138,6 +138,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         </div>
     </div>
     <script src="../assets/js/script.js">    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script>
         function downloadPDF(directoryName) {
             var link = document.createElement('a');
