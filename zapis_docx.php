@@ -9,8 +9,7 @@ if (file_exists($configPath)) {
 
 require_once './vendor/autoload.php';
 
-use Mpdf\Mpdf;
-$mpdf = new Mpdf(['default_font' => 'calibri']);
+
 
 // Check if id_zapis is set and valid
 if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_INT)) {
@@ -29,9 +28,9 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
         $zapis = htmlspecialchars($row['zapis']); // Sanitize or format as needed
 
         // Nahrazení a formátování textu
-        $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
-        $zapis = str_replace("<br>-", "<br>&#8226;", $zapis);
+        $zapis = str_replace("=", "\n", $zapis);
+        $zapis = str_replace("<br>--", "\n\u2022", $zapis);
+        $zapis = str_replace("<br>-", "\n\u2022", $zapis);
 
         function ziskatTextVLomitkach($zapis)
         {
@@ -43,7 +42,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
         }
 
         $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 14pt;">$1</div>', $zapis);
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<strong style="color: #3e6181;">$1</strong>', $zapis);
         $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis);
         $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis);
         $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis);
@@ -59,53 +58,46 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
     echo "Invalid or missing id_zapis parameter.";
     exit();
 }
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
 
-// Header HTML
-$headerHtml = '
-<div style="text-align: center;">
-    <table style="width: 100%; font-size: 9pt; border-top: 2px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="text-align: left;">Číslo dokumentu: ' . $cislo_dokumentu . '/' . $datum . '</td>
-            <td style="text-align: center;">Počet stran: 1</td>
-            <td style="text-align: right;">Počet příloh: 0</td>
-        </tr>
-        <tr>
-            <td>Dokument</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-</div>';
+// Create a new PHPWord object
+$phpWord = new PhpWord();
 
-// Body HTML
-$bodyHtml = '
-<div style="font-size: 22pt; padding-top: 25px;">
-    Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . '
-</div>
-<div style="font-size: 11pt; margin-top: 20px;">
-    ' . nl2br($zapis) . '<br><br>
+// Add a section for the document content
+$section = $phpWord->addSection();
 
-    V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu
-</div>';
+// Add header content
+$headerText = 'Číslo dokumentu: ' . $cislo_dokumentu . '/' . $datum . "\n";
+$headerText .= 'Počet stran: 1' . "\n";
+$headerText .= 'Počet příloh: 0' . "\n";
+$headerText .= 'Dokument' . "\n";
 
-// Footer HTML
-$footerHtml = '
-<table style="width: 100%; font-size: 9pt; border-collapse: collapse;">
-    <tr>
-        <td style="text-align: left;">
-            Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . '
-        </td>
-        <td style="text-align: right;">
-            Stránka {PAGENO} z {nbpg}
-        </td>
-    </tr>
-</table>';
+// Add header to the document
+$section->addText($headerText, ['bold' => true, 'size' => 12]);
 
-// Configure mPDF with header, body, and footer
-$mpdf->SetHTMLHeader($headerHtml);
-$mpdf->SetHTMLFooter($footerHtml);
-$mpdf->WriteHTML($bodyHtml);
+// Add body content
+$bodyText = 'Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . "\n\n";
+$bodyText .= $zapis . "\n\n";
+$bodyText .= 'V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . "\n";
+$bodyText .= 'Zástupci školního Parlamentu';
 
-// Output PDF
-$mpdf->Output('zapis_ze_schuze.pdf', 'I');
+// Add body to the document
+$section->addText($bodyText, ['size' => 12]);
+
+// Footer text
+$footerText = 'Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . "\n";
+$footerText .= 'Stránka {PAGE_NUM} z {PAGE_COUNT}';
+
+// Add footer to the document
+$section->addText($footerText, ['italic' => true, 'size' => 10]);
+
+// Save the DOCX file
+$fileName = 'zapis_ze_schuze.docx';
+header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+header('Content-Disposition: attachment; filename="' . $fileName . '"');
+header('Cache-Control: max-age=0');
+
+// Save the file to the output stream
+$phpWord->save('php://output', 'Word2007');
 ?>

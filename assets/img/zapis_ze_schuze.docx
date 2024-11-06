@@ -1,0 +1,9 @@
+<br />
+<b>Fatal error</b>:  Uncaught Error: Class &quot;ZipArchive&quot; not found in C:\xampp\htdocs\parlament\vendor\phpoffice\phpword\src\PhpWord\Shared\ZipArchive.php:139
+Stack trace:
+#0 C:\xampp\htdocs\parlament\vendor\phpoffice\phpword\src\PhpWord\Writer\AbstractWriter.php(284): PhpOffice\PhpWord\Shared\ZipArchive-&gt;open('C:\\Users\\boucn\\...', 8)
+#1 C:\xampp\htdocs\parlament\vendor\phpoffice\phpword\src\PhpWord\Writer\Word2007.php(98): PhpOffice\PhpWord\Writer\AbstractWriter-&gt;getZipArchive('C:\\Users\\boucn\\...')
+#2 C:\xampp\htdocs\parlament\vendor\phpoffice\phpword\src\PhpWord\PhpWord.php(324): PhpOffice\PhpWord\Writer\Word2007-&gt;save('C:\\Users\\boucn\\...')
+#3 C:\xampp\htdocs\parlament\zapis_docx.php(102): PhpOffice\PhpWord\PhpWord-&gt;save('php://output', 'Word2007')
+#4 {main}
+  thrown in <b>C:\xampp\htdocs\parlament\vendor\phpoffice\phpword\src\PhpWord\Shared\ZipArchive.php</b> on line <b>139</b><br />
