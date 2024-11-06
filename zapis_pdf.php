@@ -59,10 +59,11 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
     echo "Invalid or missing id_zapis parameter.";
     exit();
 }
-
+$mpdf->showImageErrors = true;
 // Header HTML
 $headerHtml = '
 <div style="text-align: center;">
+<img src="./assets\img\purkynka_logo.png" style="width: 8.98cm; height: 2.88cm;">
     <table style="width: 100%; font-size: 9pt; border-top: 2px solid black; border-collapse: collapse;">
         <tr>
             <td style="text-align: left;">Číslo dokumentu: ' . $cislo_dokumentu . '/' . $datum . '</td>
@@ -79,10 +80,10 @@ $headerHtml = '
 
 // Body HTML
 $bodyHtml = '
-<div style="font-size: 22pt; padding-top: 25px;">
+<div style="font-size: 22pt; padding-top: 120px;">
     Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . '
 </div>
-<div style="font-size: 11pt; margin-top: 20px;">
+<div style="font-size: 11pt; margin-top: 5pxx;">
     ' . nl2br($zapis) . '<br><br>
 
     V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu
