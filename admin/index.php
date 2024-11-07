@@ -1,6 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -367,3 +368,7 @@ if (isset($_SESSION['id_users'])) {
     </script>
 
 </html>
+<?php
+ob_end_flush();
+
+?>
