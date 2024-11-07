@@ -1,3 +1,8 @@
+<?php
+include '../assets/php/config.php';
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,8 +24,6 @@
     ?>
 </head>
 <?php
-include '../assets/php/config.php';
-session_start();
 
 // Kontrola, zda je uživatel již přihlášen
 if (isset($_SESSION['id_users'])) {
