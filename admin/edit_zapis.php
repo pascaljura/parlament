@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zapisText = nahraditMarkdown($zapisText);
     $sql = "UPDATE zapis SET datum='$datum', zapis='$zapisText' WHERE id_zapis = $id_zapis";
     if ($conn->query($sql) === TRUE) {
-        header("Location: zapis.php?id_zapis=$id_zapis");
+        header("Location: show_zapis.php?id_zapis=$id_zapis");
         exit();
     } else {
         echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <div class="button-container" id="buttonContainer">
             <button type="submit" form="myForm">Uložit změny</button>
-            <a href="zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button>Opustit stránku beze změn</button></a>
+            <a href="show_zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button>Opustit stránku beze změn</button></a>
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
