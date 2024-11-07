@@ -16,34 +16,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Získání vstupů od uživatele
     $datum = $_POST["datum"];
     $zapis = $_POST["zapis"];
-    // Nahrazení nových řádků v zápisu rovnítkem
     $zapis = str_replace(array("\n", "\r"), '=', $zapis);
 
+    // Načtení posledního čísla dokumentu podle data
+    $sql_last_doc = "SELECT cislo_dokumentu FROM zapis ORDER BY datum DESC LIMIT 1";
+    $result = $conn->query($sql_last_doc);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // Extrahuje poslední část čísla dokumentu (poslední dvě číslice)
+        $last_number = (int) substr($row['cislo_dokumentu'], -2);
+        $new_number = str_pad($last_number + 1, 2, "0", STR_PAD_LEFT);  // Zvýší o 1 a doplní nuly
+        $cislo_dokumentu = "18.02." . $new_number;
+    } else {
+        $cislo_dokumentu = "18.02.01"; // První záznam, pokud není žádný předchozí
+    }
+
     // Připravení SQL dotazu s parametry
-    $sql = "INSERT INTO zapis (id_users, datum, zapis) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO zapis (id_users, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
 
-    // Příprava dotazu
     if ($stmt = $conn->prepare($sql)) {
-        // Navázání parametrů k dotazu
-        $stmt->bind_param("iss", $_SESSION['id_users'], $datum, $zapis);
+        $stmt->bind_param("isss", $_SESSION['id_users'], $datum, $zapis, $cislo_dokumentu);
 
-        // Provedení dotazu
         if ($stmt->execute()) {
-            // Přesměrování na hlavní stránku po úspěšném uložení
             header("Location: ./main.php?message=Uloženo.");
             exit();
         } else {
-            // Zobrazení chyby při provádění dotazu
             echo "Chyba při ukládání záznamu: " . $stmt->error;
         }
-
-        // Uzavření připraveného dotazu
         $stmt->close();
     } else {
-        // Zobrazení chyby při přípravě dotazu
         echo "Chyba při přípravě dotazu: " . $conn->error;
     }
 }
+
 
 ?>
 <!DOCTYPE html>
