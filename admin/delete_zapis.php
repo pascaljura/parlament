@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id_users'])) {
     header("Location: ./index.php");
     exit();
 } else {
@@ -21,11 +21,11 @@ if (!isset($_SESSION['user_id'])) {
     // Spuštění dotazu
     if ($stmt->execute()) {
         // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
-        echo "Success";
+        echo "success";
         exit();
     } else {
         // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu
-        echo "Error";
+        echo "error";
         exit();
     }
 }

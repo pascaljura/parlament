@@ -196,7 +196,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
                         // Zpracování odpovědi
                         if (this.responseText === "success") {
                             // Pokud je odpověď "success", přesměrujeme uživatele na main.php
-                            window.location.replace("main.php?message=Zápis+byl+úspěšně+smazán.");
+                            window.location.replace("./?message=Zápis+byl+úspěšně+smazán.");
                         } else {
                             // Pokud je odpověď něco jiného než "success", zobrazíme chybovou zprávu
                             alert("Nastala chyba při mazání zápisu.");
