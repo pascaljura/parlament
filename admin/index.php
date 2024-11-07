@@ -62,7 +62,7 @@ if (isset($_SESSION['id_users'])) {
             $stmt->bind_param("isss", $_SESSION['id_users'], $datum, $zapis, $cislo_dokumentu);
 
             if ($stmt->execute()) {
-                header("Location: ./main.php?message=Uloženo.");
+                header("Location: ./?message=Uloženo.");
                 exit();
             } else {
                 echo "Chyba při ukládání záznamu: " . $stmt->error;

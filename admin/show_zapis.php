@@ -99,8 +99,8 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
             <div style="display: flex; justify-content: space-between;">
                 <div class="table-heading button-container">
                     <?php
-                    echo '<button onclick="downloadPDF(\'' . $directoryName . '\')">';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout PDF';
+                    echo '<button onclick="window.open(\'../zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                     echo '</button>';
                     echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
@@ -140,14 +140,6 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     <script src="../assets/js/script.js">    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script>
-        function downloadPDF(directoryName) {
-            var link = document.createElement('a');
-            link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.pdf';
-            link.download = 'zapis_se_schuze_' + directoryName + '.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
         function downloadWORD(directoryName) {
             var link = document.createElement('a');
             link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.docx';

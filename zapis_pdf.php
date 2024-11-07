@@ -102,11 +102,12 @@ $footerHtml = '
     </tr>
 </table>';
 
-// Configure mPDF with header, body, and footer
+// Configure mPDF with header, body, and footer and title
+$mpdf->SetTitle('Alba-rosa.cz | Parlament na Purkyňce');
 $mpdf->SetHTMLHeader($headerHtml);
 $mpdf->SetHTMLFooter($footerHtml);
 $mpdf->WriteHTML($bodyHtml);
 
 // Output PDF
-$mpdf->Output('zapis_ze_schuze.pdf', 'I');
+$mpdf->Output('zapis-ze-schuze-' . date('d-m-Y', strtotime($row['datum'])) . '.pdf', 'I');
 ?>
