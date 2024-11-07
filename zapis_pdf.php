@@ -16,8 +16,13 @@ $mpdf = new Mpdf(['default_font' => 'calibri']);
 if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_INT)) {
     $id_zapis = $_GET['id_zapis'];
 
-    // Use a prepared statement to retrieve document details from the database
-    $stmt = $conn->prepare("SELECT cislo_dokumentu, datum, zapis FROM zapis WHERE id_zapis = ?");
+    // Use a prepared statement to retrieve document details and user name from the database
+    $stmt = $conn->prepare("
+        SELECT z.*, u.name 
+        FROM zapis z
+        LEFT JOIN users u ON z.id_users = u.id_users
+        WHERE z.id_zapis = ?
+    ");
     $stmt->bind_param("i", $id_zapis);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,6 +32,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
         $cislo_dokumentu = htmlspecialchars($row['cislo_dokumentu']); // Sanitize output
         $datum = date('dmY', strtotime($row['datum']));
         $zapis = htmlspecialchars($row['zapis']); // Sanitize or format as needed
+        $name = htmlspecialchars($row['name']); // Retrieve and sanitize user's name
 
         // Nahrazení a formátování textu
         $zapis = str_replace("=", "<br>", $zapis);
@@ -81,20 +87,20 @@ $headerHtml = '
 // Body HTML
 $bodyHtml = '
 <div style="font-size: 22pt; padding-top: 120px;">
-    Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . '
+    Záznam z jednání dne ' . date('d.m.Y', strtotime($row['datum'])) . '
 </div>
 <div style="font-size: 11pt; margin-top: 5pxx;">
     ' . nl2br($zapis) . '<br><br>
 
-    V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu
+    V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu<br>Zapsal: ' . $name . '<br>Ověřila: Mgr. Denisa Gottwaldová
 </div>';
 
 // Footer HTML
 $footerHtml = '
 <table style="width: 100%; font-size: 9pt; border-collapse: collapse;">
     <tr>
-        <td style="text-align: left;">
-            Záznam z jednání dne ' . date('d-m-Y', strtotime($row['datum'])) . '
+        <td style="text-align: left;"> ' .
+    $cislo_dokumentu . ' Záznam z jednání dne ' . date('d.m.Y', strtotime($row['datum'])) . '
         </td>
         <td style="text-align: right;">
             Stránka {PAGENO} z {nbpg}
