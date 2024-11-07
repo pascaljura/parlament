@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 } else {
 
     // Ošetření parametru ID
-    if (!isset($_POST['id_zapis']) || !is_numeric($_POST['id'])) {
+    if (!isset($_POST['id_zapis']) || !is_numeric($_POST['id_zapis'])) {
         echo "Chybějící nebo neplatné id_zapis záznamu.";
         exit();
     }
