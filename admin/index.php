@@ -82,9 +82,10 @@ if (isset($_SESSION['id_users'])) {
     <body>
         <div id="calendar">
             <?php
-            // Zpráva o úspěchu
             if (isset($_GET['message'])) {
-                echo '<div class="success-message"><i class="fa fa-check"></i> ' . htmlspecialchars($_GET['message']) . '</div>';
+                echo '<div onclick="removeQueryString()" class="success-message" style="cursor: pointer;">';
+                echo '<i class="fa fa-check" style="margin-right: 5px;"></i> ' . htmlspecialchars($_GET['message']);
+                echo '</div>';
             }
             ?>
             <div class="button-container" id="buttonContainer">
@@ -349,6 +350,20 @@ if (isset($_SESSION['id_users'])) {
 
         // Zavolání funkce pro uložení dat při načtení stránky
         ulozitDoLocalStorage();
+
+        function removeQueryString() {
+            // Zkontrolujeme, jestli URL obsahuje otazník
+            if (window.location.href.indexOf('?') > -1) {
+                // Získáme část URL před otazníkem
+                const newUrl = window.location.href.split('?')[0];
+
+                // Nastavíme novou URL bez query stringu
+                window.history.pushState({}, document.title, newUrl);
+
+                // Obnovíme stránku, aby se URL aktualizovala
+                location.reload();
+            }
+        }
     </script>
 
 </html>
