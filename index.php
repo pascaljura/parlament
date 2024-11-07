@@ -60,7 +60,7 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./zapis.php?id_zapis=' . $item['id_zapis'] . '" target="_blank">';
+                    echo '<a href="./show_zapis.php?id_zapis=' . $item['id_zapis'] . '" target="_blank">';
                     echo '<button>';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';

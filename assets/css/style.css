@@ -3,7 +3,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   margin: 0;
-  font-family: sans-serif;
+  font-family: Calibri, sans-serif;
   position: relative;
 }
 
@@ -23,7 +23,10 @@ body::before {
   z-index: -1;
   position: fixed;
 }
-
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 .success-message {
   background-color: #55acee;
   color: #ffffff;
@@ -110,7 +113,6 @@ body::before {
   width: 15%;
   border-radius: 3%;
 }
-
 
 @media (max-width: 767px), (max-width: 560px) {
   #responsive-image {

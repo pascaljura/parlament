@@ -5,14 +5,30 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     $id_zapis = $_GET['id_zapis'];
 
     // Získání záznamu ze schůze
-    $result = $conn->query("SELECT * FROM zapis WHERE id_zapis = $id_zapis");
+    $result = "SELECT z.*, u.name 
+FROM zapis z
+LEFT JOIN users u ON z.id_users = u.id_users
+WHERE z.id_zapis = ?";
 
+    // Příprava připraveného dotazu
+    $stmt = $conn->prepare($result);
+
+    // Bind parametr (parametr typu i = integer, s = string)
+    $stmt->bind_param("i", $id_zapis);
+
+    // Vykonání dotazu
+    $stmt->execute();
+
+    // Výsledek dotazu
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('d.m.Y', strtotime($row['datum']));
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
-        $id_users = $row['id_users']; // předpokládám, že id_users je sloupec v tabulce zapis
+        $name = $row['name'];
+        $id_users = $row['id_users'];
+        $cislo_dokumentu = $row['cislo_dokumentu']; // předpokládám, že id_users je sloupec v tabulce zapis
 
         // Nahrazení a formátování textu
         $zapis = str_replace("=", "<br>", $zapis);
@@ -29,7 +45,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         }
 
         $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; text-align: center; font-size: 34px">$1</div>', $zapis);
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold;font-size: 34px">$1</div>', $zapis);
         $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis);
         $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis);
         $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis);
@@ -77,24 +93,44 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
         <div class="table-heading" style="text-align: center;">
-            <?php echo '<img src="favicon.ico" width="180px" height="200">'; ?>
+            <?php echo '<img src="./assets/img/purkynka_logo.png" width="200px" height="80">'; ?>
         </div>
-        <div style="display: flex; flex-direction: column; font-size: 24px;">
-            <div style="color: #000; font-family: sans-serif;">
-                <?php echo "<u>" . $datum . " | Zapsal: <b>" . $userName . "</b></u>" ?>
-            </div>
-        </div>
-        <div class="button-container" id="buttonContainer" style="font-size: 24px; font-family: sans-serif;">
-            <pre style="overflow: auto; font-family: sans-serif;"><?php echo $zapis; ?></pre>
+        <table>
+            <tr style="border-top: 1px solid black;">
+                <td >Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
+                <td style="text-align: center;">Počet stran: 1</td>
+                <td style="text-align: right;">Počet příloh: 0</td>
+            </tr>
+            <tr>
+                <td>Dokument</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <h3>
+            Záznam z jednání dne <?php echo "$datum"; ?>
+        </h3>
+        <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
+            <pre style="overflow: auto;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
         </div>
 
-        
+        <h> V Brně dne <?php echo "$datum"; ?> <br>
+            Zástupci školního Parlamentu<br>
+            Zapsal: <?php echo "$name"; ?><br>
+            Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
+            <table style="border: none;">
+            <tr>
+                <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
+                <td style="text-align: right;">Stránka 1 z 1</td>
+            </tr>
+        </table>
+        <br>
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                    echo '<button onclick="window.open(\'../zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
-                    echo '</button>';
+                echo '<button onclick="window.open(\'./zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
+                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
+                echo '</button>';
                 echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
                 echo '</button>';
