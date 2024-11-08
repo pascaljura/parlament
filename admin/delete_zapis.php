@@ -1,8 +1,27 @@
 <?php
 include '../assets/php/config.php';
 session_start();
+
+// Kontrola přihlášení
 if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");
+    exit();
+} else {
+
+    // Získání id uživatele ze session
+    $idusers = $_SESSION['idusers'];
+
+    // Kontrola přístupu na základě sloupce parlament_access
+    $stmtAccess = $conn->prepare("SELECT parlament_access FROM users_alba_rosa WHERE idusers = ?");
+    $stmtAccess->bind_param("i", $idusers);
+    $stmtAccess->execute();
+    $stmtAccess->bind_result($parlament_access);
+    $stmtAccess->fetch();
+    $stmtAccess->close();
+}
+// Pokud není přístup povolen (parlament_access != 1)
+if ($parlament_access != '1') {
+    echo "Chybí přístup";
     exit();
 } else {
 
@@ -22,11 +41,12 @@ if (!isset($_SESSION['idusers'])) {
     if ($stmt->execute()) {
         // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
         echo "success";
-        exit();
     } else {
         // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu
         echo "error";
-        exit();
     }
+
+    // Uzavření dotazu
+    $stmt->close();
 }
 ?>
