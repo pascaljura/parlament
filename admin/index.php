@@ -163,7 +163,7 @@ if (isset($_SESSION['idusers'])) {
                     </div>
                     <div class="button-container" id="buttonContainer">
                         <button type="submit" onclick="smazatZLocalStorage()">
-                        <i class="fa fa-save"></i> Uložit
+                            <i class="fa fa-save"></i> Uložit
                         </button>
                     </div>
                 </form>
@@ -238,26 +238,39 @@ if (isset($_SESSION['idusers'])) {
 
 } else {
 
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $enteredUsername = $_POST["username"];
         $enteredPassword = $_POST["password"];
-
-        // Připravíme SQL dotaz pro získání idusers na základě uživatelského jména a hesla
-        $stmt = $conn->prepare("SELECT idusers FROM users_alba_rosa WHERE email = ? AND password = ?");
-        $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
+    
+        // Připravíme SQL dotaz pro získání hesla na základě uživatelského jména
+        $stmt = $conn->prepare("SELECT idusers, password FROM users_alba_rosa WHERE email = ?");
+        $stmt->bind_param("s", $enteredUsername);
         $stmt->execute();
         $stmt->store_result();
+    
+        // Pokud najdeme uživatele, ověříme heslo
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($idusers);
+            $stmt->bind_result($idusers, $hashedPassword);
             $stmt->fetch();
-            $_SESSION['idusers'] = $idusers;
-            header("Location: ./");
-            exit();
+    
+            // Ověření hesla pomocí password_verify
+            if (password_verify($enteredPassword, $hashedPassword)) {
+                $_SESSION['idusers'] = $idusers;
+                header("Location: ./");
+                exit();
+            } else {
+                echo "Nesprávné přihlašovací údaje.";
+            }
         } else {
-            $loginError = "Nesprávné přihlašovací údaje.";
+            echo "Uživatel nenalezen.";
         }
+    
         $stmt->close();
     }
+   
+    
+
 
     ?>
         <div id="loading-overlay">
