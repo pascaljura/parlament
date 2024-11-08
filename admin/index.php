@@ -95,12 +95,12 @@ if (isset($_SESSION['id_users'])) {
                 $grouped_data = [];
 
                 // Načteme data z databáze
-                $result = $conn->query("SELECT id_zapis, datum FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
+                $result = $conn->query("SELECT idzapis, datum FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
 
                 if ($result->num_rows > 0) {
                     // Projdeme všechny záznamy
                     while ($row = $result->fetch_assoc()) {
-                        $id_zapis = $row['id_zapis'];
+                        $idzapis = $row['idzapis'];
                         $datum = $row['datum'];
                         $year = date('Y', strtotime($datum)); // Extrahujeme rok
             
@@ -111,7 +111,7 @@ if (isset($_SESSION['id_users'])) {
 
                         // Přidáme záznam do pole příslušného roku
                         $grouped_data[$year][] = [
-                            'id_zapis' => $id_zapis,
+                            'idzapis' => $idzapis,
                             'datum' => date('d.m.Y', strtotime($datum))
                         ];
                     }
@@ -124,7 +124,7 @@ if (isset($_SESSION['id_users'])) {
                         echo '</b></div>';
                         echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                         foreach ($items as $item) {
-                            echo '<a href="./show_zapis.php?id_zapis=' . $item['id_zapis'] . '" target="_blank">';
+                            echo '<a href="./show_zapis.php?idzapis=' . $item['idzapis'] . '" target="_blank">';
                             echo '<button>';
                             echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                             echo '</button>';
@@ -183,7 +183,7 @@ if (isset($_SESSION['id_users'])) {
             <?php
 
             // Získání dat z tabulky
-            $query = "SELECT * FROM other WHERE id_other = 3";
+            $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 3";
             $result = mysqli_query($conn, $query);
 
             if ($result) {
@@ -217,7 +217,7 @@ if (isset($_SESSION['id_users'])) {
             <?php
 
             // Získání dat z tabulky
-            $query = "SELECT text FROM other WHERE id_other = 1";
+            $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
             $result = mysqli_query($conn, $query);
 
             if ($result) {
@@ -292,7 +292,7 @@ if (isset($_SESSION['id_users'])) {
                 <?php
 
                 // Získání dat z tabulky
-                $query = "SELECT text FROM other WHERE id_other = 1";
+                $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
                 $result = mysqli_query($conn, $query);
 
                 if ($result) {

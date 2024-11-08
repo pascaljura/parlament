@@ -17,10 +17,10 @@ function nahraditMarkdown($text)
 {
     return $text;
 }
-if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
-    $id_zapis = $_GET['id_zapis'];
+if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
+    $idzapis = $_GET['idzapis'];
 
-    $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE id_zapis = $id_zapis");
+    $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE idzapis = $idzapis");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('Y-m-d', strtotime($row['datum']));
@@ -30,11 +30,11 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         $textInLomitkach = ziskatTextVLomitkach($zapis);
         $zapis = nahraditMarkdown($zapis);
     } else {
-        echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
+        echo "Záznam s idzapis $idzapis nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné id_zapis v URL.";
+    echo "Chybějící nebo neplatné idzapis v URL.";
     exit();
 }
 function getSklonovanyText($text)
@@ -49,7 +49,7 @@ function getSklonovanyText($text)
     }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_zapis = $_POST["id_zapis"];
+    $idzapis = $_POST["idzapis"];
     $datum = $_POST["datum"];
     $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
     $zapisText = $_POST["zapis"];
@@ -57,9 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zapisText = nahraditMarkdown($zapisText);
 
     // Aktualizace záznamu v databázi včetně čísla dokumentu
-    $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE id_zapis = $id_zapis";
+    $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idzapis = $idzapis";
     if ($conn->query($sql) === TRUE) {
-        header("Location: show_zapis.php?id_zapis=$id_zapis");
+        header("Location: show_zapis.php?idzapis=$idzapis");
         exit();
     } else {
         echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
         </div>
         <form action="" method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px; ">
-            <input type="hidden" name="id_zapis" value="<?php echo $id_zapis; ?>">
+            <input type="hidden" name="idzapis" value="<?php echo $idzapis; ?>">
 
             <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
             <input type="date" name="datum" id="datum" value="<?php echo $datum; ?>"
@@ -111,13 +111,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="button-container" id="buttonContainer">
             <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
-            <a href="show_zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button><i class="fa fa-sign-out"></i>  Opustit stránku beze změn</button></a>
+            <a href="show_zapis.php?idzapis=<?php echo $idzapis; ?>"><button><i class="fa fa-sign-out"></i>  Opustit stránku beze změn</button></a>
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id_other = 1";
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {

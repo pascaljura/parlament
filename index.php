@@ -77,7 +77,7 @@ include './assets/php/config.php';
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT * FROM other WHERE id_other = 2";
+        $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 2";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
@@ -104,7 +104,7 @@ include './assets/php/config.php';
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id_other = 1";
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);

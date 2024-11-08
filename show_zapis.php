@@ -141,7 +141,7 @@ WHERE z.idzapis = ?";
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other WHERE id_other = 1";
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
