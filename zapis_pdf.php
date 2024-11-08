@@ -16,11 +16,11 @@ $mpdf = new Mpdf(['default_font' => 'calibri']);
 if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)) {
     $idzapis = $_GET['idzapis'];
 
-    // Use a prepared statement to retrieve document details and user name from the database
+    // Use a prepared statement to retrieve document details and user username from the database
     $stmt = $conn->prepare("
-        SELECT z.*, u.name 
+        SELECT z.*, u.username 
         FROM zapis_alba_rosa_parlament z
-        LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
+        LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
         WHERE z.idzapis = ?
     ");
     $stmt->bind_param("i", $idzapis);
@@ -32,7 +32,7 @@ if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)
         $cislo_dokumentu = htmlspecialchars($row['cislo_dokumentu']); // Sanitize output
         $datum = date('dmY', strtotime($row['datum']));
         $zapis = htmlspecialchars($row['zapis']); // Sanitize or format as needed
-        $name = htmlspecialchars($row['name']); // Retrieve and sanitize user's name
+        $username = htmlspecialchars($row['username']); // Retrieve and sanitize user's username
 
         // Nahrazení a formátování textu
         $zapis = str_replace("=", "<br>", $zapis);
@@ -92,7 +92,7 @@ $bodyHtml = '
 <div style="font-size: 11pt; margin-top: 5pxx;">
     ' . nl2br($zapis) . '<br><br>
 
-    V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu<br>Zapsal: ' . $name . '<br>Ověřila: Mgr. Denisa Gottwaldová
+    V Brně dne ' . date('d.m.Y', strtotime($row['datum'])) . '<br>Zástupci školního Parlamentu<br>Zapsal: ' . $username . '<br>Ověřila: Mgr. Denisa Gottwaldová
 </div>';
 
 // Footer HTML

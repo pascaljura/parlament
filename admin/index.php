@@ -243,7 +243,7 @@ if (isset($_SESSION['idusers'])) {
         $enteredPassword = $_POST["password"];
 
         // Připravíme SQL dotaz pro získání idusers na základě uživatelského jména a hesla
-        $stmt = $conn->prepare("SELECT idusers FROM users_alba_rosa_parlament WHERE username = ? AND password = ?");
+        $stmt = $conn->prepare("SELECT idusers FROM users_alba_rosa WHERE email = ? AND password = ?");
         $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
         $stmt->execute();
         $stmt->store_result();

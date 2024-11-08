@@ -5,9 +5,9 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
     $idzapis = $_GET['idzapis'];
 
     // Získání záznamu ze schůze
-    $result = "SELECT z.*, u.name 
+    $result = "SELECT z.*, u.username 
 FROM zapis_alba_rosa_parlament z
-LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
+LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
 WHERE z.idzapis = ?";
 
     // Příprava připraveného dotazu
@@ -26,7 +26,7 @@ WHERE z.idzapis = ?";
         $datum = date('d.m.Y', strtotime($row['datum']));
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $zapis = $row['zapis'];
-        $name = $row['name'];
+        $username = $row['username'];
         $idusers = $row['idusers'];
         $cislo_dokumentu = $row['cislo_dokumentu']; // předpokládám, že idusers je sloupec v tabulce zapis
 
@@ -53,10 +53,10 @@ WHERE z.idzapis = ?";
         $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis);
 
         // Získání jména uživatele na základě idusers
-        $resultUser = $conn->query("SELECT name FROM users_alba_rosa_parlament WHERE idusers = $idusers");
+        $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
         if ($resultUser->num_rows > 0) {
             $rowUser = $resultUser->fetch_assoc();
-            $userName = $rowUser['name'];
+            $userName = $rowUser['username'];
         } else {
             $userName = 'Neznámý uživatel';
         }
@@ -116,7 +116,7 @@ WHERE z.idzapis = ?";
 
         <h> V Brně dne <?php echo "$datum"; ?> <br>
             Zástupci školního Parlamentu<br>
-            Zapsal: <?php echo "$name"; ?><br>
+            Zapsal: <?php echo "$username"; ?><br>
             Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
         <table style="border: none;">
             <tr>

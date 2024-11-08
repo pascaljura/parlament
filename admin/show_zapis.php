@@ -8,9 +8,9 @@ if (!isset($_SESSION['idusers'])) {
 if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
     $idzapis = $_GET['idzapis'];
      // Získání záznamu ze schůze
-     $result = "SELECT z.*, u.name 
+     $result = "SELECT z.*, u.username 
      FROM zapis_alba_rosa_parlament z
-     LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
+     LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
      WHERE z.idzapis = ?";
      
          // Příprava připraveného dotazu
@@ -29,7 +29,7 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
         $directoryName = date('d_m_Y', strtotime($row['datum']));
         $idusers = $row['idusers'];
         $zapis = $row['zapis'];
-        $name = $row['name'];
+        $username = $row['username'];
         $cislo_dokumentu = $row['cislo_dokumentu']; 
         $zapis = str_replace("=", "<br>", $zapis);
         $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
@@ -61,10 +61,10 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
         $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
         $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
 
-        $resultUser = $conn->query("SELECT name FROM users_alba_rosa_parlament WHERE idusers = $idusers");
+        $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
         if ($resultUser->num_rows > 0) {
             $rowUser = $resultUser->fetch_assoc();
-            $userName = $rowUser['name'];
+            $userName = $rowUser['username'];
         } else {
             $userName = 'Neznámý uživatel';
         }
@@ -123,7 +123,7 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
 
         <h> V Brně dne <?php echo "$datum"; ?> <br>
             Zástupci školního Parlamentu<br>
-            Zapsal: <?php echo "$name"; ?><br>
+            Zapsal: <?php echo "$username"; ?><br>
             Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
             <table style="border: none;">
             <tr>
