@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['id_users'])) {
+if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");
     exit();
 }
@@ -10,7 +10,7 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
      // Získání záznamu ze schůze
      $result = "SELECT z.*, u.name 
      FROM zapis_alba_rosa_parlament z
-     LEFT JOIN users u ON z.id_users = u.id_users
+     LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
      WHERE z.idzapis = ?";
      
          // Příprava připraveného dotazu
@@ -27,7 +27,7 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
         $row = $result->fetch_assoc();
         $datum = date('d.m.Y', strtotime($row['datum']));
         $directoryName = date('d_m_Y', strtotime($row['datum']));
-        $id_users = $row['id_users'];
+        $idusers = $row['idusers'];
         $zapis = $row['zapis'];
         $name = $row['name'];
         $cislo_dokumentu = $row['cislo_dokumentu']; 
@@ -61,7 +61,7 @@ if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
         $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
         $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
 
-        $resultUser = $conn->query("SELECT name FROM users WHERE id_users = $id_users");
+        $resultUser = $conn->query("SELECT name FROM users_alba_rosa_parlament WHERE idusers = $idusers");
         if ($resultUser->num_rows > 0) {
             $rowUser = $resultUser->fetch_assoc();
             $userName = $rowUser['name'];

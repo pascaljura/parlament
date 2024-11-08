@@ -1,7 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-if (!isset($_SESSION['id_users'])) {
+if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");
     exit();
 }

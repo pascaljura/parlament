@@ -27,7 +27,7 @@ ob_start();
 <?php
 
 // Kontrola, zda je uživatel již přihlášen
-if (isset($_SESSION['id_users'])) {
+if (isset($_SESSION['idusers'])) {
 
     if (isset($_POST['logout'])) {
         session_unset();
@@ -57,10 +57,10 @@ if (isset($_SESSION['id_users'])) {
         }
 
         // Připravení SQL dotazu s parametry
-        $sql = "INSERT INTO zapis_alba_rosa_parlament (id_users, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO zapis_alba_rosa_parlament (idusers, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("isss", $_SESSION['id_users'], $datum, $zapis, $cislo_dokumentu);
+            $stmt->bind_param("isss", $_SESSION['idusers'], $datum, $zapis, $cislo_dokumentu);
 
             if ($stmt->execute()) {
                 header("Location: ./?message=Uloženo.");
@@ -242,15 +242,15 @@ if (isset($_SESSION['id_users'])) {
         $enteredUsername = $_POST["username"];
         $enteredPassword = $_POST["password"];
 
-        // Připravíme SQL dotaz pro získání id_users na základě uživatelského jména a hesla
-        $stmt = $conn->prepare("SELECT id_users FROM users WHERE username = ? AND password = ?");
+        // Připravíme SQL dotaz pro získání idusers na základě uživatelského jména a hesla
+        $stmt = $conn->prepare("SELECT idusers FROM users_alba_rosa_parlament WHERE username = ? AND password = ?");
         $stmt->bind_param("ss", $enteredUsername, $enteredPassword);
         $stmt->execute();
         $stmt->store_result();
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id_users);
+            $stmt->bind_result($idusers);
             $stmt->fetch();
-            $_SESSION['id_users'] = $id_users;
+            $_SESSION['idusers'] = $idusers;
             header("Location: ./");
             exit();
         } else {
