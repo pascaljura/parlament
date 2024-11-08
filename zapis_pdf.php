@@ -12,18 +12,18 @@ require_once './vendor/autoload.php';
 use Mpdf\Mpdf;
 $mpdf = new Mpdf(['default_font' => 'calibri']);
 
-// Check if id_zapis is set and valid
-if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_INT)) {
-    $id_zapis = $_GET['id_zapis'];
+// Check if idzapis is set and valid
+if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)) {
+    $idzapis = $_GET['idzapis'];
 
     // Use a prepared statement to retrieve document details and user name from the database
     $stmt = $conn->prepare("
         SELECT z.*, u.name 
         FROM zapis_alba_rosa_parlament z
         LEFT JOIN users u ON z.id_users = u.id_users
-        WHERE z.id_zapis = ?
+        WHERE z.idzapis = ?
     ");
-    $stmt->bind_param("i", $id_zapis);
+    $stmt->bind_param("i", $idzapis);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -62,7 +62,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
     }
     $stmt->close();
 } else {
-    echo "Invalid or missing id_zapis parameter.";
+    echo "Invalid or missing idzapis parameter.";
     exit();
 }
 $mpdf->showImageErrors = true;

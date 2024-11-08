@@ -1,20 +1,20 @@
 <?php
 include './assets/php/config.php';
 
-if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
-    $id_zapis = $_GET['id_zapis'];
+if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
+    $idzapis = $_GET['idzapis'];
 
     // Získání záznamu ze schůze
     $result = "SELECT z.*, u.name 
 FROM zapis_alba_rosa_parlament z
 LEFT JOIN users u ON z.id_users = u.id_users
-WHERE z.id_zapis = ?";
+WHERE z.idzapis = ?";
 
     // Příprava připraveného dotazu
     $stmt = $conn->prepare($result);
 
     // Bind parametr (parametr typu i = integer, s = string)
-    $stmt->bind_param("i", $id_zapis);
+    $stmt->bind_param("i", $idzapis);
 
     // Vykonání dotazu
     $stmt->execute();
@@ -62,11 +62,11 @@ WHERE z.id_zapis = ?";
         }
 
     } else {
-        echo "Záznam s id_zapis $id_zapis nebyl nalezen.";
+        echo "Záznam s idzapis $idzapis nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné id_zapis v URL.";
+    echo "Chybějící nebo neplatné idzapis v URL.";
     exit();
 }
 ?>
@@ -128,7 +128,7 @@ WHERE z.id_zapis = ?";
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'./zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
                 echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
