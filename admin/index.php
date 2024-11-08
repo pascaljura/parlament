@@ -255,7 +255,7 @@ if (isset($_SESSION['idusers'])) {
             $stmt->fetch();
 
             // Kontrola, zda má uživatel přístup do parlamentu
-            if ($parlamentAccess !== 1) {
+            if ($parlamentAccess !== '1') {
                 $loginError = "Chybí oprávnění.";
             } else {
                 // Ověření hesla pomocí password_verify
