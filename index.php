@@ -31,7 +31,7 @@ include './assets/php/config.php';
         $grouped_data = [];
 
         // Načteme data z databáze
-        $result = $conn->query("SELECT * FROM zapis ORDER BY datum DESC");
+        $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
 
         if ($result->num_rows > 0) {
             // Projdeme všechny záznamy

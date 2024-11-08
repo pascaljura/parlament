@@ -6,7 +6,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
 
     // Získání záznamu ze schůze
     $result = "SELECT z.*, u.name 
-FROM zapis z
+FROM zapis_alba_rosa_parlament z
 LEFT JOIN users u ON z.id_users = u.id_users
 WHERE z.id_zapis = ?";
 
@@ -45,7 +45,7 @@ WHERE z.id_zapis = ?";
         }
 
         $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold;font-size: 34px">$1</div>', $zapis);
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px;">$1</div>', $zapis);
         $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis);
         $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis);
         $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis);
@@ -97,7 +97,7 @@ WHERE z.id_zapis = ?";
         </div>
         <table>
             <tr style="border-top: 1px solid black;">
-                <td >Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
+                <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
                 <td style="text-align: center;">Počet stran: 1</td>
                 <td style="text-align: right;">Počet příloh: 0</td>
             </tr>
@@ -107,18 +107,18 @@ WHERE z.id_zapis = ?";
                 <td></td>
             </tr>
         </table>
-        <h3>
+        <h3 style="font-size: 25px;">
             Záznam z jednání dne <?php echo "$datum"; ?>
         </h3>
         <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
-            <pre style="overflow: auto;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
+            <pre style="white-space: break-spaces; font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
         </div>
 
         <h> V Brně dne <?php echo "$datum"; ?> <br>
             Zástupci školního Parlamentu<br>
             Zapsal: <?php echo "$name"; ?><br>
             Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
-            <table style="border: none;">
+        <table style="border: none;">
             <tr>
                 <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
                 <td style="text-align: right;">Stránka 1 z 1</td>
@@ -132,7 +132,7 @@ WHERE z.id_zapis = ?";
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
                 echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
                 echo '</button>';
                 ?>
             </div>

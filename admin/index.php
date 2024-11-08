@@ -43,7 +43,7 @@ if (isset($_SESSION['id_users'])) {
         $zapis = str_replace(array("\n", "\r"), '=', $zapis);
 
         // Načtení posledního čísla dokumentu podle data
-        $sql_last_doc = "SELECT cislo_dokumentu FROM zapis ORDER BY datum DESC LIMIT 1";
+        $sql_last_doc = "SELECT cislo_dokumentu FROM zapis_alba_rosa_parlament ORDER BY datum DESC LIMIT 1";
         $result = $conn->query($sql_last_doc);
 
         if ($result && $result->num_rows > 0) {
@@ -57,7 +57,7 @@ if (isset($_SESSION['id_users'])) {
         }
 
         // Připravení SQL dotazu s parametry
-        $sql = "INSERT INTO zapis (id_users, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO zapis_alba_rosa_parlament (id_users, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("isss", $_SESSION['id_users'], $datum, $zapis, $cislo_dokumentu);
@@ -95,7 +95,7 @@ if (isset($_SESSION['id_users'])) {
                 $grouped_data = [];
 
                 // Načteme data z databáze
-                $result = $conn->query("SELECT id_zapis, datum FROM zapis ORDER BY datum DESC");
+                $result = $conn->query("SELECT id_zapis, datum FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
 
                 if ($result->num_rows > 0) {
                     // Projdeme všechny záznamy
@@ -163,7 +163,7 @@ if (isset($_SESSION['id_users'])) {
                     </div>
                     <div class="button-container" id="buttonContainer">
                         <button type="submit" onclick="smazatZLocalStorage()">
-                            Uložit
+                        <i class="fa fa-save"></i> Uložit
                         </button>
                     </div>
                 </form>
@@ -209,7 +209,7 @@ if (isset($_SESSION['id_users'])) {
             ?>
             <div class="button-container" id="buttonContainer">
                 <form method="post">
-                    <button type="submit" name="logout">Odhlásit
+                    <button type="submit" name="logout"><i class="fa fa-sign-out"></i> Odhlásit
                         se</button>
                 </form>
             </div>

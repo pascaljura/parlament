@@ -9,7 +9,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     $id_zapis = $_GET['id_zapis'];
      // Získání záznamu ze schůze
      $result = "SELECT z.*, u.name 
-     FROM zapis z
+     FROM zapis_alba_rosa_parlament z
      LEFT JOIN users u ON z.id_users = u.id_users
      WHERE z.id_zapis = ?";
      
@@ -54,7 +54,7 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
             return $textInLomitka;
         }
         $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; text-align: center; font-size: 34px">$1</div>', $zapis); // custom style
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px">$1</div>', $zapis); // custom style
         $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis); // bold italics
         $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis); // bold
         $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis); // italics
@@ -114,11 +114,11 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
                 <td></td>
             </tr>
         </table>
-        <h3>
+        <h3 style="font-size: 25px;">
             Záznam z jednání dne <?php echo "$datum"; ?>
         </h3>
         <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
-            <pre style="overflow: auto;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
+            <pre style="white-space: break-spaces;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
         </div>
 
         <h> V Brně dne <?php echo "$datum"; ?> <br>
@@ -135,11 +135,11 @@ if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'./zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'../zapis_pdf.php?id_zapis=' . $id_zapis . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
                 echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
                 echo '</button>';
                 echo '<a href="./edit_zapis.php?id_zapis=' . $id_zapis . '">';
                 echo '<button>';

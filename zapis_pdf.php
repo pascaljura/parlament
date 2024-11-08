@@ -19,7 +19,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
     // Use a prepared statement to retrieve document details and user name from the database
     $stmt = $conn->prepare("
         SELECT z.*, u.name 
-        FROM zapis z
+        FROM zapis_alba_rosa_parlament z
         LEFT JOIN users u ON z.id_users = u.id_users
         WHERE z.id_zapis = ?
     ");

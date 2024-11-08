@@ -15,7 +15,7 @@ if (!isset($_SESSION['id_users'])) {
     $id_zapis = $_POST['id_zapis'];
 
     // Příprava dotazu s parametrem
-    $stmt = $conn->prepare("DELETE FROM zapis WHERE id_zapis = ?");
+    $stmt = $conn->prepare("DELETE FROM zapis_alba_rosa_parlament WHERE id_zapis = ?");
     $stmt->bind_param("i", $id_zapis);
 
     // Spuštění dotazu

@@ -20,7 +20,7 @@ function nahraditMarkdown($text)
 if (isset($_GET['id_zapis']) && is_numeric($_GET['id_zapis'])) {
     $id_zapis = $_GET['id_zapis'];
 
-    $result = $conn->query("SELECT * FROM zapis WHERE id_zapis = $id_zapis");
+    $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE id_zapis = $id_zapis");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $datum = date('Y-m-d', strtotime($row['datum']));
@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zapisText = nahraditMarkdown($zapisText);
 
     // Aktualizace záznamu v databázi včetně čísla dokumentu
-    $sql = "UPDATE zapis SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE id_zapis = $id_zapis";
+    $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE id_zapis = $id_zapis";
     if ($conn->query($sql) === TRUE) {
         header("Location: show_zapis.php?id_zapis=$id_zapis");
         exit();
@@ -110,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <div class="button-container" id="buttonContainer">
-            <button type="submit" form="myForm">Uložit změny</button>
-            <a href="show_zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button>Opustit stránku beze změn</button></a>
+            <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
+            <a href="show_zapis.php?id_zapis=<?php echo $id_zapis; ?>"><button><i class="fa fa-sign-out"></i>  Opustit stránku beze změn</button></a>
         </div>
         <hr color="#3e6181" style="height: 2px; border: none;" />
         <?php
