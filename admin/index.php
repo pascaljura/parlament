@@ -242,34 +242,40 @@ if (isset($_SESSION['idusers'])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $enteredUsername = $_POST["username"];
         $enteredPassword = $_POST["password"];
-    
-        // Připravíme SQL dotaz pro získání hesla na základě uživatelského jména
-        $stmt = $conn->prepare("SELECT idusers, password FROM users_alba_rosa WHERE email = ?");
+
+        // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
+        $stmt = $conn->prepare("SELECT idusers, password, parlament_access FROM users_alba_rosa WHERE email = ?");
         $stmt->bind_param("s", $enteredUsername);
         $stmt->execute();
         $stmt->store_result();
-    
-        // Pokud najdeme uživatele, ověříme heslo
+
+        // Pokud najdeme uživatele, získáme jeho údaje
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($idusers, $hashedPassword);
+            $stmt->bind_result($idusers, $hashedPassword, $parlamentAccess);
             $stmt->fetch();
-    
-            // Ověření hesla pomocí password_verify
-            if (password_verify($enteredPassword, $hashedPassword)) {
-                $_SESSION['idusers'] = $idusers;
-                header("Location: ./");
-                exit();
+
+            // Kontrola, zda má uživatel přístup do parlamentu
+            if ($parlamentAccess !== 1) {
+                $loginError = "Chybí oprávnění.";
             } else {
-                echo "Nesprávné přihlašovací údaje.";
+                // Ověření hesla pomocí password_verify
+                if (password_verify($enteredPassword, $hashedPassword)) {
+                    $_SESSION['idusers'] = $idusers;
+                    header("Location: ./");
+                    exit();
+                } else {
+                    $loginError = "Nesprávné přihlašovací údaje.";
+                }
             }
         } else {
-            echo "Uživatel nenalezen.";
+            $loginError = "Uživatel nenalezen.";
         }
-    
+
         $stmt->close();
     }
-   
-    
+
+
+
 
 
     ?>
@@ -284,7 +290,7 @@ if (isset($_SESSION['idusers'])) {
                 </div>
                 <?php
                 if (isset($loginError)) {
-                    echo '<div style="color: #FF0000; margin-bottom: 5px;">' . $loginError . '</div>';
+                    echo '<div style="color: #FF0000; margin-bottom: 5px;"><b>' . $loginError . '<b></div>';
                 }
                 ?>
                 <div class="button-container" id="buttonContainer">
