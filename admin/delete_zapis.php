@@ -18,35 +18,36 @@ if (!isset($_SESSION['idusers'])) {
     $stmtAccess->bind_result($parlament_access);
     $stmtAccess->fetch();
     $stmtAccess->close();
-}
-// Pokud není přístup povolen (parlament_access != 1)
-if ($parlament_access != '1') {
-    echo "Chybí přístup";
-    exit();
-} else {
 
-    // Ošetření parametru ID
-    if (!isset($_POST['idzapis']) || !is_numeric($_POST['idzapis'])) {
-        echo "Chybějící nebo neplatné idzapis záznamu.";
+    // Pokud není přístup povolen (parlament_access != 1)
+    if ($parlament_access != '1') {
+        echo "Chybí přístup";
         exit();
-    }
-
-    $idzapis = $_POST['idzapis'];
-
-    // Příprava dotazu s parametrem
-    $stmt = $conn->prepare("DELETE FROM zapis_alba_rosa_parlament WHERE idzapis = ?");
-    $stmt->bind_param("i", $idzapis);
-
-    // Spuštění dotazu
-    if ($stmt->execute()) {
-        // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
-        echo "success";
     } else {
-        // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu
-        echo "error";
-    }
 
-    // Uzavření dotazu
-    $stmt->close();
+        // Ošetření parametru ID
+        if (!isset($_POST['idzapis']) || !is_numeric($_POST['idzapis'])) {
+            echo "Chybějící nebo neplatné idzapis záznamu.";
+            exit();
+        }
+
+        $idzapis = $_POST['idzapis'];
+
+        // Příprava dotazu s parametrem
+        $stmt = $conn->prepare("DELETE FROM zapis_alba_rosa_parlament WHERE idzapis = ?");
+        $stmt->bind_param("i", $idzapis);
+
+        // Spuštění dotazu
+        if ($stmt->execute()) {
+            // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
+            echo "success";
+        } else {
+            // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu
+            echo "error";
+        }
+
+        // Uzavření dotazu
+        $stmt->close();
+    }
 }
 ?>
