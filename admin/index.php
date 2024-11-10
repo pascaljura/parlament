@@ -12,8 +12,12 @@ ob_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="manifest" href="../assets/json/manifest.json">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
     <?php
     $headerText = '&#x1F499;・Přihlášení';
     $headerText1 = '&#x1F499;・Nový zápis・2023/2024';
@@ -302,7 +306,7 @@ if (isset($_SESSION['idusers'])) {
                                 <label for="password" style="font-size: 16px; margin-bottom: 8px;">Heslo:</label>
                                 <input type="password" name="password" required
                                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                                <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i> 
                                     Přihlásit se
                                 </button>
                             </form>

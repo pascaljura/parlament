@@ -25,11 +25,15 @@ if (!isset($_SESSION['idusers'])) {
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="manifest" href=".//assets/json/manifest.json">
-    <link rel="shortcut icon" href=".//favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
 <div id="loading-overlay">
     <div id="loading-icon"></div>

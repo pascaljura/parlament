@@ -9,8 +9,12 @@ include './assets/php/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="manifest" href="./assets/json/manifest.json">
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
     <?php
     $headerText = '&#x1F499;・Zápisy・2023/2024';
     ?>
@@ -96,7 +100,7 @@ include './assets/php/config.php';
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
         ?>
-        <hr color="black" style="height: 2px; border: none;" />
+         <hr color="black" style="height: 2px; border: none;" />
         <?php
 
         // Získání dat z tabulky
