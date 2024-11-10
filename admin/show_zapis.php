@@ -138,7 +138,7 @@ if (!isset($_SESSION['idusers'])) {
                         <td></td>
                     </tr>
                 </table>
-                <h3 style="font-size: 25px;">
+                <h3 style="font-size: 25px;padding: unset;margin: unset;">
                     Záznam z jednání dne <?php echo "$datum"; ?>
                 </h3>
                 <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
