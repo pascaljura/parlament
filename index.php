@@ -100,7 +100,7 @@ include './assets/php/config.php';
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
         ?>
-        <hr color="#3e6181" style="height: 2px; border: none;" />
+         <hr color="black" style="height: 2px; border: none;" />
         <?php
 
         // Získání dat z tabulky

@@ -137,7 +137,7 @@ if (!isset($_SESSION['idusers'])) {
                 <a href="show_zapis.php?idzapis=<?php echo $idzapis; ?>"><button><i class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
-            <hr color="#3e6181" style="height: 2px; border: none;" />
+            <hr color="black" style="height: 2px; border: none;" />
             <?php
 
             // Získání dat z tabulky
