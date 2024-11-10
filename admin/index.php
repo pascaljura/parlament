@@ -176,7 +176,7 @@ if (isset($_SESSION['idusers'])) {
                                 value="<?php echo $currentDate; ?>" required>
                             <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                             <div style="display: flex; flex-direction: column;">
-                                <textarea name="zapis" id="zapisInput" rows="4"
+                                <textarea name="zapis" id="zapisInput" rows="10"
                                     style="padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
                                     required></textarea>
                             </div>
