@@ -103,7 +103,7 @@ $footerHtml = '
     $cislo_dokumentu . ' Záznam z jednání dne ' . date('d.m.Y', strtotime($row['datum'])) . '
         </td>
         <td style="text-align: right;">
-            Stránka {PAGENO} z {nbpg}
+            Strana {PAGENO} z {nbpg}
         </td>
     </tr>
 </table>';

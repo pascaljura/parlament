@@ -121,7 +121,7 @@ WHERE z.idzapis = ?";
         <table style="border: none;">
             <tr>
                 <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
-                <td style="text-align: right;">Stránka 1 z 1</td>
+                <td style="text-align: right;"></td>
             </tr>
         </table>
         <br>
