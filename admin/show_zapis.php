@@ -44,9 +44,8 @@ if (!isset($_SESSION['idusers'])) {
     // Pokud není přístup povolen (parlament_access != 1)
     if ($parlament_access != '1') { ?>
         <div id="calendar">
-            <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění<b></div>
-        </div>
-        <?php
+            <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
+            <?php
     } else {
         if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
             $idzapis = $_GET['idzapis'];
@@ -121,63 +120,64 @@ if (!isset($_SESSION['idusers'])) {
         }
         ?>
 
-        <div id="calendar"
-            style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
-            <div class="table-heading" style="text-align: center;">
-                <?php echo '<img src="../assets/img/purkynka_logo.png" width="200px" height="80">'; ?>
-            </div>
-            <table>
-                <tr style="border-top: 1px solid black;">
-                    <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
-                    <td style="text-align: center;">Počet stran: 1</td>
-                    <td style="text-align: right;">Počet příloh: 0</td>
-                </tr>
-                <tr>
-                    <td>Dokument</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <h3 style="font-size: 25px;">
-                Záznam z jednání dne <?php echo "$datum"; ?>
-            </h3>
-            <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
-                <pre style="white-space: break-spaces;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
-            </div>
-
-            <h> V Brně dne <?php echo "$datum"; ?> <br>
-                Zástupci školního Parlamentu<br>
-                Zapsal: <?php echo "$username"; ?><br>
-                Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
-            <table style="border: none;">
-                <tr>
-                    <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
-                    <td style="text-align: right;">Stránka 1 z 1</td>
-                </tr>
-            </table>
-            <br>
-            <div style="display: flex; justify-content: space-between;">
-                <div class="table-heading button-container">
-                    <?php
-                    echo '<button onclick="window.open(\'../zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
-                    echo '</button>';
-                    echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                    echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
-                    echo '</button>';
-                    echo '<a href="./edit_zapis.php?idzapis=' . $idzapis . '">';
-                    echo '<button>';
-                    echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
-                    echo '</button>';
-                    echo '</a>';
-                    echo '<button onclick="deleteZapis(' . $idzapis . ')">';
-                    echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
-                    echo '</button>';
-                    ?>
+            <div id="calendar"
+                style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
+                <div class="table-heading" style="text-align: center;">
+                    <?php echo '<img src="../assets/img/purkynka_logo.png" width="200px" height="80">'; ?>
                 </div>
-            </div>
-            <br>
-            <?php
+                <table>
+                    <tr style="border-top: 1px solid black;">
+                        <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / " . date('dmY', strtotime($row['datum'])); ?>
+                        </td>
+                        <td style="text-align: center;">Počet stran: 1</td>
+                        <td style="text-align: right;">Počet příloh: 0</td>
+                    </tr>
+                    <tr>
+                        <td>Dokument</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <h3 style="font-size: 25px;">
+                    Záznam z jednání dne <?php echo "$datum"; ?>
+                </h3>
+                <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
+                    <pre style="white-space: break-spaces;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
+                </div>
+
+                <h> V Brně dne <?php echo "$datum"; ?> <br>
+                    Zástupci školního Parlamentu<br>
+                    Zapsal: <?php echo "$username"; ?><br>
+                    Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
+                <table style="border: none;">
+                    <tr>
+                        <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
+                        <td style="text-align: right;">Stránka 1 z 1</td>
+                    </tr>
+                </table>
+                <br>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="table-heading button-container">
+                        <?php
+                        echo '<button onclick="window.open(\'../zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
+                        echo '</button>';
+                        echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
+                        echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                        echo '</button>';
+                        echo '<a href="./edit_zapis.php?idzapis=' . $idzapis . '">';
+                        echo '<button>';
+                        echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
+                        echo '</button>';
+                        echo '</a>';
+                        echo '<button onclick="deleteZapis(' . $idzapis . ')">';
+                        echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
+                        echo '</button>';
+                        ?>
+                    </div>
+                </div>
+                <br>
+                <?php
     }
     // Získání dat z tabulky
     $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
@@ -194,47 +194,47 @@ if (!isset($_SESSION['idusers'])) {
     }
 
     ?>
-    </div>
-    <script src="../assets/js/script.js">    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
-    <script>
-        function downloadWORD(directoryName) {
-            var link = document.createElement('a');
-            link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.docx';
-            link.download = 'zapis_se_schuze_' + directoryName + '.docx';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        function deleteZapis(idzapis) {
-            if (confirm("Opravdu chcete smazat tento zápis?")) {
-                // Vytvoření instance XMLHttpRequest objektu
-                var xhttp = new XMLHttpRequest();
-                // Nastavení metody a URL pro požadavek
-                xhttp.open("POST", "delete_zapis.php", true);
-                // Nastavení hlavičky požadavku
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                // Nastavení callback funkce pro zpracování odpovědi
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        // Zpracování odpovědi
-                        if (this.responseText === "success") {
-                            // Pokud je odpověď "success", přesměrujeme uživatele na main.php
-                            window.location.replace("./?message=Zápis+byl+úspěšně+smazán.");
-                        } else {
-                            // Pokud je odpověď něco jiného než "success", zobrazíme chybovou zprávu
-                            alert("Nastala chyba při mazání zápisu.");
-                        }
-                    }
-                };
-                // Odeslání požadavku s id záznamu
-                xhttp.send("idzapis=" + idzapis);
+        </div>
+        <script src="../assets/js/script.js">    </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+        <script>
+            function downloadWORD(directoryName) {
+                var link = document.createElement('a');
+                link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.docx';
+                link.download = 'zapis_se_schuze_' + directoryName + '.docx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
-        }
+            function deleteZapis(idzapis) {
+                if (confirm("Opravdu chcete smazat tento zápis?")) {
+                    // Vytvoření instance XMLHttpRequest objektu
+                    var xhttp = new XMLHttpRequest();
+                    // Nastavení metody a URL pro požadavek
+                    xhttp.open("POST", "delete_zapis.php", true);
+                    // Nastavení hlavičky požadavku
+                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    // Nastavení callback funkce pro zpracování odpovědi
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // Zpracování odpovědi
+                            if (this.responseText === "success") {
+                                // Pokud je odpověď "success", přesměrujeme uživatele na main.php
+                                window.location.replace("./?message=Zápis+byl+úspěšně+smazán.");
+                            } else {
+                                // Pokud je odpověď něco jiného než "success", zobrazíme chybovou zprávu
+                                alert("Nastala chyba při mazání zápisu.");
+                            }
+                        }
+                    };
+                    // Odeslání požadavku s id záznamu
+                    xhttp.send("idzapis=" + idzapis);
+                }
+            }
 
 
 
-    </script>
+        </script>
 
 </body>
 
