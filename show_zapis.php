@@ -98,7 +98,7 @@ WHERE z.idzapis = ?";
         <table>
             <tr style="border-top: 1px solid black;">
                 <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
-                <td style="text-align: center;">Počet stran: 1</td>
+                <td style="text-align: center;"></td>
                 <td style="text-align: right;">Počet příloh: 0</td>
             </tr>
             <tr>
