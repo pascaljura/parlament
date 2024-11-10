@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Ned 10. lis 2024, 13:19
+-- Vytvořeno: Ned 10. lis 2024, 13:21
 -- Verze serveru: 10.4.31-MariaDB-log
 -- Verze PHP: 5.4.23
 
