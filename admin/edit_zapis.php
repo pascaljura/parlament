@@ -111,7 +111,7 @@ if ($parlament_access != '1') { ?>
             <div class="table-heading">
                 <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
             </div>
-            <form action="" method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px; ">
+            <form action="" method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px; ">
                 <input type="hidden" name="idzapis" value="<?php echo $idzapis; ?>">
 
                 <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
