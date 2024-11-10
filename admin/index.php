@@ -169,7 +169,7 @@ if (isset($_SESSION['idusers'])) {
                     $currentDate = date('Y-m-d');
                     ?>
                     <div style="display: flex; flex-direction: column;">
-                        <form method="post" id="myForm" style="width: 80%; max-width: 400px; margin-bottom: 5px;">
+                        <form method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px;">
                             <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                             <input type="date" name="datum" id="datumInput"
                                 style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
@@ -177,7 +177,7 @@ if (isset($_SESSION['idusers'])) {
                             <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                             <div style="display: flex; flex-direction: column;">
                                 <textarea name="zapis" id="zapisInput" rows="4"
-                                    style="width: 80%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
+                                    style="padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
                                     required></textarea>
                             </div>
                             <div class="button-container" id="buttonContainer">
