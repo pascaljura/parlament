@@ -117,3 +117,23 @@ $mpdf->WriteHTML($bodyHtml);
 // Output PDF
 $mpdf->Output('zapis-ze-schuze-' . date('d-m-Y', strtotime($row['datum'])) . '.pdf', 'I');
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+</head>
+<body>
+<script src="./assets/js/script.js">    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+</body>
+</html>
