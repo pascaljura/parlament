@@ -18,94 +18,93 @@ if (!isset($_SESSION['idusers'])) {
     $stmtAccess->fetch();
     $stmtAccess->close();
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
-    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
-    <meta content="https://www.alba-rosa.cz/" property="og:url" />
-    <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
-    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
-</head>
-
-<body>
-    <?php
-    // Pokud není přístup povolen (parlament_access != 1)
-    if ($parlament_access != '1') { ?>
-        <div id="calendar">
+// Pokud není přístup povolen (parlament_access != 1)
+if ($parlament_access != '1') { ?>
+    <div id="calendar">
         <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění<b></div>
-        </div>
-        <?php
-    } else {
-        function ziskatTextVLomitkach($zapis)
-        {
-            $textInLomitka = "";
-            if (preg_match('/\/\/([^\/]+)\/\//', $zapis, $matches)) {
-                $textInLomitka = $matches[1];
-            }
-            return $textInLomitka;
+    </div>
+    <?php
+} else {
+    function ziskatTextVLomitkach($zapis)
+    {
+        $textInLomitka = "";
+        if (preg_match('/\/\/([^\/]+)\/\//', $zapis, $matches)) {
+            $textInLomitka = $matches[1];
         }
-        function nahraditMarkdown($text)
-        {
-            return $text;
-        }
-        if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
-            $idzapis = $_GET['idzapis'];
+        return $textInLomitka;
+    }
+    function nahraditMarkdown($text)
+    {
+        return $text;
+    }
+    if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
+        $idzapis = $_GET['idzapis'];
 
-            $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE idzapis = $idzapis");
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $datum = date('Y-m-d', strtotime($row['datum']));
-                $cislo_dokumentu = $row['cislo_dokumentu']; // Načtení čísla dokumentu
-                $zapis = $row['zapis'];
-                $zapis = str_replace("=", "\n", $zapis);
-                $textInLomitkach = ziskatTextVLomitkach($zapis);
-                $zapis = nahraditMarkdown($zapis);
-            } else {
-                echo "Záznam s idzapis $idzapis nebyl nalezen.";
-                exit();
-            }
+        $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE idzapis = $idzapis");
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $datum = date('Y-m-d', strtotime($row['datum']));
+            $cislo_dokumentu = $row['cislo_dokumentu']; // Načtení čísla dokumentu
+            $zapis = $row['zapis'];
+            $zapis = str_replace("=", "\n", $zapis);
+            $textInLomitkach = ziskatTextVLomitkach($zapis);
+            $zapis = nahraditMarkdown($zapis);
         } else {
-            echo "Chybějící nebo neplatné idzapis v URL.";
+            echo "Záznam s idzapis $idzapis nebyl nalezen.";
             exit();
         }
-        function getSklonovanyText($text)
-        {
-            $posledniZnak = mb_substr($text, -1);
-            switch ($posledniZnak) {
-                case 'a':
-                case 'í':
-                    return $text;
-                default:
-                    return $text;
-            }
+    } else {
+        echo "Chybějící nebo neplatné idzapis v URL.";
+        exit();
+    }
+    function getSklonovanyText($text)
+    {
+        $posledniZnak = mb_substr($text, -1);
+        switch ($posledniZnak) {
+            case 'a':
+            case 'í':
+                return $text;
+            default:
+                return $text;
         }
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $idzapis = $_POST["idzapis"];
-            $datum = $_POST["datum"];
-            $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
-            $zapisText = $_POST["zapis"];
-            $zapisText = str_replace(["\r\n", "\r", "\n"], "=", $zapisText);
-            $zapisText = nahraditMarkdown($zapisText);
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $idzapis = $_POST["idzapis"];
+        $datum = $_POST["datum"];
+        $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
+        $zapisText = $_POST["zapis"];
+        $zapisText = str_replace(["\r\n", "\r", "\n"], "=", $zapisText);
+        $zapisText = nahraditMarkdown($zapisText);
 
-            // Aktualizace záznamu v databázi včetně čísla dokumentu
-            $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idzapis = $idzapis";
-            if ($conn->query($sql) === TRUE) {
-                header("Location: show_zapis.php?idzapis=$idzapis");
-                exit();
-            } else {
-                echo "Chyba při aktualizaci záznamu: " . $conn->error;
-            }
+        // Aktualizace záznamu v databázi včetně čísla dokumentu
+        $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idzapis = $idzapis";
+        if ($conn->query($sql) === TRUE) {
+            header("Location: show_zapis.php?idzapis=$idzapis");
+            exit();
+        } else {
+            echo "Chyba při aktualizaci záznamu: " . $conn->error;
         }
+    }
 
-        ?>
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+        <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+        <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+        <meta content="https://www.alba-rosa.cz/" property="og:url" />
+        <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
+        <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+    </head>
+
+    <body>
+
 
         <div id="calendar"
             style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
@@ -153,8 +152,8 @@ if (!isset($_SESSION['idusers'])) {
             } else {
                 echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
             }
-    }
-    ?>
+}
+?>
     </div>
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
