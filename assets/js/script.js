@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Počkejte, dokud se dokument úplně nenahraje
   setTimeout(function () {
-    var loadingOverlay = document.querySelector(".loader");
+    var loadingOverlay = document.getElementById("loading-overlay");
     var footerText = document.getElementById("footer-text");
 
     // Ověřte, zda elementy existují, než s nimi manipulujete
