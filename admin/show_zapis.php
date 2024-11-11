@@ -35,7 +35,9 @@ if (!isset($_SESSION['idusers'])) {
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
-<div class="loader"></div>
+<div id="loading-overlay">
+                <div class="loader"></div>
+            </div>
 
 <body>
     <?php
