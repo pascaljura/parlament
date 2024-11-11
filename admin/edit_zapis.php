@@ -104,7 +104,7 @@ if ($parlament_access != '1') { ?>
     </head>
 
     <body>
-
+    <div class="loader"></div>
 
         <div id="calendar"
             style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">

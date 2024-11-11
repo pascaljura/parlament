@@ -18,10 +18,10 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
 
     // Příprava dotazu pro načtení detailů dokumentu a jména uživatele z databáze
     $stmt = $conn->prepare("
-        SELECT z.*, u.name 
-        FROM zapis z
-        LEFT JOIN users u ON z.id_users = u.id_users
-        WHERE z.id_zapis = ?
+        SELECT z.*, u.username 
+        FROM zapis_alba_rosa_parlament z
+        LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
+        WHERE z.idzapis = ?
     ");
     $stmt->bind_param("i", $id_zapis);
     $stmt->execute();
@@ -32,7 +32,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
         $cislo_dokumentu = htmlspecialchars($radek['cislo_dokumentu']);
         $datum = date('dmY', strtotime($radek['datum']));
         $zapis = htmlspecialchars($radek['zapis']);
-        $jmeno = htmlspecialchars($radek['name']);
+        $jmeno = htmlspecialchars($radek['username']);
 
         // Nahrazení a formátování textu
         $zapis = str_replace("=", "\n", $zapis);
