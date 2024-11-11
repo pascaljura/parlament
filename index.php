@@ -19,7 +19,9 @@ include './assets/php/config.php';
     $headerText = '&#x1F499;・Zápisy・2023/2024';
     ?>
 </head>
-<div class="loader"></div>
+<div id="loading-overlay">
+                <div class="loader"></div>
+            </div>
 
 <body>
     <div id="calendar">

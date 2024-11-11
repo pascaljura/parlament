@@ -95,7 +95,9 @@ if (isset($_SESSION['idusers'])) {
 
 
         ?>
-<div class="loader"></div>
+            <div id="loading-overlay">
+                <div class="loader"></div>
+            </div>
 
             <body>
                 <div id="calendar">
@@ -304,7 +306,7 @@ if (isset($_SESSION['idusers'])) {
                                 <label for="password" style="font-size: 16px; margin-bottom: 8px;">Heslo:</label>
                                 <input type="password" name="password" required
                                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                                <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i> 
+                                <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i>
                                     Přihlásit se
                                 </button>
                             </form>
