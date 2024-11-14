@@ -30,10 +30,14 @@ WHERE z.idzapis = ?";
         $idusers = $row['idusers'];
         $cislo_dokumentu = $row['cislo_dokumentu']; // předpokládám, že idusers je sloupec v tabulce zapis
 
-        // Nahrazení a formátování textu
+        // Nahrazení "=" za <br>
         $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
-        $zapis = str_replace("<br>-", "<br>&#8226;", $zapis);
+
+        // Přidání odřádkování před jakýkoli výskyt "--" bez ohledu na předchozí znak
+        $zapis = preg_replace('/(<br>)?--/', '<br>&#160;&#160;&#9702;', $zapis);
+
+        // Přidání odřádkování před jakýkoli výskyt "-" bez ohledu na předchozí znak
+        $zapis = preg_replace('/(<br>)?-/', '<br>&#8226;', $zapis);
 
         function ziskatTextVLomitkach($zapis)
         {
@@ -87,9 +91,9 @@ WHERE z.idzapis = ?";
 </head>
 
 <body>
-<div id="loading-overlay">
-                <div class="loader"></div>
-            </div>
+    <div id="loading-overlay">
+        <div class="loader"></div>
+    </div>
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
         <div class="table-heading" style="text-align: center;">
