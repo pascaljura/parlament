@@ -283,7 +283,7 @@ if (isset($_SESSION['idusers'])) {
 
     ?>
                 <div id="loading-overlay">
-                    <div id="loading-icon"></div>
+                    <div class="loader"></div>
                 </div>
 
                 <body>
