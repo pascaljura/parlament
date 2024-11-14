@@ -66,8 +66,9 @@ if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)
     exit();
 }
 $mpdf->showImageErrors = true;
-// Header HTML
-$headerHtml = '
+
+// Body HTML
+$bodyHtml = '
 <div style="text-align: center;">
 <img src="./assets\img\purkynka_logo.png" style="width: 8.98cm; height: 2.88cm;">
     <table style="width: 100%; font-size: 9pt; border-top: 2px solid black; border-collapse: collapse;">
@@ -82,11 +83,8 @@ $headerHtml = '
             <td></td>
         </tr>
     </table>
-</div>';
-
-// Body HTML
-$bodyHtml = '
-<div style="font-size: 22pt; padding-top: 120px;">
+</div>
+<div style="font-size: 22pt; padding-top: 5px;">
     Záznam z jednání dne ' . date('d.m.Y', strtotime($row['datum'])) . '
 </div>
 <div style="font-size: 11pt; margin-top: 5pxx;">
@@ -110,7 +108,6 @@ $footerHtml = '
 
 // Configure mPDF with header, body, and footer and title
 $mpdf->SetTitle('Alba-rosa.cz | Parlament na Purkyňce');
-$mpdf->SetHTMLHeader($headerHtml);
 $mpdf->SetHTMLFooter($footerHtml);
 $mpdf->WriteHTML($bodyHtml);
 
