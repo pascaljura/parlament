@@ -34,39 +34,26 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
         $zapis = htmlspecialchars($radek['zapis']);
         $jmeno = htmlspecialchars($radek['username']);
 
-        // Formátování textu
-        $zapis = str_replace("=", "<w:br/>", $zapis);
+        // Nahrazení odrážek
+        $zapis = str_replace("=", "<br>", $zapis);
+        $zapis = preg_replace('/(?<=^|<br>)(?![\w])--/', "<br>  ○ ", $zapis);
+        $zapis = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', "<br>• ", $zapis);
 
-        $zapis = preg_replace('/(?<=^|<w:br>)(?![\w])--/', '<w:br/>  ○', $zapis);
-        $zapis = preg_replace('/(?<=^|<w:br>)(?![\w])-(?!-)/', '<w:br/>•', $zapis);
-
-        //echo $zapis;
-
+        // Extrakce stylovaného textu
         preg_match_all('/\/\/([^\/]+)\/\//', $zapis, $title);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<t>', $zapis);
         preg_match_all('/\*\*\*([^*]+)\*\*\*/', $zapis, $bolitalic);
-        $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<bi>', $zapis);
         preg_match_all('/\*\*([^*]+)\*\*/', $zapis, $bold);
-        $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>', $zapis);
         preg_match_all('/\*([^*]+)\*/', $zapis, $italic);
-        $zapis = preg_replace('/\*([^*]+)\*/', '<i>', $zapis);
         preg_match_all('/~~([^~]+)~~/', $zapis, $strike);
-        $zapis = preg_replace('/~~([^~]+)~~/', '<s>', $zapis);
         preg_match_all('/__([^_]+)__/', $zapis, $underline);
+
+        // Odebrání formátovacích značek, aby neovlivňovaly finální text
+        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<t>', $zapis);
+        $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<bi>', $zapis);
+        $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>', $zapis);
+        $zapis = preg_replace('/\*([^*]+)\*/', '<i>', $zapis);
+        $zapis = preg_replace('/~~([^~]+)~~/', '<s>', $zapis);
         $zapis = preg_replace('/__([^_]+)__/', '<u>', $zapis);
-        //echo "<br>";
-        //print_r($title);
-        //echo "<br>";
-        //print_r($bolitalic);
-        //echo "<br>";
-        //print_r($bold);
-        //echo "<br>";
-        //print_r($italic);
-        //echo "<br>";
-        //print_r($strike);
-        //echo "<br>";
-        //print_r($underline);
-        //echo "<br>";
 
     } else {
         echo "Dokument nebyl nalezen.";
@@ -117,76 +104,37 @@ $tableHeader->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000']
     ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT]
 );
 
-// Obsah dokumentu
-$section->addText("Záznam z jednání dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 22, 'bold' => true]);
-$section->addText($zapis, ['size' => 11]);
+// Přidání obsahu s dynamickým formátováním
+$section->addText("Záznam z jednání dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 22, 'bold' => true]);
 
-$phpWord->addParagraphStyle('zapis', ["size" => 11]);
-$zapisRun = $section->addTextRun('zapis');
+// Zpracování formátování
+$zapisRun = $section->addTextRun(['size' => 11]);
+$textParts = preg_split('/(<br>|<t>|<bi>|<b>|<i>|<s>|<u>)/', $zapis, -1, PREG_SPLIT_DELIM_CAPTURE);
+$prewPart = null;
+foreach ($textParts as $part) {
 
-$zapisT = explode("<t>", $zapis);
-$T = 0;
-foreach ($zapisT as $zT) {
-    //echo "<br><br>T" . $T . $zT;
-    $zapisBi = explode("<bi>", $zT);
-    if ($T > 0) {
-        $zapisRun->addText($title[1][$T - 1], ['size' => 20]);
-        //echo "<div style='color: #3e6181; font-weight: bold; font-size: 20px;'>" . $title[1][$T - 1] . "</div>";
-    }
-    $Bi = 0;
-    foreach ($zapisBi as $zBi) {
-        //echo "<br><br>Bi" . $Bi . $zBi;
-        $zapisB = explode("<b>", $zBi);
-        if ($Bi > 0) {
-            $zapisRun->addText($bolitalic[1][$Bi - 1], ['bold' => true, 'italic' => true]);
-            //echo "<b><i>" . $bolitalic[1][$Bi - 1] . "</i></b>";
+    if (strlen($part) > 1 && $part != $prewPart) {
+        //echo "<script>console.log(`$part`)</script>";
+        if ($part === '<br>') {
+            $zapisRun->addTextBreak();
+        } elseif ($part === '<t>') {
+            $zapisRun->addText(array_shift($title[1]), ['size' => 20, 'bold' => true]);
+        } else if ($part === '<bi>') {
+            $zapisRun->addText(array_shift($bolitalic[1]), ['bold' => true, 'italic' => true]);
+        } elseif ($part === '<b>') {
+            $zapisRun->addText(array_shift($bold[1]), ['bold' => true]);
+        } elseif ($part === '<i>') {
+            $zapisRun->addText(array_shift($italic[1]), ['italic' => true]);
+        } elseif ($part === '<s>') {
+            $zapisRun->addText(array_shift($strike[1]), ['strikethrough' => true]);
+        } elseif ($part === '<u>') {
+            $zapisRun->addText(array_shift($underline[1]), ['underline' => true]);
+        } else {
+            $zapisRun->addText($part);
         }
-        $B = 0;
-        foreach ($zapisB as $zB) {
-            //echo "<br><br>B" . $B . $zB;
-            $zapisI = explode("<i>", $zB);
-            if ($B > 0) {
-                $zapisRun->addText($bold[1][$B - 1], ['bold' => true]);
-                //echo "<b>" . $bold[1][$B - 1] . "</b>";
-            }
-            $I = 0;
-            foreach ($zapisI as $zI) {
-                //echo "<br><br>I" . $I . $zI;
-                $zapisS = explode("<s>", $zI);
-                if ($I > 0) {
-                    $zapisRun->addText($italic[1][$I - 1], ['italic' => true]);
-                    //echo "<i>" . $italic[1][$I - 1] . "</i>";
-                }
-                $S = 0;
-                foreach ($zapisS as $zS) {
-                    //echo "<br><br>S" . $S . $zS;
-                    $zapisU = explode("<u>", $zS);
-                    if ($S > 0) {
-                        $zapisRun->addText($strike[1][$S - 1], ['strikethrough' => true]);
-                        //echo "<strike>" . $strike[1][$S - 1] . "</strike>";
-                    }
-                    $U = 0;
-                    foreach ($zapisU as $zU) {
-                        //echo "<br><br>U" . $U . $zU;
-                        if ($U > 0) {
-                            $zapisRun->addText($underline[1][$U - 1], ['underline' => true]);
-                            //echo "<underline>" . $underline[1][$U - 1] . "</underline>";
-                        }
-                        $zapisRun->addText($zU, []);
-                        //echo $zU;
-                        $U++;
-                    }
-                    $S++;
-                }
-                $I++;
-            }
-            $B++;
-        }
-        $Bi++;
+        $prewPart = $part;
     }
-    $T++;
 }
-
 
 $section->addText("V Brně dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 11]);
 $section->addText("Zástupci školního Parlamentu", ['size' => 11]);
@@ -210,9 +158,7 @@ header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
-// Změna writeru na formát DOCX
 $writer = IOFactory::createWriter($phpWord, 'Word2007');
 $writer->save("php://output");
 exit();
-
 ?>
