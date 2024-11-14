@@ -36,8 +36,8 @@ if (!isset($_SESSION['idusers'])) {
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
 <div id="loading-overlay">
-                <div class="loader"></div>
-            </div>
+    <div class="loader"></div>
+</div>
 
 <body>
     <?php
@@ -73,9 +73,15 @@ if (!isset($_SESSION['idusers'])) {
                 $zapis = $row['zapis'];
                 $username = $row['username'];
                 $cislo_dokumentu = $row['cislo_dokumentu'];
+                // Nahrazení "=" za <br>
                 $zapis = str_replace("=", "<br>", $zapis);
-                $zapis = str_replace("<br>--", "<br>&#160;&#160;&#9702;", $zapis);
-                $zapis = str_replace("<br>-", "<br>&#8226;", $zapis);
+
+                // Přidání odřádkování před jakýkoli výskyt "--" bez ohledu na předchozí znak
+                $zapis = preg_replace('/(<br>)?--/', '<br>&#160;&#160;&#9702;', $zapis);
+
+                // Přidání odřádkování před jakýkoli výskyt "-" bez ohledu na předchozí znak
+                $zapis = preg_replace('/(<br>)?-/', '<br>&#8226;', $zapis);
+
                 function getSklonovanyText($text)
                 {
                     $posledniZnak = mb_substr($text, -1);
