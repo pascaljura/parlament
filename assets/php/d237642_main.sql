@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Ned 10. lis 2024, 13:21
+-- Vytvořeno: Čtv 14. lis 2024, 18:11
 -- Verze serveru: 10.4.31-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `logins_alba_rosa_purpix` (
   `idlogins` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logins_alba_rosa_purpix`
@@ -142,7 +142,8 @@ INSERT INTO `logins_alba_rosa_purpix` (`idlogins`, `idusers`, `time`) VALUES
 (10, 48, '2024-08-25 08:25:01'),
 (11, 59, '2024-10-18 17:12:58'),
 (12, 17, '2024-10-24 16:54:05'),
-(13, 17, '2024-10-24 16:59:54');
+(13, 17, '2024-10-24 16:59:54'),
+(14, 66, '2024-11-10 18:53:38');
 
 -- --------------------------------------------------------
 
@@ -202,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother`, `text`, `aktivni`) VALUES
-(1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n                Grafiku upravila: Sarah Buchtová\n            </div>\n        </div>', 1),
+(1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
 (2, '        <div class="table-heading">\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\n       </div>\n<div id="poster">\n         <a href="./assets/img/plakat_2.png" target="_blank">\n                <img src="./assets/img/plakat_2.png" id="responsive-image">\n            </a>\n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n            <a href="./assets/img/plakat_1.png" target="_blank">\n                <img src="./assets/img/plakat_1.png" id="responsive-image">\n            </a>\n        </div>', 1),
 (3, '        <div class="table-heading">\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\n       </div>\n<div id="poster">\n         <a href="../assets/img/plakat_2.png" target="_blank">\n                <img src="../assets/img/plakat_2.png" id="responsive-image">\n            </a>\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n            <a href="../assets/img/plakat_1.png" target="_blank">\n                <img src="../assets/img/plakat_1.png" id="responsive-image">\n            </a>\n        </div>', 1);
 
@@ -266,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `purpix_level_8` int(11) NOT NULL DEFAULT 69,
   `purpix_level_9` int(11) NOT NULL DEFAULT 69,
   `popclicker_score` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa`
@@ -274,41 +275,15 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
 
 INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
 (17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(23, 'evitastrouth9963@outlook.com', 'QXbBkuawmtypYiV', '$2y$10$pJJ7VQD0TPeSWeBybT.ZBuqDYqTvMgwlS.GgRFgx1xe/NoaXgAmjq', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(28, 'jeff.brown2938@yahoo.com', 'OGeEyjqhL', '$2y$10$29Gxgp5c8T.ovczgaZq/IeSEVzcAPzaKzvaWEuVZDlNH4ugluKCay', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(30, 'henrygeizx5912@gmail.com', 'CnWVzSQwLmNDr', '$2y$10$o/LaxfYW3MZ1Q0G846Hqf.v5.aF1hEefGCnXnE/dKEcdmqW9POy9u', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(32, 'christopher63hendersonhs1@outlook.com', 'FweDOsJGAbymHni', '$2y$10$NJgjmmtkjMtKGGyvzHRqxuE8Oscuap4kxHuLtjIPGdbhI1uImbMGa', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(33, 'stephen77rosevhn@outlook.com', 'NILFqcKTkroJe', '$2y$10$kvvO3pl5Ze68V9/cHOv8D.MP50TTcLvsGZoWozo8xODOHufa1bJsC', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(36, 'rukinapingitz@outlook.com', 'VOMbUPZatozT', '$2y$10$WNAch53MgfhVVn5Kzi5FhOBO3Ffwl4GBn8zZyA0SPpv6JgQVKbB7.', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(38, 'good.samantha2811@yahoo.com', 'UhcHDJEmpIPOQ', '$2y$10$7o1Uy8NwPE/0gFhFlT4ii.Ua8ucZZjYpIchCs2NqfCJcmfMgO1.8W', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(40, 'rwhiteheadlr49@gmail.com', 'BYliEHNJMVoQSTx', '$2y$10$W1zvEMtAuawFolXV5rreJO2AvWu/VZhxJ80JCaYBT55wInVgV..pi', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(41, 'danny_whitecfir@outlook.com', 'LsaBSNQG', '$2y$10$ucpxz46MLu6CeS2iwHoKCeA06f8Gvxb.QkYR37AQTzrkUcwICz.wS', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(42, 'hyksleihl2001@gmail.com', 'CKRGHZlfWYnACz', '$2y$10$hv8W4sftnUxZUAYc.wzfaOudWRI08sdMF4aPthx8DJSQ7LSRTO0qi', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(43, 'tbeasleymd33@gmail.com', 'EsdtWQZy', '$2y$10$cSwVqN.HkrvWjyj4P3RzYeAORj/crwO4Cvs66VvuaCbjUWAs9GIoe', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(44, 'steflini340@gmail.com', 'DvYseAmZ', '$2y$10$g0Ex0vC9YqeGFkBkW.HEYOemv.7Q7aWs5do73IeOoHUr2Igibi8Fy', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(46, 'grovermasonmi28@gmail.com', 'MdvRoKPE', '$2y$10$oElvu2rRWrdy4H0t2X0Jn.L5lwgnINRhD/snGHpmN3p6u9z8lSHjO', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(47, 'MerriHermann612@aol.com', 'PjZAJloEFkNV', '$2y$10$K9NR/T0Lq/LH8mEO93pU7eHHlATtNj9EBnh7kCTqrlYGqwRJC2jUe', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(49, 'robertsg_cooleydi@outlook.com', 'WTYfIMdOz', '$2y$10$jIeLdDQd1a1lswFaI45QvulLiaA41QhQOorgHWoKAl8BmMDfbYG5q', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(51, 'gaylenv_whittonmw@outlook.com', 'QQAZdXLz', '$2y$10$FQUVWug9d3xL1R3CamyHJuvButGnomvBKE7K8dIYEyRMTHMO2rSmK', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(52, 'codegemjava@gmail.com', 'TestDoNotBan', '$2y$10$.hYiG36pY4w5Oq.DfYn2DuCEmbIJs4lz1Ope4AwALWp5NnF9B0JVy', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(53, 'frank62bordersfpx@outlook.com', 'IBfaMprsmVLuT', '$2y$10$ZB3rC.Kt/xnfcHgWQ2NZCuMipcKNgvQ0kIRuYYW5ACNK2EMixLYgK', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(54, 'robert_grayzadv@outlook.com', 'HwifEsLpzYGCg', '$2y$10$HG71DD3KGrCjUXeaSB1JYurL893MrbALPc6v/RSfJinBfBF3iGRN6', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(55, 'johnxj_rainwaterkj@outlook.com', 'AFjQWHJmsyO', '$2y$10$pvOLpEqR8AvWa35gNGv9Yuv0QNWP7n74kOEVfPDtEWcZ6uNflgKSO', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(56, 'nchandlerdw24@gmail.com', 'OVTcSCyZg', '$2y$10$mFrF8qd0d27depzdNx0.9./F/f6dJSReaGDeIPcpuLprEQmbtoFZy', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(57, 'biok_amusi17@yahoo.com', 'SztANOtZQ', '$2y$10$189kQBffL382LdetCkYCqOhFyiY.Xz0YkXKeUJhqs4whwv9Asf/YG', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(58, 'stevensdorrisco1980@gmail.com', 'FloebifaMotK', '$2y$10$D8I4pXcPKpMEhjVXsa/U4edQcDtbrfSs9Df2o0ZZ6YqMGB8Q5nm4i', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(59, 'jonik19837@avzong.com', 'Sigma', '$2y$10$uQehL/8l77XfTHbMit2pn.6gWz2mytkXhoYNrF7OYJ4Hqx3Qm1OFi', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(60, 'levydell5947@gmail.com', 'LxnjuvlJKO', '$2y$10$XpX5QRytzzrInygO/YacfOz6PImLsBCPaEpJGUGPwBKXLYgnf8DJS', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(61, 'almirabeckerdu@gmail.com', 'XxHXJGMg', '$2y$10$77hhSWCb5rzUjjqodBz/P.VvkFs9shkbqHF3NRjaFYaDpM4ClXvNq', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(62, 'kynjoaggrlryvx@yahoo.com', 'SlnGnnGPZOchUJ', '$2y$10$P7FYiDwUwUuZv.tnlOLL1Oqy9JJAPRouueJXf8HWN51b5aVg0viQq', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(64, 'maninnodemo@yahoo.com', 'MdEsIdkfq', '$2y$10$9kyR24I8kDUBnZ5itPvO7Ov3zzH7l/yv1j.7Pv3YgRBIlDUUYn52q', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
 
 -- --------------------------------------------------------
 
@@ -322,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `zapis_alba_rosa_parlament` (
   `datum` date NOT NULL,
   `cislo_dokumentu` varchar(255) DEFAULT NULL,
   `zapis` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `zapis_alba_rosa_parlament`
@@ -365,7 +340,8 @@ INSERT INTO `zapis_alba_rosa_parlament` (`idzapis`, `idusers`, `datum`, `cislo_d
 (65, 17, '2024-10-08', '18.02.34', '**Plán akcí**=- Adapťák=- Haloween=- Mikuláš=- Zimní program=- 3 králové=- Valentýn=- Letní program=- Výlet za odměnu=- Participativní projekt=- Sportovní akce=- Spolupráce se střední školou Čichnova=**Další akce**=- Modrá síť (Důchodci na Čichnově)=--Říjen - Listopad=**Halloween**=- Zařizuje: Macháčková, Buchtová=- 31.10.=- Potřeba zařídit odměny za obleky, plakátky a celkovou organizaci a propagaci=**Adapťák**=- Asi 22.10.=- Bowling=**Dělení do sekcí**=- Nástěnky:=-- Buchtová=- Zápisy:=-- Kořalka, Vaněk=- Nabíječky:=-- Brandejs=- Sociální sítě:=-- Kačmařík=- Grafika:=-- Boucník, Macháčková=- Rozvrhy=-- Němec, Pokorná=**Zmínění diskuzního kroužku**=- O kroužku=- Co se tam děje'),
 (66, 17, '2024-10-15', '18.02.34', '**Zakázka na dřevěné diáře pro školu**=- Na první stranu hlášky používané na škole=- Parlament vymyslí hlášky a slova =- Do týdne donést návrhy=- Propagace pomocí zástupců=**Messenger skupina**=- Přidat nováčky=**Adaptační program**=- Bowling Brno=- 22. 10. úterý v 9:30 =- Placené školou místo vyučování=**Schůze s panem ředitelem**=- 5.11. 8. vyučovací hodinu=**Moudrá síť**=- Pomoc technicky negramotným lidem=- Někdy v listopadu=- Pomoc z řad našeho parlamentu=- Přednášky mohou být i od nás=-- Jak využívat různé aplikace=- Otázky budou směřované i na nás=**Sbírka na den dobrých skutků**=- Výbava pro handicapované=- 1. skupina=-- Kačmarčík =-- Kropáček=-- Šmarda=- 2. skupina=-- Macháčková=-- Hudcová=-- Munclinger=- Říct informace o projektu=- Středa 23. 10.=**Rada mladších**=- Přednášky, mezigenerační psychologie=- 16. 10. Středa=**Participativní rozpočet**=- 30 000,- na zvelebení školy=- Návrhy od studentů=- Plakátky po škole'),
 (67, 17, '2024-11-05', '18.02.34', '//Školení od Pana Ředitele doc. RNDr. Aleš Ruda, Ph.D., MBA//=**Dotazník ohledně vyučování**=- Informace o přípravě na život ve školství a výuce=- Kritéria a informace v dotazníku: =-- Učitel by na začátku hodiny měl vysvětlit cíl hodiny a na konci vyučovací hodiny říct, jak se žákům povedlo tohoto cíle dosáhnout=-- Učitel by se měl chovat partnersky až přátelsky k žákům a naopak=-- I předměty které se nevztahují k oboru/tématu nás připravují na život=-- Do vyučování by se měly zakomponovat aktivity kde žáci spolupracují/pomáhají si a  připravují je na život=-- Vyučující by měl vysvětlit učivo tak aby ho většina žáků pochopila a neodkazovala se na samostudium=-- Učitelé by měli zakomponovat měkké dovednosti do vyučování (týmová práce, kreativita)=-- Žáci by se měli učit nejen na písemky, ale i do budoucna=-- Učitel by měl ověřovat znalosti žáků více způsoby=- Dotazník je pouze doplněk, protože všechny otázky nemusejí být relevantní=- Při opakovaným špatným hodnocení nebo při více podněty od žáků se vedení školy samo podívá na případ=**Otázky od studentů**=- Zábrany mezi pisoáry: dle možnosti místa mezi pisoáry=- Sifon na každém patře: podle rozvodů vody a SRPŠ=-- Možnost firmy "Lokni"=- Učitelé dělají ze svého předmětu nejpotřebnější věc oproti potřebám žáků=- Renovace školních sítí:=-- V procesu schvalování a předpoklad že o prázdninách se uskuteční=-- Výměna příslušenství k sítím: v příštích letech=- Výpadky systému EduPage: mezi 9-11 hodinou jsou systémy přetížené'),
-(68, 65, '2024-11-01', '18.02.35', '- dotazník na hodnocení vzdělávacího procesu a učitelů - připomínky/úpravy a dovysvětlení =- sdružení rodičů =- Místo setkání - pravděpodobně aula==');
+(69, 65, '2024-11-01', '18.02.35', '**Dotazník na hodnocení vzdělávacího procesu a učitelů - připomínky/úpravy a dovysvětlení**=**Sdružení rodičů**=**Místo setkání - pravděpodobně aula**'),
+(70, 65, '2024-11-12', '18.02.06', '- prezenčka=- pokud se žák účastní akce s parlamentem, je jeho povinností doplnit si učivo=- 15.11. proběhne na škole 3. - 5. hodinu **Moudrá Síť** pro 3. ročníky, zájemci se přijdou podívat o přestávkách=- možná spolupráce s SŠ Grafickou, předseda se přijde podívat na DOD 16.11, provede ho Roman Kačmařík=- **22.11. multimediální den**, zájemci se přihlásí na discordu=- **mikuláš 5.12.** - organizátor Anežka Macháčková, sestava skupinek a rozvrhů, mikuláš Martin Němec a Jaroslav Šmarda=- **vánoční program 20.12.** - celá aula - filmy(Roman Kačmařík), konzole(Adam Abbod), deskovky(Jiří Boucník, p.u.č. Nováčková), káva(Adam Abbod), tělocvična? a cokoliv dalšího=**Bubnovačka**=- upozorňuje na násilí v rodině=- spíše symbolická akce, upozornění na centrum Locika=- plakáty, televize(youtube kanál centra Locika, zajít za IT) a jiná propagace=- 19.11. setkání u kačenek a bubnování na cokoliv=- dokumentace akce na ig- Zuzana Kaňáková=- řeší Karel Bednařík a Petr Havelka==**Školní web parlamentu**=- zápisy ze zasedání=- myšlenková mapa z nástěnek=- aktuální akce, galerie fotek=- formulář na nápady=- kdo jsme - nejhlavnější osoby=- odkazy na záležitosti parlamentu==**Participativní rozpočet**=- sekce v akcích školy na webu=- informování žáků (rozhlas, plakáty, ig, časopis discipulus, edupage, plakáty na záchody :)=- nápady sbírá Roman Kačmařík=- informační tabule - Sarah Buchtová=- návrhy může dávat kdokoliv=- shrnutí pravidel a termínů=- informovat třídy');
 
 --
 -- Klíče pro exportované tabulky
@@ -456,7 +432,7 @@ ALTER TABLE `gamehub_public_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `logins_alba_rosa_purpix`
 --
 ALTER TABLE `logins_alba_rosa_purpix`
-  MODIFY `idlogins` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `idlogins` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pro tabulku `logouts_alba_rosa_purpix`
 --
@@ -476,12 +452,12 @@ ALTER TABLE `school_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT pro tabulku `zapis_alba_rosa_parlament`
 --
 ALTER TABLE `zapis_alba_rosa_parlament`
-  MODIFY `idzapis` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+  MODIFY `idzapis` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=71;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
