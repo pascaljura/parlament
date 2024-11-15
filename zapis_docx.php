@@ -1,6 +1,6 @@
 <?php
 // Podmíněné načtení konfiguračního souboru
-$cestaKeKonfiguraci = '../assets/php/config.php';
+$cestaKeKonfiguraci = './assets/php/config.php';
 if (file_exists($cestaKeKonfiguraci)) {
     include $cestaKeKonfiguraci;
 } else {
@@ -79,7 +79,7 @@ $section = $phpWord->addSection([
 ]);
 
 // Přidání obrázku přímo do stávající sekce (na střed)
-$section->addImage('../assets/img/purkynka_logo.png', [
+$section->addImage('./assets/img/purkynka_logo.png', [
     'width' => 320,
     'height' => 103,
     'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
