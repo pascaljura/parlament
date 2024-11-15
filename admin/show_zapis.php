@@ -168,8 +168,8 @@ if (!isset($_SESSION['idusers'])) {
                         echo '<button onclick="window.open(\'../zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
-                        echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                        echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                        echo '<button onclick="window.open(\'../zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
                         echo '<a href="./edit_zapis.php?idzapis=' . $idzapis . '">';
                         echo '<button>';
@@ -204,14 +204,6 @@ if (!isset($_SESSION['idusers'])) {
         <script src="../assets/js/script.js">    </script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
         <script>
-            function downloadWORD(directoryName) {
-                var link = document.createElement('a');
-                link.href = '../' + directoryName + '/zapis_ze_schuze_' + directoryName + '.docx';
-                link.download = 'zapis_se_schuze_' + directoryName + '.docx';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
             function deleteZapis(idzapis) {
                 if (confirm("Opravdu chcete smazat tento zápis?")) {
                     // Vytvoření instance XMLHttpRequest objektu

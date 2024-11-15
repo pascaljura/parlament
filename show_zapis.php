@@ -130,8 +130,8 @@ WHERE z.idzapis = ?";
                 echo '<button onclick="window.open(\'./zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="downloadWORD(\'' . $directoryName . '\')">';
-                echo '<i class="fa fa-file-word-o" aria-hidden="true"></i> ' . ' Stáhnout DOCX';
+                echo '<button onclick="window.open(\'./zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
                 ?>
             </div>
