@@ -131,7 +131,7 @@ WHERE z.idzapis = ?";
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
                 echo '<button onclick="window.open(\'./zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
+                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 ?>
             </div>
@@ -156,16 +156,6 @@ WHERE z.idzapis = ?";
         ?>
     </div>
     <script src="./assets/js/script.js"></script>
-    <script>
-        function downloadWORD(directoryName) {
-            var link = document.createElement('a');
-            link.href = './' + directoryName + '/zapis_ze_schuze_' + directoryName + '.docx';
-            link.download = 'zapis_se_schuze_' + directoryName + '.docx';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
 </body>
 

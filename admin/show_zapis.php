@@ -169,7 +169,7 @@ if (!isset($_SESSION['idusers'])) {
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
                         echo '<button onclick="window.open(\'../zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
-                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
+                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                         echo '</button>';
                         echo '<a href="./edit_zapis.php?idzapis=' . $idzapis . '">';
                         echo '<button>';
