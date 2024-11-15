@@ -36,8 +36,8 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
 
         // Nahrazení odrážek
         $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = preg_replace('/(?<=^|<br>)(?![\w])--/', "<br>  ○ ", $zapis);
-        $zapis = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', "<br>• ", $zapis);
+        $zapis = preg_replace('/(?<=^|<br>)(?![\w])--/', "<br>  ◦", $zapis);
+        $zapis = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', "<br>•", $zapis);
 
         // Extrakce stylovaného textu
         preg_match_all('/\/\/([^\/]+)\/\//', $zapis, $title);
@@ -68,7 +68,7 @@ if (isset($_GET['id_zapis']) && filter_var($_GET['id_zapis'], FILTER_VALIDATE_IN
 // Vytvoření nové instance PhpWord
 $phpWord = new PhpWord();
 $phpWord->setDefaultFontName('Calibri');
-
+$phpWord->getSettings()->setThemeFontLang(new \PhpOffice\PhpWord\Style\Language("cs-CZ"));
 // Definování sekce
 $section = $phpWord->addSection([
     'marginTop' => 1000,
@@ -78,31 +78,46 @@ $section = $phpWord->addSection([
     'pageNumberingStart' => 1
 ]);
 
-// Přidání hlavičky
-$hlavicka = $section->addHeader();
-$hlavicka->addImage('../assets/img/purkynka_logo.png', [
+// Přidání obrázku přímo do stávající sekce (na střed)
+$section->addImage('../assets/img/purkynka_logo.png', [
     'width' => 320,
     'height' => 103,
     'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
 ]);
 
-// Vytvoření tabulky v hlavičce
-$tableHeader = $hlavicka->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'width' => 100 * 100]);
-$tableHeader->addRow();
-$tableHeader->addCell(4000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
+// Vytvoření tabulky přímo ve stávající sekci
+$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'width' => 100 * 100]);
+
+// Přidání řádku
+$table->addRow();
+
+// Přidání první buňky: Číslo dokumentu
+$table->addCell(4000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
     "Číslo dokumentu: $cislo_dokumentu/$datum",
     ['size' => 9]
 );
-$tableHeader->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
-    "Počet stran: {PAGE} z {NUMPAGES}",
+
+// Přidání druhé buňky: Počet stran
+$table->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
+    "Počet stran: {PAGE}",
     ['size' => 9],
     ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
 );
-$tableHeader->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
+
+// Přidání třetí buňky: Počet příloh
+$table->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000'])->addText(
     "Počet příloh: 0",
     ['size' => 9],
     ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT]
 );
+// Přidání řádku
+$table->addRow();
+// Přidání první buňky: Číslo dokumentu bez horního ohraničení
+$table->addCell(4000)->addText(
+    "Dokument",
+    ['size' => 9]
+);
+
 
 // Přidání obsahu s dynamickým formátováním
 $section->addText("Záznam z jednání dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 22, 'bold' => true]);
@@ -114,11 +129,15 @@ $prewPart = null;
 foreach ($textParts as $part) {
 
     if (strlen($part) > 1 && $part != $prewPart) {
-        //echo "<script>console.log(`$part`)</script>";
+        
         if ($part === '<br>') {
             $zapisRun->addTextBreak();
         } elseif ($part === '<t>') {
-            $zapisRun->addText(array_shift($title[1]), ['size' => 20, 'bold' => true]);
+            $zapisRun->addText(array_shift($title[1]), [
+                'size' => 14,
+                'bold' => true,
+                'color' => '3e6181'
+            ]);
         } else if ($part === '<bi>') {
             $zapisRun->addText(array_shift($bolitalic[1]), ['bold' => true, 'italic' => true]);
         } elseif ($part === '<b>') {
@@ -138,7 +157,7 @@ foreach ($textParts as $part) {
 
 $section->addText("V Brně dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 11]);
 $section->addText("Zástupci školního Parlamentu", ['size' => 11]);
-$section->addText("Zapsal: $jmeno", ['size' => 11]);
+$section->addText("Zapsal: " . $jmeno, ['size' => 11]);
 $section->addText("Ověřila: Mgr. Denisa Gottwaldová", ['size' => 11]);
 
 // Přidání zápatí
@@ -146,7 +165,7 @@ $zapati = $section->addFooter();
 $tableFooter = $zapati->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'width' => 100 * 100]);
 $tableFooter->addRow();
 $tableFooter->addCell(4000)->addText("$cislo_dokumentu Záznam z jednání dne " . date('d.m.Y', strtotime($radek['datum'])), ['size' => 9]);
-$tableFooter->addCell(2000)->addText("Stránka {PAGE} z {NUMPAGES}", ['size' => 9], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT]);
+$tableFooter->addCell(2000)->addText("Strana {PAGE} z {NUMPAGES}", ['size' => 9], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::RIGHT]);
 
 // Uložení souboru jako DOCX
 $nazevSouboru = 'zapis-ze-schuze-' . date('d-m-Y', strtotime($radek['datum'])) . '.docx';
@@ -161,4 +180,5 @@ header('Pragma: public');
 $writer = IOFactory::createWriter($phpWord, 'Word2007');
 $writer->save("php://output");
 exit();
+
 ?>
