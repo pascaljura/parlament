@@ -20,12 +20,38 @@ include './assets/php/config.php';
     ?>
 </head>
 <div id="loading-overlay">
-                <div class="loader"></div>
-            </div>
+    <div class="loader"></div>
+</div>
 
 <body>
     <div id="calendar">
+
         <?php
+
+        // Získání dat z tabulky
+        $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 2";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+
+            // Kontrola hodnoty id
+            if ($row['aktivni'] == 1) {
+                $phpCode = $row['text'];
+
+                // Vyhodnocení PHP kódu
+                ob_start();
+                eval ('?>' . $phpCode);
+                $text = ob_get_clean();
+
+                // Výpis HTML s dynamickým obsahem
+                echo $text;
+            } else {
+            }
+        } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+        }
+   
         // Inicializujeme prázdné pole pro seskupení dat podle roků
         $grouped_data = [];
 
@@ -72,34 +98,7 @@ include './assets/php/config.php';
             echo "Žádná data nebyla nalezena.";
         }
         ?>
-
-        <?php
-
-        // Získání dat z tabulky
-        $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 2";
-        $result = mysqli_query($conn, $query);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-
-            // Kontrola hodnoty id
-            if ($row['aktivni'] == 1) {
-                $phpCode = $row['text'];
-
-                // Vyhodnocení PHP kódu
-                ob_start();
-                eval ('?>' . $phpCode);
-                $text = ob_get_clean();
-
-                // Výpis HTML s dynamickým obsahem
-                echo $text;
-            } else {
-            }
-        } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-        }
-        ?>
-         <hr color="black" style="height: 2px; border: none;" />
+        <hr color="black" style="height: 2px; border: none;" />
         <?php
 
         // Získání dat z tabulky

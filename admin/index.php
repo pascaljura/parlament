@@ -108,6 +108,33 @@ if (isset($_SESSION['idusers'])) {
                         echo '</div>';
                     }
                     ?>
+                    <?php
+
+                    // Získání dat z tabulky
+                    $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 3";
+                    $result = mysqli_query($conn, $query);
+
+                    if ($result) {
+                        $row = mysqli_fetch_assoc($result);
+
+                        // Kontrola hodnoty id
+                        if ($row['aktivni'] == 1) {
+                            $phpCode = $row['text'];
+
+                            // Vyhodnocení PHP kódu
+                            ob_start();
+                            eval ('?>' . $phpCode);
+                            $text = ob_get_clean();
+
+                            // Výpis HTML s dynamickým obsahem
+                            echo $text;
+                        } else {
+                        }
+                    } else {
+                        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+                    }
+
+                    ?>
                     <div class="button-container" id="buttonContainer">
                         <?php
                         // Inicializujeme prázdné pole pro seskupení dat podle roků
@@ -199,33 +226,7 @@ if (isset($_SESSION['idusers'])) {
                         underline bold = __**underline bold**__ (podtržený text + tučný text)<br>
                         underline bold italics = __***underline bold italics***__ (podtržený text + tučný text + kurzíva)
                     </div>
-                    <?php
 
-                    // Získání dat z tabulky
-                    $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 3";
-                    $result = mysqli_query($conn, $query);
-
-                    if ($result) {
-                        $row = mysqli_fetch_assoc($result);
-
-                        // Kontrola hodnoty id
-                        if ($row['aktivni'] == 1) {
-                            $phpCode = $row['text'];
-
-                            // Vyhodnocení PHP kódu
-                            ob_start();
-                            eval ('?>' . $phpCode);
-                            $text = ob_get_clean();
-
-                            // Výpis HTML s dynamickým obsahem
-                            echo $text;
-                        } else {
-                        }
-                    } else {
-                        echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-                    }
-
-                    ?>
                     <div class="button-container" id="buttonContainer">
                         <form method="post">
                             <button type="submit" name="logout"><i class="fa fa-sign-out"></i> Odhlásit
