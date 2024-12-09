@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: Calibri, sans-serif;
   position: relative;
+  font-size: 20px;
 }
 
 a {
@@ -103,12 +104,12 @@ table {
     var(--color-0) 0
   );
   animation: s3 1s infinite linear;
+}
+@keyframes s3 {
+  to {
+    transform: rotate(1turn);
   }
-  @keyframes s3 {
-    to {
-      transform: rotate(1turn);
-    }
-  }
+}
 
 #footer-text.visible {
   opacity: 1;

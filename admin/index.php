@@ -20,8 +20,9 @@ ob_start();
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
     <?php
     $headerText = '&#x1F499;・Přihlášení';
-    $headerText1 = '&#x1F499;・Nový zápis・2023/2024';
-    $footerText = '&#x1F499;・Aktuálně・2023/2024';
+    $headerText1 = '&#x1F499;・Nový zápis';
+    $headerText2 = '&#x1F499;・O nás';
+    $footerText = '&#x1F499;・Aktuálně';
     ?>
 </head>
 <?php
@@ -108,6 +109,7 @@ if (isset($_SESSION['idusers'])) {
                         echo '</div>';
                     }
                     ?>
+                   
                     <?php
 
                     // Získání dat z tabulky
@@ -135,6 +137,49 @@ if (isset($_SESSION['idusers'])) {
                     }
 
                     ?>
+                     <div class="table-heading">
+                        <b> <?php echo $headerText2; ?> </b>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur fringilla sapien, at dapibus
+                        est. Fusce nec leo eu arcu convallis ultrices in sit amet leo. Cras rhoncus feugiat purus eu cursus.
+                        Nullam eget tempus dui. Donec nibh nibh, sollicitudin a posuere congue, ultricies quis tellus.
+                        Pellentesque dui ex, sollicitudin sed tincidunt vel, eleifend vel urna. Nulla facilisi. Sed odio dolor,
+                        consequat sit amet aliquet non, faucibus quis lacus. Fusce dui orci, eleifend non dictum eu, sodales
+                        eget mi. Integer sed rhoncus odio, a venenatis ipsum. Cras id vehicula nibh, tincidunt mattis augue.
+                        Aenean volutpat odio et arcu blandit commodo. Vestibulum blandit sagittis magna a tristique. Ut porta
+                        sit amet ex eget tempor. <br><br>
+
+                        Integer elementum rutrum tincidunt. Vivamus a pharetra quam. Vivamus sit amet enim ut sem lobortis
+                        blandit. Nunc at leo mauris. Maecenas congue sem ante, a imperdiet lacus porttitor non. Integer
+                        vestibulum tristique velit, id eleifend dui. Cras fringilla orci a nibh cursus blandit. Mauris ac libero
+                        faucibus, cursus quam volutpat, blandit sem. Phasellus vestibulum in odio vitae interdum. Fusce sem
+                        dolor, blandit a ullamcorper in, eleifend eget erat. In dolor tortor, scelerisque eu massa non,
+                        malesuada blandit urna. Duis hendrerit eleifend pellentesque. Nullam varius erat non erat maximus, sed
+                        fermentum felis pulvinar. Vestibulum et nunc neque.<br><br>
+
+                        Vivamus ut risus sem. Sed vitae leo arcu. Praesent condimentum tristique arcu vitae aliquam. Aliquam
+                        accumsan massa ac diam pellentesque, non mattis odio tristique. Etiam sit amet dignissim felis. Nam orci
+                        metus, scelerisque a odio rhoncus, hendrerit porttitor risus. Orci varius natoque penatibus et magnis
+                        dis parturient montes, nascetur ridiculus mus. Duis iaculis dui et diam hendrerit porta. Nam at diam a
+                        neque dignissim tristique faucibus id massa.<br><br>
+
+                        Aliquam erat volutpat. Curabitur ullamcorper ultrices porta. In ultricies bibendum semper. Pellentesque
+                        varius vehicula luctus. Etiam dignissim nisl vel sem auctor laoreet. Suspendisse quis augue efficitur,
+                        cursus leo in, dignissim diam. Proin metus quam, finibus semper eleifend sed, sollicitudin et dolor.
+                        Aliquam sit amet nulla id elit viverra venenatis a vel felis. In accumsan rutrum nisi ac mollis.
+                        Pellentesque condimentum rutrum ante, ac placerat diam consequat ac. Quisque dictum ex at quam maximus
+                        fermentum. Sed tristique sodales consequat. Morbi eget dolor ac arcu varius tincidunt non sed turpis.
+                        Aenean ut varius mi, eu mollis metus. Donec tristique imperdiet enim, non dictum turpis scelerisque at.
+                        <br><br>
+                        Nullam aliquet fermentum ex, nec euismod urna venenatis eu. Nulla facilisi. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit. In ac velit ac sapien cursus facilisis. Sed at ultrices purus. Mauris vitae
+                        eros eget lectus faucibus semper non nec arcu. Nam turpis mauris, molestie nec augue in, bibendum tempor
+                        mi. Vivamus porta mattis nisl ac commodo. Nulla finibus tincidunt blandit. Donec a nulla placerat tortor
+                        euismod blandit. Mauris vitae dignissim felis, in tincidunt dui. Fusce a sagittis augue.
+
+
+                    </p>
                     <div class="button-container" id="buttonContainer">
                         <?php
                         // Inicializujeme prázdné pole pro seskupení dat podle roků
