@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Mountains+of+Christmas');
+
+            .snow {
+                position: absolute;
+                z-index: 100;
+                width: 100%;
+                height: 100%;
+            }
+
+            .trees {
+                display: grid;
+                grid-template-rows: 50% 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
+                background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/25839/trees.svg) repeat-x;
+                position: relative;
+                width: 100%;
+                height: 500px;
+            }
+
+            .merry {
+                color: #c84257;
+                font-family: 'Mountains of Christmas';
+                text-align: center;
+                grid-row: 1;
+                grid-column: 1/4;
+                align-self: center;
+                justify-self: center;
+                font-size: 6rem;
+            }
+
+            .message {
+              color: #007BFF;
+    font-family: 'Mountains of Christmas';
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 1rem;
+    position: absolute;
+    top: 220px;
+    left: 700px;
+    font-weight: bold;
+            }
+
+            .fox {
+                grid-column: 3;
+                grid-row: 3;
+                align-self: end;
+                justify-self: start;
+                position: relative;
+            }
+
+            .tree {
+                align-self: end;
+                justify-self: end;
+                grid-column: 1;
+                grid-row: 3;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="particles-js" class="snow"></div>
+            <div class="trees">
+                <div class="merry">
+                    <h1>Veselé Vánoce</h1>
+                </div>
+                <div class="message">
+                    přeje školní Parlament 
+                </div>
+            <div class="fox">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/25839/critters.svg" width="300px">
+            </div>
+            <div class="tree">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/25839/tree.svg" width="200px">
+            </div>
+        </div>
+    </body>
+
+    <!-- Načtení knihovny particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script>
+        particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 400,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#fff"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000000"
+      },
+      "polygon": {
+        "nb_sides": 5
+      },
+    },
+    "opacity": {
+      "value": 1,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 10,
+      "random": true,
+      "anim": {
+        "enable": false,
+      }
+    },
+    "line_linked": {
+      "enable": false,
+    },
+    "move": {
+      "enable": true,
+      "speed": 6,
+      "direction": "bottom",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": {
+        "enable": false,
+        "rotateX": 600,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 400,
+        "line_linked": {
+          "opacity": 0.5
+        }
+      },
+      "bubble": {
+        "distance": 100,
+        "size": 4,
+        "duration": 0.3,
+        "opacity": 1,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 100,
+        "duration": 0.4
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true
+});
+    </script>
+</html>
