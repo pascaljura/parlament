@@ -24,6 +24,25 @@ ob_start();
     $headerText2 = '&#x1F499;・O nás';
     $footerText = '&#x1F499;・Aktuálně';
     ?>
+    <style>
+        .form-input-wrapper {
+            position: relative;
+        }
+
+        .password-input {
+            padding-right: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 32%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <?php
 
@@ -109,7 +128,7 @@ if (isset($_SESSION['idusers'])) {
                         echo '</div>';
                     }
                     ?>
-                   
+
                     <?php
 
                     // Získání dat z tabulky
@@ -137,46 +156,22 @@ if (isset($_SESSION['idusers'])) {
                     }
 
                     ?>
-                     <div class="table-heading">
+                    <div class="table-heading">
                         <b> <?php echo $headerText2; ?> </b>
                     </div>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur fringilla sapien, at dapibus
-                        est. Fusce nec leo eu arcu convallis ultrices in sit amet leo. Cras rhoncus feugiat purus eu cursus.
-                        Nullam eget tempus dui. Donec nibh nibh, sollicitudin a posuere congue, ultricies quis tellus.
-                        Pellentesque dui ex, sollicitudin sed tincidunt vel, eleifend vel urna. Nulla facilisi. Sed odio dolor,
-                        consequat sit amet aliquet non, faucibus quis lacus. Fusce dui orci, eleifend non dictum eu, sodales
-                        eget mi. Integer sed rhoncus odio, a venenatis ipsum. Cras id vehicula nibh, tincidunt mattis augue.
-                        Aenean volutpat odio et arcu blandit commodo. Vestibulum blandit sagittis magna a tristique. Ut porta
-                        sit amet ex eget tempor. <br><br>
-
-                        Integer elementum rutrum tincidunt. Vivamus a pharetra quam. Vivamus sit amet enim ut sem lobortis
-                        blandit. Nunc at leo mauris. Maecenas congue sem ante, a imperdiet lacus porttitor non. Integer
-                        vestibulum tristique velit, id eleifend dui. Cras fringilla orci a nibh cursus blandit. Mauris ac libero
-                        faucibus, cursus quam volutpat, blandit sem. Phasellus vestibulum in odio vitae interdum. Fusce sem
-                        dolor, blandit a ullamcorper in, eleifend eget erat. In dolor tortor, scelerisque eu massa non,
-                        malesuada blandit urna. Duis hendrerit eleifend pellentesque. Nullam varius erat non erat maximus, sed
-                        fermentum felis pulvinar. Vestibulum et nunc neque.<br><br>
-
-                        Vivamus ut risus sem. Sed vitae leo arcu. Praesent condimentum tristique arcu vitae aliquam. Aliquam
-                        accumsan massa ac diam pellentesque, non mattis odio tristique. Etiam sit amet dignissim felis. Nam orci
-                        metus, scelerisque a odio rhoncus, hendrerit porttitor risus. Orci varius natoque penatibus et magnis
-                        dis parturient montes, nascetur ridiculus mus. Duis iaculis dui et diam hendrerit porta. Nam at diam a
-                        neque dignissim tristique faucibus id massa.<br><br>
-
-                        Aliquam erat volutpat. Curabitur ullamcorper ultrices porta. In ultricies bibendum semper. Pellentesque
-                        varius vehicula luctus. Etiam dignissim nisl vel sem auctor laoreet. Suspendisse quis augue efficitur,
-                        cursus leo in, dignissim diam. Proin metus quam, finibus semper eleifend sed, sollicitudin et dolor.
-                        Aliquam sit amet nulla id elit viverra venenatis a vel felis. In accumsan rutrum nisi ac mollis.
-                        Pellentesque condimentum rutrum ante, ac placerat diam consequat ac. Quisque dictum ex at quam maximus
-                        fermentum. Sed tristique sodales consequat. Morbi eget dolor ac arcu varius tincidunt non sed turpis.
-                        Aenean ut varius mi, eu mollis metus. Donec tristique imperdiet enim, non dictum turpis scelerisque at.
-                        <br><br>
-                        Nullam aliquet fermentum ex, nec euismod urna venenatis eu. Nulla facilisi. Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit. In ac velit ac sapien cursus facilisis. Sed at ultrices purus. Mauris vitae
-                        eros eget lectus faucibus semper non nec arcu. Nam turpis mauris, molestie nec augue in, bibendum tempor
-                        mi. Vivamus porta mattis nisl ac commodo. Nulla finibus tincidunt blandit. Donec a nulla placerat tortor
-                        euismod blandit. Mauris vitae dignissim felis, in tincidunt dui. Fusce a sagittis augue.
+                        Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se
+                        na chodu školy. Jeho hlavní funkce jsou:<br>
+                    <ul>
+                        <li><b>Zastupování žáků</b>: Předává názory a přání studentů vedení školy.</li>
+                        <li><b>Řešení problémů</b>: Pomáhá řešit otázky týkající se školního prostředí.</li>
+                        <li> <b>Organizace akcí</b>: Podílí se na plánování soutěží, tematických dnů nebo charitativních
+                            sbírek.</li>
+                        <li> <b>Spolupráce s vedením</b>: Pravidelně komunikuje s ředitelem a učiteli.</li>
+                    </ul>
+                    Zapojení do parlamentu rozvíjí komunikační a organizační dovednosti, umožňuje ovlivňovat dění ve škole a
+                    být v obraze ohledně plánovaných změn nebo akcí. Je to příležitost pro studenty, kteří chtějí něco
+                    změnit a aktivně se podílet na životě školy.
 
 
                     </p>
@@ -350,8 +345,11 @@ if (isset($_SESSION['idusers'])) {
                                 <input type="text" name="username" required
                                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                                 <label for="password" style="font-size: 16px; margin-bottom: 8px;">Heslo:</label>
-                                <input type="password" name="password" required
+                                <div class="form-input-wrapper">
+                                <input type="password" name="password" id="txt_pwd" required
                                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                                <span class="toggle-password" id="toggle_pwd" onclick="togglePassword()"><i
+                                        class="fa fa-eye"></i></span></div>
                                 <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i>
                                     Přihlásit se
                                 </button>
@@ -384,6 +382,19 @@ if (isset($_SESSION['idusers'])) {
             <script src="../assets/js/script.js">
             </script>
             <script>
+                function togglePassword() {
+                    var passwordInput = document.getElementById("txt_pwd");
+                    var icon = document.getElementById("toggle_pwd").querySelector("i");
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        icon.classList.remove("fa-eye");
+                        icon.classList.add("fa-eye-slash");
+                    } else {
+                        passwordInput.type = "password";
+                        icon.classList.remove("fa-eye-slash");
+                        icon.classList.add("fa-eye");
+                    }
+                }
                 // Funkce pro ukládání dat do local storage
                 function ulozitDoLocalStorage() {
                     const datum = document.getElementById('datumInput').value;
