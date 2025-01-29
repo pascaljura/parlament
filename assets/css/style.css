@@ -56,6 +56,8 @@ table {
   font-family: sans-serif;
   font-size: 24px;
   text-decoration: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .button-container {
