@@ -4692,14 +4692,14 @@ INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `desc
 CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
   `idother` int(11) NOT NULL,
   `text` longtext NOT NULL,
-  `aktivni` int(11) NOT NULL
+  `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `other_alba_rosa_parlament`
 --
 
-INSERT INTO `other_alba_rosa_parlament` (`idother`, `text`, `aktivni`) VALUES
+INSERT INTO `other_alba_rosa_parlament` (`idother`, `text`, `active`) VALUES
 (1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
 (2, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n \r\n            <a href="./assets/img/plakat_0.png" target="_blank">\r\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n        </div>', 1),
 (3, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n            <a href="../assets/img/plakat_0.png" target="_blank">\r\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n       \r\n         \r\n        </div>', 1);

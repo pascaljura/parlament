@@ -37,7 +37,7 @@ include './assets/php/config.php';
             $row = mysqli_fetch_assoc($result);
 
             // Kontrola hodnoty id
-            if ($row['aktivni'] == 1) {
+            if ($row['active'] == 1) {
                 $phpCode = $row['text'];
 
                 // Vyhodnocení PHP kódu
