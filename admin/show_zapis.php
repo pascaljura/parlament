@@ -47,19 +47,19 @@ if (!isset($_SESSION['idusers'])) {
             <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
     } else {
-        if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
-            $idzapis = $_GET['idzapis'];
+        if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
+            $idnotes = $_GET['idnotes'];
             // Získání záznamu ze schůze
             $result = "SELECT z.*, u.username 
-     FROM zapis_alba_rosa_parlament z
+     FROM notes_alba_rosa_parlament z
      LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-     WHERE z.idzapis = ?";
+     WHERE z.idnotes = ?";
 
             // Příprava připraveného dotazu
             $stmt = $conn->prepare($result);
 
             // Bind parametr (parametr typu i = integer, s = string)
-            $stmt->bind_param("i", $idzapis);
+            $stmt->bind_param("i", $idnotes);
 
             // Vykonání dotazu
             $stmt->execute();
@@ -117,11 +117,11 @@ if (!isset($_SESSION['idusers'])) {
                     $userName = 'Neznámý uživatel';
                 }
             } else {
-                echo "Záznam s idzapis $idzapis nebyl nalezen.";
+                echo "Záznam s idnotes $idnotes nebyl nalezen.";
                 exit();
             }
         } else {
-            echo "Chybějící nebo neplatné idzapis v URL.";
+            echo "Chybějící nebo neplatné idnotes v URL.";
             exit();
         }
         ?>
@@ -165,18 +165,18 @@ if (!isset($_SESSION['idusers'])) {
                 <div style="display: flex; justify-content: space-between;">
                     <div class="table-heading button-container">
                         <?php
-                        echo '<button onclick="window.open(\'../zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../zapis_pdf.php?idnotes=' . $idnotes . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
-                        echo '<button onclick="window.open(\'../zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../zapis_docx.php?idnotes=' . $idnotes . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                         echo '</button>';
-                        echo '<a href="./edit_zapis.php?idzapis=' . $idzapis . '">';
+                        echo '<a href="./edit_zapis.php?idnotes=' . $idnotes . '">';
                         echo '<button>';
                         echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
                         echo '</button>';
                         echo '</a>';
-                        echo '<button onclick="deleteZapis(' . $idzapis . ')">';
+                        echo '<button onclick="deleteZapis(' . $idnotes . ')">';
                         echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
                         echo '</button>';
                         ?>
@@ -204,7 +204,7 @@ if (!isset($_SESSION['idusers'])) {
         <script src="../assets/js/script.js">    </script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
         <script>
-            function deleteZapis(idzapis) {
+            function deleteZapis(idnotes) {
                 if (confirm("Opravdu chcete smazat tento zápis?")) {
                     // Vytvoření instance XMLHttpRequest objektu
                     var xhttp = new XMLHttpRequest();
@@ -226,7 +226,7 @@ if (!isset($_SESSION['idusers'])) {
                         }
                     };
                     // Odeslání požadavku s id záznamu
-                    xhttp.send("idzapis=" + idzapis);
+                    xhttp.send("idnotes=" + idnotes);
                 }
             }
 

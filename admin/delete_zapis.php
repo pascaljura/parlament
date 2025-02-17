@@ -26,16 +26,16 @@ if (!isset($_SESSION['idusers'])) {
     } else {
 
         // Ošetření parametru ID
-        if (!isset($_POST['idzapis']) || !is_numeric($_POST['idzapis'])) {
-            echo "Chybějící nebo neplatné idzapis záznamu.";
+        if (!isset($_POST['idnotes']) || !is_numeric($_POST['idnotes'])) {
+            echo "Chybějící nebo neplatné idnotes záznamu.";
             exit();
         }
 
-        $idzapis = $_POST['idzapis'];
+        $idnotes = $_POST['idnotes'];
 
         // Příprava dotazu s parametrem
-        $stmt = $conn->prepare("DELETE FROM zapis_alba_rosa_parlament WHERE idzapis = ?");
-        $stmt->bind_param("i", $idzapis);
+        $stmt = $conn->prepare("DELETE FROM notes_alba_rosa_parlament WHERE idnotes = ?");
+        $stmt->bind_param("i", $idnotes);
 
         // Spuštění dotazu
         if ($stmt->execute()) {

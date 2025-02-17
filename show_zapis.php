@@ -1,20 +1,20 @@
 <?php
 include './assets/php/config.php';
 
-if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
-    $idzapis = $_GET['idzapis'];
+if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
+    $idnotes = $_GET['idnotes'];
 
     // Získání záznamu ze schůze
     $result = "SELECT z.*, u.username 
-FROM zapis_alba_rosa_parlament z
+FROM notes_alba_rosa_parlament z
 LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-WHERE z.idzapis = ?";
+WHERE z.idnotes = ?";
 
     // Příprava připraveného dotazu
     $stmt = $conn->prepare($result);
 
     // Bind parametr (parametr typu i = integer, s = string)
-    $stmt->bind_param("i", $idzapis);
+    $stmt->bind_param("i", $idnotes);
 
     // Vykonání dotazu
     $stmt->execute();
@@ -61,11 +61,11 @@ WHERE z.idzapis = ?";
         }
 
     } else {
-        echo "Záznam s idzapis $idzapis nebyl nalezen.";
+        echo "Záznam s idnotes $idnotes nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné idzapis v URL.";
+    echo "Chybějící nebo neplatné idnotes v URL.";
     exit();
 }
 ?>
@@ -127,10 +127,10 @@ WHERE z.idzapis = ?";
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'./zapis_pdf.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./zapis_pdf.php?idnotes=' . $idnotes . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="window.open(\'./zapis_docx.php?idzapis=' . $idzapis . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./zapis_docx.php?idnotes=' . $idnotes . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 ?>

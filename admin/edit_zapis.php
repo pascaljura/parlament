@@ -37,10 +37,10 @@ if ($parlament_access != '1') { ?>
     {
         return $text;
     }
-    if (isset($_GET['idzapis']) && is_numeric($_GET['idzapis'])) {
-        $idzapis = $_GET['idzapis'];
+    if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
+        $idnotes = $_GET['idnotes'];
 
-        $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament WHERE idzapis = $idzapis");
+        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes = $idnotes");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $datum = date('Y-m-d', strtotime($row['datum']));
@@ -50,11 +50,11 @@ if ($parlament_access != '1') { ?>
             $textInLomitkach = ziskatTextVLomitkach($zapis);
             $zapis = nahraditMarkdown($zapis);
         } else {
-            echo "Záznam s idzapis $idzapis nebyl nalezen.";
+            echo "Záznam s idnotes $idnotes nebyl nalezen.";
             exit();
         }
     } else {
-        echo "Chybějící nebo neplatné idzapis v URL.";
+        echo "Chybějící nebo neplatné idnotes v URL.";
         exit();
     }
     function getSklonovanyText($text)
@@ -69,7 +69,7 @@ if ($parlament_access != '1') { ?>
         }
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $idzapis = $_POST["idzapis"];
+        $idnotes = $_POST["idnotes"];
         $datum = $_POST["datum"];
         $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
         $zapisText = $_POST["zapis"];
@@ -77,9 +77,9 @@ if ($parlament_access != '1') { ?>
         $zapisText = nahraditMarkdown($zapisText);
 
         // Aktualizace záznamu v databázi včetně čísla dokumentu
-        $sql = "UPDATE zapis_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idzapis = $idzapis";
+        $sql = "UPDATE notes_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idnotes = $idnotes";
         if ($conn->query($sql) === TRUE) {
-            header("Location: show_zapis.php?idzapis=$idzapis");
+            header("Location: show_zapis.php?idnotes=$idnotes");
             exit();
         } else {
             echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -114,7 +114,7 @@ if ($parlament_access != '1') { ?>
                 <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
             </div>
             <form action="" method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px; ">
-                <input type="hidden" name="idzapis" value="<?php echo $idzapis; ?>">
+                <input type="hidden" name="idnotes" value="<?php echo $idnotes; ?>">
 
                 <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                 <input type="date" name="datum" id="datum" value="<?php echo $datum; ?>"
@@ -135,7 +135,7 @@ if ($parlament_access != '1') { ?>
 
             <div class="button-container" id="buttonContainer">
                 <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
-                <a href="show_zapis.php?idzapis=<?php echo $idzapis; ?>"><button><i class="fa fa-sign-out"></i> Opustit
+                <a href="show_zapis.php?idnotes=<?php echo $idnotes; ?>"><button><i class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
             <hr color="black" style="height: 2px; border: none;" />

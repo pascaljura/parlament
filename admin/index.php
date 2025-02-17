@@ -82,7 +82,7 @@ if (isset($_SESSION['idusers'])) {
             $zapis = str_replace(array("\n", "\r"), '=', $zapis);
 
             // Načtení posledního čísla dokumentu podle data
-            $sql_last_doc = "SELECT cislo_dokumentu FROM zapis_alba_rosa_parlament ORDER BY datum DESC LIMIT 1";
+            $sql_last_doc = "SELECT cislo_dokumentu FROM notes_alba_rosa_parlament ORDER BY datum DESC LIMIT 1";
             $result = $conn->query($sql_last_doc);
 
             if ($result && $result->num_rows > 0) {
@@ -96,7 +96,7 @@ if (isset($_SESSION['idusers'])) {
             }
 
             // Připravení SQL dotazu s parametry
-            $sql = "INSERT INTO zapis_alba_rosa_parlament (idusers, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO notes_alba_rosa_parlament (idusers, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
 
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bind_param("isss", $_SESSION['idusers'], $datum, $zapis, $cislo_dokumentu);
@@ -181,12 +181,12 @@ if (isset($_SESSION['idusers'])) {
                         $grouped_data = [];
 
                         // Načteme data z databáze
-                        $result = $conn->query("SELECT idzapis, datum FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
+                        $result = $conn->query("SELECT idnotes, datum FROM notes_alba_rosa_parlament ORDER BY datum DESC");
 
                         if ($result->num_rows > 0) {
                             // Projdeme všechny záznamy
                             while ($row = $result->fetch_assoc()) {
-                                $idzapis = $row['idzapis'];
+                                $idnotes = $row['idnotes'];
                                 $datum = $row['datum'];
                                 $year = date('Y', strtotime($datum)); // Extrahujeme rok
                 
@@ -197,7 +197,7 @@ if (isset($_SESSION['idusers'])) {
 
                                 // Přidáme záznam do pole příslušného roku
                                 $grouped_data[$year][] = [
-                                    'idzapis' => $idzapis,
+                                    'idnotes' => $idnotes,
                                     'datum' => date('d.m.Y', strtotime($datum))
                                 ];
                             }
@@ -210,7 +210,7 @@ if (isset($_SESSION['idusers'])) {
                                 echo '</b></div>';
                                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                                 foreach ($items as $item) {
-                                    echo '<a href="./show_zapis.php?idzapis=' . $item['idzapis'] . '" target="_blank">';
+                                    echo '<a href="./show_zapis.php?idnotes=' . $item['idnotes'] . '" target="_blank">';
                                     echo '<button>';
                                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                                     echo '</button>';

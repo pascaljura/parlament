@@ -12,18 +12,18 @@ require_once './vendor/autoload.php';
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 
-// Ověření, zda je idzapis nastaveno a je platné
-if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)) {
-    $idzapis = $_GET['idzapis'];
+// Ověření, zda je idnotes nastaveno a je platné
+if (isset($_GET['idnotes']) && filter_var($_GET['idnotes'], FILTER_VALIDATE_INT)) {
+    $idnotes = $_GET['idnotes'];
 
     // Příprava dotazu pro načtení detailů dokumentu a jména uživatele z databáze
     $stmt = $conn->prepare("
         SELECT z.*, u.username 
-        FROM zapis_alba_rosa_parlament z
+        FROM notes_alba_rosa_parlament z
         LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-        WHERE z.idzapis = ?
+        WHERE z.idnotes = ?
     ");
-    $stmt->bind_param("i", $idzapis);
+    $stmt->bind_param("i", $idnotes);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -61,7 +61,7 @@ if (isset($_GET['idzapis']) && filter_var($_GET['idzapis'], FILTER_VALIDATE_INT)
     }
     $stmt->close();
 } else {
-    echo "Neplatný nebo chybějící parametr idzapis.";
+    echo "Neplatný nebo chybějící parametr idnotes.";
     exit();
 }
 

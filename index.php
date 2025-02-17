@@ -78,12 +78,12 @@ include './assets/php/config.php';
         $grouped_data = [];
 
         // Načteme data z databáze
-        $result = $conn->query("SELECT * FROM zapis_alba_rosa_parlament ORDER BY datum DESC");
+        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament ORDER BY datum DESC");
 
         if ($result->num_rows > 0) {
             // Projdeme všechny záznamy
             while ($row = $result->fetch_assoc()) {
-                $idzapis = $row['idzapis'];
+                $idnotes = $row['idnotes'];
                 $datum = $row['datum'];
                 $year = date('Y', strtotime($datum)); // Extrahujeme rok
         
@@ -94,7 +94,7 @@ include './assets/php/config.php';
 
                 // Přidáme záznam do pole příslušného roku
                 $grouped_data[$year][] = [
-                    'idzapis' => $idzapis,
+                    'idnotes' => $idnotes,
                     'datum' => date('d.m.Y', strtotime($datum))
                 ];
             }
@@ -107,7 +107,7 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./show_zapis.php?idzapis=' . $item['idzapis'] . '" target="_blank">';
+                    echo '<a href="./show_zapis.php?idnotes=' . $item['idnotes'] . '" target="_blank">';
                     echo '<button>';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';
