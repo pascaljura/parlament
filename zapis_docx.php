@@ -12,18 +12,18 @@ require_once './vendor/autoload.php';
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 
-// Ověření, zda je idnotes nastaveno a je platné
-if (isset($_GET['idnotes']) && filter_var($_GET['idnotes'], FILTER_VALIDATE_INT)) {
-    $idnotes = $_GET['idnotes'];
+// Ověření, zda je idnotes_parlament nastaveno a je platné
+if (isset($_GET['idnotes_parlament']) && filter_var($_GET['idnotes_parlament'], FILTER_VALIDATE_INT)) {
+    $idnotes_parlament = $_GET['idnotes_parlament'];
 
     // Příprava dotazu pro načtení detailů dokumentu a jména uživatele z databáze
     $stmt = $conn->prepare("
         SELECT z.*, u.username 
         FROM notes_alba_rosa_parlament z
         LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-        WHERE z.idnotes = ?
+        WHERE z.idnotes_parlament = ?
     ");
-    $stmt->bind_param("i", $idnotes);
+    $stmt->bind_param("i", $idnotes_parlament);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -61,7 +61,7 @@ if (isset($_GET['idnotes']) && filter_var($_GET['idnotes'], FILTER_VALIDATE_INT)
     }
     $stmt->close();
 } else {
-    echo "Neplatný nebo chybějící parametr idnotes.";
+    echo "Neplatný nebo chybějící parametr idnotes_parlament.";
     exit();
 }
 

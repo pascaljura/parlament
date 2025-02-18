@@ -37,10 +37,10 @@ if ($parlament_access_admin != '1') { ?>
     {
         return $text;
     }
-    if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
-        $idnotes = $_GET['idnotes'];
+    if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
+        $idnotes_parlament = $_GET['idnotes_parlament'];
 
-        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes = $idnotes");
+        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes_parlament = $idnotes_parlament");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $datum = date('Y-m-d', strtotime($row['datum']));
@@ -50,11 +50,11 @@ if ($parlament_access_admin != '1') { ?>
             $textInLomitkach = ziskatTextVLomitkach($zapis);
             $zapis = nahraditMarkdown($zapis);
         } else {
-            echo "Záznam s idnotes $idnotes nebyl nalezen.";
+            echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
             exit();
         }
     } else {
-        echo "Chybějící nebo neplatné idnotes v URL.";
+        echo "Chybějící nebo neplatné idnotes_parlament v URL.";
         exit();
     }
     function getSklonovanyText($text)
@@ -69,7 +69,7 @@ if ($parlament_access_admin != '1') { ?>
         }
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $idnotes = $_POST["idnotes"];
+        $idnotes_parlament = $_POST["idnotes_parlament"];
         $datum = $_POST["datum"];
         $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
         $zapisText = $_POST["zapis"];
@@ -77,9 +77,9 @@ if ($parlament_access_admin != '1') { ?>
         $zapisText = nahraditMarkdown($zapisText);
 
         // Aktualizace záznamu v databázi včetně čísla dokumentu
-        $sql = "UPDATE notes_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idnotes = $idnotes";
+        $sql = "UPDATE notes_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idnotes_parlament = $idnotes_parlament";
         if ($conn->query($sql) === TRUE) {
-            header("Location: show_zapis.php?idnotes=$idnotes");
+            header("Location: show_zapis.php?idnotes_parlament=$idnotes_parlament");
             exit();
         } else {
             echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -114,7 +114,7 @@ if ($parlament_access_admin != '1') { ?>
                 <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
             </div>
             <form action="" method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px; ">
-                <input type="hidden" name="idnotes" value="<?php echo $idnotes; ?>">
+                <input type="hidden" name="idnotes_parlament" value="<?php echo $idnotes_parlament; ?>">
 
                 <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                 <input type="date" name="datum" id="datum" value="<?php echo $datum; ?>"
@@ -135,14 +135,14 @@ if ($parlament_access_admin != '1') { ?>
 
             <div class="button-container" id="buttonContainer">
                 <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
-                <a href="show_zapis.php?idnotes=<?php echo $idnotes; ?>"><button><i class="fa fa-sign-out"></i> Opustit
+                <a href="show_zapis.php?idnotes_parlament=<?php echo $idnotes_parlament; ?>"><button><i class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
             <hr color="black" style="height: 2px; border: none;" />
             <?php
 
             // Získání dat z tabulky
-            $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
+            $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
             $result = mysqli_query($conn, $query);
 
             if ($result) {

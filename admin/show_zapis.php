@@ -47,19 +47,19 @@ if (!isset($_SESSION['idusers'])) {
             <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
     } else {
-        if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
-            $idnotes = $_GET['idnotes'];
+        if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
+            $idnotes_parlament = $_GET['idnotes_parlament'];
             // Získání záznamu ze schůze
             $result = "SELECT z.*, u.username 
      FROM notes_alba_rosa_parlament z
      LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-     WHERE z.idnotes = ?";
+     WHERE z.idnotes_parlament = ?";
 
             // Příprava připraveného dotazu
             $stmt = $conn->prepare($result);
 
             // Bind parametr (parametr typu i = integer, s = string)
-            $stmt->bind_param("i", $idnotes);
+            $stmt->bind_param("i", $idnotes_parlament);
 
             // Vykonání dotazu
             $stmt->execute();
@@ -117,11 +117,11 @@ if (!isset($_SESSION['idusers'])) {
                     $userName = 'Neznámý uživatel';
                 }
             } else {
-                echo "Záznam s idnotes $idnotes nebyl nalezen.";
+                echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
                 exit();
             }
         } else {
-            echo "Chybějící nebo neplatné idnotes v URL.";
+            echo "Chybějící nebo neplatné idnotes_parlament v URL.";
             exit();
         }
         ?>
@@ -165,18 +165,18 @@ if (!isset($_SESSION['idusers'])) {
                 <div style="display: flex; justify-content: space-between;">
                     <div class="table-heading button-container">
                         <?php
-                        echo '<button onclick="window.open(\'../zapis_pdf.php?idnotes=' . $idnotes . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../zapis_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
-                        echo '<button onclick="window.open(\'../zapis_docx.php?idnotes=' . $idnotes . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../zapis_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                         echo '</button>';
-                        echo '<a href="./edit_zapis.php?idnotes=' . $idnotes . '">';
+                        echo '<a href="./edit_zapis.php?idnotes_parlament=' . $idnotes_parlament . '">';
                         echo '<button>';
                         echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
                         echo '</button>';
                         echo '</a>';
-                        echo '<button onclick="deleteZapis(' . $idnotes . ')">';
+                        echo '<button onclick="deleteZapis(' . $idnotes_parlament . ')">';
                         echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
                         echo '</button>';
                         ?>
@@ -186,7 +186,7 @@ if (!isset($_SESSION['idusers'])) {
                 <?php
     }
     // Získání dat z tabulky
-    $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
+    $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
@@ -204,7 +204,7 @@ if (!isset($_SESSION['idusers'])) {
         <script src="../assets/js/script.js">    </script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
         <script>
-            function deleteZapis(idnotes) {
+            function deleteZapis(idnotes_parlament) {
                 if (confirm("Opravdu chcete smazat tento zápis?")) {
                     // Vytvoření instance XMLHttpRequest objektu
                     var xhttp = new XMLHttpRequest();
@@ -226,7 +226,7 @@ if (!isset($_SESSION['idusers'])) {
                         }
                     };
                     // Odeslání požadavku s id záznamu
-                    xhttp.send("idnotes=" + idnotes);
+                    xhttp.send("idnotes_parlament=" + idnotes_parlament);
                 }
             }
 

@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings` int(11) NOT NULL,
+  `idmeetings_parlament` int(11) NOT NULL,
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -4617,7 +4617,7 @@ INSERT INTO `log_alba_rosa_purkyn` (`idlog_purkyn`, `text`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `meetings_alba_rosa_parlament` (
-  `idmeetings` int(11) NOT NULL,
+  `idmeetings_parlament` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   `token` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -4629,7 +4629,7 @@ CREATE TABLE IF NOT EXISTS `meetings_alba_rosa_parlament` (
 --
 
 CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
-  `idnotes` int(11) NOT NULL,
+  `idnotes_parlament` int(11) NOT NULL,
   `idusers` int(11) DEFAULT 1,
   `datum` date NOT NULL,
   `cislo_dokumentu` varchar(255) DEFAULT NULL,
@@ -4640,7 +4640,7 @@ CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
 --
 
-INSERT INTO `notes_alba_rosa_parlament` (`idnotes`, `idusers`, `datum`, `cislo_dokumentu`, `zapis`) VALUES
+INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `datum`, `cislo_dokumentu`, `zapis`) VALUES
 (1, 17, '2023-11-01', '18.02.34', '//Čtvrtletní schůze s panem ředitelem//=**Návrhy pro zlepšení chodu školy ze strany studentů:**=- Nabíječky=-- Projekt úspěšný, požadavek na zvýšení počtu nabíječek.=- Automatické propustky při zrušené výuce=-- Nelze, systém není propojený s EduPage.=- Sodobary=-- Výměna sodobarů v ostatních patrech, aby byly jako ve čtvrtém =patře=-- Sodobary jsou pronajaté, záleží na domluvě s pronajímateli.=- Zrcadlo na chodbě=-- Skleněné ne, ale alternativa hliníkové folie je možná, vytipovat více =možností na jejich umístění.=- Beseda s hejtmanem JMK=-- Je možná, záleží na domluvě studentů.=- Slevové kupóny do kantýny=-- Lze vyzkoušet, kupóny by musely mít nějaký systém (aby nedošlo =k jejich zfalšování). Nutné prodiskutovat s provozovatelem, jako =návrh i s učiteli ekonomiky.=- Lepší káva v Delikomatu=-- V automatech není káva, jedná se pouze o kávovinovou směs. Lze =se poptat, ale cena by byla vyšší. Z důvodu umístění automatu ve =škole by však nešlo o kávu. =- Stížnost na chování personálu jako uklízečky a kuchařky=-- Individuální případy se musí řešit přes třídního učitele. Tolerantnější =přístup ze strany kuchařek především na konci směny bude řešen =přes správu budov.=- Halloween=-- Různé pohledy ze strany učitelů na masky studentů ve výuce o=Učitel nemá právo kohokoliv kárat za to, jak je oblečen, konkrétní =případy řešit přes třídního učitele.=- Potíže se školním internetem a Wi-Fi=-- Škola je propojená s VUT, tam problém není, problém je v =metalických rozvodech, výměna za optické kabely stojí mezi 3-5 =miliony. Aktuálně se řeší tepelný výměník. Příští prázdniny se teprve =bude řešit internet a ty následující serverové řízení.=- Omezení Wi-Fi v hodinách, nefunguje ve výuce=-- Omezeno, aby žáci nebyli na sociálních sítích. Učitelé mají ve výuce =zadávat jen takovou práci, aby byla v danou chvíli technicky =zvládnutelná. =-- Pokud to i přesto učitel vyžaduje, konfrontovat, řešit s TU nebo =s ŘŠ. =- Rozbité rozhlasy a jiná technika v učebnách=-- Na sharepointu je systém pro zadávání požadavků, je třeba učitele =na technický problém upozornit. V PC učebnách existuje i papírová =forma, která by měla být pravidelně kontrolována a požadavky =řešeny přes IT servis.=- Sportovní zařízení=-- Minulý rok byla velká investice do posilovny =-- Rekonstrukce venkovního areálu se pohybuje okolo 15 milionů, finančně =je to nyní pro školu neúnosné. =-- Jednou za rok prochází areál bezpečnostní kontrolou, opravují se pouze =nutné záležitosti.=**Diskuze:**=- Obor kybernetika - odešel učitel maturitního předmětu (obava studentů o =maturitní zkoušku)=-- Obava není na místě, učitelé stihnou látku probrat. S novými obory =se mění ŠVP, upravují se maturitní požadavky. =- Změna učitele češtiny ve třetím ročníku, obava o čtvrtý maturitní ročník=(každý učí jiným způsobem)=-- Učitelé vědí, co potřebujete k maturitě, přístup může mít každý jiný. =- Dlouhodobá absence paní učitelky Altrichterové.=-- Zajištěn odborný zástup.=- Noví učitelé neměli dostatek informací k chodu školy=-- Učitelé prochází adaptací, dvouletou průpravou a různými semináři.=- Požární poplach – noví učitelé nevěděli, co mají dělat. =-- Zkoušku požárního poplachu je třeba opakovat za účelem hladkého =průběhu. Další zkouška bude na jaře.=-- Informace k požárnímu poplachu jsou uvedené na nástěnkách. =- Revize elektro zařízení.=-- Četnost revizí záleží na poptávce, obvykle dvakrát ročně. =- 1. patro – na WC pípá poplach.=-- Nahlásit panu Šístkovi.=- Špatné časy na PC v učebnách.=-- Řešit s Petrem Čížkem.=- Co škola umožňuje zletilým žákům?=-- Škola má povinnost zajistit vždy dohled nad všemi studenty, i těmi =zletilými.'),
 (2, 17, '2023-10-03', '18.02.34', '**Volby do funkcí školního parlamentu**=- Zapisovatel: Ondra Šteffan (náhradník Kristýna Karaivanova) – vždy =po setkání rychlá kontrola, ten se odešle na Messenger, GODE =vytiskne a Adam Abbod dá na nástěnky a zveřejní se na Instagramu=**Adaptační program Parlamentu – návrhy:**=- Laser game=- Zoo=- Bowling=- Společná venkovní akce=**Halloween**=- Zařizuje: Kristýna Karaivanova (31.10.2023)=**Nabíječky **=- Plakát roznosit po škole + dát na nástěnky=**Nábor členů do školního Parlamentu (Týká se pouze zatím prváků):**=- Čtvrtek 05.10.2023=- V časech 08:00 – 10:45 a 10:55 – 13:30=- 2 skupiny:=-- Martin Sedlář L3, Adam Abbod V3A + Eli (náhradník)=-- Ondra Šteffan V4B, Kristýna Karaivanova S4B'),
 (3, 17, '2023-11-17', '18.02.34', '**Zhodnocení akce Halloween**=- Bonbóny uspěly=- Účast větší než minulý rok=**Nové výbory parlamentu**=- Nový výbor IT=- Spojka mezi námi a panem Čížkem=- Adam Abbod=- Nový výbor komunikace (vyjednávání)=- Spojka mezi učiteli a námi=- Bohuslav a Jakub=**Stanovení plánu akcí**=- Bude k dispozici na teams=- Řeší výbor plánování akcí=- Do 14.11.=**Pozvání pana hejtmana**=- Beseda 50-100 lidí=- V řešení omezený počet míst =- Formou přihlášení=**Zrcadlo**=- Musí se najít místo=**Časy na počítačích**=- Řeší výbor IT=**Den otevřených dveří**=- Zájemci na dobrovolníky =- Řeší Martin s paní Klobásovou=**Purples**=- Zájemci na dobrovolníky=- Řeší Eli s Purplesem=**Rozhlas**=- Jen důležité akce (odhlasováno)=- Řeší Sarah=**Stále v řešení:**=- Mikuláš =- Promyslet, kdo by chtěl jít=- Logo Parlamentu=-- Bude nápis Purkyňova (odhlasováno)=- Slevy v kantýně'),
@@ -4693,7 +4693,7 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes`, `idusers`, `datum`, `cislo_d
 --
 
 CREATE TABLE IF NOT EXISTS `other_alba_rosa` (
-  `idother` int(11) NOT NULL,
+  `idother_parlament` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
@@ -4705,7 +4705,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa` (
 -- Vypisuji data pro tabulku `other_alba_rosa`
 --
 
-INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `description`) VALUES
+INSERT INTO `other_alba_rosa` (`idother_parlament`, `icon`, `name`, `github`, `web`, `description`) VALUES
 (4, '<i class="fa-solid fa-qrcode"></i>', 'Qr code!', 'https://github.com/pascaljura/qr-code/', '../qr-code/', 'A simple QR code generator for all of your needs.');
 
 -- --------------------------------------------------------
@@ -4715,7 +4715,7 @@ INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `desc
 --
 
 CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
-  `idother` int(11) NOT NULL,
+  `idother_parlament` int(11) NOT NULL,
   `text` longtext NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -4724,7 +4724,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 -- Vypisuji data pro tabulku `other_alba_rosa_parlament`
 --
 
-INSERT INTO `other_alba_rosa_parlament` (`idother`, `text`, `active`) VALUES
+INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
 (1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
 (2, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n \r\n            <a href="./assets/img/plakat_0.png" target="_blank">\r\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n        </div>', 1),
 (3, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n            <a href="../assets/img/plakat_0.png" target="_blank">\r\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n       \r\n         \r\n        </div>', 1);
@@ -4775,7 +4775,7 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
   `idtokens_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings` int(11) NOT NULL,
+  `idmeetings_parlament` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `expires` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -4932,7 +4932,7 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
   ADD KEY `fk_attendance_user` (`idusers`),
-  ADD KEY `fk_attendance_meeting` (`idmeetings`);
+  ADD KEY `fk_attendance_meeting` (`idmeetings_parlament`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -4998,25 +4998,25 @@ ALTER TABLE `log_alba_rosa_purkyn`
 -- Klíče pro tabulku `meetings_alba_rosa_parlament`
 --
 ALTER TABLE `meetings_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idmeetings`);
+  ADD PRIMARY KEY (`idmeetings_parlament`);
 
 --
 -- Klíče pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idnotes`);
+  ADD PRIMARY KEY (`idnotes_parlament`);
 
 --
 -- Klíče pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
-  ADD PRIMARY KEY (`idother`);
+  ADD PRIMARY KEY (`idother_parlament`);
 
 --
 -- Klíče pro tabulku `other_alba_rosa_parlament`
 --
 ALTER TABLE `other_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idother`);
+  ADD PRIMARY KEY (`idother_parlament`);
 
 --
 -- Klíče pro tabulku `school_alba_rosa`
@@ -5031,7 +5031,7 @@ ALTER TABLE `school_alba_rosa`
 ALTER TABLE `tokens_alba_rosa_parlament`
   ADD PRIMARY KEY (`idtokens_parlament`),
   ADD KEY `fk_token_user` (`idusers`),
-  ADD KEY `fk_token_meeting` (`idmeetings`);
+  ADD KEY `fk_token_meeting` (`idmeetings_parlament`);
 
 --
 -- Klíče pro tabulku `users_alba_rosa`
@@ -5096,17 +5096,17 @@ ALTER TABLE `logs_alba_rosa_purkyn`
 -- AUTO_INCREMENT pro tabulku `meetings_alba_rosa_parlament`
 --
 ALTER TABLE `meetings_alba_rosa_parlament`
-  MODIFY `idmeetings` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmeetings_parlament` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
-  MODIFY `idother` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idother_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pro tabulku `school_alba_rosa`
 --
@@ -5135,14 +5135,14 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- Omezení pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 --
 -- Omezení pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

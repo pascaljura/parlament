@@ -30,7 +30,7 @@ include './assets/php/config.php';
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother = 2";
+        $query = "SELECT * FROM other_alba_rosa_parlament WHERE idother_parlament = 2";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
@@ -83,7 +83,7 @@ include './assets/php/config.php';
         if ($result->num_rows > 0) {
             // Projdeme všechny záznamy
             while ($row = $result->fetch_assoc()) {
-                $idnotes = $row['idnotes'];
+                $idnotes_parlament = $row['idnotes_parlament'];
                 $datum = $row['datum'];
                 $year = date('Y', strtotime($datum)); // Extrahujeme rok
         
@@ -94,7 +94,7 @@ include './assets/php/config.php';
 
                 // Přidáme záznam do pole příslušného roku
                 $grouped_data[$year][] = [
-                    'idnotes' => $idnotes,
+                    'idnotes_parlament' => $idnotes_parlament,
                     'datum' => date('d.m.Y', strtotime($datum))
                 ];
             }
@@ -107,7 +107,7 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./show_zapis.php?idnotes=' . $item['idnotes'] . '" target="_blank">';
+                    echo '<a href="./show_zapis.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
                     echo '<button>';
                     echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
                     echo '</button>';
@@ -124,7 +124,7 @@ include './assets/php/config.php';
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);

@@ -1,20 +1,20 @@
 <?php
 include './assets/php/config.php';
 
-if (isset($_GET['idnotes']) && is_numeric($_GET['idnotes'])) {
-    $idnotes = $_GET['idnotes'];
+if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
+    $idnotes_parlament = $_GET['idnotes_parlament'];
 
     // Získání záznamu ze schůze
     $result = "SELECT z.*, u.username 
 FROM notes_alba_rosa_parlament z
 LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
-WHERE z.idnotes = ?";
+WHERE z.idnotes_parlament = ?";
 
     // Příprava připraveného dotazu
     $stmt = $conn->prepare($result);
 
     // Bind parametr (parametr typu i = integer, s = string)
-    $stmt->bind_param("i", $idnotes);
+    $stmt->bind_param("i", $idnotes_parlament);
 
     // Vykonání dotazu
     $stmt->execute();
@@ -61,11 +61,11 @@ WHERE z.idnotes = ?";
         }
 
     } else {
-        echo "Záznam s idnotes $idnotes nebyl nalezen.";
+        echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
         exit();
     }
 } else {
-    echo "Chybějící nebo neplatné idnotes v URL.";
+    echo "Chybějící nebo neplatné idnotes_parlament v URL.";
     exit();
 }
 ?>
@@ -127,10 +127,10 @@ WHERE z.idnotes = ?";
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'./zapis_pdf.php?idnotes=' . $idnotes . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./zapis_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="window.open(\'./zapis_docx.php?idnotes=' . $idnotes . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./zapis_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 ?>
@@ -140,7 +140,7 @@ WHERE z.idnotes = ?";
         <?php
 
         // Získání dat z tabulky
-        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother = 1";
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
         $result = mysqli_query($conn, $query);
 
         if ($result) {
