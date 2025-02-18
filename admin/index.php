@@ -77,29 +77,29 @@ if (isset($_SESSION['idusers'])) {
         $sql = "";
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Získání vstupů od uživatele
-            $datum = $_POST["datum"];
-            $zapis = $_POST["zapis"];
-            $zapis = str_replace(array("\n", "\r"), '=', $zapis);
+            $date = $_POST["date"];
+            $notes = $_POST["notes"];
+            $notes = str_replace(array("\n", "\r"), '=', $notes);
 
             // Načtení posledního čísla dokumentu podle data
-            $sql_last_doc = "SELECT cislo_dokumentu FROM notes_alba_rosa_parlament ORDER BY datum DESC LIMIT 1";
+            $sql_last_doc = "SELECT document_number FROM notes_alba_rosa_parlament ORDER BY date DESC LIMIT 1";
             $result = $conn->query($sql_last_doc);
 
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 // Extrahuje poslední část čísla dokumentu (poslední dvě číslice)
-                $last_number = (int) substr($row['cislo_dokumentu'], -2);
+                $last_number = (int) substr($row['document_number'], -2);
                 $new_number = str_pad($last_number + 1, 2, "0", STR_PAD_LEFT);  // Zvýší o 1 a doplní nuly
-                $cislo_dokumentu = "18.02." . $new_number;
+                $document_number = "18.02." . $new_number;
             } else {
-                $cislo_dokumentu = "18.02.01"; // První záznam, pokud není žádný předchozí
+                $document_number = "18.02.01"; // První záznam, pokud není žádný předchozí
             }
 
             // Připravení SQL dotazu s parametry
-            $sql = "INSERT INTO notes_alba_rosa_parlament (idusers, datum, zapis, cislo_dokumentu) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO notes_alba_rosa_parlament (idusers, date, notes, document_number) VALUES (?, ?, ?, ?)";
 
             if ($stmt = $conn->prepare($sql)) {
-                $stmt->bind_param("isss", $_SESSION['idusers'], $datum, $zapis, $cislo_dokumentu);
+                $stmt->bind_param("isss", $_SESSION['idusers'], $date, $notes, $document_number);
 
                 if ($stmt->execute()) {
                     header("Location: ./?message=Uloženo.");
@@ -181,14 +181,14 @@ if (isset($_SESSION['idusers'])) {
                         $grouped_data = [];
 
                         // Načteme data z databáze
-                        $result = $conn->query("SELECT idnotes_parlament, datum FROM notes_alba_rosa_parlament ORDER BY datum DESC");
+                        $result = $conn->query("SELECT idnotes_parlament, date FROM notes_alba_rosa_parlament ORDER BY date DESC");
 
                         if ($result->num_rows > 0) {
                             // Projdeme všechny záznamy
                             while ($row = $result->fetch_assoc()) {
                                 $idnotes_parlament = $row['idnotes_parlament'];
-                                $datum = $row['datum'];
-                                $year = date('Y', strtotime($datum)); // Extrahujeme rok
+                                $date = $row['date'];
+                                $year = date('Y', strtotime($date)); // Extrahujeme rok
                 
                                 // Vytvoříme skupiny podle roku
                                 if (!isset($grouped_data[$year])) {
@@ -198,7 +198,7 @@ if (isset($_SESSION['idusers'])) {
                                 // Přidáme záznam do pole příslušného roku
                                 $grouped_data[$year][] = [
                                     'idnotes_parlament' => $idnotes_parlament,
-                                    'datum' => date('d.m.Y', strtotime($datum))
+                                    'date' => date('d.m.Y', strtotime($date))
                                 ];
                             }
 
@@ -210,9 +210,9 @@ if (isset($_SESSION['idusers'])) {
                                 echo '</b></div>';
                                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                                 foreach ($items as $item) {
-                                    echo '<a href="./show_zapis.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
+                                    echo '<a href="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
                                     echo '<button>';
-                                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
+                                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['date'];
                                     echo '</button>';
                                     echo '</a>';
                                 }
@@ -237,13 +237,13 @@ if (isset($_SESSION['idusers'])) {
                     ?>
                     <div style="display: flex; flex-direction: column;">
                         <form method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px;">
-                            <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
-                            <input type="date" name="datum" id="datumInput"
+                            <label for="date" style="font-size: 16px; margin-bottom: 8px;">date:</label>
+                            <input type="date" name="date" id="dateInput"
                                 style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
                                 value="<?php echo $currentDate; ?>" required>
-                            <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
+                            <label for="notes" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
                             <div style="display: flex; flex-direction: column;">
-                                <textarea name="zapis" id="zapisInput" rows="10"
+                                <textarea name="notes" id="notesInput" rows="10"
                                     style="padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
                                     required></textarea>
                             </div>
@@ -405,37 +405,37 @@ if (isset($_SESSION['idusers'])) {
                 }
                 // Funkce pro ukládání dat do local storage
                 function ulozitDoLocalStorage() {
-                    const datum = document.getElementById('datumInput').value;
-                    const zapis = document.getElementById('zapisInput').value;
-                    if (datum.trim() !== '') {
-                        localStorage.setItem('datum', datum);
+                    const date = document.getElementById('dateInput').value;
+                    const notes = document.getElementById('notesInput').value;
+                    if (date.trim() !== '') {
+                        localStorage.setItem('date', date);
                     }
-                    if (zapis.trim() !== '') {
-                        localStorage.setItem('zapis', zapis);
+                    if (notes.trim() !== '') {
+                        localStorage.setItem('notes', notes);
                     }
                 }
 
                 // Funkce pro mazání dat z local storage
                 function smazatZLocalStorage() {
-                    localStorage.removeItem('datum');
-                    localStorage.removeItem('zapis');
+                    localStorage.removeItem('date');
+                    localStorage.removeItem('notes');
                 }
 
                 // Zavolání funkce pro načtení dat při načtení stránky
                 window.onload = function () {
-                    const datum = localStorage.getItem('datum');
-                    const zapis = localStorage.getItem('zapis');
-                    if (datum) {
-                        document.getElementById('datumInput').value = datum;
+                    const date = localStorage.getItem('date');
+                    const notes = localStorage.getItem('notes');
+                    if (date) {
+                        document.getElementById('dateInput').value = date;
                     }
-                    if (zapis) {
-                        document.getElementById('zapisInput').value = zapis;
+                    if (notes) {
+                        document.getElementById('notesInput').value = notes;
                     }
                 };
 
                 // Zavolání funkce pro ukládání dat při jakékoli změně v polích formuláře
-                document.getElementById('datumInput').addEventListener('input', ulozitDoLocalStorage);
-                document.getElementById('zapisInput').addEventListener('input', ulozitDoLocalStorage);
+                document.getElementById('dateInput').addEventListener('input', ulozitDoLocalStorage);
+                document.getElementById('notesInput').addEventListener('input', ulozitDoLocalStorage);
 
                 // Zavolání funkce pro uložení dat při načtení stránky
                 ulozitDoLocalStorage();

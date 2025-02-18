@@ -67,16 +67,16 @@ if (!isset($_SESSION['idusers'])) {
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $datum = date('d.m.Y', strtotime($row['datum']));
-                $directoryName = date('d_m_Y', strtotime($row['datum']));
+                $date = date('d.m.Y', strtotime($row['date']));
+                $directoryName = date('d_m_Y', strtotime($row['date']));
                 $idusers = $row['idusers'];
-                $zapis = $row['zapis'];
+                $notes = $row['notes'];
                 $username = $row['username'];
-                $cislo_dokumentu = $row['cislo_dokumentu'];
+                $document_number = $row['document_number'];
 
-                $zapis = str_replace("=", "<br>", $zapis);
-                $zapis = preg_replace('/(?<=^|<br>)(?![\w])--/', '&#160;&#160;&#9702;', $zapis);
-                $zapis = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', '&#8226;', $zapis);
+                $notes = str_replace("=", "<br>", $notes);
+                $notes = preg_replace('/(?<=^|<br>)(?![\w])--/', '&#160;&#160;&#9702;', $notes);
+                $notes = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', '&#8226;', $notes);
 
 
 
@@ -93,21 +93,21 @@ if (!isset($_SESSION['idusers'])) {
                             return $text;
                     }
                 }
-                function ziskatTextVLomitkach($zapis)
+                function ziskatTextVLomitkach($notes)
                 {
                     $textInLomitka = "";
-                    if (preg_match('/\/\/([^\/]+)\/\//', $zapis, $matches)) {
+                    if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
                         $textInLomitka = $matches[1];
                     }
                     return $textInLomitka;
                 }
-                $textInLomitkach = ziskatTextVLomitkach($zapis);
-                $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px">$1</div>', $zapis); // custom style
-                $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis); // bold italics
-                $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis); // bold
-                $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis); // italics
-                $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis); // strikeout
-                $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis); // underline
+                $textInLomitkach = ziskatTextVLomitkach($notes);
+                $notes = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px">$1</div>', $notes); // custom style
+                $notes = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $notes); // bold italics
+                $notes = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $notes); // bold
+                $notes = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $notes); // italics
+                $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes); // strikeout
+                $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes); // underline
     
                 $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
                 if ($resultUser->num_rows > 0) {
@@ -133,7 +133,7 @@ if (!isset($_SESSION['idusers'])) {
                 </div>
                 <table>
                     <tr style="border-top: 1px solid black;">
-                        <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / " . date('dmY', strtotime($row['datum'])); ?>
+                        <td>Číslo dokumentu: <?php echo "$document_number / " . date('dmY', strtotime($row['date'])); ?>
                         </td>
                         <td style="text-align: center;"></td>
                         <td style="text-align: right;">Počet příloh: 0</td>
@@ -145,19 +145,19 @@ if (!isset($_SESSION['idusers'])) {
                     </tr>
                 </table>
                 <h3 style="font-size: 25px;padding: unset;margin: unset;">
-                    Záznam z jednání dne <?php echo "$datum"; ?>
+                    Záznam z jednání dne <?php echo "$date"; ?>
                 </h3>
                 <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
-                    <pre style="white-space: break-spaces;  font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
+                    <pre style="white-space: break-spaces;  font-family: Calibri, sans-serif;"><?php echo $notes; ?></pre>
                 </div>
 
-                <h> V Brně dne <?php echo "$datum"; ?> <br>
+                <h> V Brně dne <?php echo "$date"; ?> <br>
                     Zástupci školního Parlamentu<br>
                     Zapsal: <?php echo "$username"; ?><br>
                     Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
                 <table style="border: none;">
                     <tr>
-                        <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
+                        <td><?php echo "$document_number Záznam z jednání dne $date"; ?></td>
                         <td style="text-align: right;"></td>
                     </tr>
                 </table>
@@ -165,18 +165,18 @@ if (!isset($_SESSION['idusers'])) {
                 <div style="display: flex; justify-content: space-between;">
                     <div class="table-heading button-container">
                         <?php
-                        echo '<button onclick="window.open(\'../zapis_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../notes_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                         echo '</button>';
-                        echo '<button onclick="window.open(\'../zapis_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                        echo '<button onclick="window.open(\'../notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                         echo '</button>';
-                        echo '<a href="./edit_zapis.php?idnotes_parlament=' . $idnotes_parlament . '">';
+                        echo '<a href="./edit_notes.php?idnotes_parlament=' . $idnotes_parlament . '">';
                         echo '<button>';
                         echo '<i class="fa fa-pencil" aria-hidden="true"></i> ' . ' Upravit zápis';
                         echo '</button>';
                         echo '</a>';
-                        echo '<button onclick="deleteZapis(' . $idnotes_parlament . ')">';
+                        echo '<button onclick="deletenotes(' . $idnotes_parlament . ')">';
                         echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
                         echo '</button>';
                         ?>
@@ -204,12 +204,12 @@ if (!isset($_SESSION['idusers'])) {
         <script src="../assets/js/script.js">    </script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
         <script>
-            function deleteZapis(idnotes_parlament) {
+            function deletenotes(idnotes_parlament) {
                 if (confirm("Opravdu chcete smazat tento zápis?")) {
                     // Vytvoření instance XMLHttpRequest objektu
                     var xhttp = new XMLHttpRequest();
                     // Nastavení metody a URL pro požadavek
-                    xhttp.open("POST", "delete_zapis.php", true);
+                    xhttp.open("POST", "delete_notes.php", true);
                     // Nastavení hlavičky požadavku
                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     // Nastavení callback funkce pro zpracování odpovědi

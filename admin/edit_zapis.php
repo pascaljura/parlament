@@ -25,10 +25,10 @@ if ($parlament_access_admin != '1') { ?>
     </div>
     <?php
 } else {
-    function ziskatTextVLomitkach($zapis)
+    function ziskatTextVLomitkach($notes)
     {
         $textInLomitka = "";
-        if (preg_match('/\/\/([^\/]+)\/\//', $zapis, $matches)) {
+        if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
             $textInLomitka = $matches[1];
         }
         return $textInLomitka;
@@ -43,12 +43,12 @@ if ($parlament_access_admin != '1') { ?>
         $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes_parlament = $idnotes_parlament");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $datum = date('Y-m-d', strtotime($row['datum']));
-            $cislo_dokumentu = $row['cislo_dokumentu']; // Načtení čísla dokumentu
-            $zapis = $row['zapis'];
-            $zapis = str_replace("=", "\n", $zapis);
-            $textInLomitkach = ziskatTextVLomitkach($zapis);
-            $zapis = nahraditMarkdown($zapis);
+            $date = date('Y-m-d', strtotime($row['date']));
+            $document_number = $row['document_number']; // Načtení čísla dokumentu
+            $notes = $row['notes'];
+            $notes = str_replace("=", "\n", $notes);
+            $textInLomitkach = ziskatTextVLomitkach($notes);
+            $notes = nahraditMarkdown($notes);
         } else {
             echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
             exit();
@@ -70,16 +70,16 @@ if ($parlament_access_admin != '1') { ?>
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idnotes_parlament = $_POST["idnotes_parlament"];
-        $datum = $_POST["datum"];
-        $cislo_dokumentu = $_POST["cislo_dokumentu"]; // Načtení čísla dokumentu
-        $zapisText = $_POST["zapis"];
-        $zapisText = str_replace(["\r\n", "\r", "\n"], "=", $zapisText);
-        $zapisText = nahraditMarkdown($zapisText);
+        $date = $_POST["date"];
+        $document_number = $_POST["document_number"]; // Načtení čísla dokumentu
+        $notesText = $_POST["notes"];
+        $notesText = str_replace(["\r\n", "\r", "\n"], "=", $notesText);
+        $notesText = nahraditMarkdown($notesText);
 
         // Aktualizace záznamu v databázi včetně čísla dokumentu
-        $sql = "UPDATE notes_alba_rosa_parlament SET datum='$datum', cislo_dokumentu='$cislo_dokumentu', zapis='$zapisText' WHERE idnotes_parlament = $idnotes_parlament";
+        $sql = "UPDATE notes_alba_rosa_parlament SET date='$date', document_number='$document_number', notes='$notesText' WHERE idnotes_parlament = $idnotes_parlament";
         if ($conn->query($sql) === TRUE) {
-            header("Location: show_zapis.php?idnotes_parlament=$idnotes_parlament");
+            header("Location: show_notes.php?idnotes_parlament=$idnotes_parlament");
             exit();
         } else {
             echo "Chyba při aktualizaci záznamu: " . $conn->error;
@@ -116,26 +116,26 @@ if ($parlament_access_admin != '1') { ?>
             <form action="" method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px; ">
                 <input type="hidden" name="idnotes_parlament" value="<?php echo $idnotes_parlament; ?>">
 
-                <label for="datum" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
-                <input type="date" name="datum" id="datum" value="<?php echo $datum; ?>"
+                <label for="date" style="font-size: 16px; margin-bottom: 8px;">date:</label>
+                <input type="date" name="date" id="date" value="<?php echo $date; ?>"
                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: Calibri, sans-serif;"
                     required>
 
                 <!-- Nové pole pro Číslo dokumentu -->
-                <label for="cislo_dokumentu" style="font-size: 16px; margin-bottom: 8px;">Číslo dokumentu:</label>
-                <input type="text" name="cislo_dokumentu" id="cislo_dokumentu" value="<?php echo $cislo_dokumentu; ?>"
+                <label for="document_number" style="font-size: 16px; margin-bottom: 8px;">Číslo dokumentu:</label>
+                <input type="text" name="document_number" id="document_number" value="<?php echo $document_number; ?>"
                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: Calibri, sans-serif;"
                     required>
 
-                <label for="zapis" style="font-size: 16px; margin-bottom: 8px;">Zápis:</label>
-                <textarea name="zapis" id="zapis" rows="10"
+                <label for="notes" style="font-size: 16px; margin-bottom: 8px;">Zápis:</label>
+                <textarea name="notes" id="notes" rows="10"
                     style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap; font-family: Calibri, sans-serif;"
-                    required><?php echo $zapis; ?></textarea>
+                    required><?php echo $notes; ?></textarea>
             </form>
 
             <div class="button-container" id="buttonContainer">
                 <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
-                <a href="show_zapis.php?idnotes_parlament=<?php echo $idnotes_parlament; ?>"><button><i class="fa fa-sign-out"></i> Opustit
+                <a href="show_notes.php?idnotes_parlament=<?php echo $idnotes_parlament; ?>"><button><i class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
             <hr color="black" style="height: 2px; border: none;" />

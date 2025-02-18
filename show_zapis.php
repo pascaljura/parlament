@@ -23,33 +23,33 @@ WHERE z.idnotes_parlament = ?";
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $datum = date('d.m.Y', strtotime($row['datum']));
-        $directoryName = date('d_m_Y', strtotime($row['datum']));
-        $zapis = $row['zapis'];
+        $date = date('d.m.Y', strtotime($row['date']));
+        $directoryName = date('d_m_Y', strtotime($row['date']));
+        $notes = $row['notes'];
         $username = $row['username'];
         $idusers = $row['idusers'];
-        $cislo_dokumentu = $row['cislo_dokumentu']; // předpokládám, že idusers je sloupec v tabulce zapis
+        $document_number = $row['document_number']; // předpokládám, že idusers je sloupec v tabulce notes
 
-        $zapis = str_replace("=", "<br>", $zapis);
-        $zapis = preg_replace('/(?<=^|<br>)(?![\w])--/', '&#160;&#160;&#9702;', $zapis);
-        $zapis = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', '&#8226;', $zapis);
+        $notes = str_replace("=", "<br>", $notes);
+        $notes = preg_replace('/(?<=^|<br>)(?![\w])--/', '&#160;&#160;&#9702;', $notes);
+        $notes = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', '&#8226;', $notes);
 
-        function ziskatTextVLomitkach($zapis)
+        function ziskatTextVLomitkach($notes)
         {
             $textInLomitka = "";
-            if (preg_match('/\/\/([^\/]+)\/\//', $zapis, $matches)) {
+            if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
                 $textInLomitka = $matches[1];
             }
             return $textInLomitka;
         }
 
-        $textInLomitkach = ziskatTextVLomitkach($zapis);
-        $zapis = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px;">$1</div>', $zapis);
-        $zapis = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $zapis);
-        $zapis = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $zapis);
-        $zapis = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $zapis);
-        $zapis = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $zapis);
-        $zapis = preg_replace('/__([^_]+)__/', '<u>$1</u>', $zapis);
+        $textInLomitkach = ziskatTextVLomitkach($notes);
+        $notes = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px;">$1</div>', $notes);
+        $notes = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $notes);
+        $notes = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $notes);
+        $notes = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $notes);
+        $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes);
+        $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes);
 
         // Získání jména uživatele na základě idusers
         $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
@@ -96,7 +96,7 @@ WHERE z.idnotes_parlament = ?";
         </div>
         <table>
             <tr style="border-top: 1px solid black;">
-                <td>Číslo dokumentu: <?php echo "$cislo_dokumentu / $datum"; ?></td>
+                <td>Číslo dokumentu: <?php echo "$document_number / $date"; ?></td>
                 <td style="text-align: center;"></td>
                 <td style="text-align: right;">Počet příloh: 0</td>
             </tr>
@@ -107,19 +107,19 @@ WHERE z.idnotes_parlament = ?";
             </tr>
         </table>
         <h3 style="font-size: 25px;">
-            Záznam z jednání dne <?php echo "$datum"; ?>
+            Záznam z jednání dne <?php echo "$date"; ?>
         </h3>
         <div class="button-container" id="buttonContainer" style=" font-family: Calibri, sans-serif;">
-            <pre style="white-space: break-spaces; font-family: Calibri, sans-serif;"><?php echo $zapis; ?></pre>
+            <pre style="white-space: break-spaces; font-family: Calibri, sans-serif;"><?php echo $notes; ?></pre>
         </div>
 
-        <h> V Brně dne <?php echo "$datum"; ?> <br>
+        <h> V Brně dne <?php echo "$date"; ?> <br>
             Zástupci školního Parlamentu<br>
             Zapsal: <?php echo "$username"; ?><br>
             Ověřila: Mgr. Denisa Gottwaldová <br><br></h>
         <table style="border: none;">
             <tr>
-                <td><?php echo "$cislo_dokumentu Záznam z jednání dne $datum"; ?></td>
+                <td><?php echo "$document_number Záznam z jednání dne $date"; ?></td>
                 <td style="text-align: right;"></td>
             </tr>
         </table>
@@ -127,10 +127,10 @@ WHERE z.idnotes_parlament = ?";
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'./zapis_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./notes_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="window.open(\'./zapis_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 ?>

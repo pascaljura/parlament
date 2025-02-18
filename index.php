@@ -78,14 +78,14 @@ include './assets/php/config.php';
         $grouped_data = [];
 
         // Načteme data z databáze
-        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament ORDER BY datum DESC");
+        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament ORDER BY date DESC");
 
         if ($result->num_rows > 0) {
             // Projdeme všechny záznamy
             while ($row = $result->fetch_assoc()) {
                 $idnotes_parlament = $row['idnotes_parlament'];
-                $datum = $row['datum'];
-                $year = date('Y', strtotime($datum)); // Extrahujeme rok
+                $date = $row['date'];
+                $year = date('Y', strtotime($date)); // Extrahujeme rok
         
                 // Vytvoříme skupiny podle roku
                 if (!isset($grouped_data[$year])) {
@@ -95,7 +95,7 @@ include './assets/php/config.php';
                 // Přidáme záznam do pole příslušného roku
                 $grouped_data[$year][] = [
                     'idnotes_parlament' => $idnotes_parlament,
-                    'datum' => date('d.m.Y', strtotime($datum))
+                    'date' => date('d.m.Y', strtotime($date))
                 ];
             }
 
@@ -107,9 +107,9 @@ include './assets/php/config.php';
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
-                    echo '<a href="./show_zapis.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
+                    echo '<a href="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
                     echo '<button>';
-                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['datum'];
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['date'];
                     echo '</button>';
                     echo '</a>';
                 }
