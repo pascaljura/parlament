@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Pon 17. úno 2025, 20:10
+-- Vytvořeno: Úte 18. úno 2025, 11:27
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -19,6 +19,19 @@ SET time_zone = "+00:00";
 --
 -- Databáze: `d237642_main`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `attendances_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
+  `idattendances_parlament` int(11) NOT NULL,
+  `idusers` int(11) NOT NULL,
+  `idmeetings` int(11) NOT NULL,
+  `time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -4600,6 +4613,18 @@ INSERT INTO `log_alba_rosa_purkyn` (`idlog_purkyn`, `text`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `meetings_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `meetings_alba_rosa_parlament` (
+  `idmeetings` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `token` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `notes_alba_rosa_parlament`
 --
 
@@ -4744,6 +4769,20 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `tokens_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
+  `idtokens_parlament` int(11) NOT NULL,
+  `idusers` int(11) NOT NULL,
+  `idmeetings` int(11) NOT NULL,
+  `token` varchar(256) NOT NULL,
+  `expires` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `users_alba_rosa`
 --
 
@@ -4754,6 +4793,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `password` text NOT NULL,
   `gamehub_private_access` enum('0','1') DEFAULT '0',
   `parlament_access_admin` enum('0','1') DEFAULT '0',
+  `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
   `purpix_level_1` int(11) NOT NULL DEFAULT 96,
   `purpix_level_2` int(11) NOT NULL DEFAULT 69,
   `purpix_level_3` int(11) NOT NULL DEFAULT 69,
@@ -4770,20 +4810,20 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
 -- Vypisuji data pro tabulku `users_alba_rosa`
 --
 
-INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
-(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
+(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '0', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
 
 -- --------------------------------------------------------
 
@@ -4795,13 +4835,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
   `idusers_purkiada` int(11) NOT NULL,
   `username` text NOT NULL,
   `name` text NOT NULL,
-  `jmeno` text NOT NULL,
-  `prijmeni` text NOT NULL,
-  `email` text NOT NULL,
-  `skola` text NOT NULL,
   `password` text DEFAULT NULL,
-  `bcrypt` text NOT NULL,
-  `note` text NOT NULL,
   `purkyn_level_1_1` int(11) DEFAULT 69,
   `purkyn_level_1_2` int(11) DEFAULT 96,
   `purkyn_level_1_3` text DEFAULT '96',
@@ -4839,58 +4873,66 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
 -- Vypisuji data pro tabulku `users_alba_rosa_purkiada`
 --
 
-INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, `jmeno`, `prijmeni`, `email`, `skola`, `password`, `bcrypt`, `note`, `purkyn_level_1_1`, `purkyn_level_1_2`, `purkyn_level_1_3`, `purkyn_level_2`, `purkyn_level_3_1`, `purkyn_level_3_2`, `purkyn_level_3_3`, `purkyn_level_4_1`, `purkyn_level_4_2`, `purkyn_level_5`, `purkyn_level_6`, `purkyn_help`, `purkinc_level_t1`, `purkinc_level_t2`, `purkinc_level_t3`, `purkinc_level_t4`, `purkinc_level_t5`, `purkinc_level_t6`, `purkinc_level_t7`, `purkinc_level_1`, `purkinc_level_2`, `purkinc_level_3`, `purkinc_level_4`, `purkinc_level_5`, `purkinc_level_6`, `purkinc_level_7`, `purkinc_level_8`, `purkinc_level_9`, `purkinc_level_10`, `purkinc_level_11`, `purkinc_level_12`) VALUES
-(1, 'boucnik.jiri@gmail.com', ' 0', '0', '', '', '', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '', 'Admin', 10, 55, '55', 55, '555', '555', '55', 96, '55', 1, 1, 9, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(2, 'vanek.fanda@centrum.cz', ' 0', '0', '', '', '', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '', 'Admin', 69, 96, '96', 96, '96', '', '', 96, '55', 96, 96, 4, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(3, 'admin', ' 0', '0', '', '', '', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '', 'Admin', 69, 96, '96', 96, '96', '96', '96', 96, '96', 2, 0, 0, 1, 69, 1, 69, 1, 69, 1, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 2, 2),
-(155, 'fili.vost', 'Vostal  Filip ', 'Filip ', 'Vostal ', 'eliasovak@seznam.cz', 'ZŠ Komenského, Adamov ', '$2b$08$1VEDbNOeRaSjq3G/MCnVeO6vzvDcfNwb3AFTN01XltqoIEbNeTnjG', '4jz6BbBx', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(156, 'mare.bart', 'Bartošek Marek', 'Marek', 'Bartošek', 'tereza.bartoskova@gmail.com', 'ZŠ Pramínek, Brno', '$2b$08$/naaO4dTR/iAT.XJfFAqq.NiGLcw.3MwOZ0NNv70YAa4Jo5McbXl6', 'Mq53mpbS', '', 10, 60177756, 'C0FFEE', 1, '.7z', 'Html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 3, 0, 1, 0, 1, 1, 1, 1, 2, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
-(157, 'pave.sima', 'Simandl Pavel', 'Pavel', 'Simandl', 'pavlinsimandl@gmail.com', 'ZŠ Prosiměřice', '$2b$08$qY96g/bVglecYcT4CYOlOO3t2mam.IvvnXNOBP2YaSnZMOfSc.LYW', 'EkUkJ7Qe', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 96, 96, 4, 0, 1, 1, 1, 1, 1, 1, 2, 2, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96),
-(158, 'mart.karv', 'Karvaš Martin', 'Martin', 'Karvaš', 'martin.karvas13@gmail.com', 'ZŠ Pramínek, Brno', '$2b$08$oqSk8VRmzknqkc6opkluLexw.W6yDLvhapSt79lQRNXE7hGCyz9CW', 'Mwcu6Es4', '', 10, 60177756, 'C0FFEE', 0, '.zip', '96', '96', 96, '96', 96, 96, 2, 1, 1, 1, 1, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(159, 'davi.tara', 'Taranza David', 'David', 'Taranza', 'dee01@seznam.cz', 'ZŠ Pramínek, Brno-Bystrc', '$2b$08$eyKAw31ldP9.dyf/Kqc9kOjP7brEyzMuUy0f.fJJeIT2EQVPMwv1W', 'MpvjUKwv', '', 10, 60177756, 'C0FFEE', 0, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 0, 0, 1, 1, 2, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
-(160, 'dani.pola', 'Polach  Daniel ', 'Daniel ', 'Polach ', 'nikolaf@email.cz', 'ZŠ Tyršova, Slavkov u Brna', '$2b$08$r8oLZb1kYYLbsx2jW/Owi.4JCuMxp6UUFj0tqO/D3Z/JgDFZ0YiPG', '2ahkzB9J', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 2, 1, 1, 69, 69, 69, 69, 69, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(161, 'jaku.souk', 'Soukeník Jakub', 'Jakub', 'Soukeník', 'kubasouk@centrum.cz', 'ZŠ Bílovice nad Svitavou', '$2b$08$tHuId3CFFypHdNEydRv.meRpJrTAodVV4clus87OG93o4c4D6VFjK', 'YhAcR9GS', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 69, 2, 69, 2, 69, 69, 96, 96, 96),
-(162, 'max.mart', 'Martiš Max', 'Max', 'Martiš', 'alena.martisova@email.cz', 'ZŠ Kotlářská, Brno', '$2b$08$UG9zFEJAq5pxjJBXN5Ay4ekJc3A7BiWYeyQKc45UdxeruH/40tyZS', 'Ltcc7Ymz', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(163, 'yaro.povk', 'Povkh Yaroslav', 'Yaroslav', 'Povkh', 'yaroslavpovkh@zs-deblin.cz', 'ZŠ a MŠ Deblín', '$2b$08$fYZK5FvoQBhw2c/wSE8ebuXNds35KGqLV00umKdfN16ifgJAxIV.i', 'CQeCSTex', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(164, 'thom.jack', 'Jackson Thomas Daniel', 'Thomas Daniel', 'Jackson', 'thomasdanieljackson.2009@gmail.com', 'GSS Mikulov', '$2b$08$ZVhg2Dykuw/CF/FGC/1HtO/JTpDksC/CK3vOPLe5KTb7pUWRkGNRW', 'r8Nya69e', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(165, 'alex.zdan', 'Ždan Alexander', 'Alexander', 'Ždan', 'zdanalexander1@gmail.com', 'ZŠ Horníkova, Brno', '$2b$08$qx6sCnmgsYhcSCIUX6nE1OsGw78huU9RXMGF7XkhYc3wH2YjJnW4O', 'U7YTMzZE', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(166, 'mate.kadl', 'Kadlec Matěj', 'Matěj', 'Kadlec', 'kadlecmatej926@gmail.com', 'ZŠ Velká Bíteš', '$2b$08$fD7yNnxhKO9jI3z5wrEOFOwdIhi9puDfgIM0ESbcv3CfHYFKKCB9.', '4qqVEPPK', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(167, 'mari.varg', 'Vargová Marie', 'Marie', 'Vargová', 'marievargova13@gmail.com', 'ZŠ Novolíšeňská, Brno', '$2b$08$xm74PkZna0LVPRLKYXOoUetotdOiEN596yZqfCQijmyo8w2348tKm', '8MAhv3U7', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a=10', 96, 96, 5, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
-(168, 'niko.madl', 'Mádle Nikola', 'Nikola', 'Mádle', 'nikolamadle@gmail.com', 'ZŠ Novolíšeňská, Brno', '$2b$08$qyJIaP.GihWp6GwqvZYiEuUjFt6y9wzr5vEUGco933K3.nGCXQGH6', 'zVBZye6e', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a=10', 96, 96, 4, 1, 1, 69, 1, 69, 69, 69, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
-(169, 'zbyn.bure', 'Bureš  Zbyněk ', 'Zbyněk ', 'Bureš ', 'zbures09@gmail.com', 'ZŠ a MŠ Blažkova 9, Brno Lesná', '$2b$08$3wG19aaQGx6wBGSck1tBj.h8ihU3L8pKoWZtawxuhv65Rfu4zba2e', 'kaDDSrBk', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 3, 1, 1, 1, 1, 69, 69, 69, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(170, 'dani.bera', 'Beránek  Daniel', 'Daniel', 'Beránek ', 'dan.beranek09@gmail.com', 'ZŠ Novolíšeňská, Brno', '$2b$08$MzxCfPRza3xF7.K/f9Xvc.0IHd6OPfI5N6cDb6osHctdm5SI1CP7W', 'kxCwhpxA', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 1, 5, 1, 1, 1, 1, 69, 69, 69, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
-(171, 'davi.barn', 'Barna David', 'David', 'Barna', 'nejsem.zeli@gmail.com', 'ZŠ Novolíšeňská, Brno', '$2b$08$F6w6PmI0JjUgsJqTt1iYieoVMN2qiWPyxGfE7Hxq223aEsDmdMuXy', 'dqNsqCKu', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(172, 'fili.skar', 'Škranc Filip', 'Filip', 'Škranc', 'filip.skranc09@gmail.com', 'ZŠ Novolíšeňská, Brno', '$2b$08$M9CuL62IIGzrHsYRYYyq9eZpWAyKI1JuRjjlZZ9pONMxURrEbYM0C', 'xGexuhzg', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
-(173, 'ondr.wolf', 'Wolf Ondřej ', 'Ondřej ', 'Wolf', 'vpoi@email.cz', 'ŽŠ Horácké náměstí 13, Brno', '$2b$08$07utYj2HvXQTx.byTBcgLuZ/PV8R1.k3nvzaFKD7nvv920Ua8BXpm', 'ZaysmcL9', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(174, 'jiri.kvas', 'Kvasnička Jiří', 'Jiří', 'Kvasnička', 'jirikmirek58@gmail.com', 'Základní škola Kněžice', '$2b$08$oX5fGTi04iWs42P8jh3TEOpC92TTK0SrWYf1qw0bQMgmpu.DpTaXq', 'LbjfaK2y', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(175, 'jaku.jant', 'Jantač  Jakub ', 'Jakub ', 'Jantač ', 'shining@centrum.cz', 'ZŠ Jana Babáka, Brno', '$2b$08$KDwnWAspyk3fau7cJ.7eped.BTdmXGQMJ05QvRynXhkLXmFjRYIU2', 'vwzD98ZQ', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(176, 'luka.kocm', 'Kocmánek Lukas', 'Lukas', 'Kocmánek', 'lukaskocmanek09@gmail.com', 'Tyršova základní škola, Brno, Kuldova 38', '$2b$08$EypT08ZzesNCngxIltiaP.SK7x6lhL3sKMPhprdiO8LEHpTRJVd66', 'z84PRS6G', '', 10, 60177756, 'C0FFEE', 1, '7z', '96', '96', 96, '96', 96, 96, 2, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(177, 'jan.chat', 'Chatrný Jan', 'Jan', 'Chatrný', 'chatrny.jan@seznam.cz', 'ZŠ TGM Ivančice', '$2b$08$BNeHMS2Vm9ybT3vTa.4XZea8Zld.TsLmCNOZ9FifyKGe2PoFZ3ee2', 'PrJcqdS5', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(178, 'fili.bart', 'Bartoš  Filip', 'Filip', 'Bartoš ', 'G.hlavonova@seznam.cz', 'ZŠ Hudcova, Brno', '$2b$08$QaSIufOlUcYXNHSNaMCUAejD/l2B9MwUMRavKL4rONPZldyacvc7u', 'KkKLANwn', '', 10, 60177756, 'C0FFEE', 1, '96', '96', '96', 96, '96', 96, 96, 5, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(179, 'anto.hora', 'Horáček  Antonín ', 'Antonín ', 'Horáček ', 'tondah09@gmail.com', 'ZŠ Arménská, Brno', '$2b$08$dkWNQzV3UBtLFFB3M658Nejk/rWpWakjuuLK8zCHOtdCLDDsFBYtS', 'Kgx3nDHq', '', 10, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 1, 1, 1, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(180, 'davi.dole', 'Doleček David ', 'David ', 'Doleček', 'vdolek22@gmail.com', 'Základní a Mateřská škola Elišky Přemyslovny, Brno, Elišky Přemyslovny', '$2b$08$OXSkKHVBhmlEEwtoKWhBAufGGRu1pRt935ZIuhbzaymL1jJ2RHA4i', 'nVKRRX6X', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(181, 'jach.mase', 'Mašek Jáchym', 'Jáchym', 'Mašek', 'mojmir.masek@gmail.com', 'ZŠ Herčíkova, Brno', '$2b$08$wa3Fp.1kTDIkLTMpo1n/bOMJs8unsl1EaqKujoCny0gvHYuMr1LJK', 'b8k5Egfb', '', 10, 60177756, 'C0FFEE', 0, '.7z', 'html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 5, 1, 0, 0, 69, 69, 69, 69, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(182, 'robi.rose', 'Rosenberg Robin', 'Robin', 'Rosenberg', 'robin.rosenberg.09@gmail.com', 'ZŠ Jihomoravské náměstí 2, Brno', '$2b$08$F6NqPYXcUiSTBPc8RGLvJegOPf2Fjj9bXdK6BHj2tGX9c7gleS..O', 'cKnqvxuQ', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(183, 'max.jeli', 'Jelínek Max', 'Max', 'Jelínek', 'max.jelinek@icloud.com', 'ZŠ Pramínek, Brno', '$2b$08$UUehbI8euwOZT.zK9Misqe8R657zYisMtaV2thzq0c3oGq4U/R8bK', 'aQcakTKc', '', 10, 60177756, 'C0FFEE', 1, '7z', 'HTML', '96', 96, '96', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
-(184, 'davi.dole', 'Doleček  David ', 'David ', 'Doleček ', 'vdolek22@gmail.com', 'ZŠ a MŠ  Elišky Přemyslovny, Brno', '$2b$08$Xqeb/qE6oeUfWvf/A/mPFetlN/CohmWkWgw/cCOm/c9SOsdaiWxs.', 'LxkcXWFt', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(185, 'patr.sedl', 'Sedlák Patrik', 'Patrik', 'Sedlák', 'sedlakpatrik72@gmail.com', 'ZŠ Březová, Brno ', '$2b$08$5Mo7kWFHRVGs40HzhphxG.pu7KMKXvwlzGefmp19mLg5zLGVHulVm', 'u9DJd6Vf', '', 10, 60177756, 'C0FFEE', 1, '.bz2', '.html', '96', 96, '96', 96, 96, 2, 0, 1, 0, 1, 1, 1, 1, 2, 2, 1, 69, 2, 69, 2, 69, 69, 96, 96, 96),
-(186, 'dan.skol', 'Školař  Dan', 'Dan', 'Školař ', 'duskar@seznam.cz', 'Školy Březová ', '$2b$08$pidrmsbLHpRfnatEZmCWNuD8w42RDFiYmDZ72jYFMGsH3m1eNjbGO', 'XyMdzqX2', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-(187, 'andr.babj', 'Babjár Andrej', 'Andrej', 'Babjár', 'andrej.babjar@gmail.com', 'ZŠ Pramínek, Brno', '$2b$08$MYlTHGksnO5XsOG0TDbvDescpv/iVL1L9wN4nUuPCXXPo3unw3Cne', 'AaT6NTkG', '', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 69, 2, 69, 2, 69, 69, 96, 96, 96),
-(188, 'maxm.mate', 'Matějka Maxmilián', 'Maxmilián', 'Matějka', 'maxmilian.matejka@tuta.io', '', '$2b$08$JUFQOPcYnL995o/4YCZAAOp95Zsf8SHFg4S.EcoU3TYKjrsVHHkt6', '6Xdy9zAG', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(189, 'nahr.1', '1 Náhradník', 'Náhradník', '1', '', '', '$2b$08$HcBw2F65kLbflCiGv/Zcv.3SZABwRdt2ThkpWGyPhi1..ij9Xjqlu', 'vNAnLcBy', '', 10, 60177756, 'C0FFEE', 1, '96', '96', '96', 96, '96', 96, 96, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 69, 2, 69, 69, 96, 96, 96, 96, 96),
-(190, 'nahr.2', '2 Náhradník', 'Náhradník', '2', '', '', '$2b$08$SbsfIVBb8HzJggIz78GTMeq6Jk75JTqjp4f4peh3144LV4DFMKs4q', 'mQCyJtkK', '', 10, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 2, 1, 1, 1, 1, 69, 1, 1, 2, 2, 2, 69, 2, 2, 2, 69, 2, 69, 2, 69),
-(191, 'nahr.3', '3 Náhradník', 'Náhradník', '3', '', '', '$2b$08$Hr0KJEmApRFjOIz93XltC.O0NYbTRMwCFTsbWpR4qF4c..JDa6YVm', 'qnJZLsvr', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(192, 'nahr.4', '4 Náhradník', 'Náhradník', '4', '', '', '$2b$08$EnnJGzkMpcfZxWhgDHMJauGtHxGNNXeG4i.uBGl2fLAAPjQE6SGQi', 'W3k52atk', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(193, 'nahr.5', '5 Náhradník', 'Náhradník', '5', '', '', '$2b$08$GML9PQoiLLSLhPUwPAlbUOv.K9VFtacN4StBK.QuV1THUkVV20kIi', 'zjDqyNcp', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(194, 'nahr.6', '6 Náhradník', 'Náhradník', '6', '', '', '$2b$08$tHeFbviJXaGbLivgm13AZuIeYO16oPyS.Y9Hh2O.GE1U3FTIYuXxC', 'FuhXHAKF', '', 10, 60177756, 'C0FFEE', 0, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(195, 'nahr.7', '7 Náhradník', 'Náhradník', '7', '', '', '$2b$08$W64PjePY4vOcUqxQoOMcd.NAO.y.9rmHgP16WnZzR8jYhdZbQ3t0O', 'ZzmmwdAW', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(196, 'nahr.8', '8 Náhradník', 'Náhradník', '8', '', '', '$2b$08$kukOhnAdNc.lvAKtPQ9oiO5bc9YNipAbh5TK0DwmII013eNWdXqLW', 'zvjm9g3g', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 69, 69, 96, 96, 96, 96, 96),
-(197, 'nahr.9', '9 Náhradník', 'Náhradník', '9', '', '', '$2b$08$iKtnS6YhS2uqz4OzdYnKau8Qz4L1Y.jTeyvDiav2kvOFzm5j.Qjv2', 'TLDvRNUX', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(198, 'nahr.10', '10 Náhradník', 'Náhradník', '10', '', '', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 'w3vcLxME', '', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96);
+INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, `password`, `purkyn_level_1_1`, `purkyn_level_1_2`, `purkyn_level_1_3`, `purkyn_level_2`, `purkyn_level_3_1`, `purkyn_level_3_2`, `purkyn_level_3_3`, `purkyn_level_4_1`, `purkyn_level_4_2`, `purkyn_level_5`, `purkyn_level_6`, `purkyn_help`, `purkinc_level_t1`, `purkinc_level_t2`, `purkinc_level_t3`, `purkinc_level_t4`, `purkinc_level_t5`, `purkinc_level_t6`, `purkinc_level_t7`, `purkinc_level_1`, `purkinc_level_2`, `purkinc_level_3`, `purkinc_level_4`, `purkinc_level_5`, `purkinc_level_6`, `purkinc_level_7`, `purkinc_level_8`, `purkinc_level_9`, `purkinc_level_10`, `purkinc_level_11`, `purkinc_level_12`) VALUES
+(1, 'boucnik.jiri@gmail.com', ' 0', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', 10, 55, '55', 55, '555', '555', '55', 96, '55', 1, 1, 9, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(2, 'vanek.fanda@centrum.cz', ' 0', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', 69, 96, '96', 96, '96', '', '', 96, '55', 96, 96, 4, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(3, 'admin', ' 0', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 2, 0, 0, 1, 69, 1, 69, 1, 69, 1, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 2, 2),
+(155, 'fili.vost', 'Vostal  Filip ', '$2b$08$1VEDbNOeRaSjq3G/MCnVeO6vzvDcfNwb3AFTN01XltqoIEbNeTnjG', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(156, 'mare.bart', 'Bartošek Marek', '$2b$08$/naaO4dTR/iAT.XJfFAqq.NiGLcw.3MwOZ0NNv70YAa4Jo5McbXl6', 10, 60177756, 'C0FFEE', 1, '.7z', 'Html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 3, 0, 1, 0, 1, 1, 1, 1, 2, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
+(157, 'pave.sima', 'Simandl Pavel', '$2b$08$qY96g/bVglecYcT4CYOlOO3t2mam.IvvnXNOBP2YaSnZMOfSc.LYW', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 96, 96, 4, 0, 1, 1, 1, 1, 1, 1, 2, 2, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96),
+(158, 'mart.karv', 'Karvaš Martin', '$2b$08$oqSk8VRmzknqkc6opkluLexw.W6yDLvhapSt79lQRNXE7hGCyz9CW', 10, 60177756, 'C0FFEE', 0, '.zip', '96', '96', 96, '96', 96, 96, 2, 1, 1, 1, 1, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(159, 'davi.tara', 'Taranza David', '$2b$08$eyKAw31ldP9.dyf/Kqc9kOjP7brEyzMuUy0f.fJJeIT2EQVPMwv1W', 10, 60177756, 'C0FFEE', 0, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 0, 0, 1, 1, 2, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
+(160, 'dani.pola', 'Polach  Daniel ', '$2b$08$r8oLZb1kYYLbsx2jW/Owi.4JCuMxp6UUFj0tqO/D3Z/JgDFZ0YiPG', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 2, 1, 1, 69, 69, 69, 69, 69, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(161, 'jaku.souk', 'Soukeník Jakub', '$2b$08$tHuId3CFFypHdNEydRv.meRpJrTAodVV4clus87OG93o4c4D6VFjK', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1, 69, 2, 69, 2, 69, 69, 96, 96, 96),
+(162, 'max.mart', 'Martiš Max', '$2b$08$UG9zFEJAq5pxjJBXN5Ay4ekJc3A7BiWYeyQKc45UdxeruH/40tyZS', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(163, 'yaro.povk', 'Povkh Yaroslav', '$2b$08$fYZK5FvoQBhw2c/wSE8ebuXNds35KGqLV00umKdfN16ifgJAxIV.i', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(164, 'thom.jack', 'Jackson Thomas Daniel', '$2b$08$ZVhg2Dykuw/CF/FGC/1HtO/JTpDksC/CK3vOPLe5KTb7pUWRkGNRW', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(165, 'alex.zdan', 'Ždan Alexander', '$2b$08$qx6sCnmgsYhcSCIUX6nE1OsGw78huU9RXMGF7XkhYc3wH2YjJnW4O', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(166, 'mate.kadl', 'Kadlec Matěj', '$2b$08$fD7yNnxhKO9jI3z5wrEOFOwdIhi9puDfgIM0ESbcv3CfHYFKKCB9.', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(167, 'mari.varg', 'Vargová Marie', '$2b$08$xm74PkZna0LVPRLKYXOoUetotdOiEN596yZqfCQijmyo8w2348tKm', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a=10', 96, 96, 5, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
+(168, 'niko.madl', 'Mádle Nikola', '$2b$08$qyJIaP.GihWp6GwqvZYiEuUjFt6y9wzr5vEUGco933K3.nGCXQGH6', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a=10', 96, 96, 4, 1, 1, 69, 1, 69, 69, 69, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
+(169, 'zbyn.bure', 'Bureš  Zbyněk ', '$2b$08$3wG19aaQGx6wBGSck1tBj.h8ihU3L8pKoWZtawxuhv65Rfu4zba2e', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 3, 1, 1, 1, 1, 69, 69, 69, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(170, 'dani.bera', 'Beránek  Daniel', '$2b$08$MzxCfPRza3xF7.K/f9Xvc.0IHd6OPfI5N6cDb6osHctdm5SI1CP7W', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 1, 5, 1, 1, 1, 1, 69, 69, 69, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
+(171, 'davi.barn', 'Barna David', '$2b$08$F6w6PmI0JjUgsJqTt1iYieoVMN2qiWPyxGfE7Hxq223aEsDmdMuXy', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(172, 'fili.skar', 'Škranc Filip', '$2b$08$M9CuL62IIGzrHsYRYYyq9eZpWAyKI1JuRjjlZZ9pONMxURrEbYM0C', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
+(173, 'ondr.wolf', 'Wolf Ondřej ', '$2b$08$07utYj2HvXQTx.byTBcgLuZ/PV8R1.k3nvzaFKD7nvv920Ua8BXpm', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(174, 'jiri.kvas', 'Kvasnička Jiří', '$2b$08$oX5fGTi04iWs42P8jh3TEOpC92TTK0SrWYf1qw0bQMgmpu.DpTaXq', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(175, 'jaku.jant', 'Jantač  Jakub ', '$2b$08$KDwnWAspyk3fau7cJ.7eped.BTdmXGQMJ05QvRynXhkLXmFjRYIU2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(176, 'luka.kocm', 'Kocmánek Lukas', '$2b$08$EypT08ZzesNCngxIltiaP.SK7x6lhL3sKMPhprdiO8LEHpTRJVd66', 10, 60177756, 'C0FFEE', 1, '7z', '96', '96', 96, '96', 96, 96, 2, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(177, 'jan.chat', 'Chatrný Jan', '$2b$08$BNeHMS2Vm9ybT3vTa.4XZea8Zld.TsLmCNOZ9FifyKGe2PoFZ3ee2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(178, 'fili.bart', 'Bartoš  Filip', '$2b$08$QaSIufOlUcYXNHSNaMCUAejD/l2B9MwUMRavKL4rONPZldyacvc7u', 10, 60177756, 'C0FFEE', 1, '96', '96', '96', 96, '96', 96, 96, 5, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(179, 'anto.hora', 'Horáček  Antonín ', '$2b$08$dkWNQzV3UBtLFFB3M658Nejk/rWpWakjuuLK8zCHOtdCLDDsFBYtS', 10, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 1, 1, 1, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(180, 'davi.dole', 'Doleček David ', '$2b$08$OXSkKHVBhmlEEwtoKWhBAufGGRu1pRt935ZIuhbzaymL1jJ2RHA4i', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(181, 'jach.mase', 'Mašek Jáchym', '$2b$08$wa3Fp.1kTDIkLTMpo1n/bOMJs8unsl1EaqKujoCny0gvHYuMr1LJK', 10, 60177756, 'C0FFEE', 0, '.7z', 'html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 5, 1, 0, 0, 69, 69, 69, 69, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(182, 'robi.rose', 'Rosenberg Robin', '$2b$08$F6NqPYXcUiSTBPc8RGLvJegOPf2Fjj9bXdK6BHj2tGX9c7gleS..O', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(183, 'max.jeli', 'Jelínek Max', '$2b$08$UUehbI8euwOZT.zK9Misqe8R657zYisMtaV2thzq0c3oGq4U/R8bK', 10, 60177756, 'C0FFEE', 1, '7z', 'HTML', '96', 96, '96', 96, 96, 4, 1, 1, 1, 1, 1, 1, 1, 2, 1, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96),
+(184, 'davi.dole', 'Doleček  David ', '$2b$08$Xqeb/qE6oeUfWvf/A/mPFetlN/CohmWkWgw/cCOm/c9SOsdaiWxs.', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(185, 'patr.sedl', 'Sedlák Patrik', '$2b$08$5Mo7kWFHRVGs40HzhphxG.pu7KMKXvwlzGefmp19mLg5zLGVHulVm', 10, 60177756, 'C0FFEE', 1, '.bz2', '.html', '96', 96, '96', 96, 96, 2, 0, 1, 0, 1, 1, 1, 1, 2, 2, 1, 69, 2, 69, 2, 69, 69, 96, 96, 96),
+(186, 'dan.skol', 'Školař  Dan', '$2b$08$pidrmsbLHpRfnatEZmCWNuD8w42RDFiYmDZ72jYFMGsH3m1eNjbGO', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+(187, 'andr.babj', 'Babjár Andrej', '$2b$08$MYlTHGksnO5XsOG0TDbvDescpv/iVL1L9wN4nUuPCXXPo3unw3Cne', 10, 60177756, 'C0FFEE', 1, '.zip', '.html', '96', 96, '96', 96, 96, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 69, 2, 69, 2, 69, 69, 96, 96, 96),
+(188, 'maxm.mate', 'Matějka Maxmilián', '$2b$08$JUFQOPcYnL995o/4YCZAAOp95Zsf8SHFg4S.EcoU3TYKjrsVHHkt6', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(189, 'nahr.1', '1 Náhradník', '$2b$08$HcBw2F65kLbflCiGv/Zcv.3SZABwRdt2ThkpWGyPhi1..ij9Xjqlu', 10, 60177756, 'C0FFEE', 1, '96', '96', '96', 96, '96', 96, 96, 3, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 69, 2, 69, 69, 96, 96, 96, 96, 96),
+(190, 'nahr.2', '2 Náhradník', '$2b$08$SbsfIVBb8HzJggIz78GTMeq6Jk75JTqjp4f4peh3144LV4DFMKs4q', 10, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 2, 1, 1, 1, 1, 69, 1, 1, 2, 2, 2, 69, 2, 2, 2, 69, 2, 69, 2, 69),
+(191, 'nahr.3', '3 Náhradník', '$2b$08$Hr0KJEmApRFjOIz93XltC.O0NYbTRMwCFTsbWpR4qF4c..JDa6YVm', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(192, 'nahr.4', '4 Náhradník', '$2b$08$EnnJGzkMpcfZxWhgDHMJauGtHxGNNXeG4i.uBGl2fLAAPjQE6SGQi', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(193, 'nahr.5', '5 Náhradník', '$2b$08$GML9PQoiLLSLhPUwPAlbUOv.K9VFtacN4StBK.QuV1THUkVV20kIi', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(194, 'nahr.6', '6 Náhradník', '$2b$08$tHeFbviJXaGbLivgm13AZuIeYO16oPyS.Y9Hh2O.GE1U3FTIYuXxC', 10, 60177756, 'C0FFEE', 0, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(195, 'nahr.7', '7 Náhradník', '$2b$08$W64PjePY4vOcUqxQoOMcd.NAO.y.9rmHgP16WnZzR8jYhdZbQ3t0O', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(196, 'nahr.8', '8 Náhradník', '$2b$08$kukOhnAdNc.lvAKtPQ9oiO5bc9YNipAbh5TK0DwmII013eNWdXqLW', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 69, 69, 96, 96, 96, 96, 96),
+(197, 'nahr.9', '9 Náhradník', '$2b$08$iKtnS6YhS2uqz4OzdYnKau8Qz4L1Y.jTeyvDiav2kvOFzm5j.Qjv2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(198, 'nahr.10', '10 Náhradník', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96);
 
 --
 -- Klíče pro exportované tabulky
 --
+
+--
+-- Klíče pro tabulku `attendances_alba_rosa_parlament`
+--
+ALTER TABLE `attendances_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idattendances_parlament`),
+  ADD KEY `fk_attendance_user` (`idusers`),
+  ADD KEY `fk_attendance_meeting` (`idmeetings`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -4953,6 +4995,12 @@ ALTER TABLE `log_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idlog_purkyn`);
 
 --
+-- Klíče pro tabulku `meetings_alba_rosa_parlament`
+--
+ALTER TABLE `meetings_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idmeetings`);
+
+--
 -- Klíče pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
@@ -4978,6 +5026,14 @@ ALTER TABLE `school_alba_rosa`
   ADD KEY `idschool_2` (`idschool`);
 
 --
+-- Klíče pro tabulku `tokens_alba_rosa_parlament`
+--
+ALTER TABLE `tokens_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idtokens_parlament`),
+  ADD KEY `fk_token_user` (`idusers`),
+  ADD KEY `fk_token_meeting` (`idmeetings`);
+
+--
 -- Klíče pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
@@ -4996,6 +5052,11 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- AUTO_INCREMENT pro tabulky
 --
 
+--
+-- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
+--
+ALTER TABLE `attendances_alba_rosa_parlament`
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
@@ -5032,6 +5093,11 @@ ALTER TABLE `logs_alba_rosa_purkinc`
 ALTER TABLE `logs_alba_rosa_purkyn`
   MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1490;
 --
+-- AUTO_INCREMENT pro tabulku `meetings_alba_rosa_parlament`
+--
+ALTER TABLE `meetings_alba_rosa_parlament`
+  MODIFY `idmeetings` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
@@ -5047,6 +5113,11 @@ ALTER TABLE `other_alba_rosa`
 ALTER TABLE `school_alba_rosa`
   MODIFY `idschool` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT pro tabulku `tokens_alba_rosa_parlament`
+--
+ALTER TABLE `tokens_alba_rosa_parlament`
+  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
@@ -5056,6 +5127,24 @@ ALTER TABLE `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
   MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=199;
+--
+-- Omezení pro exportované tabulky
+--
+
+--
+-- Omezení pro tabulku `attendances_alba_rosa_parlament`
+--
+ALTER TABLE `attendances_alba_rosa_parlament`
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
+
+--
+-- Omezení pro tabulku `tokens_alba_rosa_parlament`
+--
+ALTER TABLE `tokens_alba_rosa_parlament`
+  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
