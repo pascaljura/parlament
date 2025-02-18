@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Úte 18. úno 2025, 11:27
+-- Vytvořeno: Úte 18. úno 2025, 21:26
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings_parlament` int(11) NOT NULL,
+  `idmeetings` int(11) NOT NULL,
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -102,7 +102,7 @@ INSERT INTO `files_alba_rosa_file_storage` (`id_file`, `id_user`, `code`, `fileN
 --
 
 CREATE TABLE IF NOT EXISTS `gamehub_private_alba_rosa` (
-  `idgamehub` int(11) NOT NULL,
+  `idgamehub_private` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `buttons` varchar(9999) DEFAULT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `gamehub_private_alba_rosa` (
 -- Vypisuji data pro tabulku `gamehub_private_alba_rosa`
 --
 
-INSERT INTO `gamehub_private_alba_rosa` (`idgamehub`, `icon`, `name`, `buttons`, `description`) VALUES
+INSERT INTO `gamehub_private_alba_rosa` (`idgamehub_private`, `icon`, `name`, `buttons`, `description`) VALUES
 (4, '<i class="fa-solid fa-game-console-handheld"></i>', 'Poppy Playtime!', '<button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime_chapter_4.zip'', ''_blank'');">\n    <i class="fa-solid fa-up-right-from-square"></i>Chapter 4 ZIP</button>\n    <button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime_all_chapters.zip'', ''_blank'');">\n    <i class="fa-solid fa-up-right-from-square"></i>All chapters ZIP</button>\n<button class="project-button" onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');">\n    <i class="fa-solid fa-sack-dollar"></i>Donate</button>\n<button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime.txt'', ''_blank'');">\n    <img src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'Ever wanted to work at a toy factory? Well, now you can. But nothing comes without a catch...'),
 (5, '<i class="fa-solid fa-game-console-handheld"></i>', 'Choo-Choo Charles!', '<button class="project-button" onclick="window.open(''../sn0wix/Choo-choo-charles.zip'', ''_blank'');"><i\n        class="fa-solid fa-up-right-from-square"></i>ZIP</button><button class="project-button"\n    onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');"><i\n        class="fa-solid fa-sack-dollar"></i>Donate</button><button class="project-button"\n    onclick="window.open(''../sn0wix/Choo_choo_charles.txt'', ''_blank'');"><img\n        src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'A spider-like locomotive, that hunts you down across an island with a secret story, that you have to uncover yourself... \n'),
 (6, '<i class="fa-solid fa-game-console-handheld"></i>', 'Raft', '<button class="project-button" onclick="window.open(''../sn0wix/Raft.v1.09.zip'', ''_blank'');"><i\n        class="fa-solid fa-up-right-from-square"></i>v1.09 ZIP</button>\n<button class="project-button" onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');"><i\n        class="fa-solid fa-sack-dollar"></i>Donate</button>\n<button class="project-button" onclick="window.open(''../sn0wix/Raft.txt'', ''_blank'');"><img\n        src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'A utopian world that you explore with your own raft.'),
@@ -126,7 +126,7 @@ INSERT INTO `gamehub_private_alba_rosa` (`idgamehub`, `icon`, `name`, `buttons`,
 --
 
 CREATE TABLE IF NOT EXISTS `gamehub_public_alba_rosa` (
-  `idgamehub` int(11) NOT NULL,
+  `idgamehub_public` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `gamehub_public_alba_rosa` (
 -- Vypisuji data pro tabulku `gamehub_public_alba_rosa`
 --
 
-INSERT INTO `gamehub_public_alba_rosa` (`idgamehub`, `icon`, `name`, `github`, `web`, `description`) VALUES
+INSERT INTO `gamehub_public_alba_rosa` (`idgamehub_public`, `icon`, `name`, `github`, `web`, `description`) VALUES
 (1, '&#9839;', 'Tic Tac Toe!', 'https://github.com/matkolo1/tictactoe/', 'https://matkolo1-tictactoe.glitch.me/', 'Basic Tic Tac Toe game with changeable size of the grid.'),
 (2, '<i class="far fa-square"></i>', 'Purpix!', 'https://github.com/matkolo1/purpix/', '../purpix/', 'If you like semi-coding, you can try this one.'),
 (3, '<i class="fa fa-hand-pointer-o"></i>', 'Popclicker!', 'https://github.com/pascaljura/poclicker/', '../popclicker/', 'You know cookie clicker? Try this one with our own characters.');
@@ -180,16 +180,16 @@ INSERT INTO `help_alba_rosa_purkyn` (`idhelp_purkyn`, `idlog_purkyn`, `level`, `
 --
 
 CREATE TABLE IF NOT EXISTS `logins_alba_rosa_purpix` (
-  `idlogins` int(11) NOT NULL,
+  `idlogins_purpix` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logins_alba_rosa_purpix`
 --
 
-INSERT INTO `logins_alba_rosa_purpix` (`idlogins`, `idusers`, `time`) VALUES
+INSERT INTO `logins_alba_rosa_purpix` (`idlogins_purpix`, `idusers`, `time`) VALUES
 (1, 19, '2024-04-17 16:21:57'),
 (2, 17, '2024-05-05 12:38:22'),
 (3, 31, '2024-06-11 09:01:17'),
@@ -218,7 +218,9 @@ INSERT INTO `logins_alba_rosa_purpix` (`idlogins`, `idusers`, `time`) VALUES
 (26, 17, '2025-02-06 20:06:36'),
 (27, 17, '2025-02-06 20:06:42'),
 (28, 17, '2025-02-06 20:07:08'),
-(29, 17, '2025-02-06 20:23:05');
+(29, 17, '2025-02-06 20:23:05'),
+(30, 17, '2025-02-18 12:23:42'),
+(31, 17, '2025-02-18 20:15:33');
 
 -- --------------------------------------------------------
 
@@ -227,7 +229,7 @@ INSERT INTO `logins_alba_rosa_purpix` (`idlogins`, `idusers`, `time`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `logouts_alba_rosa_purpix` (
-  `idlogouts` int(11) NOT NULL,
+  `idlogouts_purpix` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -236,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `logouts_alba_rosa_purpix` (
 -- Vypisuji data pro tabulku `logouts_alba_rosa_purpix`
 --
 
-INSERT INTO `logouts_alba_rosa_purpix` (`idlogouts`, `idusers`, `time`) VALUES
+INSERT INTO `logouts_alba_rosa_purpix` (`idlogouts_purpix`, `idusers`, `time`) VALUES
 (1, 34, '2024-07-06 10:12:06'),
 (2, 72, '2024-12-12 13:35:29'),
 (3, 66, '2024-12-12 16:48:10'),
@@ -249,19 +251,19 @@ INSERT INTO `logouts_alba_rosa_purpix` (`idlogouts`, `idusers`, `time`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkinc` (
-  `idlogs` int(11) NOT NULL,
+  `idlogs_purkinc` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `lvl` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp(),
   `logid` int(11) NOT NULL,
   `info` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2791 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2876 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkinc`
 --
 
-INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
 (297, 3, '0', '2025-02-04 11:45:25', 0, ''),
 (298, 156, '0', '2025-02-05 08:00:34', 0, ''),
 (299, 156, 't1', '2025-02-05 08:00:39', 2, ''),
@@ -817,7 +819,7 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid
 (849, 172, 't3', '2025-02-05 08:17:44', 4, 'fnInput();fnJump0(3);#NULL;fnOutput();fnJump(1);'),
 (850, 186, '4', '2025-02-05 08:17:44', 2, ''),
 (851, 185, 't2', '2025-02-05 08:17:47', 2, '');
-INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
 (852, 183, 't3', '2025-02-05 08:17:47', 4, 'fnInput();fnOutput();fnJump0(0);fnJump(0);#NULL;'),
 (853, 160, 't3', '2025-02-05 08:17:48', 4, 'fnInput();fnJump0(1);fnInput();fnOutput();fnJump(0);'),
 (854, 187, 't5', '2025-02-05 08:17:50', 3, 'fnInput();fnStore();#NULL;#NULL;#NULL;#NULL;#NULL;'),
@@ -1351,7 +1353,7 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid
 (1382, 187, '4', '2025-02-05 08:31:07', 2, ''),
 (1383, 167, '3', '2025-02-05 08:31:08', 3, 'fnInput();fnAdd(0);fnStore(0);fnOutput();fnJump(0);'),
 (1384, 186, '6', '2025-02-05 08:31:10', 4, 'fnInput();fnJump0(9);fnJumpN(5);fnAdd(0);fnStore(0);fnJump(0);fnAdd(1);fnStore(0);fnJump(0);fnCopy(0);fnOutput();fnCopy(1);fnOutput();#NULL;');
-INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
 (1385, 167, '4', '2025-02-05 08:31:11', 2, ''),
 (1386, 186, '6', '2025-02-05 08:31:14', 4, 'fnInput();fnJump0(9);fnJumpN(5);fnAdd(0);fnStore(0);fnJump(0);fnAdd(1);fnStore(0);fnJump(0);fnCopy(0);fnOutput();fnCopy(1);fnOutput();#NULL;'),
 (1387, 185, 't3', '2025-02-05 08:31:19', 4, 'fnInput();fnJump(3);fnOutput();fnJump0(2);#NULL;'),
@@ -1822,7 +1824,7 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid
 (1852, 160, 't4', '2025-02-05 09:35:29', 3, 'fnInput();fnJumpN(0);fnJump(0);#NULL;#NULL;'),
 (1853, 160, '1', '2025-02-05 09:35:33', 2, ''),
 (1854, 156, 't5', '2025-02-05 09:35:33', 4, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnJump(0);#NULL;');
-INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
 (1855, 178, 't1', '2025-02-05 09:35:39', 4, '#NULL;fnOutput();#NULL;#NULL;#NULL;#NULL;#NULL;#NULL;#NULL;fnOutput();'),
 (1856, 156, 't5', '2025-02-05 09:35:40', 4, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnJump(0);#NULL;'),
 (1857, 156, 't5', '2025-02-05 09:35:41', 4, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnJump(0);#NULL;'),
@@ -2312,7 +2314,7 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid
 (2341, 185, '5', '2025-02-05 10:25:18', 4, 'fnInput();fnJump0(3);fnJumpN(5);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnJump(3);'),
 (2342, 185, '5', '2025-02-05 10:25:20', 5, 'fnInput();fnJump0(3);fnJumpN(5);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnJump(3);'),
 (2343, 185, '5', '2025-02-05 10:25:21', 3, 'fnInput();fnJump0(3);fnJumpN(5);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnJump(3);');
-INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
 (2344, 185, '5', '2025-02-05 10:25:22', 3, 'fnInput();fnJump0(3);fnJumpN(5);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnJump(3);'),
 (2345, 185, '6', '2025-02-05 10:25:24', 2, ''),
 (2346, 158, 't4', '2025-02-05 10:25:25', 4, 'fnInput();fnJump(4);fnJumpN(0);#NULL;fnOutput();'),
@@ -2759,7 +2761,93 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs`, `idusers`, `lvl`, `time`, `logid
 (2787, 196, '5', '2025-02-06 20:27:28', 4, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnAdd(0);fnAdd(0);fnOutput();fnJump(0);'),
 (2788, 196, '5', '2025-02-06 20:27:52', 4, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
 (2789, 196, '5', '2025-02-06 20:28:17', 5, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
-(2790, 196, '5', '2025-02-06 20:28:34', 3, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);');
+(2790, 196, '5', '2025-02-06 20:28:34', 3, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
+(2791, 199, '0', '2025-02-18 15:33:28', 0, ''),
+(2792, 199, '12', '2025-02-18 15:47:24', 2, ''),
+(2793, 199, '12', '2025-02-18 15:47:27', 4, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2794, 199, '12', '2025-02-18 16:06:58', 2, ''),
+(2795, 199, '12', '2025-02-18 16:07:01', 4, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2796, 199, '12', '2025-02-18 16:07:38', 5, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2797, 199, '12', '2025-02-18 16:07:42', 3, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2798, 199, '12', '2025-02-18 16:07:42', 3, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2799, 199, 't1', '2025-02-18 16:07:56', 2, ''),
+(2800, 199, 't1', '2025-02-18 16:07:58', 4, 'fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();'),
+(2801, 199, 't1', '2025-02-18 16:08:01', 5, 'fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();'),
+(2802, 199, 't1', '2025-02-18 16:08:02', 3, 'fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();'),
+(2803, 199, 't1', '2025-02-18 16:08:02', 3, 'fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();fnInput();fnOutput();'),
+(2804, 199, 't2', '2025-02-18 16:08:10', 2, ''),
+(2805, 199, 't2', '2025-02-18 16:08:11', 4, 'fnInput();fnOutput();fnJump(0);'),
+(2806, 199, 't2', '2025-02-18 16:08:13', 5, 'fnInput();fnOutput();fnJump(0);'),
+(2807, 199, 't2', '2025-02-18 16:08:14', 3, 'fnInput();fnOutput();fnJump(0);'),
+(2808, 199, 't3', '2025-02-18 16:08:25', 2, ''),
+(2809, 199, 't3', '2025-02-18 16:08:29', 4, 'fnInput();fnJump0(3);fnJump(0);fnOutput();fnJump(0);'),
+(2810, 199, 't3', '2025-02-18 16:08:38', 5, 'fnInput();fnJump0(3);fnJump(0);fnOutput();fnJump(0);'),
+(2811, 199, 't3', '2025-02-18 16:08:39', 3, 'fnInput();fnJump0(3);fnJump(0);fnOutput();fnJump(0);'),
+(2812, 199, 't4', '2025-02-18 16:08:46', 2, ''),
+(2813, 199, 't4', '2025-02-18 16:08:47', 4, 'fnInput();fnJumpN(3);fnJump(0);fnOutput();fnJump(0);'),
+(2814, 199, 't4', '2025-02-18 16:08:53', 5, 'fnInput();fnJumpN(3);fnJump(0);fnOutput();fnJump(0);'),
+(2815, 199, 't4', '2025-02-18 16:08:54', 3, 'fnInput();fnJumpN(3);fnJump(0);fnOutput();fnJump(0);'),
+(2816, 199, 't6', '2025-02-18 16:09:06', 2, ''),
+(2817, 199, 't6', '2025-02-18 16:09:08', 4, 'fnInput();fnAdd(0);fnOutput();fnJump(0);'),
+(2818, 199, 't6', '2025-02-18 16:09:12', 5, 'fnInput();fnAdd(0);fnOutput();fnJump(0);'),
+(2819, 199, 't6', '2025-02-18 16:09:13', 3, 'fnInput();fnAdd(0);fnOutput();fnJump(0);'),
+(2820, 199, 't5', '2025-02-18 16:09:20', 2, ''),
+(2821, 199, 't5', '2025-02-18 16:09:21', 4, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnOutput();fnJump(0);'),
+(2822, 199, 't5', '2025-02-18 16:09:24', 5, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnOutput();fnJump(0);'),
+(2823, 199, 't5', '2025-02-18 16:09:26', 3, 'fnInput();fnStore(0);fnInput();fnOutput();fnCopy(0);fnOutput();fnJump(0);'),
+(2824, 199, 't7', '2025-02-18 16:09:36', 2, ''),
+(2825, 199, 't7', '2025-02-18 16:09:40', 4, 'fnInput();fnSub(0);fnOutput();fnJump(0);'),
+(2826, 199, 't7', '2025-02-18 16:09:42', 5, 'fnInput();fnSub(0);fnOutput();fnJump(0);'),
+(2827, 199, 't7', '2025-02-18 16:09:43', 3, 'fnInput();fnSub(0);fnOutput();fnJump(0);'),
+(2828, 199, '1', '2025-02-18 16:09:48', 2, ''),
+(2829, 199, '1', '2025-02-18 16:09:52', 4, 'fnInput();fnJump0(4);fnJumpN(4);fnOutput();fnJump(0);'),
+(2830, 199, '1', '2025-02-18 16:09:54', 5, 'fnInput();fnJump0(4);fnJumpN(4);fnOutput();fnJump(0);'),
+(2831, 199, '1', '2025-02-18 16:09:55', 3, 'fnInput();fnJump0(4);fnJumpN(4);fnOutput();fnJump(0);'),
+(2832, 199, '2', '2025-02-18 16:10:00', 2, ''),
+(2833, 199, '2', '2025-02-18 16:10:04', 4, 'fnInput();fnOutput();fnInput();fnJump(0);'),
+(2834, 199, '2', '2025-02-18 16:10:05', 5, 'fnInput();fnOutput();fnInput();fnJump(0);'),
+(2835, 199, '2', '2025-02-18 16:10:06', 3, 'fnInput();fnOutput();fnInput();fnJump(0);'),
+(2836, 199, '3', '2025-02-18 16:10:14', 2, ''),
+(2837, 199, '3', '2025-02-18 16:10:16', 4, 'fnInput();fnAdd(0);fnStore(0);fnOutput();fnJump(0);'),
+(2838, 199, '3', '2025-02-18 16:10:18', 5, 'fnInput();fnAdd(0);fnStore(0);fnOutput();fnJump(0);'),
+(2839, 199, '3', '2025-02-18 16:10:19', 3, 'fnInput();fnAdd(0);fnStore(0);fnOutput();fnJump(0);'),
+(2840, 199, '4', '2025-02-18 16:10:34', 2, ''),
+(2841, 199, '4', '2025-02-18 16:10:37', 4, 'fnInput();fnJump0(5);fnAdd(0);fnStore(0);fnJump(0);fnCopy(0);fnOutput();fnInput();fnStore(0);fnJump(0);#NULL;'),
+(2842, 199, '4', '2025-02-18 16:10:41', 5, 'fnInput();fnJump0(5);fnAdd(0);fnStore(0);fnJump(0);fnCopy(0);fnOutput();fnInput();fnStore(0);fnJump(0);#NULL;'),
+(2843, 199, '4', '2025-02-18 16:10:42', 3, 'fnInput();fnJump0(5);fnAdd(0);fnStore(0);fnJump(0);fnCopy(0);fnOutput();fnInput();fnStore(0);fnJump(0);#NULL;'),
+(2844, 199, '5', '2025-02-18 16:10:48', 2, ''),
+(2845, 199, '5', '2025-02-18 16:10:49', 4, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
+(2846, 199, '5', '2025-02-18 16:10:52', 5, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
+(2847, 199, '5', '2025-02-18 16:10:53', 3, 'fnInput();fnJumpN(4);fnOutput();fnJump(0);fnStore(0);fnSub(0);fnSub(0);fnOutput();fnJump(0);'),
+(2848, 199, '6', '2025-02-18 16:11:02', 2, ''),
+(2849, 199, '6', '2025-02-18 16:11:05', 4, 'fnInput();fnJump0(9);fnJumpN(6);fnAdd(0);fnStore(0);fnJump(0);fnAdd(1);fnStore(1);fnJump(0);fnCopy(0);fnOutput();fnCopy(1);fnOutput();#NULL;'),
+(2850, 199, '6', '2025-02-18 16:11:08', 5, 'fnInput();fnJump0(9);fnJumpN(6);fnAdd(0);fnStore(0);fnJump(0);fnAdd(1);fnStore(1);fnJump(0);fnCopy(0);fnOutput();fnCopy(1);fnOutput();#NULL;'),
+(2851, 199, '6', '2025-02-18 16:11:11', 3, 'fnInput();fnJump0(9);fnJumpN(6);fnAdd(0);fnStore(0);fnJump(0);fnAdd(1);fnStore(1);fnJump(0);fnCopy(0);fnOutput();fnCopy(1);fnOutput();#NULL;'),
+(2852, 199, '7', '2025-02-18 16:11:17', 2, ''),
+(2853, 199, '7', '2025-02-18 16:11:18', 4, 'fnInput();fnStore(0);fnAdd(0);fnOutput();fnJump(0);'),
+(2854, 199, '7', '2025-02-18 16:11:21', 5, 'fnInput();fnStore(0);fnAdd(0);fnOutput();fnJump(0);');
+INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers`, `lvl`, `time`, `logid`, `info`) VALUES
+(2855, 199, '7', '2025-02-18 16:11:23', 3, 'fnInput();fnStore(0);fnAdd(0);fnOutput();fnJump(0);'),
+(2856, 199, '8', '2025-02-18 16:11:30', 2, ''),
+(2857, 199, '8', '2025-02-18 16:11:32', 4, 'fnInput();fnStore(0);fnOutput();fnCopy(0);fnSub(1);fnJumpN(0);fnJump(1);'),
+(2858, 199, '8', '2025-02-18 16:11:40', 5, 'fnInput();fnStore(0);fnOutput();fnCopy(0);fnSub(1);fnJumpN(0);fnJump(1);'),
+(2859, 199, '8', '2025-02-18 16:11:41', 3, 'fnInput();fnStore(0);fnOutput();fnCopy(0);fnSub(1);fnJumpN(0);fnJump(1);'),
+(2860, 199, '9', '2025-02-18 16:11:48', 2, ''),
+(2861, 199, '9', '2025-02-18 16:11:50', 4, 'fnInput();fnStore(0);fnSub(1);fnJumpN(5);fnJump(0);fnCopy(0);fnOutput();fnJump(0);'),
+(2862, 199, '9', '2025-02-18 16:11:54', 5, 'fnInput();fnStore(0);fnSub(1);fnJumpN(5);fnJump(0);fnCopy(0);fnOutput();fnJump(0);'),
+(2863, 199, '9', '2025-02-18 16:11:55', 3, 'fnInput();fnStore(0);fnSub(1);fnJumpN(5);fnJump(0);fnCopy(0);fnOutput();fnJump(0);'),
+(2864, 199, '10', '2025-02-18 16:12:01', 2, ''),
+(2865, 199, '10', '2025-02-18 16:12:03', 4, 'fnInput();fnStore(0);fnSub(2);fnStore(1);fnAdd(0);fnStore(0);fnCopy(1);fnJump0(9);fnJump(2);fnCopy(0);fnOutput();fnJump(0);'),
+(2866, 199, '10', '2025-02-18 16:12:10', 5, 'fnInput();fnStore(0);fnSub(2);fnStore(1);fnAdd(0);fnStore(0);fnCopy(1);fnJump0(9);fnJump(2);fnCopy(0);fnOutput();fnJump(0);'),
+(2867, 199, '10', '2025-02-18 16:12:11', 3, 'fnInput();fnStore(0);fnSub(2);fnStore(1);fnAdd(0);fnStore(0);fnCopy(1);fnJump0(9);fnJump(2);fnCopy(0);fnOutput();fnJump(0);'),
+(2868, 199, '11', '2025-02-18 16:12:15', 2, ''),
+(2869, 199, '11', '2025-02-18 16:12:17', 4, 'fnInput();fnJump0(4);fnJumpN(4);fnJump(5);fnJump(0);fnStore(0);fnStore(1);fnSub(3);fnStore(2);fnJump0(15);fnCopy(0);fnAdd(1);fnStore(0);fnCopy(2);fnJump(7);fnCopy(0);fnOutput();fnJump(0);#NULL;'),
+(2870, 199, '11', '2025-02-18 16:12:24', 5, 'fnInput();fnJump0(4);fnJumpN(4);fnJump(5);fnJump(0);fnStore(0);fnStore(1);fnSub(3);fnStore(2);fnJump0(15);fnCopy(0);fnAdd(1);fnStore(0);fnCopy(2);fnJump(7);fnCopy(0);fnOutput();fnJump(0);#NULL;'),
+(2871, 199, '11', '2025-02-18 16:12:25', 3, 'fnInput();fnJump0(4);fnJumpN(4);fnJump(5);fnJump(0);fnStore(0);fnStore(1);fnSub(3);fnStore(2);fnJump0(15);fnCopy(0);fnAdd(1);fnStore(0);fnCopy(2);fnJump(7);fnCopy(0);fnOutput();fnJump(0);#NULL;'),
+(2872, 199, '12', '2025-02-18 16:12:36', 2, ''),
+(2873, 199, '12', '2025-02-18 16:12:45', 4, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2874, 199, '12', '2025-02-18 16:13:23', 5, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2875, 199, '12', '2025-02-18 16:13:24', 3, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);');
 
 -- --------------------------------------------------------
 
@@ -2773,7 +2861,7 @@ CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkyn` (
   `idlog_purkyn` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `text` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1490 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1526 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkyn`
@@ -4269,7 +4357,43 @@ INSERT INTO `logs_alba_rosa_purkyn` (`idlogs_purkyn`, `idusers_purkiada`, `idlog
 (1486, 176, 16, '2025-02-05 11:53:45', NULL),
 (1487, 176, 16, '2025-02-05 11:54:00', NULL),
 (1488, 181, 253, '2025-02-05 11:54:48', 'https://networkhunt.com/how-to-add-repositories-in-linux/'),
-(1489, 181, 253, '2025-02-05 11:54:54', 'add-apt-repository');
+(1489, 181, 253, '2025-02-05 11:54:54', 'add-apt-repository'),
+(1490, 2, 201, '2025-02-18 17:04:42', NULL),
+(1491, 2, 1, '2025-02-18 17:04:49', NULL),
+(1492, 2, 1, '2025-02-18 17:06:15', NULL),
+(1493, 2, 1, '2025-02-18 17:07:28', NULL),
+(1494, 2, 21, '2025-02-18 17:08:21', NULL),
+(1495, 2, 2, '2025-02-18 17:09:10', NULL),
+(1496, 2, 3, '2025-02-18 17:09:23', NULL),
+(1497, 2, 205, '2025-02-18 17:11:09', NULL),
+(1498, 2, 203, '2025-02-18 17:12:08', 'Uložena hodnota do sloupce purkyn_level_1_1: 10'),
+(1499, 2, 4, '2025-02-18 17:12:12', NULL),
+(1500, 2, 206, '2025-02-18 17:12:37', NULL),
+(1501, 2, 203, '2025-02-18 17:14:54', 'Uložena hodnota do sloupce purkyn_level_1_2: 60177756'),
+(1502, 2, 5, '2025-02-18 17:14:59', NULL),
+(1503, 2, 207, '2025-02-18 17:14:59', NULL),
+(1504, 2, 203, '2025-02-18 17:16:26', 'Uložena hodnota do sloupce purkyn_level_1_3: C0FFEE'),
+(1505, 2, 6, '2025-02-18 17:16:29', NULL),
+(1506, 2, 14, '2025-02-18 17:16:37', NULL),
+(1507, 2, 7, '2025-02-18 17:16:38', NULL),
+(1508, 2, 8, '2025-02-18 17:16:42', NULL),
+(1509, 2, 9, '2025-02-18 17:17:00', NULL),
+(1510, 2, 11, '2025-02-18 17:18:16', NULL),
+(1511, 2, 12, '2025-02-18 17:19:50', NULL),
+(1512, 2, 36, '2025-02-18 17:19:57', NULL),
+(1513, 2, 13, '2025-02-18 17:20:05', NULL),
+(1514, 2, 254, '2025-02-18 17:20:10', 'Uložena hodnota do sloupce purkyn_level_3_1: .zip'),
+(1515, 2, 19, '2025-02-18 17:20:11', NULL),
+(1516, 2, 20, '2025-02-18 17:20:14', NULL),
+(1517, 2, 10, '2025-02-18 17:22:22', NULL),
+(1518, 2, 22, '2025-02-18 17:22:33', NULL),
+(1519, 2, 251, '2025-02-18 17:22:59', NULL),
+(1520, 2, 251, '2025-02-18 17:29:41', NULL),
+(1521, 2, 22, '2025-02-18 17:29:44', NULL),
+(1522, 2, 251, '2025-02-18 17:29:45', NULL),
+(1523, 2, 22, '2025-02-18 17:29:48', NULL),
+(1524, 2, 251, '2025-02-18 17:30:06', NULL),
+(1525, 2, 22, '2025-02-18 17:30:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -4278,7 +4402,7 @@ INSERT INTO `logs_alba_rosa_purkyn` (`idlogs_purkyn`, `idusers_purkiada`, `idlog
 --
 
 CREATE TABLE IF NOT EXISTS `log_alba_rosa_purkinc` (
-  `idloginfo` int(11) NOT NULL,
+  `idlog_purkinc` int(11) NOT NULL,
   `text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -4286,7 +4410,7 @@ CREATE TABLE IF NOT EXISTS `log_alba_rosa_purkinc` (
 -- Vypisuji data pro tabulku `log_alba_rosa_purkinc`
 --
 
-INSERT INTO `log_alba_rosa_purkinc` (`idloginfo`, `text`) VALUES
+INSERT INTO `log_alba_rosa_purkinc` (`idlog_purkinc`, `text`) VALUES
 (0, 'LogIn'),
 (1, 'LogOut'),
 (2, 'lvl open'),
@@ -4634,7 +4758,7 @@ CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
   `datum` date NOT NULL,
   `cislo_dokumentu` varchar(255) DEFAULT NULL,
   `zapis` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
@@ -4684,7 +4808,8 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `datum`
 (73, 65, '2024-12-10', '18.02.09', '**Vánoční program**=- potvrzena účast čichny a grafické=- zálohy: Vaněk, Gažová, Boucník, Macháčková, Bednařík, Petrčková, Topinka=- tělocvična - Buchtová=- dozory - Šístková, Mužová, Eliášová?, Čížková?, Kaloková?==**Web parlamentu**=- text o nás - Odehnal, Kořalka==**Nápady**=- stanovení pravidel pro odemčení klavíru==**Participativní rozpočet - brainstorming**=- vytvoření seznamu nápadů, který se předloží vedení=='),
 (74, 67, '2024-12-17', '18.02.10', '**Vánoční program**=- 20.12. od 8:30 hod. do cca 12 hod.=- 3 lidi z čichny=- dozory zajištěny=- deskovky:  karty, Sázky a dostihy, šachy=- filmy: Kačmařík, Němec (Pokorná)=- konzole: Abbod, (Buchtová)=- káva: Abbod==**Tři králové**=- dne 9.1.2025=- 1. až 3. vyuč. hodina – rozvrhy zajištěny=- skupinka 1: Jarda Šmarda, Martin Němec, Kateřina Pokorná=- skupina 2: Roman Kačmařík, Jakub Kropáček, Anežka Macháčková=- rozhlas možná v úterý?=- plakát – dát i na soc. sítě=- napsat učitelům'),
 (75, 66, '2025-01-07', '18.02.11', '**Tři králové**=- Vše je již vyřešeno =- Rozdávání plakátků do tříd=- Vyhlásit rozhlasem=**Participativní rozpočet**=- 4 návrhy potvrzeny ředitelstvím=- Vybrat zástupce pro každý návrh=-- Fotbálek (relax zóna) - Ondřej Tureček=-- Výběh - [volno]=-- Modernizace posilovny - Sarah Buchtová=-- Společenská akce - Jakub Kropáček, Anežka Macháčková=- Popřemýšlet nad realizací každého projektu =- Deadline 21.ledna=- Vyjádření pana ředitele na ostatní návrhy:=-- Dveře na ISIC možná projdou=-- Nástěnné židle ve 4. patře - jsou zde stěny ze sádrokartonu=-- Modernizace turniketů - dokud budou fungovat, tak se nebudou modernizovat=-- Větráky - 1 větrák do třídy je málo=-- Dámské potřeby - příliš rychle vybrané, jsme velká škola=-- Akvárium - kdo by se o něj staral?=-- Obrázky u objednávání jídel - není, kdo by je nahrával=-- Posouvací tabule - postupně se předělávají=-- Zatemnění do třídy - špatné stěny na realizaci'),
-(76, 66, '2025-01-14', '18.02.12', '**Tři králové**=- ukončeno=- děkujeme všem, především ale dárcům =**Valentýn**=- Na starost: Michaela Gažová=- Propagace, vystřihování srdíček, schránky=- 3.-7. 2. schránky=- 19.-20. 2. rozdávání srdíček=**Volba**=- Zastupující nástěnkář: Michaela Gažová');
+(76, 66, '2025-01-14', '18.02.12', '**Tři králové**=- ukončeno=- děkujeme všem, především ale dárcům =**Valentýn**=- Na starost: Michaela Gažová=- Propagace, vystřihování srdíček, schránky=- 3.-7. 2. schránky=- 19.-20. 2. rozdávání srdíček=**Volba**=- Zastupující nástěnkář: Michaela Gažová'),
+(77, 65, '2025-02-18', '18.02.13', '**Valentýn**=- třídění valentýnek, rozdávání ve středu o přestávkách=- __Rozdávání: __=-- Linda Piskorová=-- Anežka Macháčková=-- Markéta Hrnčířová=-- Izabela Žárská=-- Patrik Brandejs===**Odpoledne se seniory Čichnova**=3.4.2025 - 12:00 - 16:00=- __Zástupci:__=-- Pokorná, Němec, Macháčková, Havelka, Friedl, Gažová, Boucník, Vaněk, Topinka, Buchtová, Kačmařík, Kořalka===**Participativní rozpočet**=- __První patro __=-- Ondřej Tureček =--fotbálek=--stoly=--použití starých židlí=--sedací pytle==- __Dresy TEV__=-- Michaela Gažová - T1, Friedl Daniel - T1 =--koupě dresů, 15 pro dívky a 15 pro chlapce=--v barvách Purkyňky==- __Společenská akce__=-- Jakub Kropáček, Anežka Macháčková=**Grilovačka po purkyňácku**=--koupě grilů (kupodivu levnější než pronájem)=--výběr dobrovolného příspěvku=**Noc filmů**=--přespávačka ve škole=--dobrovolný příspěvek==- __Výběh__=-- Jiří Boucník=--návrh zahradního posezení=--popularizace výběhu');
 
 -- --------------------------------------------------------
 
@@ -4693,7 +4818,7 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `datum`
 --
 
 CREATE TABLE IF NOT EXISTS `other_alba_rosa` (
-  `idother_parlament` int(11) NOT NULL,
+  `idother` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
@@ -4705,7 +4830,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa` (
 -- Vypisuji data pro tabulku `other_alba_rosa`
 --
 
-INSERT INTO `other_alba_rosa` (`idother_parlament`, `icon`, `name`, `github`, `web`, `description`) VALUES
+INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `description`) VALUES
 (4, '<i class="fa-solid fa-qrcode"></i>', 'Qr code!', 'https://github.com/pascaljura/qr-code/', '../qr-code/', 'A simple QR code generator for all of your needs.');
 
 -- --------------------------------------------------------
@@ -4715,7 +4840,7 @@ INSERT INTO `other_alba_rosa` (`idother_parlament`, `icon`, `name`, `github`, `w
 --
 
 CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
-  `idother_parlament` int(11) NOT NULL,
+  `idother` int(11) NOT NULL,
   `text` longtext NOT NULL,
   `active` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -4724,7 +4849,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 -- Vypisuji data pro tabulku `other_alba_rosa_parlament`
 --
 
-INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
+INSERT INTO `other_alba_rosa_parlament` (`idother`, `text`, `active`) VALUES
 (1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
 (2, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n \r\n            <a href="./assets/img/plakat_0.png" target="_blank">\r\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n        </div>', 1),
 (3, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n            <a href="../assets/img/plakat_0.png" target="_blank">\r\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n       \r\n         \r\n        </div>', 1);
@@ -4736,7 +4861,7 @@ INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) 
 --
 
 CREATE TABLE IF NOT EXISTS `photos_alba_rosa_popclicker` (
-  `idphotos` int(11) NOT NULL,
+  `idphotos_popclicker` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `photos_1` longblob NOT NULL,
   `photos_2` longblob NOT NULL
@@ -4775,7 +4900,7 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
   `idtokens_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings_parlament` int(11) NOT NULL,
+  `idmeetings` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `expires` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -4793,7 +4918,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `password` text NOT NULL,
   `gamehub_private_access` enum('0','1') DEFAULT '0',
   `parlament_access_admin` enum('0','1') DEFAULT '0',
-  `parlament_access_admin_user` enum('0','1') NOT NULL DEFAULT '0',
+  `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
   `purpix_level_1` int(11) NOT NULL DEFAULT 96,
   `purpix_level_2` int(11) NOT NULL DEFAULT 69,
   `purpix_level_3` int(11) NOT NULL DEFAULT 69,
@@ -4810,7 +4935,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
 -- Vypisuji data pro tabulku `users_alba_rosa`
 --
 
-INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_admin_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
+INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
 (17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
@@ -4867,7 +4992,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
   `purkinc_level_10` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_11` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_12` int(11) NOT NULL DEFAULT 96
-) ENGINE=InnoDB AUTO_INCREMENT=199 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_purkiada`
@@ -4875,7 +5000,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
 
 INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, `password`, `purkyn_level_1_1`, `purkyn_level_1_2`, `purkyn_level_1_3`, `purkyn_level_2`, `purkyn_level_3_1`, `purkyn_level_3_2`, `purkyn_level_3_3`, `purkyn_level_4_1`, `purkyn_level_4_2`, `purkyn_level_5`, `purkyn_level_6`, `purkyn_help`, `purkinc_level_t1`, `purkinc_level_t2`, `purkinc_level_t3`, `purkinc_level_t4`, `purkinc_level_t5`, `purkinc_level_t6`, `purkinc_level_t7`, `purkinc_level_1`, `purkinc_level_2`, `purkinc_level_3`, `purkinc_level_4`, `purkinc_level_5`, `purkinc_level_6`, `purkinc_level_7`, `purkinc_level_8`, `purkinc_level_9`, `purkinc_level_10`, `purkinc_level_11`, `purkinc_level_12`) VALUES
 (1, 'boucnik.jiri@gmail.com', ' 0', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', 10, 55, '55', 55, '555', '555', '55', 96, '55', 1, 1, 9, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(2, 'vanek.fanda@centrum.cz', ' 0', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', 69, 96, '96', 96, '96', '', '', 96, '55', 96, 96, 4, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(2, 'vanek.fanda@centrum.cz', ' 0', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', 10, 60177756, 'C0FFEE', 0, '.zip', '', '', 96, '55', 96, 96, 7, 69, 69, 69, 69, 69, 96, 96, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
 (3, 'admin', ' 0', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 2, 0, 0, 1, 69, 1, 69, 1, 69, 1, 69, 69, 69, 69, 69, 69, 69, 69, 69, 69, 2, 2),
 (155, 'fili.vost', 'Vostal  Filip ', '$2b$08$1VEDbNOeRaSjq3G/MCnVeO6vzvDcfNwb3AFTN01XltqoIEbNeTnjG', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
 (156, 'mare.bart', 'Bartošek Marek', '$2b$08$/naaO4dTR/iAT.XJfFAqq.NiGLcw.3MwOZ0NNv70YAa4Jo5McbXl6', 10, 60177756, 'C0FFEE', 1, '.7z', 'Html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 96, 3, 0, 1, 0, 1, 1, 1, 1, 2, 2, 2, 69, 69, 96, 96, 96, 96, 96, 96, 96),
@@ -4920,7 +5045,8 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 (195, 'nahr.7', '7 Náhradník', '$2b$08$W64PjePY4vOcUqxQoOMcd.NAO.y.9rmHgP16WnZzR8jYhdZbQ3t0O', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
 (196, 'nahr.8', '8 Náhradník', '$2b$08$kukOhnAdNc.lvAKtPQ9oiO5bc9YNipAbh5TK0DwmII013eNWdXqLW', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 69, 69, 96, 96, 96, 96, 96),
 (197, 'nahr.9', '9 Náhradník', '$2b$08$iKtnS6YhS2uqz4OzdYnKau8Qz4L1Y.jTeyvDiav2kvOFzm5j.Qjv2', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(198, 'nahr.10', '10 Náhradník', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96);
+(198, 'nahr.10', '10 Náhradník', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
+(199, 'show', 'show', '$2y$10$xKRCYnm6Mg1l581Xvd6DZO4QdRnjFP3jfeRp02cPE0N5YjN79494G', 69, 96, '''96''', 96, '''96''', '''96''', '''96''', 96, '''96''', 96, 96, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
 
 --
 -- Klíče pro exportované tabulky
@@ -4932,7 +5058,7 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
   ADD KEY `fk_attendance_user` (`idusers`),
-  ADD KEY `fk_attendance_meeting` (`idmeetings_parlament`);
+  ADD KEY `fk_attendance_meeting` (`idmeetings`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -4944,13 +5070,13 @@ ALTER TABLE `files_alba_rosa_file_storage`
 -- Klíče pro tabulku `gamehub_private_alba_rosa`
 --
 ALTER TABLE `gamehub_private_alba_rosa`
-  ADD PRIMARY KEY (`idgamehub`);
+  ADD PRIMARY KEY (`idgamehub_private`);
 
 --
 -- Klíče pro tabulku `gamehub_public_alba_rosa`
 --
 ALTER TABLE `gamehub_public_alba_rosa`
-  ADD PRIMARY KEY (`idgamehub`);
+  ADD PRIMARY KEY (`idgamehub_public`);
 
 --
 -- Klíče pro tabulku `help_alba_rosa_purkyn`
@@ -4962,19 +5088,19 @@ ALTER TABLE `help_alba_rosa_purkyn`
 -- Klíče pro tabulku `logins_alba_rosa_purpix`
 --
 ALTER TABLE `logins_alba_rosa_purpix`
-  ADD PRIMARY KEY (`idlogins`);
+  ADD PRIMARY KEY (`idlogins_purpix`);
 
 --
 -- Klíče pro tabulku `logouts_alba_rosa_purpix`
 --
 ALTER TABLE `logouts_alba_rosa_purpix`
-  ADD PRIMARY KEY (`idlogouts`);
+  ADD PRIMARY KEY (`idlogouts_purpix`);
 
 --
 -- Klíče pro tabulku `logs_alba_rosa_purkinc`
 --
 ALTER TABLE `logs_alba_rosa_purkinc`
-  ADD PRIMARY KEY (`idlogs`);
+  ADD PRIMARY KEY (`idlogs_purkinc`);
 
 --
 -- Klíče pro tabulku `logs_alba_rosa_purkyn`
@@ -4986,7 +5112,7 @@ ALTER TABLE `logs_alba_rosa_purkyn`
 -- Klíče pro tabulku `log_alba_rosa_purkinc`
 --
 ALTER TABLE `log_alba_rosa_purkinc`
-  ADD PRIMARY KEY (`idloginfo`);
+  ADD PRIMARY KEY (`idlog_purkinc`);
 
 --
 -- Klíče pro tabulku `log_alba_rosa_purkyn`
@@ -5010,13 +5136,13 @@ ALTER TABLE `notes_alba_rosa_parlament`
 -- Klíče pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
-  ADD PRIMARY KEY (`idother_parlament`);
+  ADD PRIMARY KEY (`idother`);
 
 --
 -- Klíče pro tabulku `other_alba_rosa_parlament`
 --
 ALTER TABLE `other_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idother_parlament`);
+  ADD PRIMARY KEY (`idother`);
 
 --
 -- Klíče pro tabulku `school_alba_rosa`
@@ -5031,7 +5157,7 @@ ALTER TABLE `school_alba_rosa`
 ALTER TABLE `tokens_alba_rosa_parlament`
   ADD PRIMARY KEY (`idtokens_parlament`),
   ADD KEY `fk_token_user` (`idusers`),
-  ADD KEY `fk_token_meeting` (`idmeetings_parlament`);
+  ADD KEY `fk_token_meeting` (`idmeetings`);
 
 --
 -- Klíče pro tabulku `users_alba_rosa`
@@ -5066,32 +5192,32 @@ ALTER TABLE `files_alba_rosa_file_storage`
 -- AUTO_INCREMENT pro tabulku `gamehub_private_alba_rosa`
 --
 ALTER TABLE `gamehub_private_alba_rosa`
-  MODIFY `idgamehub` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `idgamehub_private` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_public_alba_rosa`
 --
 ALTER TABLE `gamehub_public_alba_rosa`
-  MODIFY `idgamehub` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idgamehub_public` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pro tabulku `logins_alba_rosa_purpix`
 --
 ALTER TABLE `logins_alba_rosa_purpix`
-  MODIFY `idlogins` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+  MODIFY `idlogins_purpix` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT pro tabulku `logouts_alba_rosa_purpix`
 --
 ALTER TABLE `logouts_alba_rosa_purpix`
-  MODIFY `idlogouts` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idlogouts_purpix` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkinc`
 --
 ALTER TABLE `logs_alba_rosa_purkinc`
-  MODIFY `idlogs` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2791;
+  MODIFY `idlogs_purkinc` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2876;
 --
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkyn`
 --
 ALTER TABLE `logs_alba_rosa_purkyn`
-  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1490;
+  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1526;
 --
 -- AUTO_INCREMENT pro tabulku `meetings_alba_rosa_parlament`
 --
@@ -5101,12 +5227,12 @@ ALTER TABLE `meetings_alba_rosa_parlament`
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
-  MODIFY `idother_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idother` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pro tabulku `school_alba_rosa`
 --
@@ -5126,7 +5252,7 @@ ALTER TABLE `users_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
-  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=199;
+  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=200;
 --
 -- Omezení pro exportované tabulky
 --
@@ -5135,14 +5261,14 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- Omezení pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 --
 -- Omezení pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
