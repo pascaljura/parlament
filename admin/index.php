@@ -54,16 +54,16 @@ if (isset($_SESSION['idusers'])) {
     // Získání id uživatele ze session
     $idusers = $_SESSION['idusers'];
 
-    // Kontrola přístupu na základě sloupce parlament_access_admin
-    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa WHERE idusers = ?");
+    // Kontrola přístupu na základě sloupce parlament_access_admin_admin
+    $stmtAccess = $conn->prepare("SELECT parlament_access_admin_admin FROM users_alba_rosa WHERE idusers = ?");
     $stmtAccess->bind_param("i", $idusers);
     $stmtAccess->execute();
-    $stmtAccess->bind_result($parlament_access_admin);
+    $stmtAccess->bind_result($parlament_access_admin_admin);
     $stmtAccess->fetch();
     $stmtAccess->close();
 
-    // Pokud není přístup povolen (parlament_access_admin != 1)
-    if ($parlament_access_admin != '1') { ?>
+    // Pokud není přístup povolen (parlament_access_admin_admin != 1)
+    if ($parlament_access_admin_admin != '1') { ?>
         <div id="calendar">
             <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
@@ -266,14 +266,21 @@ if (isset($_SESSION['idusers'])) {
                         underline bold = __**underline bold**__ (podtržený text + tučný text)<br>
                         underline bold italics = __***underline bold italics***__ (podtržený text + tučný text + kurzíva)
                     </div>
-
+                    <div class="table-heading">
+                        <b>&#x1F499;・Správa schůzí</b>
+                    </div>
+                    <div class="button-container" id="buttonContainer">
+                        <form action="create_meeting.php" method="post">
+                            <button type="submit">Zahájit schůzi</button>
+                        </form>
+                    </div>
+                    <hr style="border-top: 1px solid black;border-bottom: none;">
                     <div class="button-container" id="buttonContainer">
                         <form method="post">
                             <button type="submit" name="logout"><i class="fa fa-sign-out"></i> Odhlásit
                                 se</button>
                         </form>
-                    </div>
-                    <hr color="black" style="height: 2px; border: none;" />
+                    </div><br>
 
 
 
@@ -288,7 +295,7 @@ if (isset($_SESSION['idusers'])) {
         $enteredPassword = $_POST["password"];
 
         // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
-        $stmt = $conn->prepare("SELECT idusers, password, parlament_access_admin FROM users_alba_rosa WHERE email = ?");
+        $stmt = $conn->prepare("SELECT idusers, password, parlament_access_admin_admin FROM users_alba_rosa WHERE email = ?");
         $stmt->bind_param("s", $enteredUsername);
         $stmt->execute();
         $stmt->store_result();
@@ -346,10 +353,11 @@ if (isset($_SESSION['idusers'])) {
                                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                                 <label for="password" style="font-size: 16px; margin-bottom: 8px;">Heslo:</label>
                                 <div class="form-input-wrapper">
-                                <input type="password" name="password" id="txt_pwd" required
-                                    style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
-                                <span class="toggle-password" id="toggle_pwd" onclick="togglePassword()"><i
-                                        class="fa fa-eye"></i></span></div>
+                                    <input type="password" name="password" id="txt_pwd" required
+                                        style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
+                                    <span class="toggle-password" id="toggle_pwd" onclick="togglePassword()"><i
+                                            class="fa fa-eye"></i></span>
+                                </div>
                                 <button type="submit"><i class="fa fa-sign-in" aria-hidden="true"></i>
                                     Přihlásit se
                                 </button>
