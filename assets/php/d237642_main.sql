@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Úte 18. úno 2025, 21:26
+-- Vytvořeno: Úte 18. úno 2025, 21:38
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
+  `idmeetings_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings` int(11) NOT NULL,
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -4755,16 +4755,16 @@ CREATE TABLE IF NOT EXISTS `meetings_alba_rosa_parlament` (
 CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
   `idnotes_parlament` int(11) NOT NULL,
   `idusers` int(11) DEFAULT 1,
-  `datum` date NOT NULL,
-  `cislo_dokumentu` varchar(255) DEFAULT NULL,
-  `zapis` longtext NOT NULL
+  `date` date NOT NULL,
+  `document_number` varchar(255) DEFAULT NULL,
+  `notes` longtext NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
 --
 
-INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `datum`, `cislo_dokumentu`, `zapis`) VALUES
+INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `date`, `document_number`, `notes`) VALUES
 (1, 17, '2023-11-01', '18.02.34', '//Čtvrtletní schůze s panem ředitelem//=**Návrhy pro zlepšení chodu školy ze strany studentů:**=- Nabíječky=-- Projekt úspěšný, požadavek na zvýšení počtu nabíječek.=- Automatické propustky při zrušené výuce=-- Nelze, systém není propojený s EduPage.=- Sodobary=-- Výměna sodobarů v ostatních patrech, aby byly jako ve čtvrtém =patře=-- Sodobary jsou pronajaté, záleží na domluvě s pronajímateli.=- Zrcadlo na chodbě=-- Skleněné ne, ale alternativa hliníkové folie je možná, vytipovat více =možností na jejich umístění.=- Beseda s hejtmanem JMK=-- Je možná, záleží na domluvě studentů.=- Slevové kupóny do kantýny=-- Lze vyzkoušet, kupóny by musely mít nějaký systém (aby nedošlo =k jejich zfalšování). Nutné prodiskutovat s provozovatelem, jako =návrh i s učiteli ekonomiky.=- Lepší káva v Delikomatu=-- V automatech není káva, jedná se pouze o kávovinovou směs. Lze =se poptat, ale cena by byla vyšší. Z důvodu umístění automatu ve =škole by však nešlo o kávu. =- Stížnost na chování personálu jako uklízečky a kuchařky=-- Individuální případy se musí řešit přes třídního učitele. Tolerantnější =přístup ze strany kuchařek především na konci směny bude řešen =přes správu budov.=- Halloween=-- Různé pohledy ze strany učitelů na masky studentů ve výuce o=Učitel nemá právo kohokoliv kárat za to, jak je oblečen, konkrétní =případy řešit přes třídního učitele.=- Potíže se školním internetem a Wi-Fi=-- Škola je propojená s VUT, tam problém není, problém je v =metalických rozvodech, výměna za optické kabely stojí mezi 3-5 =miliony. Aktuálně se řeší tepelný výměník. Příští prázdniny se teprve =bude řešit internet a ty následující serverové řízení.=- Omezení Wi-Fi v hodinách, nefunguje ve výuce=-- Omezeno, aby žáci nebyli na sociálních sítích. Učitelé mají ve výuce =zadávat jen takovou práci, aby byla v danou chvíli technicky =zvládnutelná. =-- Pokud to i přesto učitel vyžaduje, konfrontovat, řešit s TU nebo =s ŘŠ. =- Rozbité rozhlasy a jiná technika v učebnách=-- Na sharepointu je systém pro zadávání požadavků, je třeba učitele =na technický problém upozornit. V PC učebnách existuje i papírová =forma, která by měla být pravidelně kontrolována a požadavky =řešeny přes IT servis.=- Sportovní zařízení=-- Minulý rok byla velká investice do posilovny =-- Rekonstrukce venkovního areálu se pohybuje okolo 15 milionů, finančně =je to nyní pro školu neúnosné. =-- Jednou za rok prochází areál bezpečnostní kontrolou, opravují se pouze =nutné záležitosti.=**Diskuze:**=- Obor kybernetika - odešel učitel maturitního předmětu (obava studentů o =maturitní zkoušku)=-- Obava není na místě, učitelé stihnou látku probrat. S novými obory =se mění ŠVP, upravují se maturitní požadavky. =- Změna učitele češtiny ve třetím ročníku, obava o čtvrtý maturitní ročník=(každý učí jiným způsobem)=-- Učitelé vědí, co potřebujete k maturitě, přístup může mít každý jiný. =- Dlouhodobá absence paní učitelky Altrichterové.=-- Zajištěn odborný zástup.=- Noví učitelé neměli dostatek informací k chodu školy=-- Učitelé prochází adaptací, dvouletou průpravou a různými semináři.=- Požární poplach – noví učitelé nevěděli, co mají dělat. =-- Zkoušku požárního poplachu je třeba opakovat za účelem hladkého =průběhu. Další zkouška bude na jaře.=-- Informace k požárnímu poplachu jsou uvedené na nástěnkách. =- Revize elektro zařízení.=-- Četnost revizí záleží na poptávce, obvykle dvakrát ročně. =- 1. patro – na WC pípá poplach.=-- Nahlásit panu Šístkovi.=- Špatné časy na PC v učebnách.=-- Řešit s Petrem Čížkem.=- Co škola umožňuje zletilým žákům?=-- Škola má povinnost zajistit vždy dohled nad všemi studenty, i těmi =zletilými.'),
 (2, 17, '2023-10-03', '18.02.34', '**Volby do funkcí školního parlamentu**=- Zapisovatel: Ondra Šteffan (náhradník Kristýna Karaivanova) – vždy =po setkání rychlá kontrola, ten se odešle na Messenger, GODE =vytiskne a Adam Abbod dá na nástěnky a zveřejní se na Instagramu=**Adaptační program Parlamentu – návrhy:**=- Laser game=- Zoo=- Bowling=- Společná venkovní akce=**Halloween**=- Zařizuje: Kristýna Karaivanova (31.10.2023)=**Nabíječky **=- Plakát roznosit po škole + dát na nástěnky=**Nábor členů do školního Parlamentu (Týká se pouze zatím prváků):**=- Čtvrtek 05.10.2023=- V časech 08:00 – 10:45 a 10:55 – 13:30=- 2 skupiny:=-- Martin Sedlář L3, Adam Abbod V3A + Eli (náhradník)=-- Ondra Šteffan V4B, Kristýna Karaivanova S4B'),
 (3, 17, '2023-11-17', '18.02.34', '**Zhodnocení akce Halloween**=- Bonbóny uspěly=- Účast větší než minulý rok=**Nové výbory parlamentu**=- Nový výbor IT=- Spojka mezi námi a panem Čížkem=- Adam Abbod=- Nový výbor komunikace (vyjednávání)=- Spojka mezi učiteli a námi=- Bohuslav a Jakub=**Stanovení plánu akcí**=- Bude k dispozici na teams=- Řeší výbor plánování akcí=- Do 14.11.=**Pozvání pana hejtmana**=- Beseda 50-100 lidí=- V řešení omezený počet míst =- Formou přihlášení=**Zrcadlo**=- Musí se najít místo=**Časy na počítačích**=- Řeší výbor IT=**Den otevřených dveří**=- Zájemci na dobrovolníky =- Řeší Martin s paní Klobásovou=**Purples**=- Zájemci na dobrovolníky=- Řeší Eli s Purplesem=**Rozhlas**=- Jen důležité akce (odhlasováno)=- Řeší Sarah=**Stále v řešení:**=- Mikuláš =- Promyslet, kdo by chtěl jít=- Logo Parlamentu=-- Bude nápis Purkyňova (odhlasováno)=- Slevy v kantýně'),
@@ -5058,7 +5058,7 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
   ADD KEY `fk_attendance_user` (`idusers`),
-  ADD KEY `fk_attendance_meeting` (`idmeetings`);
+  ADD KEY `fk_attendance_meeting` (`idmeetings_parlament`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -5261,7 +5261,7 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- Omezení pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 --
