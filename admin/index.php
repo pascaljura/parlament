@@ -54,16 +54,16 @@ if (isset($_SESSION['idusers'])) {
     // Získání id uživatele ze session
     $idusers = $_SESSION['idusers'];
 
-    // Kontrola přístupu na základě sloupce parlament_access
-    $stmtAccess = $conn->prepare("SELECT parlament_access FROM users_alba_rosa WHERE idusers = ?");
+    // Kontrola přístupu na základě sloupce parlament_access_admin
+    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa WHERE idusers = ?");
     $stmtAccess->bind_param("i", $idusers);
     $stmtAccess->execute();
-    $stmtAccess->bind_result($parlament_access);
+    $stmtAccess->bind_result($parlament_access_admin);
     $stmtAccess->fetch();
     $stmtAccess->close();
 
-    // Pokud není přístup povolen (parlament_access != 1)
-    if ($parlament_access != '1') { ?>
+    // Pokud není přístup povolen (parlament_access_admin != 1)
+    if ($parlament_access_admin != '1') { ?>
         <div id="calendar">
             <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
@@ -288,7 +288,7 @@ if (isset($_SESSION['idusers'])) {
         $enteredPassword = $_POST["password"];
 
         // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
-        $stmt = $conn->prepare("SELECT idusers, password, parlament_access FROM users_alba_rosa WHERE email = ?");
+        $stmt = $conn->prepare("SELECT idusers, password, parlament_access_admin FROM users_alba_rosa WHERE email = ?");
         $stmt->bind_param("s", $enteredUsername);
         $stmt->execute();
         $stmt->store_result();

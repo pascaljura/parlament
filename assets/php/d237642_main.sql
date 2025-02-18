@@ -4753,7 +4753,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `username` varchar(255) NOT NULL,
   `password` text NOT NULL,
   `gamehub_private_access` enum('0','1') DEFAULT '0',
-  `parlament_access` enum('0','1') DEFAULT '0',
+  `parlament_access_admin` enum('0','1') DEFAULT '0',
   `purpix_level_1` int(11) NOT NULL DEFAULT 96,
   `purpix_level_2` int(11) NOT NULL DEFAULT 69,
   `purpix_level_3` int(11) NOT NULL DEFAULT 69,
@@ -4770,7 +4770,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
 -- Vypisuji data pro tabulku `users_alba_rosa`
 --
 
-INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
+INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
 (17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
