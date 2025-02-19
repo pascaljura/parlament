@@ -5,6 +5,9 @@ include '../assets/php/config.php';
 <!DOCTYPE html>
 <html lang="en">
 
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,18 +19,18 @@ include '../assets/php/config.php';
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
     <div id="calendar">
         <h2>Prezentace projektů na Participativní rozpočet</h2>
-        <iframe src="https://drive.google.com/file/d/168pTjyNDMarfrWX2TLUfAszc3oERGpcq/preview" 
-        width="100%" height="600px"></iframe>
-        <a href="https://drive.google.com/uc?export=download&id=168pTjyNDMarfrWX2TLUfAszc3oERGpcq" target="_blank">
-    Stáhnout PDF
-</a>
-
+        <iframe src="https://drive.google.com/file/d/168pTjyNDMarfrWX2TLUfAszc3oERGpcq/preview" width="100%"
+            height="600px"></iframe>
+        <div class="button-container">
+            <a href="https://drive.google.com/uc?export=download&id=168pTjyNDMarfrWX2TLUfAszc3oERGpcq" target="_blank">
+                <button>Stáhnout PDF</button>
+            </a>
+        </div>
     </div>
 </body>
 
