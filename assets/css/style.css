@@ -78,6 +78,10 @@ table {
   transition-duration: 0.4s;
 }
 
+iframe {
+  border-radius: 50px;
+}
+
 .button-container button:hover {
   background-color: #3d8db1;
 }
