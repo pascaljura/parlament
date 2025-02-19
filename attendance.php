@@ -58,12 +58,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <h2>Potvrzení účasti na schůzi</h2>
-    <form method="post">
-        <label for="email">Zadejte svůj školní e-mail:</label>
-        <input type="email" name="email" required>
-        <button type="submit">Potvrdit účast</button>
-    </form>
+    <div id="calendar">
+        <h2>Potvrzení účasti na schůzi</h2>
+        <form method="post">
+            <label for="email">Zadejte svůj školní e-mail:</label>
+            <input type="email" name="email" required>
+            <button type="submit">Potvrdit účast</button>
+        </form>
+    </div>
 </body>
 
 </html>
