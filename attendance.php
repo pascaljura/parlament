@@ -1,11 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
-// Kontrola přihlášení
-if (!isset($_SESSION['idusers'])) {
-    header("Location: ./index.php");
-    exit();
-} else {
+
 
     if (!isset($_GET['token'])) {
         die("Neplatný přístup.");
@@ -45,7 +41,7 @@ if (!isset($_SESSION['idusers'])) {
         }
         exit;
     }
-}
+
 ?>
 
 <!DOCTYPE html>
