@@ -23,8 +23,8 @@ include '../assets/php/config.php';
 
 <body>
     <div id="calendar">
-        <h2 style="text-align: center; color: #55acee;">Participativní rozpočet<br></h2>
-        <h3 style="text-align: center; color: #55acee;">Prezentace projektů</h3>
+        <h2 style="text-align: center;">Participativní rozpočet<br></h2>
+        <h3 style="text-align: center;">Prezentace projektů</h3>
         <iframe src="https://drive.google.com/file/d/168pTjyNDMarfrWX2TLUfAszc3oERGpcq/preview" width="100%"
             height="600px"></iframe>
         <div class="button-container">
