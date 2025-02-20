@@ -22,16 +22,24 @@ include '../assets/php/config.php';
 </head>
 
 <body>
-    <div id="calendar">
-        <h2 style="text-align: center;">Participativní rozpočet<br></h2>
-        <h3 style="text-align: center;">Prezentace projektů</h3>
-        <iframe src="https://drive.google.com/file/d/1bpTAawSn5hzKYgF2-vHwC-NWr8o9F0qN/preview" width="100%"
-            height="600px"></iframe>
-        <div class="button-container">
-            <a href="https://drive.google.com/uc?export=download&id=168pTjyNDMarfrWX2TLUfAszc3oERGpcq" target="_blank">
-                <button>Stáhnout PDF</button>
-            </a>
-        </div>
+    <div id="calendar" style="text-align: center;">
+        <p>
+            <img src="../favicon.ico" width="auto" height="150">
+        <h2>Participativní rozpočet</h2>
+        <h4 style="font-weight: unset;">Zapojili jsme se do participativního rozpočtu a teď je to na
+            vás! 🎉 <br>
+            Už máme hotové projekty, které vám představíme. 💡<br>
+            <b>🗳️ Od 24. 2. do 28. 2. </b> budete hlasovat a rozhodnete, který nápad se uskuteční! ✨<br>
+            Sledujte projekty a podpořte ten, který vás nejvíc osloví! 🤩
+        </h4>
+        </p>
+
+
+        <p>
+        <h3>Prezentace projektů ↴</h3>
+        </p>
+        <iframe src="https://drive.google.com/file/d/1bpTAawSn5hzKYgF2-vHwC-NWr8o9F0qN/preview" width="50%"
+            height="600px" style></iframe>
     </div>
 </body>
 
