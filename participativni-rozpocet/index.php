@@ -25,7 +25,7 @@ include '../assets/php/config.php';
     <div id="calendar">
         <h2 style="text-align: center;">Participativní rozpočet<br></h2>
         <h3 style="text-align: center;">Prezentace projektů</h3>
-        <iframe src="https://drive.google.com/file/d/168pTjyNDMarfrWX2TLUfAszc3oERGpcq/preview" width="100%"
+        <iframe src="https://drive.google.com/file/d/1bpTAawSn5hzKYgF2-vHwC-NWr8o9F0qN/preview" width="100%"
             height="600px"></iframe>
         <div class="button-container">
             <a href="https://drive.google.com/uc?export=download&id=168pTjyNDMarfrWX2TLUfAszc3oERGpcq" target="_blank">
