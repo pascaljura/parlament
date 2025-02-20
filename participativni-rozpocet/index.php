@@ -38,7 +38,7 @@ include '../assets/php/config.php';
         <p>
         <h3>Prezentace projektů ↴</h3>
         </p>
-        <iframe src="https://drive.google.com/file/d/1bpTAawSn5hzKYgF2-vHwC-NWr8o9F0qN/preview" width="90%"
+        <iframe src="https://drive.google.com/file/d/1bpTAawSn5hzKYgF2-vHwC-NWr8o9F0qN/preview" width="95%"
             height="600px" style></iframe>
     </div>
 </body>
