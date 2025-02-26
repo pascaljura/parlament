@@ -10,7 +10,7 @@ if (!isset($_GET['token'])) {
 $token = $_GET['token'];
 
 // Získání schůze podle tokenu
-$sql = "SELECT idmeetings_parlament FROM meetings_alba_rosa_parlament WHERE token = '$token'";
+$sql = "SELECT idmeetings_parlament FROM attendances_list_alba_rosa_parlament WHERE token = '$token'";
 $result = $conn->query($sql);
 if ($result->num_rows === 0) {
     die("Neplatný nebo vypršelý odkaz.");
