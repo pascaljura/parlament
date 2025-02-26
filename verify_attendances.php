@@ -35,7 +35,7 @@ session_start();
         $result = $conn->query($sql);
 
         if ($result->num_rows === 0) {
-            die("<h2>Neplatný nebo vypršelý token.</h2>");
+            die("<h2>Neplatný nebo použitý token.</h2>");
         }
 
         $tokenData = $result->fetch_assoc();
