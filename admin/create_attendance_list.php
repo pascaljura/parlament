@@ -12,7 +12,7 @@ if (!isset($_SESSION['idusers'])) {
     $datetime = date('Y-m-d H:i:s');
 
     // Uložení schůze do databáze
-    $sql = "INSERT INTO  	attendances_list_alba_rosa_parlament 	 (datetime, token) VALUES ('$datetime', '$token')";
+    $sql = "INSERT INTO attendances_list_alba_rosa_parlament (datetime, token) VALUES ('$datetime', '$token')";
     if ($conn->query($sql) === TRUE) {
         $meeting_id = $conn->insert_id;
         $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
