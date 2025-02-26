@@ -92,6 +92,7 @@ session_start();
                                 }
                                 .header h1 {
                                     font-size: 32px;
+                                    color: #007acc;
                                 }
                                 .header h2 {
                                     color: #000;
@@ -145,7 +146,7 @@ session_start();
         <body>
             <p>Dobrý den,</p>
             <p>Potvrďte svou účast kliknutím na následující odkaz:</p>
-            <p><a href="' . $verifyLink . '">' . $verifyLink . '</a></p>
+            <p><a href="' . $verifyLink . '"><button style="color: #fff; background-color: #007acc; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">' . $verifyLink . '</button></a></p>
             <p>Tento odkaz je platný 24 hodin.</p>
         </body>
         </html>
