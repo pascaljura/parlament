@@ -89,12 +89,12 @@ session_start();
 
                 // Odeslání e-mailu
                 if (mail($email, $subject, $message, $headers)) {
-                    echo "E-mail s potvrzením byl odeslán.";
+                    echo "<h2>E-mail s potvrzením byl odeslán.</h2>";
                 } else {
-                    echo "Chyba při odesílání e-mailu.";
+                    echo "<h2>Chyba při odesílání e-mailu.</h2>";
                 }
             } else {
-                echo "Chyba při ukládání nového tokenu";
+                echo "<h2>Chyba při ukládání nového tokenu.</h2>";
             }
             exit;
         }
