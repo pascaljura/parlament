@@ -2,22 +2,21 @@
 include 'assets/php/config.php';
 session_start();
 
-
 if (!isset($_GET['token'])) {
     die("Neplatný přístup.");
 }
 
 $token = $_GET['token'];
 
-// Získání schůze podle tokenu
-$sql = "SELECT idmeetings_parlament FROM attendances_list_alba_rosa_parlament WHERE token = '$token'";
+// Získání ID schůze podle tokenu
+$sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = '$token'";
 $result = $conn->query($sql);
 if ($result->num_rows === 0) {
     die("Neplatný nebo vypršelý odkaz.");
 }
 
 $meeting = $result->fetch_assoc();
-$idmeetings_parlament = $meeting['idmeetings_parlament'];
+$idattendances_list_parlament = $meeting['idattendances_list_parlament'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $conn->real_escape_string($_POST['email']);
@@ -32,17 +31,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $result->fetch_assoc();
     $idusers = $user['idusers'];
 
-    // Uložení docházky
-    $sql = "INSERT INTO attendances_alba_rosa_parlament (idusers, idmeetings_parlament, time) VALUES ('$idusers', '$idmeetings_parlament', NOW())";
+    // Generování unikátního tokenu
+    $newToken = bin2hex(random_bytes(32));
+    $expiryTime = date('Y-m-d H:i:s', strtotime('+24 hours')); // Platnost 24 hodin
+
+    // Uložení tokenu do tabulky
+    $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers, idmeetings_parlament, token, expires) 
+            VALUES ('$idusers', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
+
     if ($conn->query($sql) === TRUE) {
-        echo "Úspěšně jste potvrdili svou účast!";
+        // Odkaz pro ověření účasti
+        $verifyLink = "https://www.alba-rosa.cz/parlament/verify_attendances.php?token=$newToken";
+
+        // Příprava e-mailu
+        $subject = "Potvrzení účasti na schůzi";
+        $message = "
+        <html>
+        <head>
+            <title>Potvrzení účasti</title>
+        </head>
+        <body>
+            <p>Dobrý den,</p>
+            <p>Potvrďte svou účast kliknutím na následující odkaz:</p>
+            <p><a href='$verifyLink'>$verifyLink</a></p>
+            <p>Tento odkaz je platný 24 hodin.</p>
+        </body>
+        </html>
+        ";
+
+        // Hlavičky pro HTML e-mail
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: noreply@alba-rosa.cz" . "\r\n";
+
+        // Odeslání e-mailu
+        if (mail($email, $subject, $message, $headers)) {
+            echo "E-mail s potvrzením byl odeslán.";
+        } else {
+            echo "Chyba při odesílání e-mailu.";
+        }
     } else {
-        echo "Chyba při ukládání účasti: " . $conn->error;
+        echo "Chyba při ukládání tokenu: " . $conn->error;
     }
     exit;
 }
-
 ?>
+
 
 <head>
     <meta charset="UTF-8">
