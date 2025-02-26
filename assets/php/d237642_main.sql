@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Úte 18. úno 2025, 22:08
+-- Vytvořeno: Stř 26. úno 2025, 20:04
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -31,7 +31,37 @@ CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idmeetings_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `attendances_alba_rosa_parlament`
+--
+
+INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idmeetings_parlament`, `idusers`, `time`) VALUES
+(1, 3, 17, '2025-02-19 21:53:27'),
+(2, 4, 66, '2025-02-20 08:25:34');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `attendances_list_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
+  `idmeetings_parlament` int(11) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `token` varchar(256) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
+
+--
+-- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
+--
+
+INSERT INTO `attendances_list_alba_rosa_parlament` (`idmeetings_parlament`, `datetime`, `token`) VALUES
+(1, '2025-02-19 10:37:45', '5a4642e1a74cb297e107304c43e985a5298f40aa8fba34031724a679b49b24c1'),
+(2, '2025-02-19 13:25:54', 'b4550551299429008801d4c24419efd9025f6362bed171e9fab877976f3f10f2'),
+(3, '2025-02-19 21:53:12', 'cd0e0f55d314ce526f37cfb3d8bb74d7d9ba8488aeed90c7438f5209c45b7bc7'),
+(4, '2025-02-20 08:24:48', 'e62041cb5ef97809f4ae3e133b62bf2bd5d4616c4b6806915228f6812eff8407');
 
 -- --------------------------------------------------------
 
@@ -47,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `files_alba_rosa_file_storage` (
   `startDate` datetime NOT NULL DEFAULT current_timestamp(),
   `endDate` date NOT NULL,
   `state` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `files_alba_rosa_file_storage`
@@ -93,7 +123,8 @@ INSERT INTO `files_alba_rosa_file_storage` (`idfile_file_storage`, `idusers`, `c
 (38, NULL, 'he6xJlsf07FTdGUsBmRr', 'krabicka_srdce_0.4n_0.2mm_PLA_MK4_6h5m.bgcode', '2025-01-28 21:41:51', '2026-01-28', '0'),
 (39, NULL, 'he6xJlsf07FTdGUsBmRr', 'krabicka_strdce_0.4n_0.2mm_PLA_MK4_6h5m.gcode', '2025-01-28 21:41:51', '2026-01-28', '0'),
 (40, NULL, '5tkOkL7A7wE1ovvJKTmB', 'rozvrh html.html', '2025-02-03 11:33:25', '2025-02-03', '0'),
-(41, NULL, '4msfXkfldpmAL09DmKHw', 'IZOLANTY 3 anorganické.docx', '2025-02-04 13:00:58', '2025-02-05', '0');
+(41, NULL, '4msfXkfldpmAL09DmKHw', 'IZOLANTY 3 anorganické.docx', '2025-02-04 13:00:58', '2025-02-05', '0'),
+(42, NULL, 'I4YjjgSyLk2dCwqUvHMq', 'Screen_Recording_20250225_180132.mp4', '2025-02-25 20:45:29', '2026-02-25', '0');
 
 -- --------------------------------------------------------
 
@@ -257,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkinc` (
   `time` timestamp NOT NULL DEFAULT current_timestamp(),
   `logid` int(11) NOT NULL,
   `info` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2876 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2888 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkinc`
@@ -2847,7 +2878,19 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers_purkiada`, `lvl
 (2872, 199, '12', '2025-02-18 16:12:36', 2, ''),
 (2873, 199, '12', '2025-02-18 16:12:45', 4, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
 (2874, 199, '12', '2025-02-18 16:13:23', 5, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
-(2875, 199, '12', '2025-02-18 16:13:24', 3, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);');
+(2875, 199, '12', '2025-02-18 16:13:24', 3, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);'),
+(2876, 199, '0', '2025-02-19 07:52:50', 0, ''),
+(2877, 199, '0', '2025-02-19 07:53:04', 0, ''),
+(2878, 199, '1', '2025-02-19 07:57:45', 2, ''),
+(2879, 199, 't1', '2025-02-19 07:57:52', 2, ''),
+(2880, 199, '0', '2025-02-19 07:58:09', 1, ''),
+(2881, 3, '0', '2025-02-19 07:58:39', 0, ''),
+(2882, 3, 't1', '2025-02-19 07:58:45', 2, ''),
+(2883, 199, 't1', '2025-02-19 08:17:06', 2, ''),
+(2884, 199, '5', '2025-02-19 08:17:37', 2, ''),
+(2885, 199, '9', '2025-02-19 08:18:20', 2, ''),
+(2886, 199, '12', '2025-02-19 08:18:47', 2, ''),
+(2887, 199, '12', '2025-02-19 08:19:03', 4, 'fnInput();fnJump0(18);fnJumpN(18);fnJump(4);fnSub(2);fnStore(0);fnCopy(1);fnAdd(2);fnStore(1);fnSub(0);fnJump0(13);fnCopy(0);fnJump(4);fnCopy(0);fnSub(0);fnStore(1);fnCopy(0);fnOutput();fnJump(0);');
 
 -- --------------------------------------------------------
 
@@ -2861,7 +2904,7 @@ CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkyn` (
   `idlog_purkyn` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `text` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1526 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1573 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkyn`
@@ -3788,7 +3831,54 @@ INSERT INTO `logs_alba_rosa_purkyn` (`idlogs_purkyn`, `idusers_purkiada`, `idlog
 (1480, 172, 665, '2025-02-05 11:52:21', 'ssh'),
 (1481, 172, 665, '2025-02-05 11:52:25', 'ssh bYM0C'),
 (1482, 172, 665, '2025-02-05 11:52:28', 'ssh admin bYM0C'),
-(1483, 172, 665, '2025-02-05 11:52:32', 'ssh admin');
+(1483, 172, 665, '2025-02-05 11:52:32', 'ssh admin'),
+(1526, 200, 201, '2025-02-19 07:29:40', NULL),
+(1527, 200, 1, '2025-02-19 09:54:17', NULL),
+(1528, 200, 21, '2025-02-19 09:54:25', NULL),
+(1529, 200, 2, '2025-02-19 09:54:29', NULL),
+(1530, 200, 205, '2025-02-19 09:54:31', NULL),
+(1531, 200, 3, '2025-02-19 09:54:39', NULL),
+(1532, 200, 203, '2025-02-19 09:54:51', 'Uložena hodnota do sloupce purkyn_level_1_1: 10'),
+(1533, 200, 4, '2025-02-19 09:54:56', NULL),
+(1534, 200, 203, '2025-02-19 09:55:05', 'Uložena hodnota do sloupce purkyn_level_1_2: 60177756'),
+(1535, 200, 6, '2025-02-19 09:55:08', NULL),
+(1536, 200, 14, '2025-02-19 09:55:12', NULL),
+(1537, 200, 7, '2025-02-19 09:55:13', NULL),
+(1538, 200, 8, '2025-02-19 09:55:23', NULL),
+(1539, 200, 9, '2025-02-19 09:55:31', NULL),
+(1540, 200, 1, '2025-02-19 09:56:01', NULL),
+(1541, 200, 6, '2025-02-19 09:56:29', NULL),
+(1542, 200, 14, '2025-02-19 09:56:31', NULL),
+(1543, 200, 7, '2025-02-19 09:56:33', NULL),
+(1544, 200, 8, '2025-02-19 09:56:37', NULL),
+(1545, 200, 9, '2025-02-19 09:56:45', NULL),
+(1546, 200, 11, '2025-02-19 09:57:16', NULL),
+(1547, 200, 12, '2025-02-19 09:59:33', NULL),
+(1548, 200, 36, '2025-02-19 09:59:41', NULL),
+(1549, 200, 254, '2025-02-19 09:59:51', 'Uložena hodnota do sloupce purkyn_level_3_1: .zip'),
+(1550, 200, 254, '2025-02-19 10:00:01', 'Uložena hodnota do sloupce purkyn_level_3_2: .html'),
+(1551, 200, 254, '2025-02-19 10:00:06', 'Uložena hodnota do sloupce purkyn_level_3_3: https://alba-rosa.cz/purkiada/purkyn/level/4/code.php'),
+(1552, 200, 19, '2025-02-19 10:00:07', NULL),
+(1553, 200, 20, '2025-02-19 10:00:12', NULL),
+(1554, 200, 251, '2025-02-19 10:00:17', NULL),
+(1555, 200, 10, '2025-02-19 10:00:30', NULL),
+(1556, 200, 22, '2025-02-19 10:00:36', NULL),
+(1557, 200, 251, '2025-02-19 10:00:37', NULL),
+(1558, 200, 22, '2025-02-19 10:00:45', NULL),
+(1559, 200, 24, '2025-02-19 10:01:26', NULL),
+(1560, 200, 25, '2025-02-19 10:01:28', NULL),
+(1561, 200, 26, '2025-02-19 10:01:33', NULL),
+(1562, 200, 27, '2025-02-19 10:01:44', NULL),
+(1563, 200, 214, '2025-02-19 10:02:12', NULL),
+(1564, 200, 252, '2025-02-19 10:02:30', 'ssh admin@192.168.1.200'),
+(1565, 200, 256, '2025-02-19 10:02:35', 'VsBPS'),
+(1566, 200, 28, '2025-02-19 10:02:37', NULL),
+(1567, 200, 253, '2025-02-19 10:03:08', 'sudo add-apt-repository https://alba-rosa.cz/purkiada/purkyn/level/4/code.php'),
+(1568, 200, 253, '2025-02-19 10:03:13', 'sudo apt update'),
+(1569, 200, 32, '2025-02-19 10:03:18', NULL),
+(1570, 200, 33, '2025-02-19 10:03:43', NULL),
+(1571, 200, 34, '2025-02-19 10:03:46', NULL),
+(1572, 200, 35, '2025-02-19 10:03:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -4132,18 +4222,6 @@ INSERT INTO `log_alba_rosa_purkyn` (`idlog_purkyn`, `text`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabulky `meetings_alba_rosa_parlament`
---
-
-CREATE TABLE IF NOT EXISTS `meetings_alba_rosa_parlament` (
-  `idmeetings_parlament` int(11) NOT NULL,
-  `datetime` datetime NOT NULL,
-  `token` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
--- --------------------------------------------------------
-
---
 -- Struktura tabulky `notes_alba_rosa_parlament`
 --
 
@@ -4388,7 +4466,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
   `purkinc_level_10` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_11` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_12` int(11) NOT NULL DEFAULT 96
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_purkiada`
@@ -4442,7 +4520,8 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 (196, 'nahr.8', '8 Náhradník', '$2b$08$kukOhnAdNc.lvAKtPQ9oiO5bc9YNipAbh5TK0DwmII013eNWdXqLW', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 69, 69, 96, 96, 96, 96, 96),
 (197, 'nahr.9', '9 Náhradník', '$2b$08$iKtnS6YhS2uqz4OzdYnKau8Qz4L1Y.jTeyvDiav2kvOFzm5j.Qjv2', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
 (198, 'nahr.10', '10 Náhradník', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(199, 'show', 'show', '$2y$10$xKRCYnm6Mg1l581Xvd6DZO4QdRnjFP3jfeRp02cPE0N5YjN79494G', 'Purkiáda Výherci', 69, 96, '''96''', 96, '''96''', '''96''', '''96''', 96, '''96''', 96, 96, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+(199, 'show', 'show', '$2y$10$xKRCYnm6Mg1l581Xvd6DZO4QdRnjFP3jfeRp02cPE0N5YjN79494G', 'Purkiáda Výherci', 69, 96, '''96''', 96, '''96''', '''96''', '''96''', 96, '''96''', 96, 96, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+(200, 'agent69', 'Agent69', '$2y$10$MUzrE01Ot7cOSKob9ZhgSOe2OGmotNWv5WPaBTG3j9dQhpRrVsBPS', 'Purkiáda Výherci', 10, 60177756, '55', 0, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 1, 2, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96);
 
 --
 -- Klíče pro exportované tabulky
@@ -4455,6 +4534,12 @@ ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
   ADD KEY `fk_attendance_user` (`idusers`),
   ADD KEY `fk_attendance_meeting` (`idmeetings_parlament`);
+
+--
+-- Klíče pro tabulku `attendances_list_alba_rosa_parlament`
+--
+ALTER TABLE `attendances_list_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idmeetings_parlament`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -4517,12 +4602,6 @@ ALTER TABLE `log_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idlog_purkyn`);
 
 --
--- Klíče pro tabulku `meetings_alba_rosa_parlament`
---
-ALTER TABLE `meetings_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idmeetings_parlament`);
-
---
 -- Klíče pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
@@ -4578,12 +4657,17 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
+--
+ALTER TABLE `attendances_list_alba_rosa_parlament`
+  MODIFY `idmeetings_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
 ALTER TABLE `files_alba_rosa_file_storage`
-  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_private_alba_rosa`
 --
@@ -4608,17 +4692,12 @@ ALTER TABLE `logouts_alba_rosa_purpix`
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkinc`
 --
 ALTER TABLE `logs_alba_rosa_purkinc`
-  MODIFY `idlogs_purkinc` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2876;
+  MODIFY `idlogs_purkinc` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2888;
 --
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkyn`
 --
 ALTER TABLE `logs_alba_rosa_purkyn`
-  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1526;
---
--- AUTO_INCREMENT pro tabulku `meetings_alba_rosa_parlament`
---
-ALTER TABLE `meetings_alba_rosa_parlament`
-  MODIFY `idmeetings_parlament` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1573;
 --
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
@@ -4648,7 +4727,7 @@ ALTER TABLE `users_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
-  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=200;
+  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
 --
 -- Omezení pro exportované tabulky
 --
@@ -4657,14 +4736,14 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- Omezení pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 --
 -- Omezení pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `meetings_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idmeetings_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
