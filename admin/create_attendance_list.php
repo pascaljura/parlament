@@ -41,7 +41,7 @@ if (!isset($_SESSION['idusers'])) {
 
 <body>
     <div id="calendar">
-        <h2>Prezence byla vytvořena! Sdílejte tento odkaz:</h2>
+        <h2>Prezenční listina byla vytvořena! Sdílejte tento odkaz:</h2>
         <a href="<?= $meeting_url ?>"><?= $meeting_url ?></a>
 
         <h3>Nebo naskenujte QR kód:</h3>
