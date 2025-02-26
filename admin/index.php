@@ -270,7 +270,7 @@ if (isset($_SESSION['idusers'])) {
                         <b>&#x1F499;・Správa schůzí</b>
                     </div>
                     <div class="button-container" id="buttonContainer">
-                        <form action="create_meeting.php" method="post">
+                        <form action="create_attendance.php" method="post">
                             <button type="submit">Zahájit schůzi</button>
                         </form>
                     </div>

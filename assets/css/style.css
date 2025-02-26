@@ -49,6 +49,21 @@ table {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 10px;
   height: 20%;
+  overflow: hidden;
+  white-space: normal;
+}
+
+#qrcode img {
+  width: 100%;
+  max-width: 25%; /* Maximální velikost, uprav podle potřeby */
+  height: auto;
+}
+
+a {
+  display: block; /* Odkaz zabere celou šířku */
+  word-wrap: break-word; /* Zalamování dlouhého textu */
+  overflow-wrap: break-word;
+  max-width: 100%; /* Nevyjede z divu */
 }
 
 .table-heading {

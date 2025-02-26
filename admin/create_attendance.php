@@ -41,7 +41,7 @@ if (!isset($_SESSION['idusers'])) {
 
 <body>
     <div id="calendar">
-        <h2>Schůze byla vytvořena! Sdílejte tento odkaz:</h2>
+        <h2>Prezence byla vytvořena! Sdílejte tento odkaz:</h2>
         <a href="<?= $meeting_url ?>"><?= $meeting_url ?></a>
 
         <h3>Nebo naskenujte QR kód:</h3>
@@ -50,11 +50,17 @@ if (!isset($_SESSION['idusers'])) {
     <script>
         var qrCode = new QRCode(document.getElementById("qrcode"), {
             text: "<?= $meeting_url ?>",
-            width: 400,
-            height: 400,
+            width: 256,  // Výchozí velikost QR kódu
+            height: 256,
             colorDark: "#000000",
             colorLight: "rgba(255, 255, 255, 0)"
         });
+
+        // Přizpůsobení velikosti pomocí CSS
+        document.getElementById("qrcode").style.width = "100%";
+        document.getElementById("qrcode").style.maxWidth = "100%"; // Maximální velikost
+        document.getElementById("qrcode").style.height = "auto";
+
     </script>
 </body>
 
