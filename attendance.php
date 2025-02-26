@@ -145,8 +145,8 @@ session_start();
         </head>
         <body>
             <p>Dobrý den,</p>
-            <p>Potvrďte svou účast kliknutím na následující tlačítko:</p>
-            <p><a href="' . $verifyLink . '"><button style="color: #fff; background-color: #007acc; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Potvrdit účast!</button></a></p>
+            <p>Potvrďte svou účast kliknutím na následující tlačítko:<br>
+            <a href="' . $verifyLink . '"><button style="color: #fff; background-color: #007acc; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Potvrdit účast!</button></a></p>
             <p>Tento odkaz je platný 24 hodin.</p>
         </body>
         </html>
