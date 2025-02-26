@@ -68,7 +68,76 @@ session_start();
 
                 // Příprava e-mailu
                 $subject = "Potvrzení účasti na schůzi";
-                $message = "
+                $message = '<!DOCTYPE html>
+                        <html lang="cs">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Oznámení ze systému AlbaRosa</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .container {
+                                    max-width: 600px;
+                                    margin: auto;
+                                    border-collapse: collapse;
+                                }
+                                .header {
+                                    background-color: #f4f4f4;
+                                    padding: 20px;
+                                    text-align: center;
+                                }
+                                .header h1 {
+                                    font-size: 32px;
+                                }
+                                .header h2 {
+                                    color: #000;
+                                    font-size: 16px;
+                                }
+                                .content {
+                                    background-color: #ffffff;
+                                    padding: 20px;
+                                    border: 1px solid #ddd;
+                                }
+                                .content ul {
+                                    list-style-type: none;
+                                    padding: 0;
+                                }
+                                .content ul li {
+                                    margin-bottom: 10px;
+                                }
+                                .content h2 {
+                                    color: #007acc;
+                                    font-size: 20px;
+                                }
+                                .footer {
+                                    font-size: 14px;
+                                    color: #555;
+                                    text-align: center;
+                                    padding: 20px;
+                                    background-color: #f4f4f4;
+                                }
+                                .footer strong {
+                                    font-weight: bold;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <table class="container">
+                                <tbody>
+                                    <tr>
+                                        <td class="header">
+                                            <h1>Oznámení ze systému AlbaRosa</h1>
+                                            <h2>Automatizace, která myslí za vás!</h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="content">
+
+                                        
         <html>
         <head>
             <title>Potvrzení účasti</title>
@@ -76,11 +145,25 @@ session_start();
         <body>
             <p>Dobrý den,</p>
             <p>Potvrďte svou účast kliknutím na následující odkaz:</p>
-            <p><a href='$verifyLink'>$verifyLink</a></p>
+            <p><a href="' . $verifyLink . '">' . $verifyLink . '</a></p>
             <p>Tento odkaz je platný 24 hodin.</p>
         </body>
         </html>
-        ";
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="footer">
+                                            <p>Pokud máte jakékoliv otázky či připomínky, neváhejte nás kontaktovat.</p>
+                                            <p>S pozdravem,</p>
+                                            <p><strong>Podpora systému AlbaRosa</strong></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </body>
+                        </html>
+        ';
 
                 // Hlavičky pro HTML e-mail
                 $headers = "MIME-Version: 1.0" . "\r\n";
