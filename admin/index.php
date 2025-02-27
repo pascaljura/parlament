@@ -42,6 +42,71 @@ ob_start();
             transform: translateY(-50%);
             cursor: pointer;
         }
+
+        table {
+            width: 100%;
+            max-height: 400px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-collapse: collapse;
+            border-radius: ;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        table thead {
+            background-color: #55acee;
+            color: #ffffff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: rgba(85, 172, 238, 0.25);
+        }
+
+        th {
+            padding: 10px;
+        }
+
+        td {
+            padding: 5px;
+        }
+
+        table tr:hover {
+            background-color: #55acee;
+            color: #ffffff
+        }
+
+        .layout-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .student-list-container {
+            width: 100%;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            overflow-y: auto;
+            max-height: 400px;
+            white-space: nowrap;
+            padding: 10px;
+            padding-left: 30px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        .student-list-container h3 {
+            margin-top: 0;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        ol {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <?php
@@ -68,6 +133,32 @@ if (isset($_SESSION['idusers'])) {
             <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
     } else {
+        // Načtení prezencí s formátováním datumu
+        $attendances = [];
+        $sqlattendances = "
+    SELECT 
+        idattendances_list_parlament, 
+        DATE_FORMAT(datetime, '%d.%m.%Y %H:%i:%s') AS datetime, 
+        idnotes_parlament 
+    FROM 
+        attendances_list_alba_rosa_parlament 
+    ORDER BY idattendances_list_parlament ASC";
+        $resultattendances = $conn->query($sqlattendances);
+        if ($resultattendances) {
+            while ($rowattendances = $resultattendances->fetch_assoc()) {
+                $attendances[] = $rowattendances;
+            }
+        }
+
+        // Načtení všech zápisů pro dropdown (také formátování data)
+        $notes = [];
+        $sql = "SELECT idnotes_parlament, DATE_FORMAT(date, '%d.%m.%Y') AS date FROM notes_alba_rosa_parlament";
+        $result = $conn->query($sql);
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $notes[] = $row;
+            }
+        }
         if (isset($_POST['logout'])) {
             session_unset();
             session_destroy();
@@ -237,7 +328,7 @@ if (isset($_SESSION['idusers'])) {
                     ?>
                     <div style="display: flex; flex-direction: column;">
                         <form method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px;">
-                            <label for="date" style="font-size: 16px; margin-bottom: 8px;">date:</label>
+                            <label for="date" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                             <input type="date" name="date" id="dateInput"
                                 style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
                                 value="<?php echo $currentDate; ?>" required>
@@ -271,8 +362,51 @@ if (isset($_SESSION['idusers'])) {
                     </div>
                     <div class="button-container" id="buttonContainer">
                         <form action="create_attendance_list.php" method="post">
-                            <button type="submit">Zahájit schůzi</button>
+                            <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
                         </form>
+                    </div>
+                    <div class="button-container" id="buttonContainer">
+                        <div class="layout-container">
+                            <form action="save_attendance_links.php" method="post" style="width: 100%;">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="white-space: nowrap;">ID Prezenční listiny</th>
+                                            <th style="white-space: nowrap;">Datum a čas prezence</th>
+                                            <th style="white-space: nowrap;">Přiřazený zápis</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($attendances as $attendance): ?>
+                                            <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)" style="cursor: pointer;">
+                                                <td style="white-space: nowrap;">
+                                                    <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
+                                                </td>
+                                                <td style="white-space: nowrap;"><?= htmlspecialchars($attendance['datetime']) ?>
+                                                </td>
+                                                <td style="white-space: nowrap;">
+                                                    <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]">
+                                                        <option value="" selected disabled>-- Vyber zápis --</option>
+                                                        <?php foreach ($notes as $note): ?>
+                                                            <option value="<?= $note['idnotes_parlament'] ?>"
+                                                                <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
+                                                                <?= htmlspecialchars($note['date']) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+
+                                <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
+                            </form>
+
+                            <div class="student-list-container" id="studentListContainer" style="display: none;">
+                                <ol></ol>
+                            </div>
+                        </div>
                     </div>
                     <hr style="border-top: 1px solid black;border-bottom: none;">
                     <div class="button-container" id="buttonContainer">
@@ -420,6 +554,42 @@ if (isset($_SESSION['idusers'])) {
                     localStorage.removeItem('date');
                     localStorage.removeItem('notes');
                 }
+                function loadStudents(attendanceId) {
+                    const container = document.getElementById('studentListContainer');
+                    const list = container.querySelector('ol');
+
+                    // Vyprázdnění obou
+                    list.innerHTML = '';
+
+                    // Zobrazení celého containeru (byl původně skrytý)
+                    container.style.display = 'block';
+
+                    fetch('fetch_students.php?id=' + attendanceId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                list.style.display = 'block'; // Zobrazí seznam
+
+                                data.forEach((student, index) => {
+                                    const li = document.createElement('li');
+                                    li.textContent = `${student.username} - ${student.time}`;
+                                    list.appendChild(li);
+                                });
+                            } else {
+                                list.style.display = 'block'; // Skryje seznam
+
+                                // Vytvoří li pro "Žádní studenti nenalezeni"
+                                const li = document.createElement('li');
+                                li.textContent = 'Žádní studenti nenalezeni.';
+                                list.appendChild(li);
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Chyba při načítání studentů:', err);
+                            alert('Nepodařilo se načíst studenty.');
+                        });
+                }
+
 
                 // Zavolání funkce pro načtení dat při načtení stránky
                 window.onload = function () {
