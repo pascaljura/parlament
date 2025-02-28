@@ -20,7 +20,7 @@ if (isset($_GET['idnotes_parlament']) && filter_var($_GET['idnotes_parlament'], 
     $stmt = $conn->prepare("
         SELECT z.*, u.username 
         FROM notes_alba_rosa_parlament z
-        LEFT JOIN users_alba_rosa_parlamentu ON z.idusers = u.idusers
+        LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
         WHERE z.idnotes_parlament = ?
     ");
     $stmt->bind_param("i", $idnotes_parlament);

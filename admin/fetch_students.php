@@ -8,7 +8,7 @@ if ($id > 0) {
     $sql = "
         SELECT u.username, DATE_FORMAT(a.time, '%d.%m.%Y %H:%i:%s') AS time
         FROM attendances_alba_rosa_parlament a
-        JOIN users_alba_rosa_parlamentu ON a.idusers = u.idusers
+        JOIN users_alba_rosa_parlament u ON a.idusers = u.idusers
         WHERE a.idmeetings_parlament = $id
         ORDER BY a.time ASC
     ";
