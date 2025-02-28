@@ -7,7 +7,7 @@ if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament']))
     // Získání záznamu ze schůze
     $result = "SELECT z.*, u.username 
 FROM notes_alba_rosa_parlament z
-LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
+LEFT JOIN users_alba_rosa_parlamentu ON z.idusers = u.idusers
 WHERE z.idnotes_parlament = ?";
 
     // Příprava připraveného dotazu
@@ -52,7 +52,7 @@ WHERE z.idnotes_parlament = ?";
         $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes);
 
         // Získání jména uživatele na základě idusers
-        $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
+        $resultUser = $conn->query("SELECT username FROM users_alba_rosa_parlamentWHERE idusers = $idusers");
         if ($resultUser->num_rows > 0) {
             $rowUser = $resultUser->fetch_assoc();
             $userName = $rowUser['username'];

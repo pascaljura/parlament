@@ -12,7 +12,7 @@ if (!isset($_SESSION['idusers'])) {
     $idusers = $_SESSION['idusers'];
 
     // Kontrola přístupu na základě sloupce parlament_access_admin
-    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa WHERE idusers = ?");
+    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa_parlament WHERE idusers = ?");
     $stmtAccess->bind_param("i", $idusers);
     $stmtAccess->execute();
     $stmtAccess->bind_result($parlament_access_admin);

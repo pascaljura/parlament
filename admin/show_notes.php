@@ -11,7 +11,7 @@ if (!isset($_SESSION['idusers'])) {
     $idusers = $_SESSION['idusers'];
 
     // Kontrola přístupu na základě sloupce parlament_access_admin
-    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa WHERE idusers = ?");
+    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa_parlamentWHERE idusers = ?");
     $stmtAccess->bind_param("i", $idusers);
     $stmtAccess->execute();
     $stmtAccess->bind_result($parlament_access_admin);
@@ -52,7 +52,7 @@ if (!isset($_SESSION['idusers'])) {
             // Získání záznamu ze schůze
             $result = "SELECT z.*, u.username 
      FROM notes_alba_rosa_parlament z
-     LEFT JOIN users_alba_rosa u ON z.idusers = u.idusers
+     LEFT JOIN users_alba_rosa_parlamentu ON z.idusers = u.idusers
      WHERE z.idnotes_parlament = ?";
 
             // Příprava připraveného dotazu
@@ -109,7 +109,7 @@ if (!isset($_SESSION['idusers'])) {
                 $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes); // strikeout
                 $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes); // underline
     
-                $resultUser = $conn->query("SELECT username FROM users_alba_rosa WHERE idusers = $idusers");
+                $resultUser = $conn->query("SELECT username FROM users_alba_rosa_parlamentWHERE idusers = $idusers");
                 if ($resultUser->num_rows > 0) {
                     $rowUser = $resultUser->fetch_assoc();
                     $userName = $rowUser['username'];
