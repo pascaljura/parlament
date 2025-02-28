@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Stř 26. úno 2025, 20:32
+-- Vytvořeno: Pát 28. úno 2025, 15:25
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -31,15 +31,25 @@ CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idmeetings_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `attendances_alba_rosa_parlament`
 --
 
 INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idmeetings_parlament`, `idusers`, `time`) VALUES
-(1, 3, 17, '2025-02-19 21:53:27'),
-(2, 4, 66, '2025-02-20 08:25:34');
+(3, 7, 17, '2025-02-26 21:04:48'),
+(4, 8, 17, '2025-02-26 21:07:21'),
+(5, 9, 17, '2025-02-26 21:30:18'),
+(6, 9, 17, '2025-02-26 21:38:26'),
+(7, 10, 66, '2025-02-27 08:02:26'),
+(8, 10, 17, '2025-02-27 08:03:17'),
+(9, 11, 65, '2025-02-27 08:49:06'),
+(10, 11, 27, '2025-02-27 08:51:15'),
+(11, 12, 17, '2025-02-28 09:43:21'),
+(12, 12, 65, '2025-02-28 09:44:03'),
+(13, 12, 25, '2025-02-28 09:44:17'),
+(14, 12, 27, '2025-02-28 09:44:44');
 
 -- --------------------------------------------------------
 
@@ -49,19 +59,24 @@ INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idmee
 
 CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
   `idattendances_list_parlament` int(11) NOT NULL,
+  `idnotes_parlament` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
-  `token` varchar(256) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
+  `token` varchar(256) NOT NULL,
+  `active` enum('0','1') NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
 --
 
-INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`, `datetime`, `token`) VALUES
-(1, '2025-02-19 10:37:45', '5a4642e1a74cb297e107304c43e985a5298f40aa8fba34031724a679b49b24c1'),
-(2, '2025-02-19 13:25:54', 'b4550551299429008801d4c24419efd9025f6362bed171e9fab877976f3f10f2'),
-(3, '2025-02-19 21:53:12', 'cd0e0f55d314ce526f37cfb3d8bb74d7d9ba8488aeed90c7438f5209c45b7bc7'),
-(4, '2025-02-20 08:24:48', 'e62041cb5ef97809f4ae3e133b62bf2bd5d4616c4b6806915228f6812eff8407');
+INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`, `idnotes_parlament`, `datetime`, `token`, `active`) VALUES
+(6, 0, '2025-02-26 20:59:42', '93817846f12373b176ddebed0672b80329f59d4c114f2b6525644fda24929fed', '0'),
+(7, 0, '2025-02-26 21:03:35', 'a536cff200144f70a3a161b557f04e343fb9c07550e082fa1b84912b948d4c3c', '0'),
+(8, 0, '2025-02-26 21:06:44', 'dff73be82b660636f4d474a3bdea8716abe58411348f27482eb34f794b07e774', '0'),
+(9, 0, '2025-02-26 21:24:58', '8aafd1c95c4884046357523befc91d1a981162110550948ec1dd067ebfb5c8ca', '0'),
+(10, 0, '2025-02-27 08:01:23', 'e0b61821f396d2e44e24f360a4ca8f867d3c5f7da0240786dd07fead204f96aa', '0'),
+(11, 0, '2025-02-27 08:48:38', 'a4c15e64b09ba1e1bfda221f0e500dc569a6daa2d3ee250333c3a45b46ebf4b2', '0'),
+(12, 0, '2025-02-28 09:41:09', '58fb8ae9450b1ac402797d878e62a05460f0890de6ff7ee400bf7e97f735b1aa', '0');
 
 -- --------------------------------------------------------
 
@@ -4376,7 +4391,7 @@ CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
   `idmeetings_parlament` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `expires` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -4409,15 +4424,60 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
 --
 
 INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
-(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '0', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `users_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
+  `idusers` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` text NOT NULL,
+  `gamehub_private_access` enum('0','1') DEFAULT '0',
+  `parlament_access_admin` enum('0','1') DEFAULT '0',
+  `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
+  `purpix_level_1` int(11) NOT NULL DEFAULT 96,
+  `purpix_level_2` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_3` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_4` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_5` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_6` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_7` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_8` int(11) NOT NULL DEFAULT 69,
+  `purpix_level_9` int(11) NOT NULL DEFAULT 69,
+  `popclicker_score` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `users_alba_rosa_parlament`
+--
+
+INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
+(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
 (67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
@@ -4642,6 +4702,13 @@ ALTER TABLE `users_alba_rosa`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Klíče pro tabulku `users_alba_rosa_parlament`
+--
+ALTER TABLE `users_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idusers`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Klíče pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
@@ -4657,12 +4724,12 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
-  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
@@ -4717,11 +4784,16 @@ ALTER TABLE `school_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
+--
+-- AUTO_INCREMENT pro tabulku `users_alba_rosa_parlament`
+--
+ALTER TABLE `users_alba_rosa_parlament`
   MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_purkiada`
