@@ -45,7 +45,7 @@ session_start();
             $email = $conn->real_escape_string($_POST['email']);
 
             // Ověření existence uživatele
-            $sql = "SELECT idusers FROM users_alba_rosa WHERE email = '$email' AND parlament_access_user == '1'";
+            $sql = "SELECT idusers FROM users_alba_rosa WHERE email = '$email' AND parlament_access_user = '1'";
             $result = $conn->query($sql);
             if ($result->num_rows === 0) {
                 die("<h2>Neplatný e-mail nebo nemáte přístup.</h2>");
