@@ -9,6 +9,7 @@ include './assets/php/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
@@ -16,8 +17,7 @@ include './assets/php/config.php';
     <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
     <?php
-    $headerText = '&#x1F499;・Zápisy・2023/2024';
-    $headerText2 = '&#x1F499;・O nás';
+    $headerText2 = '<i class="fa fa-heart blue"></i>・O nás';
     ?>
 </head>
 <div id="loading-overlay">
@@ -103,7 +103,7 @@ include './assets/php/config.php';
             foreach ($grouped_data as $year => $items) {
                 echo '<div class="year-container">';
                 echo '<div class="table-heading"><b>';
-                echo '&#x1F499;・Zápisy・' . $year;
+                echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
                 echo '</b></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {

@@ -3,7 +3,8 @@ body {
   justify-content: center;
   min-height: 100vh;
   margin: 0;
-  font-family: Calibri, sans-serif;
+  font-family: "Roboto", Calibri, sans-serif;
+  font-weight: 100; /* to je přímo ten "Bold 700" */
   position: relative;
   font-size: 20px;
 }
@@ -11,7 +12,23 @@ body {
 a {
   text-decoration: none;
 }
+h1,
+h2 {
+  font-family: "Roboto Slab", Calibri, sans-serif;
+  font-weight: 700; /* to je přímo ten "Bold 700" */
+  padding: unset;
+  margin: unset;
+}
 
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto Slab", Calibri, sans-serif;
+  font-weight: 400; /* to je přímo ten "Bold 700" */
+  padding: unset;
+  margin: unset;
+}
 body::before {
   content: "";
   top: 0;
@@ -28,8 +45,13 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
+.blue {
+  color: #5481aa;
+}
+
 .success-message {
-  background-color: #55acee;
+  background-color: #5481aa;
   color: #ffffff;
   border: none;
   padding: 10px;
@@ -62,7 +84,7 @@ table {
 select {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 4px;
   background-color: #fff;
   font-size: 14px;
@@ -71,7 +93,7 @@ select {
 
 select:focus {
   outline: none;
-  border-color: #55acee;
+  border-color: #5481aa;
   box-shadow: 0 0 5px #27a1ffd5;
 }
 
@@ -98,7 +120,7 @@ a {
 }
 
 .button-container button {
-  background-color: #55acee;
+  background-color: #5481aa;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -114,7 +136,7 @@ iframe {
 }
 
 .button-container button:hover {
-  background-color: #3d8db1;
+  background-color: #77AFE0;
 }
 
 #loading-overlay {
@@ -123,7 +145,7 @@ iframe {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #3e6181de;
+  background-color: #3e6182c9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,7 +156,7 @@ iframe {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: conic-gradient(#aad4f3 10%, #77afe0);
+  background: conic-gradient(#aad4f3 10%, #5481AA);
   -webkit-mask: radial-gradient(
     farthest-side,
     var(--color-0) calc(100% - 16px),

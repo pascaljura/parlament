@@ -95,6 +95,7 @@ if ($parlament_access_admin != '1') { ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../assets/css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
         <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
         <title>Alba-rosa.cz | Parlament na Purkyňce</title>
         <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
@@ -104,19 +105,19 @@ if ($parlament_access_admin != '1') { ?>
     </head>
 
     <body>
-    <div id="loading-overlay">
-                <div class="loader"></div>
-            </div>
+        <div id="loading-overlay">
+            <div class="loader"></div>
+        </div>
 
         <div id="calendar"
             style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
             <div class="table-heading">
-                <?php echo '&#x1F499;・ Úprava zápisu・2023/2024'; ?>
+                <h2> <?php echo '<i class="fa fa-heart blue"></i>・Úprava zápisu'; ?></h2>
             </div>
             <form action="" method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px; ">
                 <input type="hidden" name="idnotes_parlament" value="<?php echo $idnotes_parlament; ?>">
 
-                <label for="date" style="font-size: 16px; margin-bottom: 8px;">date:</label>
+                <label for="date" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
                 <input type="date" name="date" id="date" value="<?php echo $date; ?>"
                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: Calibri, sans-serif;"
                     required>
@@ -132,10 +133,23 @@ if ($parlament_access_admin != '1') { ?>
                     style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap; font-family: Calibri, sans-serif;"
                     required><?php echo $notes; ?></textarea>
             </form>
-
+            <p> main title = //main title// (Tučný modrý text na středu stránky) <br>
+                odrížka = -odrážka <br>
+                pododrážka = --podorážka<br>
+                header = /header/ (Tučný modrý nadpis uprostřed a zároveň zápatí)<br>
+                italics = *italics* (kurzíva)<br>
+                bold = **bold** (tučný text)<br>
+                bold italics = ***bold italics*** (tučný text + kurzíva)<br>
+                strikeout = ~~strikeout~~ (přešktrnuté)<br>
+                underline = __underline__ (podtržený text)<br>
+                underline italics = __*underline italics*__ (podtržený text + kurzíva)<br>
+                underline bold = __**underline bold**__ (podtržený text + tučný text)<br>
+                underline bold italics = __***underline bold italics***__ (podtržený text + tučný text + kurzíva)
+            </p>
             <div class="button-container" id="buttonContainer">
                 <button type="submit" form="myForm"><i class="fa fa-save"></i> Uložit změny</button>
-                <a href="show_notes.php?idnotes_parlament=<?php echo $idnotes_parlament; ?>"><button><i class="fa fa-sign-out"></i> Opustit
+                <a href="show_notes.php?idnotes_parlament=<?php echo $idnotes_parlament; ?>"><button><i
+                            class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
             <hr color="black" style="height: 2px; border: none;" />
