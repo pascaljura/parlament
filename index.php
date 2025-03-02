@@ -54,7 +54,7 @@ include './assets/php/config.php';
         }
         ?>
         <div class="table-heading">
-            <b> <?php echo $headerText2; ?> </b>
+            <h2> <?php echo $headerText2; ?> </h2>
         </div>
         <p>
             Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se
@@ -102,9 +102,9 @@ include './assets/php/config.php';
             // Vypíšeme data podle roku
             foreach ($grouped_data as $year => $items) {
                 echo '<div class="year-container">';
-                echo '<div class="table-heading"><b>';
+                echo '<div class="table-heading"><h3>';
                 echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
-                echo '</b></div>';
+                echo '</h3></div>';
                 echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                 foreach ($items as $item) {
                     echo '<a href="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
