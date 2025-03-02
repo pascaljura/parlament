@@ -222,7 +222,7 @@ if (isset($_SESSION['idusers'])) {
     // Pokud není přístup povolen (parlament_access_admin != 1)
     if ($parlament_access_admin != '1') { ?>
         <div id="calendar">
-            <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
+            <div style="color: #ff4848; margin-bottom: 5px;"><b>Chybí oprávnění</b></div>
             <?php
     } else {
         // Načtení prezencí s formátováním datumu

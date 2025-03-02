@@ -51,7 +51,16 @@ table {
 }
 
 .success-message {
-  background-color: #5481aa;
+  background-color: #70b95e;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.error-message {
+  background-color: #ff4848;
   color: #ffffff;
   border: none;
   padding: 10px;
@@ -136,7 +145,7 @@ iframe {
 }
 
 .button-container button:hover {
-  background-color: #77AFE0;
+  background-color: #77afe0;
 }
 
 #loading-overlay {
@@ -156,7 +165,7 @@ iframe {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: conic-gradient(#aad4f3 10%, #5481AA);
+  background: conic-gradient(#aad4f3 10%, #5481aa);
   -webkit-mask: radial-gradient(
     farthest-side,
     var(--color-0) calc(100% - 16px),
