@@ -1,5 +1,3 @@
-<h?php include '../assets/php/config.php' ; session_start(); ob_start(); ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
@@ -611,7 +609,7 @@
                     <body>
                         <div id="calendar">
                             <div class="table-heading">
-                                <h2> <?php echo $headerText; ?> </>
+                                <h2> <?php echo $headerText; ?> </h2>
                             </div>
                             <?php
                             if (isset($loginError)) {
