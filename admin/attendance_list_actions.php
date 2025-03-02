@@ -63,8 +63,8 @@ include '../assets/php/config.php';
                     $stmt->execute();
                     $stmt->close();
 
-                    // Přesměrování s parametrem message a message_type=success
-                    header("Location: ./?message=Záznam+byl+úspěšně+smazán&message_type=success");
+                    // Přesměrování s parametrem message a message_type=success-message
+                    header("Location: ./?message=Záznam+byl+úspěšně+smazán&message_type=success-message");
                     exit();
                 } elseif ($action == 'end') {
                     // SQL pro změnu stavu na 0 (Ukončeno)
@@ -73,8 +73,8 @@ include '../assets/php/config.php';
                     $stmt->execute();
                     $stmt->close();
 
-                    // Přesměrování s parametrem message a message_type=success
-                    header("Location: ./?message=Stav+byl+úspěšně+změněn+na+Ukončeno&message_type=success");
+                    // Přesměrování s parametrem message a message_type=success-message
+                    header("Location: ./?message=Stav+byl+úspěšně+změněn+na+Ukončeno&message_type=success-message");
                     exit();
                 } elseif ($action == 'qr') {
                     // Získání tokenu pro QR kód
@@ -89,8 +89,8 @@ include '../assets/php/config.php';
                         $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
                         generateQRCode($meeting_url);
                     } else {
-                        // Pokud není záznam, přesměrování s parametrem message a message_type=error
-                        header("Location: ./?message=Záznam+s+tímto+ID+nebyl+nalezen&message_type=error");
+                        // Pokud není záznam, přesměrování s parametrem message a message_type=error-message
+                        header("Location: ./?message=Záznam+s+tímto+ID+nebyl+nalezen&message_type=error-message");
                         exit();
                     }
                     $stmt->close();
