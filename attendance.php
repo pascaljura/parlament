@@ -12,7 +12,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
@@ -45,9 +45,10 @@ session_start();
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $conn->real_escape_string($_POST['email']);
 
-            // Ověření existence uživatele
+            // Ověření existence uživatele a jeho přístup
             $sql = "SELECT idusers FROM users_alba_rosa_parlament WHERE email = '$email' AND parlament_access_user = '1'";
             $result = $conn->query($sql);
+
             if ($result->num_rows === 0) {
                 die("<h2>Neplatný e-mail nebo nemáte přístup.</h2>");
             }
@@ -55,13 +56,23 @@ session_start();
             $user = $result->fetch_assoc();
             $idusers = $user['idusers'];
 
-            // Generování unikátního tokenu
+            // Kontrola, jestli už není zapsaný v docházce pro danou schůzi
+            $sql = "SELECT COUNT(*) AS count FROM attendances_alba_rosa_parlament 
+                    WHERE idusers = '$idusers' AND idmeetings_parlament = '$idattendances_list_parlament'";
+
+            $checkResult = $conn->query($sql);
+            $check = $checkResult->fetch_assoc();
+
+            if ($check['count'] > 0) {
+                die("<h2>Již jste potvrdili účast na této schůzi. Není možné se registrovat vícekrát.</h2>");
+            }
+
+            // Pokud ještě není zapsaný, pokračuje se vygenerováním nového tokenu
             $newToken = bin2hex(random_bytes(32));
             $expiryTime = date('Y-m-d H:i:s', strtotime('+24 hours')); // Platnost 24 hodin
         
-            // Uložení tokenu do tabulky
             $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers, idmeetings_parlament, token, expires) 
-            VALUES ('$idusers', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
+                    VALUES ('$idusers', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
 
             if ($conn->query($sql) === TRUE) {
                 // Odkaz pro ověření účasti
