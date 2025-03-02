@@ -45,107 +45,103 @@ ob_start();
         }
 
         table {
-    width: 100%;
-    max-height: 400px;
-    border-collapse: collapse;
-    font-family: 'Roboto', Calibri, sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    text-align: center;
-}
+            width: 100%;
+            max-height: 400px;
+            border-collapse: collapse;
+            font-family: 'Roboto', Calibri, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+        }
 
-table thead {
-    background-color: #5481AA;
-    color: #ffffff;
-    border: 2px solid black; /* Ohraničení pro hlavičku */
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
+        table thead {
+            background-color: #5481AA;
+            color: #ffffff;
+            border: 2px solid black;
+            /* Ohraničení pro hlavičku */
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
 
-table tbody td, table tbody th {
-    border: 1px solid black; /* Ohraničení pro tělo tabulky */
-}
+        table tbody td,
+        table tbody th {
+            border: 1px solid black;
+            /* Ohraničení pro tělo tabulky */
+        }
 
-td:first-child,
-th:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 5;
-    background-color: #5481AA;
-    color: white;
-}
+        td:first-child,
+        th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background-color: #5481AA;
+            color: white;
+        }
 
-table tr:nth-child(even) {
-    background-color: rgba(85, 172, 238, 0.25);
-}
+        table tr:nth-child(even) {
+            background-color: rgba(85, 172, 238, 0.25);
+        }
 
-th {
-    padding: 10px;
-}
+        th {
+            padding: 10px;
+        }
 
-td {
-    padding: 5px;
-}
+        td {
+            padding: 5px;
+        }
 
-table tr:hover {
-    background-color: #5481AA;
-    color: #ffffff
-}
+        table tr:hover {
+            background-color: #5481AA;
+            color: #ffffff
+        }
 
 
+        /* Kontejner pro tabulku, umožní horizontální posouvání */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        /* Styl pro tabulku uvnitř table-wrapper */
+        .table-wrapper table {
+            width: 100%;
+            min-width: 600px;
+            /* Ujistí se, že tabulka nebude příliš úzká */
+        }
+
+        /* Layout pro větší obrazovky - seznam žáků vedle tabulky */
         .layout-container {
             display: flex;
             align-items: flex-start;
             gap: 20px;
             flex-wrap: nowrap;
-            /* základní stav pro desktop */
         }
 
+        /* Seznam žáků styl */
         .student-list-container {
-            width: 100%;
             background: #f9f9f9;
             border: 1px solid #ddd;
-            overflow-y: auto;
             max-height: 400px;
-            white-space: nowrap;
-            padding: 10px;
-            padding-left: 30px;
-            overflow-x: hidden;
-            overflow-y: auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            padding-left: 25px;
             border-radius: 8px;
+            overflow-y: auto;
         }
 
-        .student-list-container h3 {
-            margin-top: 0;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-   /* Základní nastavení pro tabulku a její posouvání */
-.overflow {
-    max-height: 350px; 
-    width: 100%;
-    overflow: auto; /* Povolí horizontální i vertikální posouvání */
-}
-
-/* Pro mobilní zařízení */
-@media (max-width: 768px) {
-    .overflow {
-        max-width: 100%;  /* Na mobilu se nastaví 100% šířky */
-        overflow-x: auto; /* Povolí horizontální posouvání na mobilu */
-    }
-}
-
-/* Pro desktop zařízení */
-@media (min-width: 769px) {
-    .overflow {
-        max-width: 100%; /* Na desktopu tabulka zůstane na 100% šířky */
-        overflow-x: auto; /* Povolí horizontální posouvání i na desktopu */
-    }
-}
-
-        /* Mobilní verze - seznam žáků pod tabulkou */
+        /* Mobilní zařízení - seznam žáků pod tabulkou */
         @media (max-width: 768px) {
+
+            /* Kontejner pro tabulku, umožní horizontální posouvání */
+            .table-wrapper {
+                width: 40%;
+                overflow-x: auto;
+                max-width: 100%;
+            }
+
             .layout-container {
                 flex-direction: column;
                 gap: 0;
@@ -153,8 +149,8 @@ table tr:hover {
 
             .student-list-container {
                 order: 2;
-                /* Zajistí, že student-list půjde pod tabulku */
                 margin-top: 10px;
+                max-width: 100%;
             }
         }
 
@@ -311,11 +307,27 @@ if (isset($_SESSION['idusers'])) {
             <body>
                 <div id="calendar">
                     <?php
-                    if (isset($_GET['message'])) {
-                        echo '<div onclick="removeQueryString()" class="success-message" style="cursor: pointer;">';
-                        echo '<i class="fa fa-check" style="margin-right: 5px;"></i> ' . htmlspecialchars($_GET['message']);
+
+                    if (isset($_GET['message']) && isset($_GET['message_type'])) {
+                        $message = $_GET['message'];
+                        $message_type = $_GET['message_type'];
+
+                        // Určení třídy a ikony podle typu zprávy
+                        if ($message_type == 'success') {
+                            $message_class = 'success-message';
+                            $message_icon = 'fa-check';
+                        } elseif ($message == 'error') {
+                            $message_class = 'error-message';
+                            $message_icon = 'fa-times';
+                        }
+
+                        // Výstup zprávy s ikonou a třídou
+                        echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
+                        echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
                         echo '</div>';
                     }
+
+
                     ?>
 
                     <?php
@@ -465,77 +477,71 @@ if (isset($_SESSION['idusers'])) {
                         </form>
                     </div>
                     <div class="button-container" id="buttonContainer">
-                        <div class="button-container" id="buttonContainer">
-                            <div class="layout-container">
-                                <form action="save_attendance_links.php" method="post">
-
-                          
-                                        <div class="overflow">
-                                            <table style="border-collapse: collapse;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID<br>Prezenční<br>listiny</th>
-                                                        <th style="white-space: nowrap;">Datum a čas</th>
-                                                        <th style="white-space: nowrap;">Přiřazený zápis</th>
-                                                        <th style="white-space: nowrap;">Stav</th>
-                                                        <th style="white-space: nowrap;">Akce</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php foreach ($attendances as $attendance): ?>
-                                                        <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
-                                                            style="cursor: pointer;">
-                                                            <td
-                                                                style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
-                                                                <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
-                                                            </td>
-                                                            <td style="white-space: nowrap;">
-                                                                <?= htmlspecialchars($attendance['datetime']) ?>
-                                                            </td>
-                                                            <td style="white-space: nowrap;">
-                                                                <select
-                                                                    name="notes[<?= $attendance['idattendances_list_parlament'] ?>]">
-                                                                    <option value="" selected disabled>-- Vyberte zápis --</option>
-                                                                    <?php foreach ($notes as $note): ?>
-                                                                        <option value="<?= $note['idnotes_parlament'] ?>"
-                                                                            <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
-                                                                            <?= htmlspecialchars($note['date']) ?>
-                                                                        </option>
-                                                                    <?php endforeach; ?>
-                                                                </select>
-                                                            </td>
-                                                            <td style="white-space: nowrap;">
-                                                                <?= $attendance['active'] == 1 ? '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' : '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
-                                                            </td>
-                                                            <td style="white-space: nowrap;">
-                                                                <div style="display: flex; gap: 10px; justify-content: center;">
-                                                                    <a
-                                                                        href="attendance_actions.php?action=delete&id=<?= $attendance['idattendances_list_parlament'] ?>">
-                                                                        <button type="button" class="delete">Smazat</button>
-                                                                    </a>
-                                                                    <a
-                                                                        href="attendance_actions.php?action=end&id=<?= $attendance['idattendances_list_parlament'] ?>">
-                                                                        <button type="button" class="end">Ukončit</button>
-                                                                    </a>
-                                                                    <a
-                                                                        href="show_qr.php?id=<?= $attendance['idattendances_list_parlament'] ?>">
-                                                                        <button type="button" class="qr">QR Kód</button>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                              
-
-                                    <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
-                                </form>
-
-                                <div class="student-list-container" id="studentListContainer" style="display: none; max-width: 50%;">
-                                    <ol></ol>
+                        <div class="layout-container">
+                            <form action="save_attendance_links.php" method="post">
+                                <div class="table-wrapper">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>ID<br>Prezenční<br>listiny</th>
+                                                <th style="white-space: nowrap;">Datum a čas</th>
+                                                <th style="white-space: nowrap;">Přiřazený zápis</th>
+                                                <th style="white-space: nowrap;">Stav</th>
+                                                <th style="white-space: nowrap;">Akce</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($attendances as $attendance): ?>
+                                                <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
+                                                    style="cursor: pointer;">
+                                                    <td
+                                                        style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
+                                                        <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
+                                                    </td>
+                                                    <td style="white-space: nowrap;">
+                                                        <?= htmlspecialchars($attendance['datetime']) ?>
+                                                    </td>
+                                                    <td style="white-space: nowrap;">
+                                                        <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]">
+                                                            <option value="" selected disabled>-- Vyberte zápis --</option>
+                                                            <?php foreach ($notes as $note): ?>
+                                                                <option value="<?= $note['idnotes_parlament'] ?>"
+                                                                    <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
+                                                                    <?= htmlspecialchars($note['date']) ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </td>
+                                                    <td style="white-space: nowrap;">
+                                                        <?= $attendance['active'] == '1' ? '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' : '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
+                                                    </td>
+                                                    <td style="white-space: nowrap;">
+                                                        <div style="display: flex; gap: 10px; justify-content: center;">
+                                                            <a
+                                                                href="attendance_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
+                                                                <button type="button" class="delete">Smazat</button>
+                                                            </a>
+                                                            <a
+                                                                href="attendance_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
+                                                                <button type="button" class="end">Ukončit</button>
+                                                            </a>
+                                                            <a href="attendance_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                                target="_blank">
+                                                                <button type="button" class="qr">QR Kód</button>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
+                            </form>
+
+                            <div class="student-list-container" id="studentListContainer"
+                                style="display: none; max-width: 40%; overflow-x: auto; width: 40%;">
+                                <ol></ol>
                             </div>
                         </div>
                     </div>

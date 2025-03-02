@@ -27,7 +27,8 @@ if (!isset($_SESSION['idusers'])) {
 
         // Ošetření parametru ID
         if (!isset($_POST['idnotes_parlament']) || !is_numeric($_POST['idnotes_parlament'])) {
-            echo "Chybějící nebo neplatné idnotes_parlament záznamu.";
+            // Pokud není záznam, přesměrování s parametrem message a message_type=error
+            header("Location: ./?message=Chybějící+ID+zápisu&message_type=error");
             exit();
         }
 
@@ -39,11 +40,13 @@ if (!isset($_SESSION['idusers'])) {
 
         // Spuštění dotazu
         if ($stmt->execute()) {
-            // Pokud dotaz proběhl úspěšně, vrátíme "success" jako odpověď
-            echo "success";
+            // Pokud není záznam, přesměrování s parametrem message a message_type=error
+            header("Location: ./?message=Zápis+s+tímto+ID+byl+úspěšně+smazán&message_type=success");
+            exit();
         } else {
-            // Pokud došlo k chybě při provádění dotazu, zobrazíme chybovou zprávu
-            echo "error";
+            // Pokud není záznam, přesměrování s parametrem message a message_type=error
+            header("Location: ./?message=Zápis+s+tímto+ID+nebyl+smazán&message_type=success");
+            exit();
         }
 
         // Uzavření dotazu
@@ -59,7 +62,7 @@ if (!isset($_SESSION['idusers'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
@@ -67,8 +70,10 @@ if (!isset($_SESSION['idusers'])) {
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
+
 <body>
-<script src="../assets/js/script.js">    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+    <script src="../assets/js/script.js">    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
 </body>
+
 </html>

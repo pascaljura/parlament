@@ -21,5 +21,3 @@ if (!empty($_POST['notes'])) {
         $stmt->execute();
     }
 }
-
-echo "Změny byly uloženy. <a href='index.php'>Zpět</a>";
