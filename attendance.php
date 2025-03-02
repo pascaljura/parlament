@@ -58,7 +58,7 @@ session_start();
 
             // Kontrola, jestli už není zapsaný v docházce pro danou schůzi
             $sql = "SELECT COUNT(*) AS count FROM attendances_alba_rosa_parlament 
-                    WHERE idusers = '$idusers' AND idmeetings_parlament = '$idattendances_list_parlament'";
+                    WHERE idusers = '$idusers' AND idattendances_list_parlament = '$idattendances_list_parlament'";
 
             $checkResult = $conn->query($sql);
             $check = $checkResult->fetch_assoc();
@@ -71,7 +71,7 @@ session_start();
             $newToken = bin2hex(random_bytes(32));
             $expiryTime = date('Y-m-d H:i:s', strtotime('+24 hours')); // Platnost 24 hodin
         
-            $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers, idmeetings_parlament, token, expires) 
+            $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers, idattendances_list_parlament, token, expires) 
                     VALUES ('$idusers', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
 
             if ($conn->query($sql) === TRUE) {
