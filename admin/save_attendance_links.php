@@ -3,7 +3,7 @@ require '../assets/php/config.php';
 
 if (empty($_POST['notes'])) {
     // Pokud není nic v POSTu, přesměrujeme s hláškou
-    header("Location: ./?message=" . urlencode("Neproběhly žádné změny, protože nebylo nic zvoleno.") . "&message_type=sucess-message");
+    header("Location: ./?message=" . urlencode("Neproběhly žádné změny, protože nebylo nic zvoleno.") . "&message_type=success-message");
     exit();
 }
 
