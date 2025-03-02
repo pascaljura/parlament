@@ -1,3 +1,5 @@
+<?php include '../assets/php/config.php' ; session_start(); ob_start(); ?>
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -425,7 +427,7 @@
                             ?>
                         </div>
                         <div class="table-heading">
-                            <h2> <?php echo $headerText1; ?> </h>
+                            <h2> <?php echo $headerText1; ?> </>
                         </div>
                         <?php
                         if ($sql != "" && $conn->query($sql) === TRUE) {
