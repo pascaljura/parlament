@@ -319,6 +319,9 @@ if (isset($_SESSION['idusers'])) {
                         } elseif ($message_type == 'error-message') {
                             $message_class = 'error-message';
                             $message_icon = 'fa-times';
+                        } elseif ($message_type == 'info-message') {
+                            $message_class = 'info-message';
+                            $message_icon = 'fa-info-circle';
                         }
 
                         // Výstup zprávy s ikonou a třídou
