@@ -1,6 +1,7 @@
 <?php
 include '../assets/php/config.php';
 session_start();
+ob_start();
 // Kontrola přihlášení
 if (!isset($_SESSION['idusers'])) {
     header("Location: ./index.php");

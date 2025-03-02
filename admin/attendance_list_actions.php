@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 include '../assets/php/config.php';
 ?>
 <!DOCTYPE html>
