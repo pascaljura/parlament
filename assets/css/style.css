@@ -68,6 +68,15 @@ table {
   border-radius: 4px;
 }
 
+.info-message {
+  background-color: #5481aa;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
 #container {
   text-align: center;
 }
