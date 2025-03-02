@@ -611,7 +611,7 @@
                     <body>
                         <div id="calendar">
                             <div class="table-heading">
-                                <h2> <?php echo $headerText; ?> </h2>
+                                <h2> <?php echo $headerText; ?> </>
                             </div>
                             <?php
                             if (isset($loginError)) {
