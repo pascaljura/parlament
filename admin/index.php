@@ -313,10 +313,10 @@ if (isset($_SESSION['idusers'])) {
                         $message_type = $_GET['message_type'];
 
                         // Určení třídy a ikony podle typu zprávy
-                        if ($message_type == 'success') {
+                        if ($message_type == 'success-message') {
                             $message_class = 'success-message';
                             $message_icon = 'fa-check';
-                        } elseif ($message == 'error') {
+                        } elseif ($message_type == 'error-message') {
                             $message_class = 'error-message';
                             $message_icon = 'fa-times';
                         }

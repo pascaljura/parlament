@@ -32,7 +32,7 @@ session_start();
         $token = $conn->real_escape_string($_GET['token']);
 
         // Ověření platnosti tokenu
-        $sql = "SELECT idtokens_parlament, idusers, idattendances_list_parlament, expires FROM tokens_alba_rosa_parlament WHERE token = '$token'";
+        $sql = "SELECT idtokens_parlament, idusers, idattendances_list_alba_rosa_parlament, expires FROM tokens_alba_rosa_parlament WHERE token = '$token'";
         $result = $conn->query($sql);
 
         if ($result->num_rows === 0) {
