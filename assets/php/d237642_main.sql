@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Pát 28. úno 2025, 15:25
+-- Vytvořeno: Ned 02. bře 2025, 21:59
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -28,16 +28,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
-  `idmeetings_parlament` int(11) NOT NULL,
+  `idattendances_list_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `attendances_alba_rosa_parlament`
 --
 
-INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idmeetings_parlament`, `idusers`, `time`) VALUES
+INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idattendances_list_parlament`, `idusers`, `time`) VALUES
 (3, 7, 17, '2025-02-26 21:04:48'),
 (4, 8, 17, '2025-02-26 21:07:21'),
 (5, 9, 17, '2025-02-26 21:30:18'),
@@ -49,7 +49,10 @@ INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idmee
 (11, 12, 17, '2025-02-28 09:43:21'),
 (12, 12, 65, '2025-02-28 09:44:03'),
 (13, 12, 25, '2025-02-28 09:44:17'),
-(14, 12, 27, '2025-02-28 09:44:44');
+(14, 12, 27, '2025-02-28 09:44:44'),
+(15, 6, 17, '2025-03-02 21:30:11'),
+(16, 13, 17, '2025-03-02 21:58:34'),
+(17, 14, 17, '2025-03-02 21:59:33');
 
 -- --------------------------------------------------------
 
@@ -62,8 +65,8 @@ CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
   `idnotes_parlament` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   `token` varchar(256) NOT NULL,
-  `active` enum('0','1') NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
+  `active` enum('0','1') NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
@@ -76,7 +79,9 @@ INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlamen
 (9, 0, '2025-02-26 21:24:58', '8aafd1c95c4884046357523befc91d1a981162110550948ec1dd067ebfb5c8ca', '0'),
 (10, 0, '2025-02-27 08:01:23', 'e0b61821f396d2e44e24f360a4ca8f867d3c5f7da0240786dd07fead204f96aa', '0'),
 (11, 0, '2025-02-27 08:48:38', 'a4c15e64b09ba1e1bfda221f0e500dc569a6daa2d3ee250333c3a45b46ebf4b2', '0'),
-(12, 0, '2025-02-28 09:41:09', '58fb8ae9450b1ac402797d878e62a05460f0890de6ff7ee400bf7e97f735b1aa', '0');
+(12, 0, '2025-02-28 09:41:09', '58fb8ae9450b1ac402797d878e62a05460f0890de6ff7ee400bf7e97f735b1aa', '0'),
+(13, 0, '2025-03-02 21:55:49', '2c9ee98c34bf54e78115f4fa74e1efc7f2a6c218236740efbda6586c5a00b12a', '1'),
+(14, 0, '2025-03-02 21:59:20', '31d1d771a5076ac2f16cfccd7ca88b0aac1f7ad8050f07e030fd9f8ba2308b30', '1');
 
 -- --------------------------------------------------------
 
@@ -4338,9 +4343,9 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník<br>\n                Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
-(2, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n \r\n            <a href="./assets/img/plakat_0.png" target="_blank">\r\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n        </div>', 1),
-(3, '        <div class="table-heading">\r\n  <b>&#x1F499;・Aktuálně・2024/2025</b>\r\n       </div>\r\n<div id="poster">\r\n            <a href="../assets/img/plakat_0.png" target="_blank">\r\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\r\n            </a>\r\n       \r\n         \r\n        </div>', 1);
+(1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web: Jiří Boucník | Grafika: Marcel Mikula\n            </div>\n        </div>', 1),
+(2, '        <div class="table-heading">\n  <h2>&#x1F499;・Aktuálně</h2>\n       </div>\n<div id="poster">\n \n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
+(3, '        <div class="table-heading">\n  <h2>&#x1F499;・Aktuálně</h2>\n       </div>\n<div id="poster">\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
 
 -- --------------------------------------------------------
 
@@ -4388,10 +4393,10 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
   `idtokens_parlament` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
-  `idmeetings_parlament` int(11) NOT NULL,
+  `idattendances_list_parlament` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `expires` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -4593,7 +4598,7 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
   ADD KEY `fk_attendance_user` (`idusers`),
-  ADD KEY `fk_attendance_meeting` (`idmeetings_parlament`);
+  ADD KEY `fk_attendance_meeting` (`idattendances_list_parlament`);
 
 --
 -- Klíče pro tabulku `attendances_list_alba_rosa_parlament`
@@ -4692,7 +4697,7 @@ ALTER TABLE `school_alba_rosa`
 ALTER TABLE `tokens_alba_rosa_parlament`
   ADD PRIMARY KEY (`idtokens_parlament`),
   ADD KEY `fk_token_user` (`idusers`),
-  ADD KEY `fk_token_meeting` (`idmeetings_parlament`);
+  ADD KEY `fk_token_meeting` (`idattendances_list_parlament`);
 
 --
 -- Klíče pro tabulku `users_alba_rosa`
@@ -4724,12 +4729,12 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
-  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
@@ -4784,7 +4789,7 @@ ALTER TABLE `school_alba_rosa`
 -- AUTO_INCREMENT pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
@@ -4808,14 +4813,14 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- Omezení pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idattendances_list_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 --
 -- Omezení pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idmeetings_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idattendances_list_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
