@@ -78,15 +78,17 @@ $section = $phpWord->addSection([
     'pageNumberingStart' => 1
 ]);
 
+$zahlavi = $section->addHeader();
+
 // Přidání obrázku přímo do stávající sekce (na střed)
-$section->addImage('./assets/img/purkynka_logo.png', [
-    'width' => 320,
-    'height' => 103,
+$zahlavi->addImage('./assets/img/purkynka_logo1.png', [
+    'width' => 430,
+    'height' => 76,
     'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
 ]);
 
 // Vytvoření tabulky přímo ve stávající sekci
-$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'width' => 100 * 100]);
+$table = $zahlavi->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'width' => 100 * 100]);
 
 // Přidání řádku
 $table->addRow();
