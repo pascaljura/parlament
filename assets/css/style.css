@@ -4,20 +4,22 @@ body {
   min-height: 100vh;
   margin: 0;
   font-family: "Roboto", Calibri, sans-serif;
-  font-weight: 100; /* to je přímo ten "Bold 700" */
+  font-weight: 300;
   position: relative;
-  font-size: 20px;
+  font-size: 18px; /* Mírně menší pro lepší čitelnost */
+  line-height: 1.6; /* Zvětšený řádkový odstup pro vzdušnější vzhled */
 }
 
 a {
   text-decoration: none;
 }
+
 h1,
 h2 {
   font-family: "Roboto Slab", Calibri, sans-serif;
-  font-weight: 700; /* to je přímo ten "Bold 700" */
-  padding: unset;
-  margin: unset;
+  font-weight: 700;
+  padding: 0;
+  margin: 0 0 1rem 0; /* Malý prostor pod nadpisy */
 }
 
 h3,
@@ -25,10 +27,11 @@ h4,
 h5,
 h6 {
   font-family: "Roboto Slab", Calibri, sans-serif;
-  font-weight: 400; /* to je přímo ten "Bold 700" */
-  padding: unset;
-  margin: unset;
+  font-weight: 400;
+  padding: 0;
+  margin: 0 0 1rem 0;
 }
+
 body::before {
   content: "";
   top: 0;
@@ -46,66 +49,54 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1rem;
-  background-color: #f9f9f9; /* pozadí navbaru */
+  padding: 1rem 2rem; /* Větší padding pro lepší prostor */
+  background-color: rgba(
+    249,
+    249,
+    249,
+    0.9
+  ); /* Poloprůhledné pozadí pro efekt */
   color: black;
-  border-radius: 5px;
-  position: relative; /* pro pozicování dropdown menu */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Nastaví navbar na celou šířku obrazovky */
-  box-sizing: border-box; /* Zajistí, že padding nebude přidávat šířku */
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Odkazy v menu */
 .nav-links {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .nav-links a {
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   text-decoration: none;
-  padding: 0.5rem;
-  display: inline-block;
+  padding: 0.2rem 1rem;
   background-color: #5481aa;
-  transition-duration: 0.4s;
-  border-radius: 5px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-links a:hover {
   background-color: #77afe0;
-  border-radius: 5px;
+  transform: scale(1.05); /* Efekt zvětšení na hover */
 }
 
-.user-dropdown a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  padding: 0.5rem;
-  display: inline-block;
-  background-color: #5481aa;
-  transition-duration: 0.4s;
-  border-radius: 5px;
-}
-
-.user-dropdown a:hover {
-  background-color: #77afe0;
-  border-radius: 5px;
-}
-
+.user-dropdown a,
 .mobile-menu a {
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   text-decoration: none;
-  padding: 0.5rem;
-  display: inline-block;
+  padding: 0.6rem 1rem;
   background-color: #5481aa;
-  transition-duration: 0.4s;
-  border-radius: 5px;
-  margin: 2px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.mobile-menu :hover {
+.user-dropdown a:hover,
+.mobile-menu a:hover {
   background-color: #77afe0;
-  border-radius: 5px;
+  transform: scale(1.05);
 }
 
 .user-icon,
@@ -117,22 +108,21 @@ nav {
   z-index: 10;
 }
 
-/* Styl pro oba menu (user dropdown a mobile menu) */
 .user-dropdown,
 .mobile-menu {
   display: none;
   position: absolute;
-  background-color: #f9f9f9; /* Pozadí menu */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  width: 200px; /* Stejná šířka pro obě menu */
+  background-color: rgba(249, 249, 249, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 220px;
   top: 60px;
   left: 50%;
-  transform: translateX(-50%); /* Zarovnáno na střed */
+  transform: translateX(-50%);
   padding: 1rem;
   z-index: 9;
   flex-direction: column;
-  align-items: center; /* Zarovnání tlačítek na střed */
+  align-items: center;
 }
 
 .hamburger {
@@ -142,69 +132,62 @@ nav {
 }
 
 .hamburger div {
-  width: 25px;
-  height: 3px;
+  width: 30px;
+  height: 4px;
+  background-color: #333;
 }
 
 .user-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333;
-  font-size: 18px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #5481aa;
 }
 
 @media (max-width: 768px) {
-  /* Na mobilu chceme, aby byly odkazy skryté, když je hamburger menu zobrazeno */
   .nav-links {
     display: none;
   }
 
-  /* Umožníme zobrazení hamburger ikony */
   .hamburger {
     display: flex;
     position: absolute;
-    right: 1rem; /* Hamburger ikona na pravé straně */
+    right: 2rem;
   }
 
-  /* Uživatelova ikona je vpravo vedle hamburgeru */
   .user-icon {
-    order: 0;
     position: absolute;
-    left: 1rem; /* Uživatelova ikona na levé straně na mobilu */
+    left: 2rem;
   }
 
-  /* Zajistí, že navbar je stále flexibilní a ikony jsou v rámci navbaru */
   nav {
-    flex-direction: row; /* Horizontální rozložení pro mobil */
-    justify-content: space-between; /* Umožňuje oddělit ikony */
-    width: 100%; /* Zajišťuje, že navbar zabírá celou šířku obrazovky */
-    box-sizing: border-box; /* Zajistí, že padding nebude přidávat šířku */
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 2rem;
   }
 }
 
-/* Zajištění, aby na desktopu byly odkazy vlevo a user ikona vpravo */
 @media (min-width: 769px) {
   .user-icon {
-    order: 1; /* User icon na pravé straně */
+    order: 1;
   }
   .nav-links {
-    order: 0; /* Odkazy vlevo */
+    order: 0;
   }
 
-  /* Zarovnání user dropdown menu pod ikonku na desktopu */
   .user-dropdown {
     left: auto;
     right: 0;
-    transform: translateX(0);
     top: 75px;
+    transform: translateX(0);
   }
 }
 
-/* Ztmavení stránky */
 .overlay {
   position: fixed;
   top: 0;
@@ -212,7 +195,7 @@ nav {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none; /* Defaultně skryto */
+  display: none;
   z-index: 8;
 }
 
@@ -225,114 +208,100 @@ table {
   color: #5481aa;
 }
 
+.success-message,
+.error-message,
+.info-message {
+  color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
 .success-message {
   background-color: #70b95e;
-  color: #ffffff;
-  border: none;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 4px;
 }
 
 .error-message {
   background-color: #ff4848;
-  color: #ffffff;
-  border: none;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 4px;
 }
 
 .info-message {
   background-color: #5481aa;
-  color: #ffffff;
-  border: none;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 4px;
 }
 
 #container {
   text-align: center;
+  padding: 2rem 0;
 }
 
 #calendar {
   width: 80%;
-  background-color: #ffffffcc;
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
   height: 20%;
   overflow: hidden;
-  white-space: normal;
 }
 
 #qrcode img {
   width: 100%;
-  max-width: 25%; /* Maximální velikost, uprav podle potřeby */
+  max-width: 25%;
   height: auto;
 }
 
 select {
   width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   background-color: #fff;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 16px;
 }
 
 select:focus {
   outline: none;
   border-color: #5481aa;
-  box-shadow: 0 0 5px #27a1ffd5;
+  box-shadow: 0 0 5px rgba(39, 161, 255, 0.6);
 }
 
 a {
-  display: block; /* Odkaz zabere celou šířku */
-  word-wrap: break-word; /* Zalamování dlouhého textu */
+  display: block;
+  word-wrap: break-word;
   overflow-wrap: break-word;
-  max-width: 100%; /* Nevyjede z divu */
+  max-width: 100%;
 }
 
 .table-heading {
-  color: #333;
-  font-family: sans-serif;
   font-size: 24px;
-  text-decoration: bold;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  color: #333;
+  margin: 1rem 0;
 }
 
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 3px;
 }
 
 .button-container button {
   background-color: #5481aa;
   color: white;
-  padding: 10px 15px;
+  padding: 12px 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: "Roboto", Calibri, sans-serif;
-  font-weight: 100; /* to je přímo ten "Bold 700" */
-  font-size: 16px;
-  font-family: sans-serif;
-  transition-duration: 0.4s;
-  font-family: "Roboto", Calibri, sans-serif;
-}
-
-iframe {
-  border-radius: 50px;
+  transition: background-color 0.3s ease;
 }
 
 .button-container button:hover {
   background-color: #77afe0;
+}
+
+iframe {
+  border-radius: 12px;
 }
 
 #loading-overlay {
@@ -341,7 +310,7 @@ iframe {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #3e6182c9;
+  background-color: rgba(62, 97, 130, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -353,13 +322,9 @@ iframe {
   height: 100px;
   border-radius: 50%;
   background: conic-gradient(#aad4f3 10%, #5481aa);
-  -webkit-mask: radial-gradient(
-    farthest-side,
-    var(--color-0) calc(100% - 16px),
-    var(--color-0) 0
-  );
   animation: s3 1s infinite linear;
 }
+
 @keyframes s3 {
   to {
     transform: rotate(1turn);
@@ -375,9 +340,9 @@ iframe {
 }
 
 #responsive-image {
-  margin: 5px;
-  width: 15%;
-  border-radius: 3%;
+  width: 25%;
+  margin: 10px;
+  border-radius: 6%;
 }
 
 @media (max-width: 767px), (max-width: 560px) {
@@ -391,7 +356,6 @@ iframe {
   0% {
     transform: rotate(360deg);
   }
-
   100% {
     transform: rotate(0deg);
   }
