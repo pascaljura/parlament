@@ -27,6 +27,7 @@ if (isset($_SESSION['idusers'])) {
         $delete_attendances = $userData['delete_attendances'];
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
+$show_attendances= $userData['show_attendances'];
 
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho

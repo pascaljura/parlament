@@ -26,6 +26,7 @@ if (isset($_SESSION['idusers'])) {
         $delete_attendances = $userData['delete_attendances'];
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
+        $show_attendances= $userData['show_attendances'];
 
 
     } else {
@@ -154,7 +155,9 @@ if (isset($_SESSION['idusers'])) {
             <div class="nav-links">
                 <a href="../">Domů</a>
                 <a href="../notes" class="active">Zápisy</a>
-                <a href="../attendances">Prezenční listiny</a>
+                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                    <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
             </div>
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
@@ -176,7 +179,9 @@ if (isset($_SESSION['idusers'])) {
             <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
                 <a href="../notes" class="active">Zápisy</a>
-                <a href="../attendances">Prezenční listiny</a>
+                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                    <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
             </div>
         </nav>
         <div class="table-heading" style="text-align: center;">
