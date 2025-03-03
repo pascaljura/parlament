@@ -1,13 +1,13 @@
 <?php
 // Podmíněné načtení konfiguračního souboru
-$cestaKeKonfiguraci = './assets/php/config.php';
+$cestaKeKonfiguraci = '../assets/php/config.php';
 if (file_exists($cestaKeKonfiguraci)) {
     include $cestaKeKonfiguraci;
 } else {
     die("Konfigurační soubor nebyl nalezen.");
 }
 
-require_once './vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;

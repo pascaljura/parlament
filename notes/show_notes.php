@@ -225,10 +225,10 @@ if (isset($_SESSION['idusers'])) {
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
                 <?php
-                echo '<button onclick="window.open(\'../notes_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./notes_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="window.open(\'../notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                echo '<button onclick="window.open(\'./notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 // Pokud není přístup povolen (parlament_access_admin != 1)
