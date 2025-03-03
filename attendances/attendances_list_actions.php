@@ -2,6 +2,41 @@
 session_start();
 ob_start();
 include '../assets/php/config.php';
+
+if (isset($_SESSION['idusers'])) {
+    $userId = $_SESSION['idusers'];
+
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($userData = $result->fetch_assoc()) {
+        // Uložení do proměnných
+        $idusers_parlament = $userData['idusers'];
+        $email_parlament = $userData['email'];
+        $username_parlament = $userData['username'];
+        $parlament_access_admin = $userData['parlament_access_admin'];
+        $parlament_access_user = $userData['parlament_access_user'];
+        // Nové sloupce (práva a přístupy)
+        $add_notes = $userData['add_notes'];
+        $delete_notes = $userData['delete_notes'];
+        $edit_notes = $userData['edit_notes'];
+        $start_attendances = $userData['start_attendances'];
+        $end_attendances = $userData['end_attendances'];
+        $delete_attendances = $userData['delete_attendances'];
+        $qr_attendances = $userData['qr_attendances'];
+        $select_idnotes_parlament = $userData['select_idnotes_parlament'];
+
+
+    } else {
+        // Uživatel nenalezen (může být smazán), odhlásíme ho
+        header("Location: ./logout.php");
+        exit();
+    }
+
+    $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +58,43 @@ include '../assets/php/config.php';
 
 <body>
     <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+        <nav>
+
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Schůze</a>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="../logout.php">Logout</a>
+                <?php } else { ?>
+                    <a href="../login.php">Login</a>
+                <?php } ?>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">Domů</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Schůze</a>
+            </div>
+        </nav>
         <?php
         // Kontrola přihlášení
         if (!isset($_SESSION['idusers'])) {
@@ -102,6 +174,9 @@ include '../assets/php/config.php';
         }
         ?>
     </div>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+    <script src="../assets/js/script.js">
+    </script>
 </body>
 
 </html>

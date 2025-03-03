@@ -142,6 +142,43 @@ if (isset($_SESSION['idusers'])) {
 
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+        <nav>
+
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <a href="../attendances">Schůze</a>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="../logout.php">Logout</a>
+                <?php } else { ?>
+                    <a href="../login.php">Login</a>
+                <?php } ?>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <a href="../attendances">Schůze</a>
+            </div>
+        </nav>
         <div class="table-heading" style="text-align: center;">
             <?php echo '<img src="../assets/img/purkynka_logo.png" width="200px" height="80">'; ?>
         </div>
@@ -186,10 +223,12 @@ if (isset($_SESSION['idusers'])) {
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
                 echo '</button>';
                 // Pokud není přístup povolen (parlament_access_admin != 1)
-                if (isset($parlament_access_admin) && $parlament_access_admin == '1') {
+                if (isset($edit_notes) && $edit_notes == '1') {
                     echo '<button onclick="window.location.href=\'./edit_notes.php?idnotes_parlament=' . $idnotes_parlament . '\'">';
                     echo '<i class="fa fa-pencil" aria-hidden="true"></i> Upravit zápis';
                     echo '</button>';
+                }
+                if (isset($delete_notes) && $delete_notes == '1') {
                     echo '<button onclick="deletenotes(' . $idnotes_parlament . ')">';
                     echo '<i class="fa fa-trash" aria-hidden="true"></i> ' . ' Odstranit zápis';
                     echo '</button>';
@@ -232,10 +271,10 @@ if (isset($_SESSION['idusers'])) {
                     if (this.readyState == 4 && this.status == 200) {
                         // Zpracování odpovědi
                         if (this.responseText === "success") {
-                            // Pokud je odpověď "success", přesměrujeme uživatele na main.php
-                            window.location.replace("./?message=Zápis+byl+úspěšně+smazán.");
+                            // Pokud je odpověď "success", přesměrujeme uživatele na hlavní stránku
+                            window.location.replace("./?message=Zápis+byl+úspěšně+smazán.&message_type=success-message");
                         } else {
-                            // Pokud je odpověď něco jiného než "success", zobrazíme chybovou zprávu
+                            // Pokud je odpověď "error", zobrazíme chybovou zprávu
                             alert("Nastala chyba při mazání zápisu.");
                         }
                     }
@@ -244,6 +283,7 @@ if (isset($_SESSION['idusers'])) {
                 xhttp.send("idnotes_parlament=" + idnotes_parlament);
             }
         }
+
 
 
 

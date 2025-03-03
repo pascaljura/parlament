@@ -2,116 +2,176 @@
 include '../assets/php/config.php';
 session_start();
 ob_start();
-// Kontrola přihlášení
-if (!isset($_SESSION['idusers'])) {
-    header("Location: ./index.php");
-    exit();
-} else {
 
-    // Získání id uživatele ze session
-    $idusers = $_SESSION['idusers'];
+if (isset($_SESSION['idusers'])) {
+    $userId = $_SESSION['idusers'];
 
-    // Kontrola přístupu na základě sloupce parlament_access_admin
-    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa_parlament WHERE idusers = ?");
-    $stmtAccess->bind_param("i", $idusers);
-    $stmtAccess->execute();
-    $stmtAccess->bind_result($parlament_access_admin);
-    $stmtAccess->fetch();
-    $stmtAccess->close();
-}
-// Pokud není přístup povolen (parlament_access_admin != 1)
-if ($parlament_access_admin != '1') { ?>
-    <div id="calendar">
-        <div style="color: #FF0000; margin-bottom: 5px;"><b>Chybí oprávnění<b></div>
-    </div>
-    <?php
-} else {
-    function ziskatTextVLomitkach($notes)
-    {
-        $textInLomitka = "";
-        if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
-            $textInLomitka = $matches[1];
-        }
-        return $textInLomitka;
-    }
-    function nahraditMarkdown($text)
-    {
-        return $text;
-    }
-    if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
-        $idnotes_parlament = $_GET['idnotes_parlament'];
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes_parlament = $idnotes_parlament");
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $date = date('Y-m-d', strtotime($row['date']));
-            $document_number = $row['document_number']; // Načtení čísla dokumentu
-            $notes = $row['notes'];
-            $notes = str_replace("=", "\n", $notes);
-            $textInLomitkach = ziskatTextVLomitkach($notes);
-            $notes = nahraditMarkdown($notes);
-        } else {
-            echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
-            exit();
-        }
+    if ($userData = $result->fetch_assoc()) {
+        // Uložení do proměnných
+        $idusers_parlament = $userData['idusers'];
+        $email_parlament = $userData['email'];
+        $username_parlament = $userData['username'];
+        $parlament_access_admin = $userData['parlament_access_admin'];
+        $parlament_access_user = $userData['parlament_access_user'];
+        // Nové sloupce (práva a přístupy)
+        $add_notes = $userData['add_notes'];
+        $delete_notes = $userData['delete_notes'];
+        $edit_notes = $userData['edit_notes'];
+        $start_attendances = $userData['start_attendances'];
+        $end_attendances = $userData['end_attendances'];
+        $delete_attendances = $userData['delete_attendances'];
+        $qr_attendances = $userData['qr_attendances'];
+        $select_idnotes_parlament = $userData['select_idnotes_parlament'];
     } else {
-        echo "Chybějící nebo neplatné idnotes_parlament v URL.";
+        // Uživatel nenalezen (může být smazán), odhlásíme ho
+        header("Location: ./logout.php");
         exit();
     }
-    function getSklonovanyText($text)
-    {
-        $posledniZnak = mb_substr($text, -1);
-        switch ($posledniZnak) {
-            case 'a':
-            case 'í':
-                return $text;
-            default:
-                return $text;
-        }
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $idnotes_parlament = $_POST["idnotes_parlament"];
-        $date = $_POST["date"];
-        $document_number = $_POST["document_number"]; // Načtení čísla dokumentu
-        $notesText = $_POST["notes"];
-        $notesText = str_replace(["\r\n", "\r", "\n"], "=", $notesText);
-        $notesText = nahraditMarkdown($notesText);
 
-        // Aktualizace záznamu v databázi včetně čísla dokumentu
-        $sql = "UPDATE notes_alba_rosa_parlament SET date='$date', document_number='$document_number', notes='$notesText' WHERE idnotes_parlament = $idnotes_parlament";
-        if ($conn->query($sql) === TRUE) {
-            header("Location: show_notes.php?idnotes_parlament=$idnotes_parlament");
-            exit();
+    $stmt->close();
+} else {
+    // Pokud není uživatel přihlášený, přesměrujeme na login stránku
+    header("Location: ../login.php");
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+</head>
+
+<body>
+
+    <div id="calendar"
+        style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+        <nav>
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
+
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <a href="../attendances">Schůze</a>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="../logout.php">Logout</a>
+                <?php } else { ?>
+                    <a href="../login.php">Login</a>
+                <?php } ?>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <a href="../attendances">Schůze</a>
+            </div>
+        </nav>
+        <?php
+        // Pokud nemá uživatel oprávnění (parlament_access_admin != 1) nebo (edit_notes != 1), přesměrujeme ho nebo zobrazíme chybovou hlášku
+        if ($parlament_access_admin != '1' || $edit_notes != '1') {
+
+            echo '<div class="error-message">';
+            echo '<i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění';
+            echo '</div>';
         } else {
-            echo "Chyba při aktualizaci záznamu: " . $conn->error;
-        }
-    }
+            function ziskatTextVLomitkach($notes)
+            {
+                $textInLomitka = "";
+                if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
+                    $textInLomitka = $matches[1];
+                }
+                return $textInLomitka;
+            }
+            function nahraditMarkdown($text)
+            {
+                return $text;
+            }
+            if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
+                $idnotes_parlament = $_GET['idnotes_parlament'];
 
-    ?>
-    <!DOCTYPE html>
-    <html lang="en">
+                $result = $conn->query("SELECT * FROM notes_alba_rosa_parlament WHERE idnotes_parlament = $idnotes_parlament");
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $date = date('Y-m-d', strtotime($row['date']));
+                    $document_number = $row['document_number']; // Načtení čísla dokumentu
+                    $notes = $row['notes'];
+                    $notes = str_replace("=", "\n", $notes);
+                    $textInLomitkach = ziskatTextVLomitkach($notes);
+                    $notes = nahraditMarkdown($notes);
+                } else {
+                    echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
+                    exit();
+                }
+            } else {
+                echo "Chybějící nebo neplatné idnotes_parlament v URL.";
+                exit();
+            }
+            function getSklonovanyText($text)
+            {
+                $posledniZnak = mb_substr($text, -1);
+                switch ($posledniZnak) {
+                    case 'a':
+                    case 'í':
+                        return $text;
+                    default:
+                        return $text;
+                }
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $idnotes_parlament = $_POST["idnotes_parlament"];
+                $date = $_POST["date"];
+                $document_number = $_POST["document_number"]; // Načtení čísla dokumentu
+                $notesText = $_POST["notes"];
+                $notesText = str_replace(["\r\n", "\r", "\n"], "=", $notesText);
+                $notesText = nahraditMarkdown($notesText);
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-        <title>Alba-rosa.cz | Parlament na Purkyňce</title>
-        <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
-        <meta content="https://www.alba-rosa.cz/" property="og:url" />
-        <meta content="https://www.alba-rosa.cz/parlament/favicon.ico" property="og:image" />
-        <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
-    </head>
+                // Aktualizace záznamu v databázi včetně čísla dokumentu
+                $sql = "UPDATE notes_alba_rosa_parlament SET date='$date', document_number='$document_number', notes='$notesText' WHERE idnotes_parlament = $idnotes_parlament";
+                if ($conn->query($sql) === TRUE) {
+                    header("Location: show_notes.php?idnotes_parlament=$idnotes_parlament");
+                    exit();
+                } else {
+                    echo "Chyba při aktualizaci záznamu: " . $conn->error;
+                }
+            }
 
-    <body>
-        <div id="loading-overlay">
-            <div class="loader"></div>
-        </div>
+            ?>
 
-        <div id="calendar"
-            style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
+
+
+
+
             <div class="table-heading">
                 <h2> <?php echo '<i class="fa fa-heart blue"></i>・Úprava zápisu'; ?></h2>
             </div>
@@ -154,22 +214,22 @@ if ($parlament_access_admin != '1') { ?>
                         stránku beze změn</button></a>
             </div>
             <?php
+        }
 
-            // Získání dat z tabulky
-            $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
-            $result = mysqli_query($conn, $query);
+        // Získání dat z tabulky
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
+        $result = mysqli_query($conn, $query);
 
-            if ($result) {
-                $row = mysqli_fetch_assoc($result);
-                $text = $row['text'];
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $text = $row['text'];
 
-                // Výpis HTML s dynamickým obsahem
-                echo "$text";
-            } else {
-                echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-            }
-}
-?>
+            // Výpis HTML s dynamickým obsahem
+            echo "$text";
+        } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+        }
+        ?>
     </div>
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>

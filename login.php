@@ -90,14 +90,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+        <nav>
+
+
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
+
+
+
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="./" class="active">Domů</a>
+                <a href="./notes">Zápisy</a>
+                <a href="./attendances">Schůze</a>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="./logout.php">Logout</a>
+                <?php } else { ?>
+                    <a href="./login.php">Login</a>
+                <?php } ?>
+            </div>
+
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="./" class="active">Domů</a>
+                <a href="./notes">Zápisy</a>
+                <a href="./attendances">Schůze</a>
+            </div>
+        </nav>
+        <?php
+        if (isset($loginError)) {
+            echo '<div class="error-message">';
+            echo '<i class="fa fa-times" style="margin-right: 5px;"></i>' . $loginError;
+            echo '</div>';
+        }
+        ?>
         <div class="table-heading">
             <h2> <?php echo $headerText; ?> </h2>
         </div>
-        <?php
-        if (isset($loginError)) {
-            echo '<div style="color: #FF0000; margin-bottom: 5px;"><b>' . $loginError . '<b></div>';
-        }
-        ?>
         <div class="button-container" id="buttonContainer">
             <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="loginForm"
                 style="width: 80%; max-width: 400px; margin-bottom: 20px;">
