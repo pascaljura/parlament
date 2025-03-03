@@ -117,7 +117,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
             <div class="user-icon" onclick="toggleUserMenu(event)">
-                <i class="fa fa-user"></i>
+                                <?php if (!empty($username_parlament)) { ?>
+<i class="fa fa-user" style="color: #70B95E;"></i>
+  <?php } else { ?>
+<i class="fa fa-user" style="color: #3C3C3B;"></i>
+  <?php } ?>
             </div>
 
             <!-- Navigation Links (vlevo na PC) -->
