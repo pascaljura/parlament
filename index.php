@@ -1,6 +1,34 @@
 <?php include './assets/php/config.php';
 session_start();
 ob_start();
+
+if (isset($_SESSION['idusers'])) {
+    $userId = $_SESSION['idusers'];
+
+    $stmt = $conn->prepare("SELECT idusers, email, username, password, parlament_access_admin, parlament_access_user 
+                            FROM users_alba_rosa_parlament 
+                            WHERE idusers = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($userData = $result->fetch_assoc()) {
+        // Uložení do proměnných
+        $idusers_parlament = $userData['idusers'];
+        $email_parlament = $userData['email'];
+        $username_parlament = $userData['username'];
+        $parlament_access_admin = $userData['parlament_access_admin'];
+        $parlament_access_user = $userData['parlament_access_user'];
+
+
+    } else {
+        // Uživatel nenalezen (může být smazán), odhlásíme ho
+        header("Location: ./logout.php");
+        exit();
+    }
+
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,10 +52,7 @@ ob_start();
     $headerText2 = '<i class="fa fa-heart blue"></i>・O nás';
     ?>
 </head>
-<?php
 
-
-?>
 <div id="loading-overlay">
     <div class="loader"></div>
 </div>
@@ -37,10 +62,12 @@ ob_start();
         <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
         <nav>
 
-            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+
             <div class="user-icon" onclick="toggleUserMenu(event)">
                 <i class="fa fa-user"></i>
             </div>
+
+
 
             <!-- Navigation Links (vlevo na PC) -->
             <div class="nav-links">
@@ -56,10 +83,14 @@ ob_start();
 
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
-                <p>Přihlášen jako:</p><br>
-                <a href="./login.php">Login</a>
-                <a href="./logout.php">Logout</a>
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="./logout.php">Logout</a>
+                <?php } else { ?>
+                    <a href="./login.php">Login</a>
+                <?php } ?>
             </div>
+
 
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">

@@ -280,13 +280,13 @@ ob_start();
                             <h2><i class="fa fa-heart blue"></i>・Správa schůzí</h2>
                         </div>
                         <div class="button-container" id="buttonContainer">
-                            <form action="create_attendance_list.php" method="post">
+                            <form action="create_attendances_list.php" method="post">
                                 <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
                             </form>
                         </div>
                         <div class="button-container" id="buttonContainer">
                             <div class="layout-container">
-                                <form action="save_attendance_links.php" method="post">
+                                <form action="save_attendances_links.php" method="post">
                                     <div class="table-wrapper">
                                         <table>
                                             <thead>
@@ -327,14 +327,14 @@ ob_start();
                                                         <td style="white-space: nowrap;">
                                                             <div style="display: flex; gap: 10px; justify-content: center;">
                                                                 <a
-                                                                    href="attendance_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
+                                                                    href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
                                                                     <button type="button" class="delete">Smazat</button>
                                                                 </a>
                                                                 <a
-                                                                    href="attendance_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
+                                                                    href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
                                                                     <button type="button" class="end">Ukončit</button>
                                                                 </a>
-                                                                <a href="attendance_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                                <a href="attendances_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
                                                                     target="_blank">
                                                                     <button type="button" class="qr">QR Kód</button>
                                                                 </a>
