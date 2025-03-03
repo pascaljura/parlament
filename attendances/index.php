@@ -1,5 +1,7 @@
-<?php include '../assets/php/config.php' ; session_start();
-ob_start(); ob_start(); ?>
+<?php include '../assets/php/config.php';
+session_start();
+ob_start();
+?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -36,7 +38,7 @@ ob_start(); ob_start(); ?>
                 /* Ohraničení pro hlavičku */
                 position: sticky;
                 top: 0;
-                z-index: 10;
+                z-index: 5;
             }
 
             table tbody td,
@@ -425,5 +427,4 @@ ob_start(); ob_start(); ?>
     </html>
     <?php
     ob_end_flush();
-
     ?>

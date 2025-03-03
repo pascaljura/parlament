@@ -1,7 +1,7 @@
 <?php include '../assets/php/config.php';
 session_start();
 ob_start();
-ob_start(); ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -121,8 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
                 <p>Přihlášen jako:</p><br>
-                <a href="./login.php">Login</a>
-                <a href="./logout.php">Logout</a>
+                <a href="../login.php">Login</a>
+                <a href="../logout.php">Logout</a>
             </div>
 
             <!-- Mobile Menu -->
@@ -224,21 +224,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <br>
 
-
-
-
-        <?php
-
-
-
-
-
-
-
-
-
-        ?>
-
         <?php
 
         // Získání dat z tabulky
@@ -303,5 +288,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 <?php
 ob_end_flush();
-
 ?>

@@ -78,3 +78,6 @@ if (!isset($_SESSION['idusers'])) {
 </body>
 
 </html>
+<?php
+ob_end_flush();
+?>

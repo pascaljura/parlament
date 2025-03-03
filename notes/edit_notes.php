@@ -177,3 +177,6 @@ if ($parlament_access_admin != '1') { ?>
 </script>
 
 </html>
+<?php
+ob_end_flush();
+?>

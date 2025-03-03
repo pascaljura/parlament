@@ -57,13 +57,13 @@ ob_start();
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
                 <p>Přihlášen jako:</p><br>
-                <a href="#">Login</a>
-                <a href="#">Logout</a>
+                <a href="./login.php">Login</a>
+                <a href="./logout.php">Logout</a>
             </div>
 
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
-            <a href="./" class="active">Domů</a>
+                <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
                 <a href="./attendances">Schůze</a>
             </div>
@@ -171,5 +171,4 @@ ob_start();
 </html>
 <?php
 ob_end_flush();
-
 ?>

@@ -105,3 +105,6 @@ include '../assets/php/config.php';
 </body>
 
 </html>
+<?php
+ob_end_flush();
+?>

@@ -1,5 +1,6 @@
-<?php
-require '../assets/php/config.php';
+<?php include '../assets/php/config.php';
+session_start();
+ob_start();
 
 if (empty($_POST['notes'])) {
     // Pokud není nic v POSTu, přesměrujeme s hláškou
@@ -41,3 +42,5 @@ $message_type = $success ? "success-message" : "error-message";
 // Přesměrování s výslednou zprávou
 header("Location: ./?message=" . urlencode($message) . "&message_type=$message_type");
 exit();
+
+ob_end_flush();
