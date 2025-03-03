@@ -1,17 +1,38 @@
 {
   "name": "Alba-rosa.cz | Parlament na Purkyňce",
-  "short_name": "Alba-rosa",
+  "short_name": "Alba-rosa.cz | Parlament na Purkyňce",
   "description": "Oficiální web školního parlamentu na Purkyňce.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f1523",
   "theme_color": "#0f1523",
+  "display_override": ["window-controls-overlay"],
   "icons": [
     {
-      "src": "../favicon.ico",
-      "sizes": "64x64 32x32 16x16",
-      "type": "image/x-icon"
+      "src": "../../assets/img/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../../assets/img/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "title": "Alba-rosa.cz | Parlament na Purkyňce"
+  "screenshots": [
+    {
+      "src": "../../assets/img/screenshot-mobile.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "../../assets/img/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
 }
