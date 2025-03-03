@@ -27,10 +27,12 @@ include './assets/php/config.php';
 <body>
     <div id="calendar">
         <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-
         <nav>
+
             <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-            <div class="user-icon" onclick="toggleUserMenu(event)"><i class="fa fa-user"></i></div>
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
 
             <!-- Navigation Links (vlevo na PC) -->
             <div class="nav-links">
@@ -41,18 +43,14 @@ include './assets/php/config.php';
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
             <div class="hamburger" onclick="toggleMobileMenu(event)">
-                <div></div>
-                <div></div>
-                <div></div>
+                <i class="fa fa-bars"></i>
             </div>
 
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
-                <div class="button-container button">
-                    <p>Přihlášen jako:</p><br>
-                    <a href="#"><button>Login</button></a>
-                    <a href="#"><button>Logout</button></a>
-                </div>
+                <p>Přihlášen jako:</p><br>
+                <a href="#">Login</a>
+                <a href="#">Logout</a>
             </div>
 
             <!-- Mobile Menu -->
@@ -62,6 +60,7 @@ include './assets/php/config.php';
                 <a href="#">Schůze</a>
             </div>
         </nav>
+
         <?php
 
         // Získání dat z tabulky
