@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Ned 02. bře 2025, 21:59
+-- Vytvořeno: Pon 03. bře 2025, 14:58
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -80,8 +80,8 @@ INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlamen
 (10, 0, '2025-02-27 08:01:23', 'e0b61821f396d2e44e24f360a4ca8f867d3c5f7da0240786dd07fead204f96aa', '0'),
 (11, 0, '2025-02-27 08:48:38', 'a4c15e64b09ba1e1bfda221f0e500dc569a6daa2d3ee250333c3a45b46ebf4b2', '0'),
 (12, 0, '2025-02-28 09:41:09', '58fb8ae9450b1ac402797d878e62a05460f0890de6ff7ee400bf7e97f735b1aa', '0'),
-(13, 0, '2025-03-02 21:55:49', '2c9ee98c34bf54e78115f4fa74e1efc7f2a6c218236740efbda6586c5a00b12a', '1'),
-(14, 0, '2025-03-02 21:59:20', '31d1d771a5076ac2f16cfccd7ca88b0aac1f7ad8050f07e030fd9f8ba2308b30', '1');
+(13, 0, '2025-03-02 21:55:49', '2c9ee98c34bf54e78115f4fa74e1efc7f2a6c218236740efbda6586c5a00b12a', ''),
+(14, 0, '2025-03-02 21:59:20', '31d1d771a5076ac2f16cfccd7ca88b0aac1f7ad8050f07e030fd9f8ba2308b30', '');
 
 -- --------------------------------------------------------
 
@@ -4343,9 +4343,9 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '        <div style="display: flex;" id="footer-text">\n            <div class=" button-container">\n            Web: Jiří Boucník | Grafika: Marcel Mikula\n            </div>\n        </div>', 1),
-(2, '        <div class="table-heading">\n  <h2>&#x1F499;・Aktuálně</h2>\n       </div>\n<div id="poster">\n \n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
-(3, '        <div class="table-heading">\n  <h2>&#x1F499;・Aktuálně</h2>\n       </div>\n<div id="poster">\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
+(1, '<hr style="border-top: 1px solid black;border-bottom: none;">      \n  <div style="display: flex; justify-content: center;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník | Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
+(2, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n \n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
+(3, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
 
 -- --------------------------------------------------------
 
@@ -4454,39 +4454,36 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` text NOT NULL,
-  `gamehub_private_access` enum('0','1') DEFAULT '0',
   `parlament_access_admin` enum('0','1') DEFAULT '0',
   `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
-  `purpix_level_1` int(11) NOT NULL DEFAULT 96,
-  `purpix_level_2` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_3` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_4` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_5` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_6` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_7` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_8` int(11) NOT NULL DEFAULT 69,
-  `purpix_level_9` int(11) NOT NULL DEFAULT 69,
-  `popclicker_score` int(11) NOT NULL
+  `add_notes` enum('0','1') NOT NULL DEFAULT '0',
+  `delete_notes` enum('0','1') NOT NULL,
+  `edit_notes` enum('0','1') NOT NULL DEFAULT '0',
+  `start_attendances` enum('0','1') NOT NULL DEFAULT '0',
+  `end_attendances` enum('0','1') NOT NULL DEFAULT '0',
+  `delete_attendances` enum('0','1') NOT NULL DEFAULT '0',
+  `qr_attendances` enum('0','1') NOT NULL,
+  `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_parlament`
 --
 
-INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `gamehub_private_access`, `parlament_access_admin`, `parlament_access_user`, `purpix_level_1`, `purpix_level_2`, `purpix_level_3`, `purpix_level_4`, `purpix_level_5`, `purpix_level_6`, `purpix_level_7`, `purpix_level_8`, `purpix_level_9`, `popclicker_score`) VALUES
-(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '1', '0', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
+(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
+(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
+(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
+(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- --------------------------------------------------------
 

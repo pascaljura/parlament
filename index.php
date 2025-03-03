@@ -5,9 +5,7 @@ ob_start();
 if (isset($_SESSION['idusers'])) {
     $userId = $_SESSION['idusers'];
 
-    $stmt = $conn->prepare("SELECT idusers, email, username, password, parlament_access_admin, parlament_access_user 
-                            FROM users_alba_rosa_parlament 
-                            WHERE idusers = ?");
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -19,6 +17,15 @@ if (isset($_SESSION['idusers'])) {
         $username_parlament = $userData['username'];
         $parlament_access_admin = $userData['parlament_access_admin'];
         $parlament_access_user = $userData['parlament_access_user'];
+        // Nové sloupce (práva a přístupy)
+        $add_notes = $userData['add_notes'];
+        $delete_notes = $userData['delete_notes'];
+        $edit_notes = $userData['edit_notes'];
+        $start_attendances = $userData['start_attendances'];
+        $end_attendances = $userData['end_attendances'];
+        $delete_attendances = $userData['delete_attendances'];
+        $qr_attendances = $userData['qr_attendances'];
+        $select_idnotes_parlament = $userData['select_idnotes_parlament'];
 
 
     } else {
