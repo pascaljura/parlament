@@ -26,7 +26,7 @@ if (isset($_SESSION['idusers'])) {
         $delete_attendances = $userData['delete_attendances'];
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
-        $show_attendances= $userData['show_attendances'];
+        $show_attendances = $userData['show_attendances'];
 
 
     } else {
@@ -264,7 +264,7 @@ if ($result) {
             <div class="nav-links">
                 <a href="../">Domů</a>
                 <a href="../notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                     <a href="../attendances" class="active">Prezenční listiny</a>
                 <?php } ?>
             </div>
@@ -288,7 +288,7 @@ if ($result) {
             <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
                 <a href="../notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                     <a href="../attendances" class="active">Prezenční listiny</a>
                 <?php } ?>
             </div>
@@ -315,115 +315,116 @@ if ($result) {
             echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
             echo '</div>';
         }
-        ?>
+        if (isset($show_attendances) && $show_attendances == '1') {
 
-        <div class="table-heading">
-            <h2><i class="fa fa-heart blue"></i>・Správa prezenčních listin</h2>
-        </div>
-        <div class="button-container" id="buttonContainer">
-            <form action="create_attendances_list.php" method="post">
-                <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
-            </form>
-        </div>
-        <?php if (count($attendances) > 0): ?>
+            ?>
+            <div class="table-heading">
+                <h2><i class="fa fa-heart blue"></i>・Správa prezenčních listin</h2>
+            </div>
             <div class="button-container" id="buttonContainer">
-                <div class="layout-container">
-                    <form action="save_attendances_links.php" method="post">
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID<br>Prezenční<br>listiny</th>
-                                        <th style="white-space: nowrap;">Datum a čas</th>
-                                        <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
-                                            ?>
-                                            <th style="white-space: nowrap;">Přiřazený zápis</th>
-                                        <?php } ?>
-                                        <th style="white-space: nowrap;">Stav</th>
-                                        <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
-                                            ?>
-                                            <th style="white-space: nowrap;">Akce</th>
-                                        <?php } ?>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($attendances as $attendance): ?>
-                                        <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
-                                            style="cursor: pointer;">
-                                            <td
-                                                style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
-                                                <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
-                                            </td>
-                                            <td style="white-space: nowrap;">
-                                                <?= htmlspecialchars($attendance['datetime']) ?>
-                                            </td>
+                <form action="create_attendances_list.php" method="post">
+                    <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
+                </form>
+            </div>
+            <?php if (count($attendances) > 0): ?>
+                <div class="button-container" id="buttonContainer">
+                    <div class="layout-container">
+                        <form action="save_attendances_links.php" method="post">
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID<br>Prezenční<br>listiny</th>
+                                            <th style="white-space: nowrap;">Datum a čas</th>
                                             <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
                                                 ?>
-                                                <td style="white-space: nowrap;">
-                                                    <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]"
-                                                        onclick="event.stopPropagation();">
-                                                        <option value="" selected disabled>-- Vyberte zápis --</option>
-                                                        <?php foreach ($notes as $note): ?>
-                                                            <option value="<?= $note['idnotes_parlament'] ?>"
-                                                                <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
-                                                                <?= htmlspecialchars($note['date']) ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </td>
+                                                <th style="white-space: nowrap;">Přiřazený zápis</th>
                                             <?php } ?>
-                                            <td style="white-space: nowrap;">
-                                                <?= $attendance['active'] == '1' ?
-                                                    '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' :
-                                                    '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
-                                            </td>
+                                            <th style="white-space: nowrap;">Stav</th>
                                             <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
                                                 ?>
-                                                <td style="white-space: nowrap;">
-                                                    <div style="display: flex; gap: 10px; justify-content: center;">
-                                                    <?php } ?>
-                                                    <?php if (isset($delete_attendances) && $delete_attendances == '1') { ?>
-                                                        <a href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
-                                                            onclick="event.stopPropagation();">
-                                                            <button type="button" class="delete">Smazat</button>
-                                                        </a>
-                                                    <?php }
-                                                    if (isset($end_attendances) && $end_attendances == '1') {
-                                                        ?>
-                                                        <a href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
-                                                            onclick="event.stopPropagation();">
-                                                            <button type="button" class="end">Ukončit</button>
-                                                        </a>
-                                                    <?php }
-                                                    if (isset($qr_attendances) && $qr_attendances == '1') {
-                                                        ?>
-                                                        <a href="attendances_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
-                                                            target="_blank" onclick="event.stopPropagation();">
-                                                            <button type="button" class="qr">QR Kód</button>
-                                                        </a>
-                                                    <?php }
-                                                    ?>
-                                                </div>
-                                            </td>
+                                                <th style="white-space: nowrap;">Akce</th>
+                                            <?php } ?>
                                         </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
-                    </form>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($attendances as $attendance): ?>
+                                            <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
+                                                style="cursor: pointer;">
+                                                <td
+                                                    style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
+                                                    <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
+                                                </td>
+                                                <td style="white-space: nowrap;">
+                                                    <?= htmlspecialchars($attendance['datetime']) ?>
+                                                </td>
+                                                <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
+                                                    ?>
+                                                    <td style="white-space: nowrap;">
+                                                        <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]"
+                                                            onclick="event.stopPropagation();">
+                                                            <option value="" selected disabled>-- Vyberte zápis --</option>
+                                                            <?php foreach ($notes as $note): ?>
+                                                                <option value="<?= $note['idnotes_parlament'] ?>"
+                                                                    <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
+                                                                    <?= htmlspecialchars($note['date']) ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </td>
+                                                <?php } ?>
+                                                <td style="white-space: nowrap;">
+                                                    <?= $attendance['active'] == '1' ?
+                                                        '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' :
+                                                        '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
+                                                </td>
+                                                <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
+                                                    ?>
+                                                    <td style="white-space: nowrap;">
+                                                        <div style="display: flex; gap: 10px; justify-content: center;">
+                                                        <?php } ?>
+                                                        <?php if (isset($delete_attendances) && $delete_attendances == '1') { ?>
+                                                            <a href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                                onclick="event.stopPropagation();">
+                                                                <button type="button" class="delete">Smazat</button>
+                                                            </a>
+                                                        <?php }
+                                                        if (isset($end_attendances) && $end_attendances == '1') {
+                                                            ?>
+                                                            <a href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                                onclick="event.stopPropagation();">
+                                                                <button type="button" class="end">Ukončit</button>
+                                                            </a>
+                                                        <?php }
+                                                        if (isset($qr_attendances) && $qr_attendances == '1') {
+                                                            ?>
+                                                            <a href="attendances_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                                target="_blank" onclick="event.stopPropagation();">
+                                                                <button type="button" class="qr">QR Kód</button>
+                                                            </a>
+                                                        <?php }
+                                                        ?>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
+                        </form>
 
-                    <div class="student-list-container" id="studentListContainer"
-                        style="display: none; max-width: 40%; overflow-x: auto;">
-                        <ol></ol>
+                        <div class="student-list-container" id="studentListContainer"
+                            style="display: none; max-width: 40%; overflow-x: auto;">
+                            <ol></ol>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php else: ?>
-            <div class="info-message">
-                <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Žádná schůze zatím nebyla zahájena.
-            </div>
-        <?php endif; ?>
+            <?php else: ?>
+                <div class="info-message">
+                    <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Žádná schůze zatím nebyla zahájena.
+                </div>
+            <?php endif; ?>
 
 
 
@@ -431,8 +432,12 @@ if ($result) {
 
 
 
-        <?php
-
+            <?php
+        } else {
+           echo ' <div class="error-message">
+            <i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění.
+        </div>' ;
+        }
 
         // Získání dat z tabulky
         $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";

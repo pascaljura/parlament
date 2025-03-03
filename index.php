@@ -26,7 +26,7 @@ if (isset($_SESSION['idusers'])) {
         $delete_attendances = $userData['delete_attendances'];
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
-        $show_attendances= $userData['show_attendances'];
+        $show_attendances = $userData['show_attendances'];
 
 
     } else {
@@ -81,7 +81,7 @@ if (isset($_SESSION['idusers'])) {
             <div class="nav-links">
                 <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                     <a href="./attendances">Prezenční listiny</a>
                 <?php } ?>
             </div>
@@ -106,7 +106,7 @@ if (isset($_SESSION['idusers'])) {
             <div class="mobile-menu" id="mobileMenu">
                 <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances== '1') { ?>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                 <a href="./attendances">Prezenční listiny</a>
                 <?php } ?>
             </div>
