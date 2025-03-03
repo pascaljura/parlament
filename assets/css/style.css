@@ -83,6 +83,21 @@ nav {
   transform: scale(1.05); /* Efekt zvětšení na hover */
 }
 
+/* Efekt pro aktivní odkaz */
+.nav-links a.active,
+.mobile-menu a.active {
+  background-color: #77afe0; /* Světle modrá pro aktivní odkaz */
+  transform: scale(1.05); /* Efekt zvětšení na aktivním odkazu */
+  font-weight: bold; /* Zvýraznění textu */
+  color: #fff; /* Bílé písmo pro lepší kontrast */
+}
+
+.nav-links a:active,
+.mobile-menu a:active {
+  background-color: #77afe0; /* Tmavší modrá pro kliknutý odkaz */
+  transform: scale(1.05); /* Efekt zvětšení při kliknutí */
+}
+
 .user-dropdown a,
 .mobile-menu a {
   color: #ffffff;
@@ -91,6 +106,7 @@ nav {
   background-color: #5481aa;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0.3rem;
 }
 
 .user-dropdown a:hover,
