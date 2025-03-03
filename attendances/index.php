@@ -282,9 +282,9 @@ if ($result) {
             <div class="user-dropdown" id="userDropdown">
                 <?php if (!empty($username_parlament)) { ?>
                     <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
-                    <a href="../logout.php">Logout</a>
+                    <a href="../logout.php">Odhlásit se</a>
                 <?php } else { ?>
-                    <a href="../login.php">Login</a>
+                    <a href="../login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
 
