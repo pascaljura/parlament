@@ -2,7 +2,7 @@
   "name": "Alba-rosa.cz | Parlament na Purkyňce",
   "short_name": "Alba-rosa.cz | Parlament na Purkyňce",
   "description": "Oficiální web školního parlamentu na Purkyňce.",
-  "start_url": "https://www.alba-rosa.cz/parlament",
+  "start_url": "/parlament",
   "display": "standalone",
   "background_color": "#0f1523",
   "theme_color": "#0f1523",
