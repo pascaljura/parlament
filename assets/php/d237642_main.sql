@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Pon 03. bře 2025, 14:58
+-- Vytvořeno: Pon 03. bře 2025, 20:35
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -33,27 +33,6 @@ CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `time` datetime NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
---
--- Vypisuji data pro tabulku `attendances_alba_rosa_parlament`
---
-
-INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idattendances_list_parlament`, `idusers`, `time`) VALUES
-(3, 7, 17, '2025-02-26 21:04:48'),
-(4, 8, 17, '2025-02-26 21:07:21'),
-(5, 9, 17, '2025-02-26 21:30:18'),
-(6, 9, 17, '2025-02-26 21:38:26'),
-(7, 10, 66, '2025-02-27 08:02:26'),
-(8, 10, 17, '2025-02-27 08:03:17'),
-(9, 11, 65, '2025-02-27 08:49:06'),
-(10, 11, 27, '2025-02-27 08:51:15'),
-(11, 12, 17, '2025-02-28 09:43:21'),
-(12, 12, 65, '2025-02-28 09:44:03'),
-(13, 12, 25, '2025-02-28 09:44:17'),
-(14, 12, 27, '2025-02-28 09:44:44'),
-(15, 6, 17, '2025-03-02 21:30:11'),
-(16, 13, 17, '2025-03-02 21:58:34'),
-(17, 14, 17, '2025-03-02 21:59:33');
-
 -- --------------------------------------------------------
 
 --
@@ -66,22 +45,15 @@ CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
   `datetime` datetime NOT NULL,
   `token` varchar(256) NOT NULL,
   `active` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
 --
 
 INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`, `idnotes_parlament`, `datetime`, `token`, `active`) VALUES
-(6, 0, '2025-02-26 20:59:42', '93817846f12373b176ddebed0672b80329f59d4c114f2b6525644fda24929fed', '0'),
-(7, 0, '2025-02-26 21:03:35', 'a536cff200144f70a3a161b557f04e343fb9c07550e082fa1b84912b948d4c3c', '0'),
-(8, 0, '2025-02-26 21:06:44', 'dff73be82b660636f4d474a3bdea8716abe58411348f27482eb34f794b07e774', '0'),
-(9, 0, '2025-02-26 21:24:58', '8aafd1c95c4884046357523befc91d1a981162110550948ec1dd067ebfb5c8ca', '0'),
-(10, 0, '2025-02-27 08:01:23', 'e0b61821f396d2e44e24f360a4ca8f867d3c5f7da0240786dd07fead204f96aa', '0'),
-(11, 0, '2025-02-27 08:48:38', 'a4c15e64b09ba1e1bfda221f0e500dc569a6daa2d3ee250333c3a45b46ebf4b2', '0'),
-(12, 0, '2025-02-28 09:41:09', '58fb8ae9450b1ac402797d878e62a05460f0890de6ff7ee400bf7e97f735b1aa', '0'),
-(13, 0, '2025-03-02 21:55:49', '2c9ee98c34bf54e78115f4fa74e1efc7f2a6c218236740efbda6586c5a00b12a', ''),
-(14, 0, '2025-03-02 21:59:20', '31d1d771a5076ac2f16cfccd7ca88b0aac1f7ad8050f07e030fd9f8ba2308b30', '');
+(17, 0, '2025-03-03 20:04:22', '3462cd1373dc1f7ebc044a6fdfd22dab05d7cdcbea092c54c3ad5d7b0df3932e', '1'),
+(18, 0, '2025-03-03 20:04:28', '95870b19fe3dcdaa067be9e5d7b98c0dfa99b0379ad371a1e2b8c41b4f0387cb', '1');
 
 -- --------------------------------------------------------
 
@@ -4251,7 +4223,7 @@ CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
   `date` date NOT NULL,
   `document_number` varchar(255) DEFAULT NULL,
   `notes` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
@@ -4302,7 +4274,8 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `date`,
 (74, 67, '2024-12-17', '18.02.10', '**Vánoční program**=- 20.12. od 8:30 hod. do cca 12 hod.=- 3 lidi z čichny=- dozory zajištěny=- deskovky:  karty, Sázky a dostihy, šachy=- filmy: Kačmařík, Němec (Pokorná)=- konzole: Abbod, (Buchtová)=- káva: Abbod==**Tři králové**=- dne 9.1.2025=- 1. až 3. vyuč. hodina – rozvrhy zajištěny=- skupinka 1: Jarda Šmarda, Martin Němec, Kateřina Pokorná=- skupina 2: Roman Kačmařík, Jakub Kropáček, Anežka Macháčková=- rozhlas možná v úterý?=- plakát – dát i na soc. sítě=- napsat učitelům'),
 (75, 66, '2025-01-07', '18.02.11', '**Tři králové**=- Vše je již vyřešeno =- Rozdávání plakátků do tříd=- Vyhlásit rozhlasem=**Participativní rozpočet**=- 4 návrhy potvrzeny ředitelstvím=- Vybrat zástupce pro každý návrh=-- Fotbálek (relax zóna) - Ondřej Tureček=-- Výběh - [volno]=-- Modernizace posilovny - Sarah Buchtová=-- Společenská akce - Jakub Kropáček, Anežka Macháčková=- Popřemýšlet nad realizací každého projektu =- Deadline 21.ledna=- Vyjádření pana ředitele na ostatní návrhy:=-- Dveře na ISIC možná projdou=-- Nástěnné židle ve 4. patře - jsou zde stěny ze sádrokartonu=-- Modernizace turniketů - dokud budou fungovat, tak se nebudou modernizovat=-- Větráky - 1 větrák do třídy je málo=-- Dámské potřeby - příliš rychle vybrané, jsme velká škola=-- Akvárium - kdo by se o něj staral?=-- Obrázky u objednávání jídel - není, kdo by je nahrával=-- Posouvací tabule - postupně se předělávají=-- Zatemnění do třídy - špatné stěny na realizaci'),
 (76, 66, '2025-01-14', '18.02.12', '**Tři králové**=- ukončeno=- děkujeme všem, především ale dárcům =**Valentýn**=- Na starost: Michaela Gažová=- Propagace, vystřihování srdíček, schránky=- 3.-7. 2. schránky=- 19.-20. 2. rozdávání srdíček=**Volba**=- Zastupující nástěnkář: Michaela Gažová'),
-(77, 65, '2025-02-18', '18.02.13', '**Valentýn**=- třídění valentýnek, rozdávání ve středu o přestávkách=- __Rozdávání: __=-- Linda Piskorová=-- Anežka Macháčková=-- Markéta Hrnčířová=-- Izabela Žárská=-- Patrik Brandejs===**Odpoledne se seniory Čichnova**=3.4.2025 - 12:00 - 16:00=- __Zástupci:__=-- Pokorná, Němec, Macháčková, Havelka, Friedl, Gažová, Boucník, Vaněk, Topinka, Buchtová, Kačmařík, Kořalka===**Participativní rozpočet**=- __První patro __=-- Ondřej Tureček =--fotbálek=--stoly=--použití starých židlí=--sedací pytle==- __Dresy TEV__=-- Michaela Gažová - T1, Friedl Daniel - T1 =--koupě dresů, 15 pro dívky a 15 pro chlapce=--v barvách Purkyňky==- __Společenská akce__=-- Jakub Kropáček, Anežka Macháčková=**Grilovačka po purkyňácku**=--koupě grilů (kupodivu levnější než pronájem)=--výběr dobrovolného příspěvku=**Noc filmů**=--přespávačka ve škole=--dobrovolný příspěvek==- __Výběh__=-- Jiří Boucník=--návrh zahradního posezení=--popularizace výběhu');
+(77, 65, '2025-02-18', '18.02.13', '**Valentýn**=- třídění valentýnek, rozdávání ve středu o přestávkách=- __Rozdávání: __=-- Linda Piskorová=-- Anežka Macháčková=-- Markéta Hrnčířová=-- Izabela Žárská=-- Patrik Brandejs===**Odpoledne se seniory Čichnova**=3.4.2025 - 12:00 - 16:00=- __Zástupci:__=-- Pokorná, Němec, Macháčková, Havelka, Friedl, Gažová, Boucník, Vaněk, Topinka, Buchtová, Kačmařík, Kořalka===**Participativní rozpočet**=- __První patro __=-- Ondřej Tureček =--fotbálek=--stoly=--použití starých židlí=--sedací pytle==- __Dresy TEV__=-- Michaela Gažová - T1, Friedl Daniel - T1 =--koupě dresů, 15 pro dívky a 15 pro chlapce=--v barvách Purkyňky==- __Společenská akce__=-- Jakub Kropáček, Anežka Macháčková=**Grilovačka po purkyňácku**=--koupě grilů (kupodivu levnější než pronájem)=--výběr dobrovolného příspěvku=**Noc filmů**=--přespávačka ve škole=--dobrovolný příspěvek==- __Výběh__=-- Jiří Boucník=--návrh zahradního posezení=--popularizace výběhu'),
+(78, NULL, '2025-03-03', '18.02.14', 'tt');
 
 -- --------------------------------------------------------
 
@@ -4343,7 +4316,7 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '<hr style="border-top: 1px solid black;border-bottom: none;">      \n  <div style="display: flex; justify-content: center;" id="footer-text">\n            <div class=" button-container">\n            Web vytvořil: Jiří Boucník | Grafiku vytvořil: Marcel Mikula<br>\n            </div>\n        </div>', 1),
+(1, '<hr style="border-top: 1px solid black;border-bottom: none;">      \n  <div style="display: flex; justify-content: center;" id="footer-text">\n            <div class=" button-container">\n            Web: Jiří Boucník | Grafiku: Marcel Mikula<br>\n            </div>\n        </div>', 1),
 (2, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n \n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
 (3, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
 
@@ -4457,12 +4430,13 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `parlament_access_admin` enum('0','1') DEFAULT '0',
   `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
   `add_notes` enum('0','1') NOT NULL DEFAULT '0',
-  `delete_notes` enum('0','1') NOT NULL,
+  `delete_notes` enum('0','1') NOT NULL DEFAULT '0',
   `edit_notes` enum('0','1') NOT NULL DEFAULT '0',
+  `show_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `start_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `end_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `delete_attendances` enum('0','1') NOT NULL DEFAULT '0',
-  `qr_attendances` enum('0','1') NOT NULL,
+  `qr_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -4470,20 +4444,11 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
 -- Vypisuji data pro tabulku `users_alba_rosa_parlament`
 --
 
-INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
-(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
-(25, 'matnipp8@gmail.com', 'HevyHellcat ', '$2y$10$SYmlpl/tiyylX1ba2wdJEOEQBPcQHb1WMxGgBblHxORJnMMRNRJwG', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
-(27, 'nonym2000@post.cz', 'Honza', '$2y$10$stmdZXXYptwzsZvTBUMV1O6yr340jfnI1/8SLh1wSxWDWEsjzqiL2', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
-(34, 'lukasJ@alba-rosa.cz', 'LukasJ', '$2y$10$DyjrONQQgv1KCxEjKwbjsuI/hzif.zWHDannHg45u7yWCDrAVDsqW', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(35, 'sedlacekmatej21@gmail.com', 'Mates', '$2y$10$Tj3zid/k085gXykOMsa90.AEL9vOTjS2HV0F.tVgXy6lBQVy8y4H.', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(37, 'lukas.filipek10@gmail.com', 'Lukas', '$2y$10$FXX.LtSw1nKzVRwf2gUPY.0U3OPaTPJLAmGHLg94msR2sQbUEz5We', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
-(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0'),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
+(17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
+(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -4731,7 +4696,7 @@ ALTER TABLE `attendances_alba_rosa_parlament`
 -- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
-  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
@@ -4771,7 +4736,7 @@ ALTER TABLE `logs_alba_rosa_purkyn`
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=78;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
