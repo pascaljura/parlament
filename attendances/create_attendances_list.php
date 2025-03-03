@@ -3,24 +3,39 @@ include '../assets/php/config.php';
 session_start();
 ob_start();
 
-// Kontrola přihlášení
-if (!isset($_SESSION['idusers'])) {
-    header("Location: ./index.php");
-    exit();
-} else {
-    // Vygenerování unikátního tokenu schůze
-    $token = bin2hex(random_bytes(32));
-    $datetime = date('Y-m-d H:i:s');
+if (isset($_SESSION['idusers'])) {
+    $userId = $_SESSION['idusers'];
 
-    // Uložení schůze do databáze
-    $sql = "INSERT INTO attendances_list_alba_rosa_parlament (datetime, token) VALUES ('$datetime', '$token')";
-    if ($conn->query($sql) === TRUE) {
-        $meeting_id = $conn->insert_id;
-        $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($userData = $result->fetch_assoc()) {
+        // Uložení do proměnných
+        $idusers_parlament = $userData['idusers'];
+        $email_parlament = $userData['email'];
+        $username_parlament = $userData['username'];
+        $parlament_access_admin = $userData['parlament_access_admin'];
+        $parlament_access_user = $userData['parlament_access_user'];
+        // Nové sloupce (práva a přístupy)
+        $add_notes = $userData['add_notes'];
+        $delete_notes = $userData['delete_notes'];
+        $edit_notes = $userData['edit_notes'];
+        $start_attendances = $userData['start_attendances'];
+        $end_attendances = $userData['end_attendances'];
+        $delete_attendances = $userData['delete_attendances'];
+        $qr_attendances = $userData['qr_attendances'];
+        $select_idnotes_parlament = $userData['select_idnotes_parlament'];
+
+
     } else {
-        echo "Chyba: " . $conn->error;
+        // Uživatel nenalezen (může být smazán), odhlásíme ho
+        header("Location: ./logout.php");
         exit();
     }
+
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
@@ -54,8 +69,8 @@ if (!isset($_SESSION['idusers'])) {
             <!-- Navigation Links (vlevo na PC) -->
             <div class="nav-links">
                 <a href="../">Domů</a>
-                <a href="../notes" >Zápisy</a>
-                <a href="../attendances" class="active">Schůze</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Prezenční listiny</a>
             </div>
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
@@ -76,15 +91,39 @@ if (!isset($_SESSION['idusers'])) {
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
-                <a href="../notes" >Zápisy</a>
-                <a href="../attendances" class="active">Schůze</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Prezenční listiny</a>
             </div>
         </nav>
-        <h2>Prezenční listina byla vytvořena! Sdílejte tento odkaz:</h2>
-        <a href="<?= $meeting_url ?>"><?= $meeting_url ?></a>
+        <?php
+        if (isset($start_attendances) && isset($parlament_access_admin) && $parlament_access_admin == '1' && $start_attendances == '1') {
+            // Vygenerování unikátního tokenu schůze
+            $token = bin2hex(random_bytes(32));
+            $datetime = date('Y-m-d H:i:s');
 
-        <h3>Nebo naskenujte QR kód:</h3>
-        <div id="qrcode"></div>
+            // Uložení schůze do databáze
+            $sql = "INSERT INTO attendances_list_alba_rosa_parlament (datetime, token) VALUES ('$datetime', '$token')";
+            if ($conn->query($sql) === TRUE) {
+                $meeting_id = $conn->insert_id;
+                $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
+            } else {
+                echo "Chyba: " . $conn->error;
+                exit();
+            }
+
+
+            ?>
+
+            <h2>Prezenční listina byla vytvořena! Sdílejte tento odkaz:</h2>
+            <a href="<?= $meeting_url ?>"><?= $meeting_url ?></a>
+
+            <h3>Nebo naskenujte QR kód:</h3>
+            <div id="qrcode"></div>
+        <?php } else {
+            echo '<div class="error-message">';
+            echo '<i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění';
+            echo '</div>';
+        } ?>
     </div>
     <script>
         var qrCode = new QRCode(document.getElementById("qrcode"), {

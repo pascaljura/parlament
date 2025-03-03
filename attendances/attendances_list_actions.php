@@ -28,7 +28,6 @@ if (isset($_SESSION['idusers'])) {
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
 
-
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
         header("Location: ./logout.php");
@@ -58,43 +57,6 @@ if (isset($_SESSION['idusers'])) {
 
 <body>
     <div id="calendar">
-        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-        <nav>
-
-            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-            <div class="user-icon" onclick="toggleUserMenu(event)">
-                <i class="fa fa-user"></i>
-            </div>
-
-            <!-- Navigation Links (vlevo na PC) -->
-            <div class="nav-links">
-                <a href="../">Domů</a>
-                <a href="../notes">Zápisy</a>
-                <a href="../attendances" class="active">Schůze</a>
-            </div>
-
-            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-            <div class="hamburger" onclick="toggleMobileMenu(event)">
-                <i class="fa fa-bars"></i>
-            </div>
-
-            <!-- User Dropdown Menu -->
-            <div class="user-dropdown" id="userDropdown">
-                <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
-                    <a href="../logout.php">Logout</a>
-                <?php } else { ?>
-                    <a href="../login.php">Login</a>
-                <?php } ?>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="../">Domů</a>
-                <a href="../notes">Zápisy</a>
-                <a href="../attendances" class="active">Schůze</a>
-            </div>
-        </nav>
         <?php
         // Kontrola přihlášení
         if (!isset($_SESSION['idusers'])) {
@@ -128,7 +90,7 @@ if (isset($_SESSION['idusers'])) {
 
             // Proveďte akci podle typu akce (delete, end nebo qr)
             if (($idattendances_list_parlament && $idattendances_list_parlament != null) && ($action && $action != null)) {
-                if ($action == 'delete') {
+                if ($action == 'delete' && $delete_attendances == '1') {
                     // SQL pro smazání záznamu
                     $stmt = $conn->prepare("DELETE FROM `attendances_list_alba_rosa_parlament` WHERE `idattendances_list_parlament` = ?");
                     $stmt->bind_param("i", $idattendances_list_parlament); // "i" znamená, že id je integer
@@ -138,7 +100,7 @@ if (isset($_SESSION['idusers'])) {
                     // Přesměrování s parametrem message a message_type=success-message
                     header("Location: ./?message=Záznam+byl+úspěšně+smazán&message_type=success-message");
                     exit();
-                } elseif ($action == 'end') {
+                } elseif ($action == 'end' && $end_attendances == '1') {
                     // SQL pro změnu stavu na 0 (Ukončeno)
                     $stmt = $conn->prepare("UPDATE `attendances_list_alba_rosa_parlament` SET `active` = 0 WHERE `idattendances_list_parlament` = ?");
                     $stmt->bind_param("i", $idattendances_list_parlament);
@@ -148,7 +110,7 @@ if (isset($_SESSION['idusers'])) {
                     // Přesměrování s parametrem message a message_type=success-message
                     header("Location: ./?message=Stav+byl+úspěšně+změněn+na+Ukončeno&message_type=success-message");
                     exit();
-                } elseif ($action == 'qr') {
+                } elseif ($action == 'qr' && $qr_attendances == '1') {
                     // Získání tokenu pro QR kód
                     $stmt = $conn->prepare("SELECT `token` FROM `attendances_list_alba_rosa_parlament` WHERE `idattendances_list_parlament` = ?");
                     $stmt->bind_param("i", $idattendances_list_parlament);
@@ -166,6 +128,10 @@ if (isset($_SESSION['idusers'])) {
                         exit();
                     }
                     $stmt->close();
+                } else {
+                    // Pokud uživatel nemá potřebná práva
+                    header("Location: ./?message=Nemáte+povolení+k+této+akci&message_type=error-message");
+                    exit();
                 }
             }
 
@@ -175,8 +141,7 @@ if (isset($_SESSION['idusers'])) {
         ?>
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
-    <script src="../assets/js/script.js">
-    </script>
+    <script src="../assets/js/script.js"></script>
 </body>
 
 </html>

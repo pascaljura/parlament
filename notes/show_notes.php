@@ -154,7 +154,7 @@ if (isset($_SESSION['idusers'])) {
             <div class="nav-links">
                 <a href="../">Domů</a>
                 <a href="../notes" class="active">Zápisy</a>
-                <a href="../attendances">Schůze</a>
+                <a href="../attendances">Prezenční listiny</a>
             </div>
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
@@ -176,7 +176,7 @@ if (isset($_SESSION['idusers'])) {
             <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
                 <a href="../notes" class="active">Zápisy</a>
-                <a href="../attendances">Schůze</a>
+                <a href="../attendances">Prezenční listiny</a>
             </div>
         </nav>
         <div class="table-heading" style="text-align: center;">

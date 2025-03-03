@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="nav-links">
                 <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
-                <a href="./attendances">Schůze</a>
+                <a href="./attendances">Prezenční listiny</a>
             </div>
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mobile-menu" id="mobileMenu">
                 <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
-                <a href="./attendances">Schůze</a>
+                <a href="./attendances">Prezenční listiny</a>
             </div>
         </nav>
         <?php

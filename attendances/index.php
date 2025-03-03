@@ -38,187 +38,185 @@ if (isset($_SESSION['idusers'])) {
 }
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../assets/css/style.css">
-        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-        <title>Alba-rosa.cz | Parlament na Purkyňce</title>
-        <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
-        <meta content="https://www.alba-rosa.cz/" property="og:url" />
-        <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
-        <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-        <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
+    <meta content="https://www.alba-rosa.cz/" property="og:url" />
+    <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
+    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        table {
+            width: 100%;
+            max-height: 400px;
+            border-collapse: collapse;
+            font-family: 'Roboto', Calibri, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-align: center;
+        }
 
-            table {
-                width: 100%;
-                max-height: 400px;
-                border-collapse: collapse;
-                font-family: 'Roboto', Calibri, sans-serif;
-                font-weight: 500;
-                font-size: 16px;
-                text-align: center;
-            }
+        table thead {
+            background-color: #5481AA;
+            color: #ffffff;
+            border: 2px solid black;
+            /* Ohraničení pro hlavičku */
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
 
-            table thead {
-                background-color: #5481AA;
-                color: #ffffff;
-                border: 2px solid black;
-                /* Ohraničení pro hlavičku */
-                position: sticky;
-                top: 0;
-                z-index: 5;
-            }
+        table tbody td,
+        table tbody th {
+            border: 1px solid black;
+            /* Ohraničení pro tělo tabulky */
+        }
 
-            table tbody td,
-            table tbody th {
-                border: 1px solid black;
-                /* Ohraničení pro tělo tabulky */
-            }
+        td:first-child,
+        th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background-color: #5481AA;
+            color: white;
+        }
 
-            td:first-child,
-            th:first-child {
-                position: sticky;
-                left: 0;
-                z-index: 5;
-                background-color: #5481AA;
-                color: white;
-            }
+        table tr:nth-child(even) {
+            background-color: rgba(85, 172, 238, 0.25);
+        }
 
-            table tr:nth-child(even) {
-                background-color: rgba(85, 172, 238, 0.25);
-            }
+        th {
+            padding: 10px;
+        }
 
-            th {
-                padding: 10px;
-            }
+        td {
+            padding: 5px;
+        }
 
-            td {
-                padding: 5px;
-            }
+        table tr:hover {
+            background-color: #5481AA;
+            color: #ffffff
+        }
 
-            table tr:hover {
-                background-color: #5481AA;
-                color: #ffffff
-            }
 
+        /* Kontejner pro tabulku, umožní horizontální posouvání */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        /* Styl pro tabulku uvnitř table-wrapper */
+        .table-wrapper table {
+            width: 100%;
+            min-width: 600px;
+            /* Ujistí se, že tabulka nebude příliš úzká */
+        }
+
+        /* Layout pro větší obrazovky - seznam žáků vedle tabulky */
+        .layout-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: nowrap;
+        }
+
+        /* Seznam žáků styl */
+        .student-list-container {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            max-height: 400px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            padding-left: 25px;
+            border-radius: 8px;
+            overflow-y: auto;
+        }
+
+        /* Mobilní zařízení - seznam žáků pod tabulkou */
+        @media (max-width: 768px) {
 
             /* Kontejner pro tabulku, umožní horizontální posouvání */
             .table-wrapper {
-                width: 100%;
+                width: 40%;
                 overflow-x: auto;
                 max-width: 100%;
             }
 
-            /* Styl pro tabulku uvnitř table-wrapper */
-            .table-wrapper table {
-                width: 100%;
-                min-width: 600px;
-                /* Ujistí se, že tabulka nebude příliš úzká */
-            }
-
-            /* Layout pro větší obrazovky - seznam žáků vedle tabulky */
             .layout-container {
-                display: flex;
-                align-items: flex-start;
-                gap: 20px;
-                flex-wrap: nowrap;
+                flex-direction: column;
+                gap: 0;
             }
 
-            /* Seznam žáků styl */
             .student-list-container {
-                background: #f9f9f9;
-                border: 1px solid #ddd;
-                max-height: 400px;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                padding-right: 5px;
-                padding-left: 25px;
-                border-radius: 8px;
-                overflow-y: auto;
+                order: 2;
+                margin-top: 10px;
+                max-width: 100%;
             }
-
-            /* Mobilní zařízení - seznam žáků pod tabulkou */
-            @media (max-width: 768px) {
-
-                /* Kontejner pro tabulku, umožní horizontální posouvání */
-                .table-wrapper {
-                    width: 40%;
-                    overflow-x: auto;
-                    max-width: 100%;
-                }
-
-                .layout-container {
-                    flex-direction: column;
-                    gap: 0;
-                }
-
-                .student-list-container {
-                    order: 2;
-                    margin-top: 10px;
-                    max-width: 100%;
-                }
-            }
+        }
 
 
-            ol {
-                margin: 0;
-                padding: 0;
-            }
+        ol {
+            margin: 0;
+            padding: 0;
+        }
 
-            button.end {
-                background-color: rgb(255, 203, 70);
-                color: white;
-                border: none;
-                padding: 5px 10px;
-                cursor: pointer;
-                border-radius: 4px;
-            }
+        button.end {
+            background-color: rgb(255, 203, 70);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-            button.end:hover {
-                background-color: rgb(255, 183, 0);
-            }
+        button.end:hover {
+            background-color: rgb(255, 183, 0);
+        }
 
-            button.delete {
-                background-color: #ff4848;
-                color: white;
-                border: none;
-                padding: 5px 10px;
-                cursor: pointer;
-                border-radius: 4px;
-            }
+        button.delete {
+            background-color: #ff4848;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-            button.delete:hover {
-                background-color: rgb(255, 0, 0);
-            }
+        button.delete:hover {
+            background-color: rgb(255, 0, 0);
+        }
 
-            button.qr {
-                background-color: rgb(255, 255, 255);
-                color: black;
-                border: none;
-                padding: 5px 10px;
-                cursor: pointer;
-                border-radius: 4px;
-            }
+        button.qr {
+            background-color: rgb(255, 255, 255);
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-            button.qr:hover {
-                background-color: rgb(196, 255, 255);
+        button.qr:hover {
+            background-color: rgb(196, 255, 255);
 
-            }
-        </style>
-    </head>
-    <?php
+        }
+    </style>
+</head>
+<?php
 
-      
-            // Načtení prezencí s formátováním datumu
-            $attendances = [];
-            $sqlattendances = "
+
+// Načtení prezencí s formátováním datumu
+$attendances = [];
+$sqlattendances = "
     SELECT 
         idattendances_list_parlament, 
         DATE_FORMAT(datetime, '%d.%m.%Y %H:%i:%s') AS datetime, 
@@ -228,53 +226,53 @@ if (isset($_SESSION['idusers'])) {
         attendances_list_alba_rosa_parlament 
     ORDER BY idattendances_list_parlament ASC";
 
-            $resultattendances = $conn->query($sqlattendances);
-            if ($resultattendances) {
-                while ($rowattendances = $resultattendances->fetch_assoc()) {
-                    $attendances[] = $rowattendances;
-                }
-            }
+$resultattendances = $conn->query($sqlattendances);
+if ($resultattendances) {
+    while ($rowattendances = $resultattendances->fetch_assoc()) {
+        $attendances[] = $rowattendances;
+    }
+}
 
-            // Načtení všech zápisů pro dropdown (také formátování data)
-            $notes = [];
-            $sql = "SELECT idnotes_parlament, DATE_FORMAT(date, '%d.%m.%Y') AS date FROM notes_alba_rosa_parlament";
-            $result = $conn->query($sql);
-            if ($result) {
-                while ($row = $result->fetch_assoc()) {
-                    $notes[] = $row;
-                }
-            }
+// Načtení všech zápisů pro dropdown (také formátování data)
+$notes = [];
+$sql = "SELECT idnotes_parlament, DATE_FORMAT(date, '%d.%m.%Y') AS date FROM notes_alba_rosa_parlament";
+$result = $conn->query($sql);
+if ($result) {
+    while ($row = $result->fetch_assoc()) {
+        $notes[] = $row;
+    }
+}
 
 
-            ?>
-                <div id="loading-overlay">
-                    <div class="loader"></div>
-                </div>
+?>
+<div id="loading-overlay">
+    <div class="loader"></div>
+</div>
 
-                <body>
-                    <div id="calendar">
-                    <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-                  
-                    <nav>
-    <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-    <div class="user-icon" onclick="toggleUserMenu(event)">
-        <i class="fa fa-user"></i>
-    </div>
+<body>
+    <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
 
-    <!-- Navigation Links (vlevo na PC) -->
-    <div class="nav-links">
-        <a href="../" >Domů</a>
-        <a href="../notes">Zápisy</a>
-        <a href="../attendances" class="active">Schůze</a>
-    </div>
+        <nav>
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <i class="fa fa-user"></i>
+            </div>
 
-    <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-    <div class="hamburger" onclick="toggleMobileMenu(event)">
-        <i class="fa fa-bars"></i>
-    </div>
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Prezenční listiny</a>
+            </div>
 
-      <!-- User Dropdown Menu -->
-      <div class="user-dropdown" id="userDropdown">
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
                 <?php if (!empty($username_parlament)) { ?>
                     <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
                     <a href="../logout.php">Logout</a>
@@ -283,186 +281,216 @@ if (isset($_SESSION['idusers'])) {
                 <?php } ?>
             </div>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="../" >Domů</a>
-        <a href="../notes">Zápisy</a>
-        <a href="../attendances" class="active">Schůze</a>
-    </div>
-</nav>
-<?php
-                        if (isset($_GET['message']) && isset($_GET['message_type'])) {
-                            $message = $_GET['message'];
-                            $message_type = $_GET['message_type'];
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">Domů</a>
+                <a href="../notes">Zápisy</a>
+                <a href="../attendances" class="active">Prezenční listiny</a>
+            </div>
+        </nav>
+        <?php
+        if (isset($_GET['message']) && isset($_GET['message_type'])) {
+            $message = $_GET['message'];
+            $message_type = $_GET['message_type'];
 
-                            // Určení třídy a ikony podle typu zprávy
-                            if ($message_type == 'success-message') {
-                                $message_class = 'success-message';
-                                $message_icon = 'fa-check';
-                            } elseif ($message_type == 'error-message') {
-                                $message_class = 'error-message';
-                                $message_icon = 'fa-times';
-                            } elseif ($message_type == 'info-message') {
-                                $message_class = 'info-message';
-                                $message_icon = 'fa-info-circle';
-                            }
+            // Určení třídy a ikony podle typu zprávy
+            if ($message_type == 'success-message') {
+                $message_class = 'success-message';
+                $message_icon = 'fa-check';
+            } elseif ($message_type == 'error-message') {
+                $message_class = 'error-message';
+                $message_icon = 'fa-times';
+            } elseif ($message_type == 'info-message') {
+                $message_class = 'info-message';
+                $message_icon = 'fa-info-circle';
+            }
 
-                            // Výstup zprávy s ikonou a třídou
-                            echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
-                            echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
-                            echo '</div>';
-                        }
-                        ?>
-                     
-                        <div class="table-heading">
-                            <h2><i class="fa fa-heart blue"></i>・Správa schůzí</h2>
+            // Výstup zprávy s ikonou a třídou
+            echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
+            echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
+            echo '</div>';
+        }
+        ?>
+
+        <div class="table-heading">
+            <h2><i class="fa fa-heart blue"></i>・Správa prezenčních listin</h2>
+        </div>
+        <div class="button-container" id="buttonContainer">
+            <form action="create_attendances_list.php" method="post">
+                <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
+            </form>
+        </div>
+        <?php if (count($attendances) > 0): ?>
+            <div class="button-container" id="buttonContainer">
+                <div class="layout-container">
+                    <form action="save_attendances_links.php" method="post">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID<br>Prezenční<br>listiny</th>
+                                        <th style="white-space: nowrap;">Datum a čas</th>
+                                        <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
+                                            ?>
+                                            <th style="white-space: nowrap;">Přiřazený zápis</th>
+                                        <?php } ?>
+                                        <th style="white-space: nowrap;">Stav</th>
+                                        <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
+                                            ?>
+                                            <th style="white-space: nowrap;">Akce</th>
+                                        <?php } ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($attendances as $attendance): ?>
+                                        <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
+                                            style="cursor: pointer;">
+                                            <td
+                                                style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
+                                                <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
+                                            </td>
+                                            <td style="white-space: nowrap;">
+                                                <?= htmlspecialchars($attendance['datetime']) ?>
+                                            </td>
+                                            <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
+                                                ?>
+                                                <td style="white-space: nowrap;">
+                                                    <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]"
+                                                        onclick="event.stopPropagation();">
+                                                        <option value="" selected disabled>-- Vyberte zápis --</option>
+                                                        <?php foreach ($notes as $note): ?>
+                                                            <option value="<?= $note['idnotes_parlament'] ?>"
+                                                                <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
+                                                                <?= htmlspecialchars($note['date']) ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </td>
+                                            <?php } ?>
+                                            <td style="white-space: nowrap;">
+                                                <?= $attendance['active'] == '1' ?
+                                                    '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' :
+                                                    '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
+                                            </td>
+                                            <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
+                                                ?>
+                                                <td style="white-space: nowrap;">
+                                                    <div style="display: flex; gap: 10px; justify-content: center;">
+                                                    <?php } ?>
+                                                    <?php if (isset($delete_attendances) && $delete_attendances == '1') { ?>
+                                                        <a href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                            onclick="event.stopPropagation();">
+                                                            <button type="button" class="delete">Smazat</button>
+                                                        </a>
+                                                    <?php }
+                                                    if (isset($end_attendances) && $end_attendances == '1') {
+                                                        ?>
+                                                        <a href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                            onclick="event.stopPropagation();">
+                                                            <button type="button" class="end">Ukončit</button>
+                                                        </a>
+                                                    <?php }
+                                                    if (isset($qr_attendances) && $qr_attendances == '1') {
+                                                        ?>
+                                                        <a href="attendances_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
+                                                            target="_blank" onclick="event.stopPropagation();">
+                                                            <button type="button" class="qr">QR Kód</button>
+                                                        </a>
+                                                    <?php }
+                                                    ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="button-container" id="buttonContainer">
-                            <form action="create_attendances_list.php" method="post">
-                                <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
-                            </form>
-                        </div>
-                        <div class="button-container" id="buttonContainer">
-                            <div class="layout-container">
-                                <form action="save_attendances_links.php" method="post">
-                                    <div class="table-wrapper">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>ID<br>Prezenční<br>listiny</th>
-                                                    <th style="white-space: nowrap;">Datum a čas</th>
-                                                    <th style="white-space: nowrap;">Přiřazený zápis</th>
-                                                    <th style="white-space: nowrap;">Stav</th>
-                                                    <th style="white-space: nowrap;">Akce</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($attendances as $attendance): ?>
-                                                    <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
-                                                        style="cursor: pointer;">
-                                                        <td
-                                                            style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
-                                                            <?= htmlspecialchars($attendance['idattendances_list_parlament']) ?>
-                                                        </td>
-                                                        <td style="white-space: nowrap;">
-                                                            <?= htmlspecialchars($attendance['datetime']) ?>
-                                                        </td>
-                                                        <td style="white-space: nowrap;">
-                                                            <select
-                                                                name="notes[<?= $attendance['idattendances_list_parlament'] ?>]">
-                                                                <option value="" selected disabled>-- Vyberte zápis --</option>
-                                                                <?php foreach ($notes as $note): ?>
-                                                                    <option value="<?= $note['idnotes_parlament'] ?>"
-                                                                        <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
-                                                                        <?= htmlspecialchars($note['date']) ?>
-                                                                    </option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-                                                        </td>
-                                                        <td style="white-space: nowrap;">
-                                                            <?= $attendance['active'] == '1' ? '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' : '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
-                                                        </td>
-                                                        <td style="white-space: nowrap;">
-                                                            <div style="display: flex; gap: 10px; justify-content: center;">
-                                                                <a
-                                                                    href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
-                                                                    <button type="button" class="delete">Smazat</button>
-                                                                </a>
-                                                                <a
-                                                                    href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>">
-                                                                    <button type="button" class="end">Ukončit</button>
-                                                                </a>
-                                                                <a href="attendances_list_actions.php?action=qr&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
-                                                                    target="_blank">
-                                                                    <button type="button" class="qr">QR Kód</button>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
-                                </form>
+                        <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
+                    </form>
 
-                                <div class="student-list-container" id="studentListContainer"
-                                    style="display: none; max-width: 40%; overflow-x: auto; width: 40%;">
-                                    <ol></ol>
-                                </div>
-                            </div>
-                        </div>
-                        
-                      
-
-
-
-
-                        <?php
-    
-
-                        // Získání dat z tabulky
-                        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
-                        $result = mysqli_query($conn, $query);
-
-                        if ($result) {
-                            $row = mysqli_fetch_assoc($result);
-                            $text = $row['text'];
-
-                            // Výpis HTML s dynamickým obsahem
-                            echo "$text";
-                        } else {
-                            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-                        }
-                        ?>
+                    <div class="student-list-container" id="studentListContainer"
+                        style="display: none; max-width: 40%; overflow-x: auto;">
+                        <ol></ol>
                     </div>
-                </body>
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
-                <script src="../assets/js/script.js">
-                </script>
-                <script>
-                   
-                    function loadStudents(idattendances_list_parlament) {
-                        const container = document.getElementById('studentListContainer');
-                        const list = container.querySelector('ol');
-
-                        // Vyprázdnění obou
-                        list.innerHTML = '';
-
-                        // Zobrazení celého containeru (byl původně skrytý)
-                        container.style.display = 'block';
-
-                        fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.length > 0) {
-                                    list.style.display = 'block'; // Zobrazí seznam
-
-                                    data.forEach((student, index) => {
-                                        const li = document.createElement('li');
-                                        li.textContent = `${student.username} - ${student.time}`;
-                                        list.appendChild(li);
-                                    });
-                                } else {
-                                    list.style.display = 'block'; // Skryje seznam
-
-                                    // Vytvoří li pro "Žádní studenti nenalezeni"
-                                    const li = document.createElement('li');
-                                    li.textContent = 'Žádní studenti nenalezeni.';
-                                    list.appendChild(li);
-                                }
-                            })
-                            .catch(err => {
-                                console.error('Chyba při načítání studentů:', err);
-                                alert('Nepodařilo se načíst studenty.');
-                            });
-                    }
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="info-message">
+                <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Žádná schůze zatím nebyla zahájena.
+            </div>
+        <?php endif; ?>
 
 
-                
-                </script>
 
-    </html>
-    <?php
-    ob_end_flush();
-    ?>
+
+
+
+
+        <?php
+
+
+        // Získání dat z tabulky
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $text = $row['text'];
+
+            // Výpis HTML s dynamickým obsahem
+            echo "$text";
+        } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+        }
+        ?>
+    </div>
+</body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+<script src="../assets/js/script.js">
+</script>
+<script>
+
+    function loadStudents(idattendances_list_parlament) {
+        const container = document.getElementById('studentListContainer');
+        const list = container.querySelector('ol');
+
+        // Vyprázdnění obou
+        list.innerHTML = '';
+
+        // Zobrazení celého containeru (byl původně skrytý)
+        container.style.display = 'block';
+
+        fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    list.style.display = 'block'; // Zobrazí seznam
+
+                    data.forEach((student, index) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${student.username} - ${student.time}`;
+                        list.appendChild(li);
+                    });
+                } else {
+                    list.style.display = 'block'; // Skryje seznam
+
+                    // Vytvoří li pro "Žádní studenti nenalezeni"
+                    const li = document.createElement('li');
+                    li.textContent = 'Žádní studenti nenalezeni.';
+                    list.appendChild(li);
+                }
+            })
+            .catch(err => {
+                console.error('Chyba při načítání studentů:', err);
+                alert('Nepodařilo se načíst studenty.');
+            });
+    }
+
+
+
+</script>
+
+</html>
+<?php
+ob_end_flush();
+?>
