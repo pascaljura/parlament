@@ -41,6 +41,139 @@ body::before {
   z-index: -1;
   position: fixed;
 }
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  background-color: #f9f9f9; /* pozadí navbaru */
+  color: black;
+  border-radius: 5px;
+  position: relative; /* pro pozicování dropdown menu */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-links a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  padding: 0.5rem;
+  display: inline-block;
+  background-color: #5481aa;
+  transition-duration: 0.4s;
+  border-radius: 5px;
+}
+
+.nav-links a:hover {
+  background-color: #77afe0;
+  border-radius: 5px;
+}
+
+.user-icon,
+.hamburger {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Styl pro oba menu (user dropdown a mobile menu) */
+.user-dropdown,
+.mobile-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9; /* Pozadí menu */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 200px; /* Stejná šířka pro obě menu */
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%); /* Zarovnáno na střed */
+  padding: 1rem;
+  z-index: 9;
+  flex-direction: column;
+  align-items: center; /* Zarovnání tlačítek na střed */
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 2rem;
+    top: 1rem;
+  }
+  nav {
+    flex-direction: row-reverse;
+  }
+  .user-icon {
+    order: -1; /* User icon vlevo na mobilu */
+    position: absolute;
+    left: 2rem;
+    top: 1rem;
+  }
+}
+
+/* Zajištění, aby na desktopu byly odkazy vlevo a user ikona vpravo */
+@media (min-width: 769px) {
+  .user-icon {
+    order: 1; /* User icon na pravé straně */
+  }
+  .nav-links {
+    order: 0; /* Odkazy vlevo */
+  }
+
+  /* Zarovnání user dropdown menu pod ikonku na desktopu */
+  .user-dropdown {
+    left: auto;
+    right: 0;
+    transform: translateX(0);
+    top: 75px;
+  }
+}
+/* Ztmavení stránky */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Defaultně skryto */
+  z-index: 8;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -144,9 +277,12 @@ a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Roboto", Calibri, sans-serif;
+  font-weight: 100; /* to je přímo ten "Bold 700" */
   font-size: 16px;
   font-family: sans-serif;
   transition-duration: 0.4s;
+  font-family: "Roboto", Calibri, sans-serif;
 }
 
 iframe {

@@ -9,7 +9,7 @@ include './assets/php/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
@@ -26,7 +26,42 @@ include './assets/php/config.php';
 
 <body>
     <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
 
+        <nav>
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)"><i class="fa fa-user"></i></div>
+
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="#">Domů</a>
+                <a href="#">Zápisy</a>
+                <a href="#">Schůze</a>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <div class="button-container button">
+                    <p>Přihlášen jako:</p><br>
+                    <a href="#"><button>Login</button></a>
+                    <a href="#"><button>Logout</button></a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="#">Domů</a>
+                <a href="#">Zápisy</a>
+                <a href="#">Schůze</a>
+            </div>
+        </nav>
         <?php
 
         // Získání dat z tabulky
