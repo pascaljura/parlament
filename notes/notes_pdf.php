@@ -1,13 +1,13 @@
 <?php
 // Include configuration file conditionally
-$configPath = './assets/php/config.php';
+$configPath = '../assets/php/config.php';
 if (file_exists($configPath)) {
     include $configPath;
 } else {
     die("Configuration file not found.");
 }
 
-require_once './vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use Mpdf\Mpdf;
 $mpdf = new Mpdf(['default_font' => 'calibri']);
@@ -70,7 +70,7 @@ $mpdf->showImageErrors = true;
 // Body HTML
 $bodyHtml = '
 <div style="text-align: center;">
-<img src="./assets\img\purkynka_logo.png" style="width: 8.98cm; height: 2.88cm;">
+<img src="../assets\img\purkynka_logo.png" style="width: 8.98cm; height: 2.88cm;">
     <table style="width: 100%; font-size: 9pt; border-top: 2px solid black; border-collapse: collapse;">
         <tr>
             <td style="text-align: left;">Číslo dokumentu: ' . $document_number . '/' . $date . '</td>
