@@ -153,7 +153,6 @@ if ($parlament_access_admin != '1') { ?>
                             class="fa fa-sign-out"></i> Opustit
                         stránku beze změn</button></a>
             </div>
-            <hr color="black" style="height: 2px; border: none;" />
             <?php
 
             // Získání dat z tabulky

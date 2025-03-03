@@ -117,7 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
             </form>
         </div>
-        <hr color="black" style="height: 2px; border: none;" />
 
         <?php
 

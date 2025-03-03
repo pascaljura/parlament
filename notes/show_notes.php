@@ -184,7 +184,7 @@ if (!isset($_SESSION['idusers'])) {
                         ?>
                     </div>
                 </div>
-                <hr color="black" style="height: 2px; border: none;" />
+
                 <?php
     }
     // Získání dat z tabulky

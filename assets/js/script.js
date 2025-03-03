@@ -52,7 +52,19 @@ document.addEventListener("click", (event) => {
     closeAllMenus();
   }
 });
+function removeQueryString() {
+  // Zkontrolujeme, jestli URL obsahuje otazník
+  if (window.location.href.indexOf("?") > -1) {
+    // Získáme část URL před otazníkem
+    const newUrl = window.location.href.split("?")[0];
 
+    // Nastavíme novou URL bez query stringu
+    window.history.pushState({}, document.title, newUrl);
+
+    // Obnovíme stránku, aby se URL aktualizovala
+    location.reload();
+  }
+}
 // Zavření při resize (pro jistotu)
 window.addEventListener("resize", () => {
   if (window.innerWidth > 768) {

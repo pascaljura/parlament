@@ -299,7 +299,7 @@ a {
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 5px;
 }
 
 .button-container button {
@@ -309,11 +309,12 @@ a {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .button-container button:hover {
   background-color: #77afe0;
+  transform: scale(1.05);
 }
 
 iframe {
