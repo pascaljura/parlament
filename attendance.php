@@ -35,7 +35,7 @@ ob_start();
         $token = $_GET['token'];
 
         // Získání ID schůze podle tokenu
-        $sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = ? AND active = 1";
+        $sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = ? AND active = '1'";
 
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
