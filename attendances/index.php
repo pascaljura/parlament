@@ -139,9 +139,10 @@ if (isset($_SESSION['idusers_parlament'])) {
             padding-top: 10px;
             padding-bottom: 10px;
             padding-right: 5px;
-            padding-left: 25px;
+            padding-left: 35px;
             border-radius: 8px;
             overflow-y: auto;
+            width: 250px;
         }
 
         /* Mobilní zařízení - seznam žáků pod tabulkou */
@@ -521,44 +522,93 @@ die("Chyba při přípravě dotazu: " . $conn->error);
 <script src="../assets/js/script.js">
 </script>
 <script>
+function loadStudents(idattendances_list_parlament) {
+    const container = document.getElementById('studentListContainer');
+    const list = container.querySelector('ol');
 
-    function loadStudents(idattendances_list_parlament) {
-        const container = document.getElementById('studentListContainer');
-        const list = container.querySelector('ol');
+    // Vyprázdnění seznamu
+    list.innerHTML = '';
 
-        // Vyprázdnění obou
-        list.innerHTML = '';
-
-        // Zobrazení celého containeru (byl původně skrytý)
-        container.style.display = 'block';
-
-        fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    list.style.display = 'block'; // Zobrazí seznam
-
-                    data.forEach((student, index) => {
-                        const li = document.createElement('li');
-                        li.textContent = `${student.username} - ${student.time}`;
-                        list.appendChild(li);
-                    });
-                } else {
-                    list.style.display = 'block'; // Skryje seznam
-
-                    // Vytvoří li pro "Žádní studenti nenalezeni"
-                    const li = document.createElement('li');
-                    li.textContent = 'Žádní studenti nenalezeni.';
-                    list.appendChild(li);
-                }
-            })
-            .catch(err => {
-                console.error('Chyba při načítání studentů:', err);
-                alert('Nepodařilo se načíst studenty.');
-            });
+    // Smazání případného starého tlačítka
+    const oldButton = container.querySelector('button');
+    if (oldButton) {
+        oldButton.remove();
     }
 
+    container.style.display = 'block';
 
+    fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
+        .then(response => response.json())
+        .then(data => {
+            if (data.all_students.length > 0) {
+                list.style.display = 'block';
+
+                data.all_students.forEach((student) => {
+                    const li = document.createElement('li');
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = student.idusers_parlament;
+                    checkbox.checked = data.present_students.includes(parseInt(student.idusers_parlament));
+
+                    li.appendChild(checkbox);
+                    li.appendChild(document.createTextNode(` ${student.username}`));
+
+                    list.appendChild(li);
+                });
+
+                // Tlačítko přidáme až po načtení studentů
+                const saveButton = document.createElement('button');
+saveButton.textContent = 'Uložit prezenční listinu';
+saveButton.style.width = '100%';
+saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+container.appendChild(saveButton);
+
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'Žádní studenti nenalezeni.';
+                list.appendChild(li);
+            }
+        })
+        .catch(err => {
+            console.error('Chyba při načítání studentů:', err);
+            alert('Nepodařilo se načíst studenty.');
+        });
+}
+
+function saveAttendanceList(idattendances_list_parlament) {
+    const checkboxes = document.querySelectorAll('#studentListContainer input[type="checkbox"]');
+    const attendanceData = [];
+
+    checkboxes.forEach(checkbox => {
+        attendanceData.push({
+            idusers_parlament: checkbox.value,
+            present: checkbox.checked
+        });
+    });
+
+    fetch('save_attendance_list.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            idattendances_list_parlament,
+            attendanceData
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert(result.message);
+        if (result.success) {
+            loadStudents(idattendances_list_parlament);
+        }
+    })
+    .catch(err => {
+        console.error('Chyba při ukládání:', err);
+        alert('Nepodařilo se uložit prezenční listinu.');
+    });
+}
 
 </script>
 
