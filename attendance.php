@@ -35,11 +35,28 @@ ob_start();
         $token = $_GET['token'];
 
         // Získání ID schůze podle tokenu
-        $sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = '$token'";
-        $result = $conn->query($sql);
-        if ($result->num_rows === 0) {
-            die("<h2>Neplatný nebo vypršelý odkaz.</h2>");
+        $sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = ? AND active = 1";
+
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            die("Chyba přípravy dotazu: " . $conn->error);
         }
+
+        $stmt->bind_param("s", $token); // 's' = string
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            die("<h2>Prezenční listina je neplatná, nebo byla již ukončena.</h2>");
+        }
+
+        // Pokud potřebuješ to ID dál
+        $row = $result->fetch_assoc();
+        $id = $row['idattendances_list_parlament'];
+
+        $stmt->close();
+
 
         $meeting = $result->fetch_assoc();
         $idattendances_list_parlament = $meeting['idattendances_list_parlament'];
