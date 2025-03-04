@@ -42,7 +42,7 @@ ob_start();
             die("Chyba přípravy dotazu: " . $conn->error);
         }
 
-        $stmt->bind_param("s", $token); // 's' = string
+        $stmt->bind_param("s", $token);
         $stmt->execute();
 
         $resultattendances = $stmt->get_result();
@@ -51,10 +51,10 @@ ob_start();
             die("<h2>Prezenční listina je neplatná, nebo byla již ukončena.</h2>");
         }
 
-        // Pokud potřebuješ to ID dál
+        // Fetch pouze jednou
         $row = $resultattendances->fetch_assoc();
-        $id = $row['idattendances_list_parlament'];
-
+        $idattendances_list_parlament = $row['idattendances_list_parlament'];  // tady je to ID pro další použití
+        
         $stmt->close();
 
 
