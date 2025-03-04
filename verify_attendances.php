@@ -34,7 +34,7 @@ ob_start();
         $token = $conn->real_escape_string($_GET['token']);
 
         // Ověření platnosti tokenu
-        $sql = "SELECT idtokens_parlament, idusers, idattendances_list_parlament, expires FROM tokens_alba_rosa_parlament WHERE token = '$token'";
+        $sql = "SELECT idtokens_parlament, idusers_parlament, idattendances_list_parlament, expires FROM tokens_alba_rosa_parlament WHERE token = '$token'";
         $result = $conn->query($sql);
 
         if ($result->num_rows === 0) {
@@ -48,11 +48,11 @@ ob_start();
             die("<h2>Token vypršel.");
         }
 
-        $idusers = $tokenData['idusers'];
+        $idusers_parlament = $tokenData['idusers_parlament'];
         $idattendances_list_parlament = $tokenData['idattendances_list_parlament'];
 
         // Zapsání účasti
-        $sql = "INSERT INTO attendances_alba_rosa_parlament (idusers, idattendances_list_parlament, time) VALUES ('$idusers', '$idattendances_list_parlament', NOW())";
+        $sql = "INSERT INTO attendances_alba_rosa_parlament (idusers_parlament, idattendances_list_parlament, time) VALUES ('$idusers_parlament', '$idattendances_list_parlament', NOW())";
         if ($conn->query($sql) === TRUE) {
             echo "<h2>Účast byla úspěšně potvrzena!</h2>";
         } else {

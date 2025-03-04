@@ -2,17 +2,17 @@
 include '../assets/php/config.php';
 session_start();
 ob_start();
-if (isset($_SESSION['idusers'])) {
-    $userId = $_SESSION['idusers'];
+if (isset($_SESSION['idusers_parlament'])) {
+    $userId = $_SESSION['idusers_parlament'];
 
-    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers_parlament = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($userData = $result->fetch_assoc()) {
         // Uložení do proměnných
-        $idusers_parlament = $userData['idusers'];
+        $idusers_parlament_parlament = $userData['idusers_parlament'];
         $email_parlament = $userData['email'];
         $username_parlament = $userData['username'];
         $parlament_access_admin = $userData['parlament_access_admin'];
@@ -68,7 +68,7 @@ if (isset($_SESSION['idusers'])) {
         // Získání záznamu ze schůze
         $result = "SELECT z.*, u.username 
      FROM notes_alba_rosa_parlament z
-     LEFT JOIN users_alba_rosa_parlament u ON z.idusers = u.idusers
+     LEFT JOIN users_alba_rosa_parlament u ON z.idusers_parlament = u.idusers_parlament
      WHERE z.idnotes_parlament = ?";
 
         // Příprava připraveného dotazu
@@ -85,7 +85,7 @@ if (isset($_SESSION['idusers'])) {
             $row = $result->fetch_assoc();
             $date = date('d.m.Y', strtotime($row['date']));
             $directoryName = date('d_m_Y', strtotime($row['date']));
-            $idusers = $row['idusers'];
+            $idusers_parlament = $row['idusers_parlament'];
             $notes = $row['notes'];
             $username = $row['username'];
             $document_number = $row['document_number'];
@@ -125,7 +125,7 @@ if (isset($_SESSION['idusers'])) {
             $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes); // strikeout
             $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes); // underline
     
-            $resultUser = $conn->query("SELECT username FROM users_alba_rosa_parlament WHERE idusers = $idusers");
+            $resultUser = $conn->query("SELECT username FROM users_alba_rosa_parlament WHERE idusers_parlament = $idusers_parlament");
             if ($resultUser->num_rows > 0) {
                 $rowUser = $resultUser->fetch_assoc();
                 $userName = $rowUser['username'];

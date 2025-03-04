@@ -2,17 +2,17 @@
 session_start();
 ob_start();
 
-if (isset($_SESSION['idusers'])) {
-    $userId = $_SESSION['idusers'];
+if (isset($_SESSION['idusers_parlament'])) {
+    $userId = $_SESSION['idusers_parlament'];
 
-    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers = ?");
+    $stmt = $conn->prepare("SELECT * FROM users_alba_rosa_parlament WHERE idusers_parlament = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($userData = $result->fetch_assoc()) {
         // Uložení do proměnných
-        $idusers_parlament = $userData['idusers'];
+        $idusers_parlament_parlament = $userData['idusers_parlament'];
         $email_parlament = $userData['email'];
         $username_parlament = $userData['username'];
         $parlament_access_admin = $userData['parlament_access_admin'];

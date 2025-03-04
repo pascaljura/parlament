@@ -2,7 +2,7 @@
 session_start();
 ob_start();
 
-if (isset($_SESSION['idusers'])) {
+if (isset($_SESSION['idusers_parlament'])) {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
         header("Location: ./");
         exit();
@@ -56,14 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredPassword = $_POST["password"];
 
     // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
-    $stmt = $conn->prepare("SELECT idusers, password, parlament_access_admin FROM users_alba_rosa_parlament WHERE email = ?");
+    $stmt = $conn->prepare("SELECT idusers_parlament, password, parlament_access_admin FROM users_alba_rosa_parlament WHERE email = ?");
     $stmt->bind_param("s", $enteredemail);
     $stmt->execute();
     $stmt->store_result();
 
     // Pokud najdeme uživatele, získáme jeho údaje
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($idusers, $hashedPassword, $parlamentAccess);
+        $stmt->bind_result($idusers_parlament, $hashedPassword, $parlamentAccess);
         $stmt->fetch();
 
         // Kontrola, zda má uživatel přístup do parlamentu
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Ověření hesla pomocí password_verify
             if (password_verify($enteredPassword, $hashedPassword)) {
-                $_SESSION['idusers'] = $idusers;
+                $_SESSION['idusers_parlament'] = $idusers_parlament;
                 header("Location: ./");
                 exit();
             } else {

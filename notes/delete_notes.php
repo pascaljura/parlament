@@ -4,16 +4,16 @@ session_start();
 ob_start();
 
 // Kontrola přihlášení
-if (!isset($_SESSION['idusers'])) {
+if (!isset($_SESSION['idusers_parlament'])) {
     echo "error";
     exit();
 } else {
     // Získání id uživatele ze session
-    $idusers = $_SESSION['idusers'];
+    $idusers_parlament = $_SESSION['idusers_parlament'];
 
     // Kontrola přístupu na základě sloupce parlament_access_admin
-    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa_parlament WHERE idusers = ?");
-    $stmtAccess->bind_param("i", $idusers);
+    $stmtAccess = $conn->prepare("SELECT parlament_access_admin FROM users_alba_rosa_parlament WHERE idusers_parlament = ?");
+    $stmtAccess->bind_param("i", $idusers_parlament);
     $stmtAccess->execute();
     $stmtAccess->bind_result($parlament_access_admin);
     $stmtAccess->fetch();

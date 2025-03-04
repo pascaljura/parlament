@@ -48,7 +48,7 @@ ob_start();
             $email = $conn->real_escape_string($_POST['email']);
 
             // Ověření existence uživatele a jeho přístup
-            $sql = "SELECT idusers FROM users_alba_rosa_parlament WHERE email = '$email' AND parlament_access_user = '1'";
+            $sql = "SELECT idusers_parlament FROM users_alba_rosa_parlament WHERE email = '$email' AND parlament_access_user = '1'";
             $result = $conn->query($sql);
 
             if ($result->num_rows === 0) {
@@ -56,11 +56,11 @@ ob_start();
             }
 
             $user = $result->fetch_assoc();
-            $idusers = $user['idusers'];
+            $idusers_parlament = $user['idusers_parlament'];
 
             // Kontrola, jestli už není zapsaný v docházce pro danou schůzi
             $sql = "SELECT COUNT(*) AS count FROM attendances_alba_rosa_parlament 
-                    WHERE idusers = '$idusers' AND idattendances_list_parlament = '$idattendances_list_parlament'";
+                    WHERE idusers_parlament = '$idusers_parlament' AND idattendances_list_parlament = '$idattendances_list_parlament'";
 
             $checkResult = $conn->query($sql);
             $check = $checkResult->fetch_assoc();
@@ -73,8 +73,8 @@ ob_start();
             $newToken = bin2hex(random_bytes(32));
             $expiryTime = date('Y-m-d H:i:s', strtotime('+24 hours')); // Platnost 24 hodin
         
-            $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers, idattendances_list_parlament, token, expires) 
-                    VALUES ('$idusers', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
+            $sql = "INSERT INTO tokens_alba_rosa_parlament (idusers_parlament, idattendances_list_parlament, token, expires) 
+                    VALUES ('$idusers_parlament', '$idattendances_list_parlament', '$newToken', '$expiryTime')";
 
             if ($conn->query($sql) === TRUE) {
                 // Odkaz pro ověření účasti
