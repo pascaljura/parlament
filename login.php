@@ -46,12 +46,12 @@ ob_start();
 </head>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $enteredUsername = $_POST["username"];
+    $enteredemail = $_POST["email"];
     $enteredPassword = $_POST["password"];
 
     // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
     $stmt = $conn->prepare("SELECT idusers, password, parlament_access_admin FROM users_alba_rosa_parlament WHERE email = ?");
-    $stmt->bind_param("s", $enteredUsername);
+    $stmt->bind_param("s", $enteredemail);
     $stmt->execute();
     $stmt->store_result();
 
@@ -96,11 +96,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <div class="user-icon" onclick="toggleUserMenu(event)">
-                                <?php if (!empty($username_parlament)) { ?>
-<i class="fa fa-user" style="color: #70B95E;"></i>
-  <?php } else { ?>
-<i class="fa fa-user" style="color: #3C3C3B;"></i>
-  <?php } ?>
+                <?php if (!empty($email_parlament)) { ?>
+                    <i class="fa fa-user" style="color: #70B95E;"></i>
+                <?php } else { ?>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                <?php } ?>
             </div>
 
 
@@ -121,8 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
-                <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                <?php if (!empty($email_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $email_parlament; ?></b></p>
                     <a href="./logout.php">Odhlásit se</a>
                 <?php } else { ?>
                     <a href="./login.php">Přihlásit se</a>
@@ -152,9 +152,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="button-container" id="buttonContainer">
             <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="loginForm"
                 style="width: 80%; max-width: 400px; margin-bottom: 20px;">
-                <label for="username" style="font-size: 16px; margin-bottom: 8px;">Uživatelské
-                    jméno:</label>
-                <input type="text" name="username" required
+                <label for="email" style="font-size: 16px; margin-bottom: 8px;">Email:</label>
+                <input type="text" name="email" required
                     style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;">
                 <label for="password" style="font-size: 16px; margin-bottom: 8px;">Heslo:</label>
                 <div class="form-input-wrapper">
