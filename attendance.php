@@ -57,10 +57,6 @@ ob_start();
         
         $stmt->close();
 
-
-        $meeting = $resultattendances->fetch_assoc();
-        $idattendances_list_parlament = $meeting['idattendances_list_parlament'];
-
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $conn->real_escape_string($_POST['email']);
 
