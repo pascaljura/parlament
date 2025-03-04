@@ -320,7 +320,9 @@ if ($result) {
             echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
             echo '</div>';
         }
-        if ((isset($show_attendances) && $show_attendances == '1') && (isset($parlament_access_admin) && $parlament_access_admin == '1')) {
+
+        if ((isset($show_attendances) && $show_attendances == '1') && ((isset($parlament_access_admin) && $parlament_access_admin == '1') || (isset($parlament_access_user) && $parlament_access_user == '1'))) {
+        if ((isset($parlament_access_admin) && $parlament_access_admin == '1')) {
 
             ?>
             <div class="table-heading">
@@ -438,15 +440,66 @@ if ($result) {
 
 
             <?php
-        } elseif((isset($show_attendances) && $show_attendances == '1') && (isset($parlament_access_admin) && $parlament_access_admin == '1')) {
-       
-       
-        } else {
-            echo ' <div class="error-message">
-             <i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění.
-         </div>' ;
+        } if((isset($show_attendances) && $show_attendances == '1') && ((isset($parlament_access_admin) && $parlament_access_admin == '1') || (isset($parlament_access_user) && $parlament_access_user == '1'))) {
+       // SQL dotaz
+$sqluser = "SELECT 
+al.idattendances_list_parlament AS id_listiny,
+allp.datetime AS datum_cas
+FROM 
+attendances_alba_rosa_parlament al
+JOIN 
+attendances_list_alba_rosa_parlament allp
+ON 
+al.idattendances_list_parlament = allp.idattendances_list_parlament
+WHERE 
+al.idusers_parlament = ?
+GROUP BY 
+al.idattendances_list_parlament
+ORDER BY 
+allp.datetime DESC";
 
+// Příprava a provedení dotazu
+if ($stmt = $conn->prepare($sqluser)) {
+$stmt->bind_param("i", $idusers_parlament);
+$stmt->execute();
+$resultuser = $stmt->get_result();
+} else {
+die("Chyba při přípravě dotazu: " . $conn->error);
+}
+?>
+  <div class="table-heading">
+                <h2><i class="fa fa-heart blue"></i>・Záznamy mé účasti</h2>
+            </div></thead>
+<table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID Prezenční listiny</th>
+                <th>Datum a čas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>" . htmlspecialchars($row['id_listiny']) . "</td>
+                            <td>" . htmlspecialchars($row['datum_cas']) . "</td>
+                          </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='2'>Žádné záznamy</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+       <?php
         }
+    } else {
+        echo ' <div class="error-message">
+         <i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění.
+     </div>' ;
+
+    }
 
         // Získání dat z tabulky
         $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
