@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.1
--- http://www.phpmyadmin.net
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Počítač: md407.wedos.net:3306
--- Vytvořeno: Pon 03. bře 2025, 20:35
--- Verze serveru: 10.4.34-MariaDB-log
--- Verze PHP: 5.4.23
+-- Počítač: 127.0.0.1
+-- Vytvořeno: Úte 04. bře 2025, 17:47
+-- Verze serveru: 10.4.32-MariaDB
+-- Verze PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáze: `d237642_main`
+-- Databáze: `main`
 --
 
 -- --------------------------------------------------------
@@ -26,12 +27,12 @@ SET time_zone = "+00:00";
 -- Struktura tabulky `attendances_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
+CREATE TABLE `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
   `idattendances_list_parlament` int(11) NOT NULL,
-  `idusers` int(11) NOT NULL,
+  `idusers_parlament` int(11) NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -39,21 +40,13 @@ CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
 -- Struktura tabulky `attendances_list_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
+CREATE TABLE `attendances_list_alba_rosa_parlament` (
   `idattendances_list_parlament` int(11) NOT NULL,
   `idnotes_parlament` int(11) NOT NULL,
   `datetime` datetime NOT NULL,
   `token` varchar(256) NOT NULL,
   `active` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
-
---
--- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
---
-
-INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`, `idnotes_parlament`, `datetime`, `token`, `active`) VALUES
-(17, 0, '2025-03-03 20:04:22', '3462cd1373dc1f7ebc044a6fdfd22dab05d7cdcbea092c54c3ad5d7b0df3932e', '1'),
-(18, 0, '2025-03-03 20:04:28', '95870b19fe3dcdaa067be9e5d7b98c0dfa99b0379ad371a1e2b8c41b4f0387cb', '1');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -61,7 +54,7 @@ INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlamen
 -- Struktura tabulky `files_alba_rosa_file_storage`
 --
 
-CREATE TABLE IF NOT EXISTS `files_alba_rosa_file_storage` (
+CREATE TABLE `files_alba_rosa_file_storage` (
   `idfile_file_storage` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `code` varchar(255) NOT NULL,
@@ -69,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `files_alba_rosa_file_storage` (
   `startDate` datetime NOT NULL DEFAULT current_timestamp(),
   `endDate` date NOT NULL,
   `state` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `files_alba_rosa_file_storage`
@@ -124,23 +117,23 @@ INSERT INTO `files_alba_rosa_file_storage` (`idfile_file_storage`, `idusers`, `c
 -- Struktura tabulky `gamehub_private_alba_rosa`
 --
 
-CREATE TABLE IF NOT EXISTS `gamehub_private_alba_rosa` (
+CREATE TABLE `gamehub_private_alba_rosa` (
   `idgamehub_private` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `buttons` varchar(9999) DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `gamehub_private_alba_rosa`
 --
 
 INSERT INTO `gamehub_private_alba_rosa` (`idgamehub_private`, `icon`, `name`, `buttons`, `description`) VALUES
-(4, '<i class="fa-solid fa-game-console-handheld"></i>', 'Poppy Playtime!', '<button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime_chapter_4.zip'', ''_blank'');">\n    <i class="fa-solid fa-up-right-from-square"></i>Chapter 4 ZIP</button>\n    <button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime_all_chapters.zip'', ''_blank'');">\n    <i class="fa-solid fa-up-right-from-square"></i>All chapters ZIP</button>\n<button class="project-button" onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');">\n    <i class="fa-solid fa-sack-dollar"></i>Donate</button>\n<button class="project-button" onclick="window.open(''../sn0wix/Poppy_playtime.txt'', ''_blank'');">\n    <img src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'Ever wanted to work at a toy factory? Well, now you can. But nothing comes without a catch...'),
-(5, '<i class="fa-solid fa-game-console-handheld"></i>', 'Choo-Choo Charles!', '<button class="project-button" onclick="window.open(''../sn0wix/Choo-choo-charles.zip'', ''_blank'');"><i\n        class="fa-solid fa-up-right-from-square"></i>ZIP</button><button class="project-button"\n    onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');"><i\n        class="fa-solid fa-sack-dollar"></i>Donate</button><button class="project-button"\n    onclick="window.open(''../sn0wix/Choo_choo_charles.txt'', ''_blank'');"><img\n        src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'A spider-like locomotive, that hunts you down across an island with a secret story, that you have to uncover yourself... \n'),
-(6, '<i class="fa-solid fa-game-console-handheld"></i>', 'Raft', '<button class="project-button" onclick="window.open(''../sn0wix/Raft.v1.09.zip'', ''_blank'');"><i\n        class="fa-solid fa-up-right-from-square"></i>v1.09 ZIP</button>\n<button class="project-button" onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');"><i\n        class="fa-solid fa-sack-dollar"></i>Donate</button>\n<button class="project-button" onclick="window.open(''../sn0wix/Raft.txt'', ''_blank'');"><img\n        src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'A utopian world that you explore with your own raft.'),
-(7, '<i class="fa-solid fa-game-console-handheld"></i>', 'Portal', '<button class="project-button" onclick="window.open(''../sn0wix/Portal.zip'', ''_blank'');"><i\n        class="fa-solid fa-up-right-from-square"></i>ZIP</button>\n<button class="project-button" onclick="window.open(''https://ko-fi.com/sn0wix'', ''_blank'');"><i\n        class="fa-solid fa-sack-dollar"></i>Donate</button>\n<button class="project-button" onclick="window.open(''../sn0wix/Portal.txt'', ''_blank'');"><img\n        src="https://alba-rosa.cz/assets/txt-icon.png"> Docs</button>', 'Portal puzzle game.');
+(4, '<i class=\"fa-solid fa-game-console-handheld\"></i>', 'Poppy Playtime!', '<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Poppy_playtime_chapter_4.zip\', \'_blank\');\">\n    <i class=\"fa-solid fa-up-right-from-square\"></i>Chapter 4 ZIP</button>\n    <button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Poppy_playtime_all_chapters.zip\', \'_blank\');\">\n    <i class=\"fa-solid fa-up-right-from-square\"></i>All chapters ZIP</button>\n<button class=\"project-button\" onclick=\"window.open(\'https://ko-fi.com/sn0wix\', \'_blank\');\">\n    <i class=\"fa-solid fa-sack-dollar\"></i>Donate</button>\n<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Poppy_playtime.txt\', \'_blank\');\">\n    <img src=\"https://alba-rosa.cz/assets/txt-icon.png\"> Docs</button>', 'Ever wanted to work at a toy factory? Well, now you can. But nothing comes without a catch...'),
+(5, '<i class=\"fa-solid fa-game-console-handheld\"></i>', 'Choo-Choo Charles!', '<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Choo-choo-charles.zip\', \'_blank\');\"><i\n        class=\"fa-solid fa-up-right-from-square\"></i>ZIP</button><button class=\"project-button\"\n    onclick=\"window.open(\'https://ko-fi.com/sn0wix\', \'_blank\');\"><i\n        class=\"fa-solid fa-sack-dollar\"></i>Donate</button><button class=\"project-button\"\n    onclick=\"window.open(\'../sn0wix/Choo_choo_charles.txt\', \'_blank\');\"><img\n        src=\"https://alba-rosa.cz/assets/txt-icon.png\"> Docs</button>', 'A spider-like locomotive, that hunts you down across an island with a secret story, that you have to uncover yourself... \n'),
+(6, '<i class=\"fa-solid fa-game-console-handheld\"></i>', 'Raft', '<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Raft.v1.09.zip\', \'_blank\');\"><i\n        class=\"fa-solid fa-up-right-from-square\"></i>v1.09 ZIP</button>\n<button class=\"project-button\" onclick=\"window.open(\'https://ko-fi.com/sn0wix\', \'_blank\');\"><i\n        class=\"fa-solid fa-sack-dollar\"></i>Donate</button>\n<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Raft.txt\', \'_blank\');\"><img\n        src=\"https://alba-rosa.cz/assets/txt-icon.png\"> Docs</button>', 'A utopian world that you explore with your own raft.'),
+(7, '<i class=\"fa-solid fa-game-console-handheld\"></i>', 'Portal', '<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Portal.zip\', \'_blank\');\"><i\n        class=\"fa-solid fa-up-right-from-square\"></i>ZIP</button>\n<button class=\"project-button\" onclick=\"window.open(\'https://ko-fi.com/sn0wix\', \'_blank\');\"><i\n        class=\"fa-solid fa-sack-dollar\"></i>Donate</button>\n<button class=\"project-button\" onclick=\"window.open(\'../sn0wix/Portal.txt\', \'_blank\');\"><img\n        src=\"https://alba-rosa.cz/assets/txt-icon.png\"> Docs</button>', 'Portal puzzle game.');
 
 -- --------------------------------------------------------
 
@@ -148,14 +141,14 @@ INSERT INTO `gamehub_private_alba_rosa` (`idgamehub_private`, `icon`, `name`, `b
 -- Struktura tabulky `gamehub_public_alba_rosa`
 --
 
-CREATE TABLE IF NOT EXISTS `gamehub_public_alba_rosa` (
+CREATE TABLE `gamehub_public_alba_rosa` (
   `idgamehub_public` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
   `web` varchar(256) DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `gamehub_public_alba_rosa`
@@ -163,8 +156,8 @@ CREATE TABLE IF NOT EXISTS `gamehub_public_alba_rosa` (
 
 INSERT INTO `gamehub_public_alba_rosa` (`idgamehub_public`, `icon`, `name`, `github`, `web`, `description`) VALUES
 (1, '&#9839;', 'Tic Tac Toe!', 'https://github.com/matkolo1/tictactoe/', 'https://matkolo1-tictactoe.glitch.me/', 'Basic Tic Tac Toe game with changeable size of the grid.'),
-(2, '<i class="far fa-square"></i>', 'Purpix!', 'https://github.com/matkolo1/purpix/', '../purpix/', 'If you like semi-coding, you can try this one.'),
-(3, '<i class="fa fa-hand-pointer-o"></i>', 'Popclicker!', 'https://github.com/pascaljura/poclicker/', '../popclicker/', 'You know cookie clicker? Try this one with our own characters.');
+(2, '<i class=\"far fa-square\"></i>', 'Purpix!', 'https://github.com/matkolo1/purpix/', '../purpix/', 'If you like semi-coding, you can try this one.'),
+(3, '<i class=\"fa fa-hand-pointer-o\"></i>', 'Popclicker!', 'https://github.com/pascaljura/poclicker/', '../popclicker/', 'You know cookie clicker? Try this one with our own characters.');
 
 -- --------------------------------------------------------
 
@@ -172,7 +165,7 @@ INSERT INTO `gamehub_public_alba_rosa` (`idgamehub_public`, `icon`, `name`, `git
 -- Struktura tabulky `help_alba_rosa_purkyn`
 --
 
-CREATE TABLE IF NOT EXISTS `help_alba_rosa_purkyn` (
+CREATE TABLE `help_alba_rosa_purkyn` (
   `idhelp_purkyn` int(11) NOT NULL,
   `idlog_purkyn` int(11) NOT NULL,
   `level` varchar(255) NOT NULL,
@@ -192,7 +185,7 @@ INSERT INTO `help_alba_rosa_purkyn` (`idhelp_purkyn`, `idlog_purkyn`, `level`, `
 (7, 210, '3.2', 'Jazyk ve kterém se dělá základní struktura webových stránek.'),
 (8, 211, '3.3', 'Zkus online qr kód scanner. Pokud nefunguje, udělej lepší print screen.'),
 (9, 212, '4.1', 'Třetí řádek vypadá nějak zvláštně....'),
-(10, 213, '4.2', 'Přece nemůžeš sčítat "text" a číslo.'),
+(10, 213, '4.2', 'Přece nemůžeš sčítat \"text\" a číslo.'),
 (11, 214, '5', 'Tobě se povedlo ztratit heslo!? Zkus znovu načíst stránku. A taky věz toto: ssh uzivatel@destinace'),
 (12, 215, '6', 'Mrkni na tento článek: https://networkhunt.com/how-to-add-repositories-in-linux/');
 
@@ -202,11 +195,11 @@ INSERT INTO `help_alba_rosa_purkyn` (`idhelp_purkyn`, `idlog_purkyn`, `level`, `
 -- Struktura tabulky `logins_alba_rosa_purpix`
 --
 
-CREATE TABLE IF NOT EXISTS `logins_alba_rosa_purpix` (
+CREATE TABLE `logins_alba_rosa_purpix` (
   `idlogins_purpix` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logins_alba_rosa_purpix`
@@ -251,11 +244,11 @@ INSERT INTO `logins_alba_rosa_purpix` (`idlogins_purpix`, `idusers`, `time`) VAL
 -- Struktura tabulky `logouts_alba_rosa_purpix`
 --
 
-CREATE TABLE IF NOT EXISTS `logouts_alba_rosa_purpix` (
+CREATE TABLE `logouts_alba_rosa_purpix` (
   `idlogouts_purpix` int(11) NOT NULL,
   `idusers` int(11) DEFAULT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logouts_alba_rosa_purpix`
@@ -273,14 +266,14 @@ INSERT INTO `logouts_alba_rosa_purpix` (`idlogouts_purpix`, `idusers`, `time`) V
 -- Struktura tabulky `logs_alba_rosa_purkinc`
 --
 
-CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkinc` (
+CREATE TABLE `logs_alba_rosa_purkinc` (
   `idlogs_purkinc` int(11) NOT NULL,
   `idusers_purkiada` int(11) NOT NULL,
   `lvl` varchar(255) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp(),
   `logid` int(11) NOT NULL,
   `info` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2888 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkinc`
@@ -2890,13 +2883,13 @@ INSERT INTO `logs_alba_rosa_purkinc` (`idlogs_purkinc`, `idusers_purkiada`, `lvl
 -- Struktura tabulky `logs_alba_rosa_purkyn`
 --
 
-CREATE TABLE IF NOT EXISTS `logs_alba_rosa_purkyn` (
+CREATE TABLE `logs_alba_rosa_purkyn` (
   `idlogs_purkyn` int(11) NOT NULL,
   `idusers_purkiada` int(11) NOT NULL,
   `idlog_purkyn` int(11) NOT NULL,
   `time` datetime NOT NULL,
   `text` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1573 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `logs_alba_rosa_purkyn`
@@ -3586,7 +3579,7 @@ INSERT INTO `logs_alba_rosa_purkyn` (`idlogs_purkyn`, `idusers_purkiada`, `idlog
 (1150, 189, 3, '2025-02-05 11:31:29', NULL),
 (1152, 189, 2, '2025-02-05 11:31:33', NULL),
 (1153, 172, 16, '2025-02-05 11:31:35', NULL),
-(1154, 157, 665, '2025-02-05 11:31:36', 'add-apt-repository ''deb "192.168.1.200 "'''),
+(1154, 157, 665, '2025-02-05 11:31:36', 'add-apt-repository \'deb \"192.168.1.200 \"\''),
 (1155, 189, 3, '2025-02-05 11:31:38', NULL),
 (1157, 189, 205, '2025-02-05 11:31:43', NULL),
 (1160, 157, 24, '2025-02-05 11:31:57', NULL),
@@ -3878,7 +3871,7 @@ INSERT INTO `logs_alba_rosa_purkyn` (`idlogs_purkyn`, `idusers_purkiada`, `idlog
 -- Struktura tabulky `log_alba_rosa_purkinc`
 --
 
-CREATE TABLE IF NOT EXISTS `log_alba_rosa_purkinc` (
+CREATE TABLE `log_alba_rosa_purkinc` (
   `idlog_purkinc` int(11) NOT NULL,
   `text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -3902,7 +3895,7 @@ INSERT INTO `log_alba_rosa_purkinc` (`idlog_purkinc`, `text`) VALUES
 -- Struktura tabulky `log_alba_rosa_purkyn`
 --
 
-CREATE TABLE IF NOT EXISTS `log_alba_rosa_purkyn` (
+CREATE TABLE `log_alba_rosa_purkyn` (
   `idlog_purkyn` int(11) NOT NULL,
   `text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -4217,19 +4210,19 @@ INSERT INTO `log_alba_rosa_purkyn` (`idlog_purkyn`, `text`) VALUES
 -- Struktura tabulky `notes_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
+CREATE TABLE `notes_alba_rosa_parlament` (
   `idnotes_parlament` int(11) NOT NULL,
-  `idusers` int(11) DEFAULT 1,
+  `idusers_parlament` int(11) DEFAULT 1,
   `date` date NOT NULL,
   `document_number` varchar(255) DEFAULT NULL,
   `notes` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
 --
 
-INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `date`, `document_number`, `notes`) VALUES
+INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers_parlament`, `date`, `document_number`, `notes`) VALUES
 (1, 17, '2023-11-01', '18.02.34', '//Čtvrtletní schůze s panem ředitelem//=**Návrhy pro zlepšení chodu školy ze strany studentů:**=- Nabíječky=-- Projekt úspěšný, požadavek na zvýšení počtu nabíječek.=- Automatické propustky při zrušené výuce=-- Nelze, systém není propojený s EduPage.=- Sodobary=-- Výměna sodobarů v ostatních patrech, aby byly jako ve čtvrtém =patře=-- Sodobary jsou pronajaté, záleží na domluvě s pronajímateli.=- Zrcadlo na chodbě=-- Skleněné ne, ale alternativa hliníkové folie je možná, vytipovat více =možností na jejich umístění.=- Beseda s hejtmanem JMK=-- Je možná, záleží na domluvě studentů.=- Slevové kupóny do kantýny=-- Lze vyzkoušet, kupóny by musely mít nějaký systém (aby nedošlo =k jejich zfalšování). Nutné prodiskutovat s provozovatelem, jako =návrh i s učiteli ekonomiky.=- Lepší káva v Delikomatu=-- V automatech není káva, jedná se pouze o kávovinovou směs. Lze =se poptat, ale cena by byla vyšší. Z důvodu umístění automatu ve =škole by však nešlo o kávu. =- Stížnost na chování personálu jako uklízečky a kuchařky=-- Individuální případy se musí řešit přes třídního učitele. Tolerantnější =přístup ze strany kuchařek především na konci směny bude řešen =přes správu budov.=- Halloween=-- Různé pohledy ze strany učitelů na masky studentů ve výuce o=Učitel nemá právo kohokoliv kárat za to, jak je oblečen, konkrétní =případy řešit přes třídního učitele.=- Potíže se školním internetem a Wi-Fi=-- Škola je propojená s VUT, tam problém není, problém je v =metalických rozvodech, výměna za optické kabely stojí mezi 3-5 =miliony. Aktuálně se řeší tepelný výměník. Příští prázdniny se teprve =bude řešit internet a ty následující serverové řízení.=- Omezení Wi-Fi v hodinách, nefunguje ve výuce=-- Omezeno, aby žáci nebyli na sociálních sítích. Učitelé mají ve výuce =zadávat jen takovou práci, aby byla v danou chvíli technicky =zvládnutelná. =-- Pokud to i přesto učitel vyžaduje, konfrontovat, řešit s TU nebo =s ŘŠ. =- Rozbité rozhlasy a jiná technika v učebnách=-- Na sharepointu je systém pro zadávání požadavků, je třeba učitele =na technický problém upozornit. V PC učebnách existuje i papírová =forma, která by měla být pravidelně kontrolována a požadavky =řešeny přes IT servis.=- Sportovní zařízení=-- Minulý rok byla velká investice do posilovny =-- Rekonstrukce venkovního areálu se pohybuje okolo 15 milionů, finančně =je to nyní pro školu neúnosné. =-- Jednou za rok prochází areál bezpečnostní kontrolou, opravují se pouze =nutné záležitosti.=**Diskuze:**=- Obor kybernetika - odešel učitel maturitního předmětu (obava studentů o =maturitní zkoušku)=-- Obava není na místě, učitelé stihnou látku probrat. S novými obory =se mění ŠVP, upravují se maturitní požadavky. =- Změna učitele češtiny ve třetím ročníku, obava o čtvrtý maturitní ročník=(každý učí jiným způsobem)=-- Učitelé vědí, co potřebujete k maturitě, přístup může mít každý jiný. =- Dlouhodobá absence paní učitelky Altrichterové.=-- Zajištěn odborný zástup.=- Noví učitelé neměli dostatek informací k chodu školy=-- Učitelé prochází adaptací, dvouletou průpravou a různými semináři.=- Požární poplach – noví učitelé nevěděli, co mají dělat. =-- Zkoušku požárního poplachu je třeba opakovat za účelem hladkého =průběhu. Další zkouška bude na jaře.=-- Informace k požárnímu poplachu jsou uvedené na nástěnkách. =- Revize elektro zařízení.=-- Četnost revizí záleží na poptávce, obvykle dvakrát ročně. =- 1. patro – na WC pípá poplach.=-- Nahlásit panu Šístkovi.=- Špatné časy na PC v učebnách.=-- Řešit s Petrem Čížkem.=- Co škola umožňuje zletilým žákům?=-- Škola má povinnost zajistit vždy dohled nad všemi studenty, i těmi =zletilými.'),
 (2, 17, '2023-10-03', '18.02.34', '**Volby do funkcí školního parlamentu**=- Zapisovatel: Ondra Šteffan (náhradník Kristýna Karaivanova) – vždy =po setkání rychlá kontrola, ten se odešle na Messenger, GODE =vytiskne a Adam Abbod dá na nástěnky a zveřejní se na Instagramu=**Adaptační program Parlamentu – návrhy:**=- Laser game=- Zoo=- Bowling=- Společná venkovní akce=**Halloween**=- Zařizuje: Kristýna Karaivanova (31.10.2023)=**Nabíječky **=- Plakát roznosit po škole + dát na nástěnky=**Nábor členů do školního Parlamentu (Týká se pouze zatím prváků):**=- Čtvrtek 05.10.2023=- V časech 08:00 – 10:45 a 10:55 – 13:30=- 2 skupiny:=-- Martin Sedlář L3, Adam Abbod V3A + Eli (náhradník)=-- Ondra Šteffan V4B, Kristýna Karaivanova S4B'),
 (3, 17, '2023-11-17', '18.02.34', '**Zhodnocení akce Halloween**=- Bonbóny uspěly=- Účast větší než minulý rok=**Nové výbory parlamentu**=- Nový výbor IT=- Spojka mezi námi a panem Čížkem=- Adam Abbod=- Nový výbor komunikace (vyjednávání)=- Spojka mezi učiteli a námi=- Bohuslav a Jakub=**Stanovení plánu akcí**=- Bude k dispozici na teams=- Řeší výbor plánování akcí=- Do 14.11.=**Pozvání pana hejtmana**=- Beseda 50-100 lidí=- V řešení omezený počet míst =- Formou přihlášení=**Zrcadlo**=- Musí se najít místo=**Časy na počítačích**=- Řeší výbor IT=**Den otevřených dveří**=- Zájemci na dobrovolníky =- Řeší Martin s paní Klobásovou=**Purples**=- Zájemci na dobrovolníky=- Řeší Eli s Purplesem=**Rozhlas**=- Jen důležité akce (odhlasováno)=- Řeší Sarah=**Stále v řešení:**=- Mikuláš =- Promyslet, kdo by chtěl jít=- Logo Parlamentu=-- Bude nápis Purkyňova (odhlasováno)=- Slevy v kantýně'),
@@ -4265,17 +4258,17 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `date`,
 (64, 17, '2024-10-01', '18.02.34', '**Nový předseda**: Jiří Boucník (ve spolupráci s Adam Abbod)=**Zapisovatel**: Matěj Kořalka, František Vaněk=**Sociální sítě**: Roman Kačmařík=**Nástěnkářka**: Sarah Buchtová=**Nábor prváků** =- Rozvrh a trasy pro 4 skupiny=- Co říct o náboru=- Slušnost a mluvit pravdu=- 2.10. čtvrtek 1. a 2. vyučovací hodinu=- Popis práce, něco o akcích, odměny=**Nabíječky** =- 8.10. revize=- Štítky a kontroly=- Nepůjčovat učitelům=- Samostatné nekombinované kabely=- Zodpovídá: Patrik Brandejs=**Plán akcí**=- Nábor prváků=- Adapťák=- Halloween=- Zimní program=- 3 králové=- Valentýn=- Letní program=- Výlet za odměnu=- Akce sport=- Participativní projekt na zvelebení školy=- Spolupráce s Střední školou informatiky, poštovnictví a finančnictví Čichnova'),
 (65, 17, '2024-10-08', '18.02.34', '**Plán akcí**=- Adapťák=- Haloween=- Mikuláš=- Zimní program=- 3 králové=- Valentýn=- Letní program=- Výlet za odměnu=- Participativní projekt=- Sportovní akce=- Spolupráce se střední školou Čichnova=**Další akce**=- Modrá síť (Důchodci na Čichnově)=--Říjen - Listopad=**Halloween**=- Zařizuje: Macháčková, Buchtová=- 31.10.=- Potřeba zařídit odměny za obleky, plakátky a celkovou organizaci a propagaci=**Adapťák**=- Asi 22.10.=- Bowling=**Dělení do sekcí**=- Nástěnky:=-- Buchtová=- Zápisy:=-- Kořalka, Vaněk=- Nabíječky:=-- Brandejs=- Sociální sítě:=-- Kačmařík=- Grafika:=-- Boucník, Macháčková=- Rozvrhy=-- Němec, Pokorná=**Zmínění diskuzního kroužku**=- O kroužku=- Co se tam děje'),
 (66, 17, '2024-10-15', '18.02.34', '**Zakázka na dřevěné diáře pro školu**=- Na první stranu hlášky používané na škole=- Parlament vymyslí hlášky a slova =- Do týdne donést návrhy=- Propagace pomocí zástupců=**Messenger skupina**=- Přidat nováčky=**Adaptační program**=- Bowling Brno=- 22. 10. úterý v 9:30 =- Placené školou místo vyučování=**Schůze s panem ředitelem**=- 5.11. 8. vyučovací hodinu=**Moudrá síť**=- Pomoc technicky negramotným lidem=- Někdy v listopadu=- Pomoc z řad našeho parlamentu=- Přednášky mohou být i od nás=-- Jak využívat různé aplikace=- Otázky budou směřované i na nás=**Sbírka na den dobrých skutků**=- Výbava pro handicapované=- 1. skupina=-- Kačmarčík =-- Kropáček=-- Šmarda=- 2. skupina=-- Macháčková=-- Hudcová=-- Munclinger=- Říct informace o projektu=- Středa 23. 10.=**Rada mladších**=- Přednášky, mezigenerační psychologie=- 16. 10. Středa=**Participativní rozpočet**=- 30 000,- na zvelebení školy=- Návrhy od studentů=- Plakátky po škole'),
-(67, 17, '2024-11-05', '18.02.34', '//Školení od Pana Ředitele doc. RNDr. Aleš Ruda, Ph.D., MBA//=**Dotazník ohledně vyučování**=- Informace o přípravě na život ve školství a výuce=- Kritéria a informace v dotazníku: =-- Učitel by na začátku hodiny měl vysvětlit cíl hodiny a na konci vyučovací hodiny říct, jak se žákům povedlo tohoto cíle dosáhnout=-- Učitel by se měl chovat partnersky až přátelsky k žákům a naopak=-- I předměty které se nevztahují k oboru/tématu nás připravují na život=-- Do vyučování by se měly zakomponovat aktivity kde žáci spolupracují/pomáhají si a  připravují je na život=-- Vyučující by měl vysvětlit učivo tak aby ho většina žáků pochopila a neodkazovala se na samostudium=-- Učitelé by měli zakomponovat měkké dovednosti do vyučování (týmová práce, kreativita)=-- Žáci by se měli učit nejen na písemky, ale i do budoucna=-- Učitel by měl ověřovat znalosti žáků více způsoby=- Dotazník je pouze doplněk, protože všechny otázky nemusejí být relevantní=- Při opakovaným špatným hodnocení nebo při více podněty od žáků se vedení školy samo podívá na případ=**Otázky od studentů**=- Zábrany mezi pisoáry: dle možnosti místa mezi pisoáry=- Sifon na každém patře: podle rozvodů vody a SRPŠ=-- Možnost firmy "Lokni"=- Učitelé dělají ze svého předmětu nejpotřebnější věc oproti potřebám žáků=- Renovace školních sítí:=-- V procesu schvalování a předpoklad že o prázdninách se uskuteční=-- Výměna příslušenství k sítím: v příštích letech=- Výpadky systému EduPage: mezi 9-11 hodinou jsou systémy přetížené'),
+(67, 17, '2024-11-05', '18.02.34', '//Školení od Pana Ředitele doc. RNDr. Aleš Ruda, Ph.D., MBA//=**Dotazník ohledně vyučování**=- Informace o přípravě na život ve školství a výuce=- Kritéria a informace v dotazníku: =-- Učitel by na začátku hodiny měl vysvětlit cíl hodiny a na konci vyučovací hodiny říct, jak se žákům povedlo tohoto cíle dosáhnout=-- Učitel by se měl chovat partnersky až přátelsky k žákům a naopak=-- I předměty které se nevztahují k oboru/tématu nás připravují na život=-- Do vyučování by se měly zakomponovat aktivity kde žáci spolupracují/pomáhají si a  připravují je na život=-- Vyučující by měl vysvětlit učivo tak aby ho většina žáků pochopila a neodkazovala se na samostudium=-- Učitelé by měli zakomponovat měkké dovednosti do vyučování (týmová práce, kreativita)=-- Žáci by se měli učit nejen na písemky, ale i do budoucna=-- Učitel by měl ověřovat znalosti žáků více způsoby=- Dotazník je pouze doplněk, protože všechny otázky nemusejí být relevantní=- Při opakovaným špatným hodnocení nebo při více podněty od žáků se vedení školy samo podívá na případ=**Otázky od studentů**=- Zábrany mezi pisoáry: dle možnosti místa mezi pisoáry=- Sifon na každém patře: podle rozvodů vody a SRPŠ=-- Možnost firmy \"Lokni\"=- Učitelé dělají ze svého předmětu nejpotřebnější věc oproti potřebám žáků=- Renovace školních sítí:=-- V procesu schvalování a předpoklad že o prázdninách se uskuteční=-- Výměna příslušenství k sítím: v příštích letech=- Výpadky systému EduPage: mezi 9-11 hodinou jsou systémy přetížené'),
 (69, 65, '2024-11-01', '18.02.35', '**Dotazník na hodnocení vzdělávacího procesu a učitelů - připomínky/úpravy a dovysvětlení**=**Sdružení rodičů**=**Místo setkání - pravděpodobně aula**'),
 (70, 65, '2024-11-12', '18.02.06', '- prezenčka=- pokud se žák účastní akce s parlamentem, je jeho povinností doplnit si učivo=- 15.11. proběhne na škole 3. - 5. hodinu **Moudrá Síť** pro 3. ročníky, zájemci se přijdou podívat o přestávkách=- možná spolupráce s SŠ Grafickou, předseda se přijde podívat na DOD 16.11, provede ho Roman Kačmařík=- **22.11. multimediální den**, zájemci se přihlásí na discordu=- **mikuláš 5.12.** - organizátor Anežka Macháčková, sestava skupinek a rozvrhů, mikuláš Martin Němec a Jaroslav Šmarda=- **vánoční program 20.12.** - celá aula - filmy(Roman Kačmařík), konzole(Adam Abbod), deskovky(Jiří Boucník, p.u.č. Nováčková), káva(Adam Abbod), tělocvična? a cokoliv dalšího=**Bubnovačka**=- upozorňuje na násilí v rodině=- spíše symbolická akce, upozornění na centrum Locika=- plakáty, televize(youtube kanál centra Locika, zajít za IT) a jiná propagace=- 19.11. setkání u kačenek a bubnování na cokoliv=- dokumentace akce na ig- Zuzana Kaňáková=- řeší Karel Bednařík a Petr Havelka==**Školní web parlamentu**=- zápisy ze zasedání=- myšlenková mapa z nástěnek=- aktuální akce, galerie fotek=- formulář na nápady=- kdo jsme - nejhlavnější osoby=- odkazy na záležitosti parlamentu==**Participativní rozpočet**=- sekce v akcích školy na webu=- informování žáků (rozhlas, plakáty, ig, časopis discipulus, edupage, plakáty na záchody :)=- nápady sbírá Roman Kačmařík=- informační tabule - Sarah Buchtová=- návrhy může dávat kdokoliv=- shrnutí pravidel a termínů=- informovat třídy'),
 (71, 66, '2024-11-26', '18.02.07', '**Participativní rozpočet**=- Vyzdobit tabuli ve vestibulu=- Šířit ve třídách=- 12 odpovědí ve formuláři=- Brainstorming na nápady=**Krajský studentský sněm**=- 2.12.=- Schůze zástupců ze všech škol=- Zástupci: Sára Buchtová, Roman Kačmařík=**Mikuláš**=- 5.12.=- 2 skupiny:=-- Mikuláš Němec, Čert Urbanová, Buchtová, Anděl Kaňáková, Pokorná=-- Mikuláš Šmarda, Čert Tureček, Gažová, Anděl Macháčková, Kropáček=- Kostým si zařídí každý sám=- Udělat plakáty=**Podněty od žáků parlamentu**=- Zámky na záchody=- Zařídit rychlovárnou konvici v jídelně'),
-(72, 65, '2024-12-03', '18.02.08', '- připomínka k postupu řešení problémů==**Krajský studentský sněm**==- DOFE=- administrativní věci ohledně sněmu=-- "motivace mladých lidí ke konání dobrých skutků"==**Mikuláš**=- kostýmy si každý shání sám=- čtvrtek 5.12.=- sraz 7:50 ve studovně=- koupě jednoho mikulášského obleku za školní peníze?==**Tři králové**=- řeší Roman Kačmařík=- skupinka 1: Anežka Macháčková, Martin Němec, Kateřina Pokorná=- skupina 2: Roman Kačmařík, Jakub Kropáček + třetí člen=- skupiny jsou pouze orientační=- potřeba zařídit: kasičky, rozvrhy, plakáty, Edupage (4./5.1.), rozhlas (16.12.), ig=- 6.1. 2025==**Vánoční program**=- 20.12. od 8 do 12=- možná účast tříd z grafické=- možná účast tříd z čichny=- zajištění dozorů=- deskovky: Boucník=- filmy: Kačmařík, Němec (Pokorná)=- konzole: Abbod, (Buchtová)=- káva: Abbod=- tělocvična - dořešit dozor==**Participativní rozpočet**=- hlasování na discordu=- rozhlas - brzké uzavření formuláře=- příští schůze brainstorming=- poté předložení nápadů vedení=- po vyjádření vedení rozpis návrhů na tabuli a hlasování'),
+(72, 65, '2024-12-03', '18.02.08', '- připomínka k postupu řešení problémů==**Krajský studentský sněm**==- DOFE=- administrativní věci ohledně sněmu=-- \"motivace mladých lidí ke konání dobrých skutků\"==**Mikuláš**=- kostýmy si každý shání sám=- čtvrtek 5.12.=- sraz 7:50 ve studovně=- koupě jednoho mikulášského obleku za školní peníze?==**Tři králové**=- řeší Roman Kačmařík=- skupinka 1: Anežka Macháčková, Martin Němec, Kateřina Pokorná=- skupina 2: Roman Kačmařík, Jakub Kropáček + třetí člen=- skupiny jsou pouze orientační=- potřeba zařídit: kasičky, rozvrhy, plakáty, Edupage (4./5.1.), rozhlas (16.12.), ig=- 6.1. 2025==**Vánoční program**=- 20.12. od 8 do 12=- možná účast tříd z grafické=- možná účast tříd z čichny=- zajištění dozorů=- deskovky: Boucník=- filmy: Kačmařík, Němec (Pokorná)=- konzole: Abbod, (Buchtová)=- káva: Abbod=- tělocvična - dořešit dozor==**Participativní rozpočet**=- hlasování na discordu=- rozhlas - brzké uzavření formuláře=- příští schůze brainstorming=- poté předložení nápadů vedení=- po vyjádření vedení rozpis návrhů na tabuli a hlasování'),
 (73, 65, '2024-12-10', '18.02.09', '**Vánoční program**=- potvrzena účast čichny a grafické=- zálohy: Vaněk, Gažová, Boucník, Macháčková, Bednařík, Petrčková, Topinka=- tělocvična - Buchtová=- dozory - Šístková, Mužová, Eliášová?, Čížková?, Kaloková?==**Web parlamentu**=- text o nás - Odehnal, Kořalka==**Nápady**=- stanovení pravidel pro odemčení klavíru==**Participativní rozpočet - brainstorming**=- vytvoření seznamu nápadů, který se předloží vedení=='),
 (74, 67, '2024-12-17', '18.02.10', '**Vánoční program**=- 20.12. od 8:30 hod. do cca 12 hod.=- 3 lidi z čichny=- dozory zajištěny=- deskovky:  karty, Sázky a dostihy, šachy=- filmy: Kačmařík, Němec (Pokorná)=- konzole: Abbod, (Buchtová)=- káva: Abbod==**Tři králové**=- dne 9.1.2025=- 1. až 3. vyuč. hodina – rozvrhy zajištěny=- skupinka 1: Jarda Šmarda, Martin Němec, Kateřina Pokorná=- skupina 2: Roman Kačmařík, Jakub Kropáček, Anežka Macháčková=- rozhlas možná v úterý?=- plakát – dát i na soc. sítě=- napsat učitelům'),
 (75, 66, '2025-01-07', '18.02.11', '**Tři králové**=- Vše je již vyřešeno =- Rozdávání plakátků do tříd=- Vyhlásit rozhlasem=**Participativní rozpočet**=- 4 návrhy potvrzeny ředitelstvím=- Vybrat zástupce pro každý návrh=-- Fotbálek (relax zóna) - Ondřej Tureček=-- Výběh - [volno]=-- Modernizace posilovny - Sarah Buchtová=-- Společenská akce - Jakub Kropáček, Anežka Macháčková=- Popřemýšlet nad realizací každého projektu =- Deadline 21.ledna=- Vyjádření pana ředitele na ostatní návrhy:=-- Dveře na ISIC možná projdou=-- Nástěnné židle ve 4. patře - jsou zde stěny ze sádrokartonu=-- Modernizace turniketů - dokud budou fungovat, tak se nebudou modernizovat=-- Větráky - 1 větrák do třídy je málo=-- Dámské potřeby - příliš rychle vybrané, jsme velká škola=-- Akvárium - kdo by se o něj staral?=-- Obrázky u objednávání jídel - není, kdo by je nahrával=-- Posouvací tabule - postupně se předělávají=-- Zatemnění do třídy - špatné stěny na realizaci'),
 (76, 66, '2025-01-14', '18.02.12', '**Tři králové**=- ukončeno=- děkujeme všem, především ale dárcům =**Valentýn**=- Na starost: Michaela Gažová=- Propagace, vystřihování srdíček, schránky=- 3.-7. 2. schránky=- 19.-20. 2. rozdávání srdíček=**Volba**=- Zastupující nástěnkář: Michaela Gažová'),
 (77, 65, '2025-02-18', '18.02.13', '**Valentýn**=- třídění valentýnek, rozdávání ve středu o přestávkách=- __Rozdávání: __=-- Linda Piskorová=-- Anežka Macháčková=-- Markéta Hrnčířová=-- Izabela Žárská=-- Patrik Brandejs===**Odpoledne se seniory Čichnova**=3.4.2025 - 12:00 - 16:00=- __Zástupci:__=-- Pokorná, Němec, Macháčková, Havelka, Friedl, Gažová, Boucník, Vaněk, Topinka, Buchtová, Kačmařík, Kořalka===**Participativní rozpočet**=- __První patro __=-- Ondřej Tureček =--fotbálek=--stoly=--použití starých židlí=--sedací pytle==- __Dresy TEV__=-- Michaela Gažová - T1, Friedl Daniel - T1 =--koupě dresů, 15 pro dívky a 15 pro chlapce=--v barvách Purkyňky==- __Společenská akce__=-- Jakub Kropáček, Anežka Macháčková=**Grilovačka po purkyňácku**=--koupě grilů (kupodivu levnější než pronájem)=--výběr dobrovolného příspěvku=**Noc filmů**=--přespávačka ve škole=--dobrovolný příspěvek==- __Výběh__=-- Jiří Boucník=--návrh zahradního posezení=--popularizace výběhu'),
-(78, NULL, '2025-03-03', '18.02.14', 'tt');
+(79, 66, '2025-03-04', '18.02.15', '**Krajský studentský sněm**==- Roman Kačmařík, Sarah Buchtová=- sběr podnětů pro DPMB==**Řešení problémů na škole**=- nahlásit třídnímu učiteli, možnost i přes školskou radu==**Participativní rozpočet**=- vyhrála relax zóna v 1. patře=- můžeme lehce upravovat časem=- vyhlášení skrze rozhlas==**Velikonoce**=- budou, máme funkční program==**Školní inspekce**==- 17. 3. – 20. 3.=- mohou přijít ke komukoli==*Poskytnout seznam vedoucích oborů*=*Zeptat se 660,- na nabíječky*=');
 
 -- --------------------------------------------------------
 
@@ -4283,21 +4276,21 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers`, `date`,
 -- Struktura tabulky `other_alba_rosa`
 --
 
-CREATE TABLE IF NOT EXISTS `other_alba_rosa` (
+CREATE TABLE `other_alba_rosa` (
   `idother` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
   `web` varchar(256) DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `other_alba_rosa`
 --
 
 INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `description`) VALUES
-(4, '<i class="fa-solid fa-qrcode"></i>', 'Qr code!', 'https://github.com/pascaljura/qr-code/', '../qr-code/', 'A simple QR code generator for all of your needs.');
+(4, '<i class=\"fa-solid fa-qrcode\"></i>', 'Qr code!', 'https://github.com/pascaljura/qr-code/', '../qr-code/', 'A simple QR code generator for all of your needs.');
 
 -- --------------------------------------------------------
 
@@ -4305,7 +4298,7 @@ INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `desc
 -- Struktura tabulky `other_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
+CREATE TABLE `other_alba_rosa_parlament` (
   `idother_parlament` int(11) NOT NULL,
   `text` longtext NOT NULL,
   `active` int(11) NOT NULL
@@ -4316,9 +4309,9 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '<hr style="border-top: 1px solid black;border-bottom: none;">      \n  <div style="display: flex; justify-content: center;" id="footer-text">\n            <div class=" button-container">\n            Web: Jiří Boucník | Grafiku: Marcel Mikula<br>\n            </div>\n        </div>', 1),
-(2, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n \n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
-(3, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
+(1, '<hr style=\"border-top: 1px solid black;border-bottom: none;\">      \n  <div style=\"display: flex; justify-content: center;\" id=\"footer-text\">\n            <div class=\" button-container\">\n            Web: Jiří Boucník | Grafiku: Marcel Mikula<br>\n            </div>\n        </div>', 1),
+(2, '        <div class=\"table-heading\">\n  <h2><i class=\"fa fa-heart blue\"></i>・Aktuálně</h2>\n       </div>\n<div id=\"poster\">\n \n            <a href=\"./assets/img/plakat_0.png\" target=\"_blank\">\n                <img src=\"./assets/img/plakat_0.png\" id=\"responsive-image\">\n            </a>\n        </div>', 1),
+(3, '        <div class=\"table-heading\">\n  <h2><i class=\"fa fa-heart blue\"></i>・Aktuálně</h2>\n       </div>\n<div id=\"poster\">\n            <a href=\"../assets/img/plakat_0.png\" target=\"_blank\">\n                <img src=\"../assets/img/plakat_0.png\" id=\"responsive-image\">\n            </a>\n       \n         \n        </div>', 1);
 
 -- --------------------------------------------------------
 
@@ -4326,7 +4319,7 @@ INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) 
 -- Struktura tabulky `photos_alba_rosa_popclicker`
 --
 
-CREATE TABLE IF NOT EXISTS `photos_alba_rosa_popclicker` (
+CREATE TABLE `photos_alba_rosa_popclicker` (
   `idphotos_popclicker` int(11) NOT NULL,
   `idusers` int(11) NOT NULL,
   `photos_1` longblob NOT NULL,
@@ -4339,23 +4332,23 @@ CREATE TABLE IF NOT EXISTS `photos_alba_rosa_popclicker` (
 -- Struktura tabulky `school_alba_rosa`
 --
 
-CREATE TABLE IF NOT EXISTS `school_alba_rosa` (
+CREATE TABLE `school_alba_rosa` (
   `idschool` int(11) NOT NULL,
   `icon` varchar(256) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `github` varchar(256) DEFAULT NULL,
   `web` varchar(256) DEFAULT NULL,
   `description` text DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `school_alba_rosa`
 --
 
 INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `description`) VALUES
-(1, '<img src="https://icons.iconarchive.com/icons/fa-team/fontawesome/128/FontAwesome-Egg-icon.png" width="25" height="25">', 'Egg Hunt!', 'https://github.com/pascaljura/egg-hunt/', 'https://velikonoce.sspbrno.cz/', 'Programme for the Easter event at Purkiňka High School in Brno from the school Parliament'),
-(2, '<i class="fa-solid fa-bezier-curve"></i>', 'Bezier''s curve!', 'https://github.com/matkolo1/bezier/', '../bezier/', 'A simple program to calculate a bezier''s curve with unlimited points.'),
-(3, '<i class="fa-solid fa-chalkboard-user"></i>', 'Parlament!', 'https://github.com/pascaljura/parlament', '../parlament/', 'Exclusive site for our school parliament to store all records.');
+(1, '<img src=\"https://icons.iconarchive.com/icons/fa-team/fontawesome/128/FontAwesome-Egg-icon.png\" width=\"25\" height=\"25\">', 'Egg Hunt!', 'https://github.com/pascaljura/egg-hunt/', 'https://velikonoce.sspbrno.cz/', 'Programme for the Easter event at Purkiňka High School in Brno from the school Parliament'),
+(2, '<i class=\"fa-solid fa-bezier-curve\"></i>', 'Bezier\'s curve!', 'https://github.com/matkolo1/bezier/', '../bezier/', 'A simple program to calculate a bezier\'s curve with unlimited points.'),
+(3, '<i class=\"fa-solid fa-chalkboard-user\"></i>', 'Parlament!', 'https://github.com/pascaljura/parlament', '../parlament/', 'Exclusive site for our school parliament to store all records.');
 
 -- --------------------------------------------------------
 
@@ -4363,13 +4356,13 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 -- Struktura tabulky `tokens_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
+CREATE TABLE `tokens_alba_rosa_parlament` (
   `idtokens_parlament` int(11) NOT NULL,
-  `idusers` int(11) NOT NULL,
+  `idusers_parlament` int(11) NOT NULL,
   `idattendances_list_parlament` int(11) NOT NULL,
   `token` varchar(256) NOT NULL,
   `expires` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -4377,7 +4370,7 @@ CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
 -- Struktura tabulky `users_alba_rosa`
 --
 
-CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
+CREATE TABLE `users_alba_rosa` (
   `idusers` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -4395,7 +4388,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `purpix_level_8` int(11) NOT NULL DEFAULT 69,
   `purpix_level_9` int(11) NOT NULL DEFAULT 69,
   `popclicker_score` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa`
@@ -4422,13 +4415,13 @@ INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `game
 -- Struktura tabulky `users_alba_rosa_parlament`
 --
 
-CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
-  `idusers` int(11) NOT NULL,
+CREATE TABLE `users_alba_rosa_parlament` (
+  `idusers_parlament` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` text NOT NULL,
   `parlament_access_admin` enum('0','1') DEFAULT '0',
-  `parlament_access_user` enum('0','1') NOT NULL DEFAULT '0',
+  `parlament_access_user` enum('0','1') NOT NULL DEFAULT '1',
   `add_notes` enum('0','1') NOT NULL DEFAULT '0',
   `delete_notes` enum('0','1') NOT NULL DEFAULT '0',
   `edit_notes` enum('0','1') NOT NULL DEFAULT '0',
@@ -4438,17 +4431,34 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `delete_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `qr_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_parlament`
 --
 
-INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
+INSERT INTO `users_alba_rosa_parlament` (`idusers_parlament`, `email`, `username`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
 (17, 'boucnik.jiri@gmail.com', 'Jiří Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
-(65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
-(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+(66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0'),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
+(88, 'vanek.frantisek@purkynka.cz', 'František Vaněk', '$2y$10$4CZfx4iSH2otCe.wMVKuheh0HGEOeuumtG13UbWo7hAEkVe7ipZ7C', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0'),
+(89, 'korcak.jiri@purkynka.cz', 'Korčák Jiří', '$2y$10$H3gbijTDVMO8Q.aLd0j8IeihQlHeNLJxLU6Rr8RJAWZ2l1MBu/4sa', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(90, 'prudil.frantisek@purkynka.cz', 'František Prudil', '$2y$10$PVImTnZ8slKxdMOZzLFqKO2xGP6lI1eqpeTHjfuVBXXADYPC2XdcS', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(91, 'bednarikkarel50@gmail.com', 'Karel Bednařík ', '$2y$10$fBstLy4Yc.WeobDklMeOBukcCCnm/QcRo.oH7Cc73BcHYqiqv0lQu', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(92, 'hudcova.nikola@purkynka.cz', 'Nikola Hudcová', '$2y$10$kZKrSfwbW4LWWUejZWzQpOK9LN9eUJWE.I3n5wyPCRAm0DPnlHgJS', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(94, 'balejova.alena@purkynka.cz', 'Alena Balejová', '$2y$10$EwqePk8ouLYSagRnYBxoze25AwVdV0g4F4qyyo.wuuCTd34Bc5DDS', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(95, 'pokorna.katerina@purkynka.cz', 'Kateřina Pokorná', '$2y$10$4cpMqqr9H87F7v7N1TPCY.42TfFQyfgkbqnPVLkXp3BSK6UkFXmVe', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(96, 'jankuj.ondrej@purkynka.cz', 'Ondřej Jankůj', '$2y$10$4D6YRq59SspjLcFn8mX9HOK20w7vOTvFqI9kVWQco8yTqi5inxa3C', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(97, 'romankacmarik@seznam.cz', 'Kačmařík Roman', '$2y$10$57iHXHnim6sqFqcoA5W4y.p4oJ3AvBYRCYaI0yy0undeWDhDW2L/m', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(98, 'furmanskyi.tymofii@purkynka.cz', 'Tymofii Furmanskyi ', '$2y$10$mS7VGo.9/ezwAjujHviyr.lFDKzdubiW96xMRtt3gCO0nwnfgDAkG', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(100, 'gazova.michaela@purkynka.cz', 'Michaela Gažová ', '$2y$10$T42s0RulXC/LndiXBFUYiuth8dMazfyUy98B74t/O7fQyMdVR3z4a', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(101, 'brandejs.patrik@purkynka.cz', 'Patrik Brandejs', '$2y$10$i3KgR8r6ICZE/gYMJSnfoeaT7LA1qBJTZJYwhIaKzWTcf8zpCscLO', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(102, 'kanakova.zuzana@purkynka.cz', 'Zuzana Kaňáková ', '$2y$10$N9pXDK0uW5URRv1973WC8e/3jB00aIiGhrN5FIwwiTDFNviVM5PL.', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(103, 'friedl.daniel@purkynka.cz', 'Daniel Friedl', '$2y$10$7/.16pUX1SCq0a4uu3F3IeA6K6RITTlBAQhbQxK1Tt0awbxUUwKS2', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(104, 'smarda.jaroslav@purkynka.cz', 'Jaroslav  Šmarda', '$2y$10$Z.0Pdwx.t6pk9Nvqv.Bb9OofMmDRf6sXagp17y/W7G6xkjsM1ZaFu', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(108, 'odehnal.lukas@purkynka.cz', 'Lukáš Odehnal', '$2y$10$WiGemhJaYh2mA65yJi56JeNA13mK6GlYmLw2vX9vtaqvVvfLrm/Wu', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(109, 'vibiw60448@azduan.com', 'vibiw60448@azduan.com', '$2y$10$3kY4MZsRgCVG0oLqxNi8Gu8cLkPbGQtaZC7BVINsivGUSb7IIfJZu', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(110, 'boucnik.jiri@purkynka.cz', 'Boucník Jiří', '$2y$10$v2RvwciKXCQC.1JFXeCKFeSRKjCtZaMPBi3dneV7hlwNuympYP4n.', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -4456,7 +4466,7 @@ INSERT INTO `users_alba_rosa_parlament` (`idusers`, `email`, `username`, `passwo
 -- Struktura tabulky `users_alba_rosa_purkiada`
 --
 
-CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
+CREATE TABLE `users_alba_rosa_purkiada` (
   `idusers_purkiada` int(11) NOT NULL,
   `username` text NOT NULL,
   `name` text NOT NULL,
@@ -4493,7 +4503,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_purkiada` (
   `purkinc_level_10` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_11` int(11) NOT NULL DEFAULT 96,
   `purkinc_level_12` int(11) NOT NULL DEFAULT 96
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_purkiada`
@@ -4547,136 +4557,136 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 (196, 'nahr.8', '8 Náhradník', '$2b$08$kukOhnAdNc.lvAKtPQ9oiO5bc9YNipAbh5TK0DwmII013eNWdXqLW', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 1, 1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 69, 69, 96, 96, 96, 96, 96),
 (197, 'nahr.9', '9 Náhradník', '$2b$08$iKtnS6YhS2uqz4OzdYnKau8Qz4L1Y.jTeyvDiav2kvOFzm5j.Qjv2', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
 (198, 'nahr.10', '10 Náhradník', '$2b$08$hEw86HJOzQFBun1j8/q3MOHbacp0cFTqrGEMRxC9qHAI0P83nK.uS', 'Purkiáda Výherci', 69, 96, '96', 96, '96', '96', '96', 96, '96', 96, 96, 0, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96),
-(199, 'show', 'show', '$2y$10$xKRCYnm6Mg1l581Xvd6DZO4QdRnjFP3jfeRp02cPE0N5YjN79494G', 'Purkiáda Výherci', 69, 96, '''96''', 96, '''96''', '''96''', '''96''', 96, '''96''', 96, 96, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+(199, 'show', 'show', '$2y$10$xKRCYnm6Mg1l581Xvd6DZO4QdRnjFP3jfeRp02cPE0N5YjN79494G', 'Purkiáda Výherci', 69, 96, '\'96\'', 96, '\'96\'', '\'96\'', '\'96\'', 96, '\'96\'', 96, 96, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
 (200, 'agent69', 'Agent69', '$2y$10$MUzrE01Ot7cOSKob9ZhgSOe2OGmotNWv5WPaBTG3j9dQhpRrVsBPS', 'Purkiáda Výherci', 10, 60177756, '55', 0, '.zip', '.html', 'https://alba-rosa.cz/purkiada/purkyn/level/4/code.php', 3, 'a = 10', 1, 1, 2, 69, 69, 69, 69, 69, 69, 69, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96, 96);
 
 --
--- Klíče pro exportované tabulky
+-- Indexy pro exportované tabulky
 --
 
 --
--- Klíče pro tabulku `attendances_alba_rosa_parlament`
+-- Indexy pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_parlament`),
-  ADD KEY `fk_attendance_user` (`idusers`),
+  ADD KEY `fk_attendance_user` (`idusers_parlament`),
   ADD KEY `fk_attendance_meeting` (`idattendances_list_parlament`);
 
 --
--- Klíče pro tabulku `attendances_list_alba_rosa_parlament`
+-- Indexy pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_list_parlament`);
 
 --
--- Klíče pro tabulku `files_alba_rosa_file_storage`
+-- Indexy pro tabulku `files_alba_rosa_file_storage`
 --
 ALTER TABLE `files_alba_rosa_file_storage`
   ADD PRIMARY KEY (`idfile_file_storage`);
 
 --
--- Klíče pro tabulku `gamehub_private_alba_rosa`
+-- Indexy pro tabulku `gamehub_private_alba_rosa`
 --
 ALTER TABLE `gamehub_private_alba_rosa`
   ADD PRIMARY KEY (`idgamehub_private`);
 
 --
--- Klíče pro tabulku `gamehub_public_alba_rosa`
+-- Indexy pro tabulku `gamehub_public_alba_rosa`
 --
 ALTER TABLE `gamehub_public_alba_rosa`
   ADD PRIMARY KEY (`idgamehub_public`);
 
 --
--- Klíče pro tabulku `help_alba_rosa_purkyn`
+-- Indexy pro tabulku `help_alba_rosa_purkyn`
 --
 ALTER TABLE `help_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idhelp_purkyn`);
 
 --
--- Klíče pro tabulku `logins_alba_rosa_purpix`
+-- Indexy pro tabulku `logins_alba_rosa_purpix`
 --
 ALTER TABLE `logins_alba_rosa_purpix`
   ADD PRIMARY KEY (`idlogins_purpix`);
 
 --
--- Klíče pro tabulku `logouts_alba_rosa_purpix`
+-- Indexy pro tabulku `logouts_alba_rosa_purpix`
 --
 ALTER TABLE `logouts_alba_rosa_purpix`
   ADD PRIMARY KEY (`idlogouts_purpix`);
 
 --
--- Klíče pro tabulku `logs_alba_rosa_purkinc`
+-- Indexy pro tabulku `logs_alba_rosa_purkinc`
 --
 ALTER TABLE `logs_alba_rosa_purkinc`
   ADD PRIMARY KEY (`idlogs_purkinc`);
 
 --
--- Klíče pro tabulku `logs_alba_rosa_purkyn`
+-- Indexy pro tabulku `logs_alba_rosa_purkyn`
 --
 ALTER TABLE `logs_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idlogs_purkyn`);
 
 --
--- Klíče pro tabulku `log_alba_rosa_purkinc`
+-- Indexy pro tabulku `log_alba_rosa_purkinc`
 --
 ALTER TABLE `log_alba_rosa_purkinc`
   ADD PRIMARY KEY (`idlog_purkinc`);
 
 --
--- Klíče pro tabulku `log_alba_rosa_purkyn`
+-- Indexy pro tabulku `log_alba_rosa_purkyn`
 --
 ALTER TABLE `log_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idlog_purkyn`);
 
 --
--- Klíče pro tabulku `notes_alba_rosa_parlament`
+-- Indexy pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
   ADD PRIMARY KEY (`idnotes_parlament`);
 
 --
--- Klíče pro tabulku `other_alba_rosa`
+-- Indexy pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
   ADD PRIMARY KEY (`idother`);
 
 --
--- Klíče pro tabulku `other_alba_rosa_parlament`
+-- Indexy pro tabulku `other_alba_rosa_parlament`
 --
 ALTER TABLE `other_alba_rosa_parlament`
   ADD PRIMARY KEY (`idother_parlament`);
 
 --
--- Klíče pro tabulku `school_alba_rosa`
+-- Indexy pro tabulku `school_alba_rosa`
 --
 ALTER TABLE `school_alba_rosa`
   ADD UNIQUE KEY `idschool` (`idschool`),
   ADD KEY `idschool_2` (`idschool`);
 
 --
--- Klíče pro tabulku `tokens_alba_rosa_parlament`
+-- Indexy pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
   ADD PRIMARY KEY (`idtokens_parlament`),
-  ADD KEY `fk_token_user` (`idusers`),
+  ADD KEY `fk_token_user` (`idusers_parlament`),
   ADD KEY `fk_token_meeting` (`idattendances_list_parlament`);
 
 --
--- Klíče pro tabulku `users_alba_rosa`
+-- Indexy pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
   ADD PRIMARY KEY (`idusers`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Klíče pro tabulku `users_alba_rosa_parlament`
+-- Indexy pro tabulku `users_alba_rosa_parlament`
 --
 ALTER TABLE `users_alba_rosa_parlament`
-  ADD PRIMARY KEY (`idusers`),
+  ADD PRIMARY KEY (`idusers_parlament`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Klíče pro tabulku `users_alba_rosa_purkiada`
+-- Indexy pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
   ADD PRIMARY KEY (`idusers_purkiada`),
@@ -4691,99 +4701,98 @@ ALTER TABLE `users_alba_rosa_purkiada`
 -- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
 -- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
-  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
 ALTER TABLE `files_alba_rosa_file_storage`
-  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
+  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_private_alba_rosa`
 --
 ALTER TABLE `gamehub_private_alba_rosa`
-  MODIFY `idgamehub_private` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `idgamehub_private` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_public_alba_rosa`
 --
 ALTER TABLE `gamehub_public_alba_rosa`
-  MODIFY `idgamehub_public` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idgamehub_public` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT pro tabulku `logins_alba_rosa_purpix`
 --
 ALTER TABLE `logins_alba_rosa_purpix`
-  MODIFY `idlogins_purpix` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
+  MODIFY `idlogins_purpix` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- AUTO_INCREMENT pro tabulku `logouts_alba_rosa_purpix`
 --
 ALTER TABLE `logouts_alba_rosa_purpix`
-  MODIFY `idlogouts_purpix` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idlogouts_purpix` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkinc`
 --
 ALTER TABLE `logs_alba_rosa_purkinc`
-  MODIFY `idlogs_purkinc` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2888;
+  MODIFY `idlogs_purkinc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2888;
+
 --
 -- AUTO_INCREMENT pro tabulku `logs_alba_rosa_purkyn`
 --
 ALTER TABLE `logs_alba_rosa_purkyn`
-  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1573;
+  MODIFY `idlogs_purkyn` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1573;
+
 --
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
-  MODIFY `idother` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `idother` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pro tabulku `school_alba_rosa`
 --
 ALTER TABLE `school_alba_rosa`
-  MODIFY `idschool` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `idschool` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_parlament`
 --
 ALTER TABLE `users_alba_rosa_parlament`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=87;
+  MODIFY `idusers_parlament` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
-  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
---
--- Omezení pro exportované tabulky
---
-
---
--- Omezení pro tabulku `attendances_alba_rosa_parlament`
---
-ALTER TABLE `attendances_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_attendance_meeting` FOREIGN KEY (`idattendances_list_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_attendance_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
-
---
--- Omezení pro tabulku `tokens_alba_rosa_parlament`
---
-ALTER TABLE `tokens_alba_rosa_parlament`
-  ADD CONSTRAINT `fk_token_meeting` FOREIGN KEY (`idattendances_list_parlament`) REFERENCES `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_token_user` FOREIGN KEY (`idusers`) REFERENCES `users_alba_rosa` (`idusers`) ON DELETE CASCADE;
+  MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

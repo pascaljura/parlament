@@ -190,7 +190,7 @@ if (isset($_SESSION['idusers_parlament'])) {
             </div>
         </nav>
         <div class="table-heading" style="text-align: center;">
-            <?php echo '<img src="../assets/img/purkynka_logo.png" width="200px" height="80">'; ?>
+            <?php echo '<img src="../assets/img/purkynka_logo.png" width="300px" height="auto">'; ?>
         </div>
         <table>
             <tr style="border-top: 1px solid black;">

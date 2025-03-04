@@ -3,10 +3,10 @@ session_start();
 ob_start();
 
 if (isset($_SESSION['idusers_parlament'])) {
-        // Uživatel nenalezen (může být smazán), odhlásíme ho
-        header("Location: ./");
-        exit();
-} 
+    // Uživatel nenalezen (může být smazán), odhlásíme ho
+    header("Location: ./");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,24 +55,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredemail = $_POST["email"];
     $enteredPassword = $_POST["password"];
 
-    // Připravíme SQL dotaz pro získání hesla a přístupu na základě uživatelského jména
-    $stmt = $conn->prepare("SELECT idusers_parlament, password, parlament_access_admin FROM users_alba_rosa_parlament WHERE email = ?");
+    $stmt = $conn->prepare("SELECT idusers_parlament, password, parlament_access_admin, parlament_access_user FROM users_alba_rosa_parlament WHERE email = ?");
     $stmt->bind_param("s", $enteredemail);
     $stmt->execute();
     $stmt->store_result();
 
-    // Pokud najdeme uživatele, získáme jeho údaje
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($idusers_parlament, $hashedPassword, $parlamentAccess);
+        $stmt->bind_result($idusers_parlament, $hashedPassword, $parlamentAccessAdmin, $parlamentAccessUser);
         $stmt->fetch();
 
-        // Kontrola, zda má uživatel přístup do parlamentu
-        if ($parlamentAccess !== '1') {
+        if ($parlamentAccessAdmin != '1' && $parlamentAccessUser != '1') {
             $loginError = "Chybí oprávnění.";
         } else {
-            // Ověření hesla pomocí password_verify
             if (password_verify($enteredPassword, $hashedPassword)) {
                 $_SESSION['idusers_parlament'] = $idusers_parlament;
+
+                if ($parlamentAccessAdmin == '1') {
+                    $_SESSION['parlament_role'] = 'admin';
+                } elseif ($parlamentAccessUser == '1') {
+                    $_SESSION['parlament_role'] = 'user';
+                }
+
                 header("Location: ./");
                 exit();
             } else {
@@ -85,6 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
 }
+
+
 
 
 
