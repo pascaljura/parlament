@@ -35,9 +35,9 @@ ob_start();
         $token = $_GET['token'];
 
         // Získání ID schůze podle tokenu
-        $sql = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = ? AND active = '1'";
+        $sqlattendances = "SELECT idattendances_list_parlament FROM attendances_list_alba_rosa_parlament WHERE token = ? AND active = '1'";
 
-        $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare($sqlattendances);
         if (!$stmt) {
             die("Chyba přípravy dotazu: " . $conn->error);
         }
@@ -45,41 +45,41 @@ ob_start();
         $stmt->bind_param("s", $token); // 's' = string
         $stmt->execute();
 
-        $result = $stmt->get_result();
+        $resultattendances = $stmt->get_result();
 
-        if ($result->num_rows === 0) {
+        if ($resultattendances->num_rows === 0) {
             die("<h2>Prezenční listina je neplatná, nebo byla již ukončena.</h2>");
         }
 
         // Pokud potřebuješ to ID dál
-        $row = $result->fetch_assoc();
+        $row = $resultattendances->fetch_assoc();
         $id = $row['idattendances_list_parlament'];
 
         $stmt->close();
 
 
-        $meeting = $result->fetch_assoc();
+        $meeting = $resultattendances->fetch_assoc();
         $idattendances_list_parlament = $meeting['idattendances_list_parlament'];
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $conn->real_escape_string($_POST['email']);
 
             // Ověření existence uživatele a jeho přístup
-            $sql = "SELECT idusers_parlament FROM users_alba_rosa_parlament WHERE email = '$email' AND parlament_access_user = '1'";
-            $result = $conn->query($sql);
+            $sqlusers = "SELECT idusers_parlament FROM users_alba_rosa_parlament WHERE email = '$email' AND parlament_access_user = '1'";
+            $resultusers = $conn->query($sqlusers);
 
-            if ($result->num_rows === 0) {
+            if ($resultusers->num_rows === 0) {
                 die("<h2>Neplatný e-mail nebo nemáte přístup.</h2>");
             }
 
-            $user = $result->fetch_assoc();
+            $user = $resultusers->fetch_assoc();
             $idusers_parlament = $user['idusers_parlament'];
 
             // Kontrola, jestli už není zapsaný v docházce pro danou schůzi
-            $sql = "SELECT COUNT(*) AS count FROM attendances_alba_rosa_parlament 
+            $sqlverify = "SELECT COUNT(*) AS count FROM attendances_alba_rosa_parlament 
                     WHERE idusers_parlament = '$idusers_parlament' AND idattendances_list_parlament = '$idattendances_list_parlament'";
 
-            $checkResult = $conn->query($sql);
+            $checkResult = $conn->query($sqlverify);
             $check = $checkResult->fetch_assoc();
 
             if ($check['count'] > 0) {
