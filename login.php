@@ -1,6 +1,12 @@
 <?php include './assets/php/config.php';
 session_start();
 ob_start();
+
+if (isset($_SESSION['idusers'])) {
+        // Uživatel nenalezen (může být smazán), odhlásíme ho
+        header("Location: ./");
+        exit();
+} 
 ?>
 
 <!DOCTYPE html>
