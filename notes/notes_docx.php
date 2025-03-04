@@ -81,7 +81,7 @@ $section = $phpWord->addSection([
 $zahlavi = $section->addHeader();
 
 // Přidání obrázku přímo do stávající sekce (na střed)
-$zahlavi->addImage('./assets/img/purkynka_logo1.png', [
+$zahlavi->addImage('../assets/img/purkynka_logo1.png', [
     'width' => 430,
     'height' => 76,
     'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
