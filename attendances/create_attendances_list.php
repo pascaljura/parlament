@@ -13,7 +13,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     if ($userData = $result->fetch_assoc()) {
         // Uložení do proměnných
-        $idusers_parlament_parlament = $userData['idusers_parlament'];
+        $idusers_parlament = $userData['idusers_parlament'];
         $email_parlament = $userData['email'];
         $username_parlament = $userData['username'];
         $parlament_access_admin = $userData['parlament_access_admin'];

@@ -12,7 +12,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     if ($userData = $result->fetch_assoc()) {
         // Uložení do proměnných
-        $idusers_parlament_parlament = $userData['idusers_parlament'];
+        $idusers_parlament = $userData['idusers_parlament'];
         $email_parlament = $userData['email'];
         $username_parlament = $userData['username'];
         $parlament_access_admin = $userData['parlament_access_admin'];
@@ -330,9 +330,11 @@ if ($result) {
                 <h2><i class="fa fa-heart blue"></i>・Správa prezenčních listin</h2>
             </div>
             <div class="button-container" id="buttonContainer">
+            <?php if (isset($start_attendances) && $start_attendances == '1') { ?>                   
                 <form action="create_attendances_list.php" method="post">
                     <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
                 </form>
+                <?php } ?>
             </div>
             <?php if (count($attendances) > 0): ?>
                 <div class="button-container" id="buttonContainer">
@@ -481,16 +483,17 @@ die("Chyba při přípravě dotazu: " . $conn->error);
         </thead>
         <tbody>
             <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                            <td>" . htmlspecialchars($row['id_listiny']) . "</td>
-                            <td>" . htmlspecialchars($row['datum_cas']) . "</td>
-                          </tr>";
-                }
-            } else {
-                echo "<tr><td colspan='2'>Žádné záznamy</td></tr>";
+          if ($resultuser->num_rows > 0) {
+            while ($row = $resultuser->fetch_assoc()) {
+                echo "<tr>
+                        <td>" . htmlspecialchars($row['id_listiny']) . "</td>
+                        <td>" . htmlspecialchars($row['datum_cas']) . "</td>
+                      </tr>";
             }
+        } else {
+            echo "<tr><td colspan='2'>Žádné záznamy</td></tr>";
+        }
+        
             ?>
         </tbody>
     </table>
