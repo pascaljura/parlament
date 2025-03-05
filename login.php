@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="user-icon" onclick="toggleUserMenu(event)">
                 <?php if (!empty($email_parlament)) { ?>
-                    <i class="fa fa-user" style="color: #70B95E;"></i>
+                    <i class="fa fa-user" style="color: #5481aa;"></i>
                 <?php } else { ?>
                     <i class="fa fa-user" style="color: #3C3C3B;"></i>
                 <?php } ?>
