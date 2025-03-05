@@ -139,7 +139,7 @@ if (isset($_SESSION['idusers_parlament'])) {
             padding-top: 10px;
             padding-bottom: 10px;
             padding-right: 5px;
-            padding-left: 35px;
+            padding-left: 5px;
             border-radius: 8px;
             overflow-y: auto;
             width: 250px;
@@ -423,9 +423,10 @@ if ($result) {
                         </form>
 
                         <div class="student-list-container" id="studentListContainer"
-                            style="display: none; max-width: 40%; overflow-x: auto;">
-                            <ol></ol>
-                        </div>
+    style="display: none; max-width: 40%; overflow-x: auto;">
+    <!-- Tady už žádné <ol> nepotřebuješ, JavaScript si tam sám nasype divy se studenty -->
+</div>
+
                     </div>
                 </div>
             <?php else: ?>
@@ -524,50 +525,66 @@ die("Chyba při přípravě dotazu: " . $conn->error);
 <script>
 function loadStudents(idattendances_list_parlament) {
     const container = document.getElementById('studentListContainer');
-    const list = container.querySelector('ol');
 
-    // Vyprázdnění seznamu
-    list.innerHTML = '';
-
-    // Smazání případného starého tlačítka
-    const oldButton = container.querySelector('button');
-    if (oldButton) {
-        oldButton.remove();
+    if (!container) {
+        console.error('studentListContainer nenalezen');
+        return;
     }
 
-    container.style.display = 'block';
+    container.innerHTML = '';  // vyprázdnění
+    container.style.display = 'block';  // zobrazíme kontejner
 
     fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
         .then(response => response.json())
         .then(data => {
-            if (data.all_students.length > 0) {
-                list.style.display = 'block';
 
-                data.all_students.forEach((student) => {
-                    const li = document.createElement('li');
+            if (Array.isArray(data.all_students) && data.all_students.length > 0) {
+                data.all_students.forEach((student, index) => {
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.cursor = 'pointer';
+                    row.style.padding = '5px';
+                    row.style.borderBottom = '1px solid #ddd';
 
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.value = student.idusers_parlament;
-                    checkbox.checked = data.present_students.includes(parseInt(student.idusers_parlament));
+                    checkbox.checked = Array.isArray(data.present_students) &&
+                        data.present_students.includes(parseInt(student.idusers_parlament));
+                    checkbox.id = 'student_' + student.idusers_parlament;
+                    checkbox.style.cursor = 'pointer';
 
-                    li.appendChild(checkbox);
-                    li.appendChild(document.createTextNode(` ${student.username}`));
+                    const studentNumber = document.createElement('span');
+                    studentNumber.textContent = (index + 1) + '.';
+                    studentNumber.style.minWidth = '30px';
 
-                    list.appendChild(li);
+                    const studentName = document.createElement('span');
+                    studentName.textContent = student.username;
+
+                    row.onclick = () => {
+                        checkbox.checked = !checkbox.checked;
+                    };
+
+                    checkbox.onclick = (e) => e.stopPropagation();
+
+                    row.appendChild(checkbox);
+                    row.appendChild(studentNumber);
+                    row.appendChild(studentName);
+
+                    container.appendChild(row);
                 });
 
-                // Tlačítko přidáme až po načtení studentů
                 const saveButton = document.createElement('button');
-saveButton.textContent = 'Uložit prezenční listinu';
-saveButton.style.width = '100%';
-saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
-container.appendChild(saveButton);
+                saveButton.textContent = 'Uložit prezenční listinu';
+                saveButton.style.width = '100%';
+                saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+                container.appendChild(saveButton);
 
             } else {
-                const li = document.createElement('li');
-                li.textContent = 'Žádní studenti nenalezeni.';
-                list.appendChild(li);
+                const noStudentsMessage = document.createElement('div');
+                noStudentsMessage.textContent = 'Žádní studenti nenalezeni.';
+                container.appendChild(noStudentsMessage);
             }
         })
         .catch(err => {
@@ -575,6 +592,7 @@ container.appendChild(saveButton);
             alert('Nepodařilo se načíst studenty.');
         });
 }
+
 
 function saveAttendanceList(idattendances_list_parlament) {
     const checkboxes = document.querySelectorAll('#studentListContainer input[type="checkbox"]');
@@ -599,9 +617,10 @@ function saveAttendanceList(idattendances_list_parlament) {
     })
     .then(response => response.json())
     .then(result => {
-        alert(result.message);
         if (result.success) {
-            loadStudents(idattendances_list_parlament);
+            window.location.href = './?message=Prezenční listina byla uložena&message_type=success-message';
+        } else {
+            window.location.href = './?message=Nepodařilo se uložit prezenční listinu.&message_type=error-message';
         }
     })
     .catch(err => {
