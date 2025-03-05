@@ -149,11 +149,11 @@ if (isset($_SESSION['idusers_parlament'])) {
 
             <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
             <div class="user-icon" onclick="toggleUserMenu(event)">
-                                <?php if (!empty($username_parlament)) { ?>
-<i class="fa fa-user" style="color: #70B95E;"></i>
-  <?php } else { ?>
-<i class="fa fa-user" style="color: #3C3C3B;"></i>
-  <?php } ?>
+                <?php if (!empty($username_parlament)) { ?>
+                    <i class="fa fa-user" style="color: #70B95E;"></i>
+                <?php } else { ?>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                <?php } ?>
             </div>
 
             <!-- Navigation Links (vlevo na PC) -->
@@ -189,8 +189,8 @@ if (isset($_SESSION['idusers_parlament'])) {
                 <?php } ?>
             </div>
         </nav>
-        <div class="table-heading" style="text-align: center;">
-            <?php echo '<img src="../assets/img/purkynka_logo.png" width="300px" height="auto">'; ?>
+        <div class="table-heading" style="text-align: center; margin: 1rem 0px -20px;">
+            <?php echo '<img src="../assets/img/purkynka_logo.png" width="300px" height="auto" >'; ?>
         </div>
         <table>
             <tr style="border-top: 1px solid black;">
