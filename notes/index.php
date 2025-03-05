@@ -251,9 +251,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Vypíšeme data podle roku
                 foreach ($grouped_data as $year => $items) {
                     echo '<div class="year-container">';
-                    echo '<div class="table-heading"><h3>';
+                    echo '<div class="table-heading"><h2>';
                     echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
-                    echo '</h3></div>';
+                    echo '</h2></div>';
                     echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
                     foreach ($items as $item) {
                         echo '<a href="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
