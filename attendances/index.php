@@ -583,9 +583,10 @@ function loadStudents(idattendances_list_parlament) {
                 });
 
                 const saveButton = document.createElement('button');
-                saveButton.textContent = 'Uložit prezenční listinu';
-                saveButton.style.width = '100%';
-                saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+saveButton.textContent = 'Uložit prezenční listinu';
+saveButton.style.width = '100%';
+saveButton.style.marginTop = '5px';  // přidání marginu
+saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
                 container.appendChild(saveButton);
 
             } else {
