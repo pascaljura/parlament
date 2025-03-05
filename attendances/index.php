@@ -473,7 +473,9 @@ die("Chyba při přípravě dotazu: " . $conn->error);
 ?>
   <div class="table-heading">
                 <h2><i class="fa fa-heart blue"></i>・Záznamy mé účasti</h2>
-            </div></thead>
+            </div>
+            <?php
+            if ($resultuser->num_rows > 0) { ?>
 <table border="1" cellspacing="0" cellpadding="5">
         <thead>
             <tr>
@@ -483,7 +485,7 @@ die("Chyba při přípravě dotazu: " . $conn->error);
         </thead>
         <tbody>
             <?php
-          if ($resultuser->num_rows > 0) {
+          
             while ($row = $resultuser->fetch_assoc()) {
                 echo "<tr>
                         <td>" . htmlspecialchars($row['id_listiny']) . "</td>
@@ -491,7 +493,9 @@ die("Chyba při přípravě dotazu: " . $conn->error);
                       </tr>";
             }
         } else {
-            echo "<tr><td colspan='2'>Žádné záznamy</td></tr>";
+            echo '<div class="info-message">
+            <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Žádná schůze zatím nebyla zahájena.
+        </div>';
         }
         
             ?>
