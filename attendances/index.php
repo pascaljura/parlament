@@ -494,7 +494,7 @@ die("Chyba při přípravě dotazu: " . $conn->error);
             }
         } else {
             echo '<div class="info-message">
-            <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Žádná schůze zatím nebyla zahájena.
+            <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Nemáme u tebe žádnou účats :(.
         </div>';
         }
         
@@ -549,10 +549,11 @@ function loadStudents(idattendances_list_parlament) {
                 data.all_students.forEach((student, index) => {
                     const row = document.createElement('div');
                     row.style.display = 'flex';
-                    row.style.alignItems = 'center';
+                    row.style.alignItems = 'left';
                     row.style.cursor = 'pointer';
                     row.style.padding = '5px';
                     row.style.borderBottom = '1px solid #ddd';
+                    row.style.flexDirection = 'column'; // Uspořádání pod sebe
 
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
@@ -561,13 +562,25 @@ function loadStudents(idattendances_list_parlament) {
                         data.present_students.includes(parseInt(student.idusers_parlament));
                     checkbox.id = 'student_' + student.idusers_parlament;
                     checkbox.style.cursor = 'pointer';
+                    checkbox.style.marginRight = '5px';
+
+                    const studentInfo = document.createElement('div');
+                    studentInfo.style.display = 'flex';
+                    studentInfo.style.alignItems = 'left';
 
                     const studentNumber = document.createElement('span');
                     studentNumber.textContent = (index + 1) + '.';
                     studentNumber.style.minWidth = '30px';
 
                     const studentName = document.createElement('span');
-                    studentName.textContent = student.username;
+                    const parts = student.username.split(' - '); // Rozdělit na jméno a čas
+                    studentName.textContent = parts[0];
+
+                    const studentTime = document.createElement('span');
+                    studentTime.textContent = parts[1]; // Čas nebo "nepřítomen"
+                    studentTime.style.fontWeight = 'bold';
+                    studentTime.style.color = parts[1] === 'nepřítomen' ? 'red' : 'green';
+                    studentTime.style.display = 'block'; // Zajistí, že se zobrazí na novém řádku
 
                     row.onclick = () => {
                         checkbox.checked = !checkbox.checked;
@@ -575,18 +588,21 @@ function loadStudents(idattendances_list_parlament) {
 
                     checkbox.onclick = (e) => e.stopPropagation();
 
-                    row.appendChild(checkbox);
-                    row.appendChild(studentNumber);
-                    row.appendChild(studentName);
+                    studentInfo.appendChild(checkbox);
+                    studentInfo.appendChild(studentNumber);
+                    studentInfo.appendChild(studentName);
+
+                    row.appendChild(studentInfo);
+                    row.appendChild(studentTime); // Čas zobrazíme pod jménem
 
                     container.appendChild(row);
                 });
 
                 const saveButton = document.createElement('button');
-saveButton.textContent = 'Uložit prezenční listinu';
-saveButton.style.width = '100%';
-saveButton.style.marginTop = '5px';  // přidání marginu
-saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+                saveButton.textContent = 'Uložit prezenční listinu';
+                saveButton.style.width = '100%';
+                saveButton.style.marginTop = '5px';  // přidání marginu
+                saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
                 container.appendChild(saveButton);
 
             } else {
@@ -600,6 +616,7 @@ saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
             alert('Nepodařilo se načíst studenty.');
         });
 }
+
 
 
 function saveAttendanceList(idattendances_list_parlament) {

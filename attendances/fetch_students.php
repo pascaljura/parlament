@@ -6,9 +6,18 @@ $idattendances_list_parlament = isset($_GET['idattendances_list_parlament']) ? (
 $students = [];
 $present_students = [];
 
-// Načtení všech studentů
-$sql_all = "SELECT idusers_parlament, username FROM users_alba_rosa_parlament ORDER BY username";
+// Načtení všech studentů s časem přítomnosti (pokud existuje)
+$sql_all = "
+    SELECT u.idusers_parlament, 
+           CONCAT(u.username, ' - ', COALESCE(a.time, 'nepřítomen')) AS username
+    FROM users_alba_rosa_parlament u
+    LEFT JOIN attendances_alba_rosa_parlament a 
+        ON u.idusers_parlament = a.idusers_parlament 
+        AND a.idattendances_list_parlament = $idattendances_list_parlament
+    ORDER BY u.username
+";
 $result_all = $conn->query($sql_all);
+
 while ($row = $result_all->fetch_assoc()) {
     $students[] = $row;
 }
@@ -31,3 +40,4 @@ echo json_encode([
     'all_students' => $students,
     'present_students' => $present_students
 ]);
+?>
