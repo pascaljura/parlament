@@ -591,6 +591,8 @@ const container = iframeDocument.createElement('div');
 container.style.display = 'block';
 container.style.backgroundColor = 'white';
 container.style.borderRadius = '8px';
+container.style.fontFamily = '"Roboto", Calibri, sans-serif';  // Nastavení fontu pro celý kontejner
+container.style.fontWeight = '300';  // Nastavení váhy písma pro celý kontejner
 
 data.students.forEach((student, index) => {
     const row = iframeDocument.createElement('div');
@@ -612,18 +614,20 @@ data.students.forEach((student, index) => {
     const username = iframeDocument.createElement('span');
     username.innerHTML = `${index + 1}. <strong>${student.name}</strong>`;
     username.style.display = 'block';  // Nastavíme jako block, aby byl pod jménem
-    username.style.fontSize = '14px';
+    username.style.fontSize = '20px';
+    username.style.fontWeight = 'bold';
     username.style.color = '#333';
 
     const email = iframeDocument.createElement('span');
     email.innerHTML = `<em>(${student.email})</em>`;
     email.style.display = 'block';  // Nastavíme jako block pro zobrazení pod jménem
-    email.style.fontSize = '12px';
+    email.style.fontSize = '14px';
     email.style.color = '#777';
 
     const timeInfo = iframeDocument.createElement('span');
     timeInfo.textContent = student.time;
     timeInfo.style.fontWeight = 'bold';
+    timeInfo.style.fontSize = '18px';
     timeInfo.style.color = student.time === 'nepřítomen' ? 'red' : 'green';
     timeInfo.style.display = 'block';  // Nastavíme jako block pro zobrazení pod emailem
 
