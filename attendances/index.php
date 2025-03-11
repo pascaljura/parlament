@@ -300,27 +300,31 @@ if ($result) {
             </div>
         </nav>
         <?php
-        if (isset($_GET['message']) && isset($_GET['message_type'])) {
-            $message = $_GET['message'];
-            $message_type = $_GET['message_type'];
+if (isset($_GET['message']) && isset($_GET['message_type'])) {
+    $message = $_GET['message'];
+    $message_type = $_GET['message_type'];
 
-            // Určení třídy a ikony podle typu zprávy
-            if ($message_type == 'success-message') {
-                $message_class = 'success-message';
-                $message_icon = 'fa-check';
-            } elseif ($message_type == 'error-message') {
-                $message_class = 'error-message';
-                $message_icon = 'fa-times';
-            } elseif ($message_type == 'info-message') {
-                $message_class = 'info-message';
-                $message_icon = 'fa-info-circle';
-            }
+    // Určení třídy a ikony podle typu zprávy
+    if ($message_type == 'success-message') {
+        $message_class = 'success-message';
+        $message_icon = 'fa-check';
+    } elseif ($message_type == 'error-message') {
+        $message_class = 'error-message';
+        $message_icon = 'fa-times';
+    } elseif ($message_type == 'info-message') {
+        $message_class = 'info-message';
+        $message_icon = 'fa-info-circle';
+    }
 
-            // Výstup zprávy s ikonou a třídou
-            echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
-            echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
-            echo '</div>';
-        }
+    // Převod HTML zpět, aby seznamy fungovaly správně
+    $decoded_message = htmlspecialchars_decode($message);
+
+    // Výstup zprávy s ikonou a třídou
+    echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
+    echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . $decoded_message;
+    echo '</div>';
+}
+
 
         if ((isset($show_attendances) && $show_attendances == '1') && ((isset($parlament_access_admin) && $parlament_access_admin == '1') || (isset($parlament_access_user) && $parlament_access_user == '1'))) {
         if ((isset($parlament_access_admin) && $parlament_access_admin == '1')) {
@@ -644,8 +648,6 @@ function loadStudents(idattendances_list_parlament) {
         });
 }
 
-
-
 function saveAttendanceList(idattendances_list_parlament) {
     const checkboxes = document.querySelectorAll('#studentListContainer input[type="checkbox"]');
     const attendanceData = [];
@@ -670,16 +672,20 @@ function saveAttendanceList(idattendances_list_parlament) {
     .then(response => response.json())
     .then(result => {
         if (result.success) {
-            window.location.href = './?message=Prezenční listina byla uložena&message_type=success-message';
+            // Posíláme HTML zprávu přes URL
+            const encodedMessage = encodeURIComponent(result.message);
+            window.location.href = `./?message=${encodedMessage}&message_type=success-message`;
         } else {
-            window.location.href = './?message=Nepodařilo se uložit prezenční listinu.&message_type=error-message';
+            const encodedMessage = encodeURIComponent(result.message);
+            window.location.href = `./?message=${encodedMessage}&message_type=error-message`;
         }
     })
     .catch(err => {
         console.error('Chyba při ukládání:', err);
-        alert('Nepodařilo se uložit prezenční listinu.');
+        window.location.href = `./?message=Nepodařilo se uložit prezenční listinu.&message_type=error-message`;
     });
 }
+
 
 </script>
 
