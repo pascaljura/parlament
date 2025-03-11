@@ -428,10 +428,11 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                             <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
                         </form>
 
-                        <div class="student-list-container" id="studentListContainer"
-    style="display: none; max-width: 40%; overflow-x: auto;">
-    <!-- Tady už žádné <ol> nepotřebuješ, JavaScript si tam sám nasype divy se studenty -->
+                        <iframe id="studentIframe" src="" style="display: none; width: 100%; height: 400px; border: none;"></iframe>
+<div class="student-list-container" id="studentListContainer" style="display: none; max-width: 40%; overflow-x: auto;">
+    <!-- Tento obsah bude zobrazen v rámci iframe -->
 </div>
+
 
                     </div>
                 </div>
@@ -562,44 +563,50 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function loadStudents(idattendances_list_parlament) {
-    const container = document.getElementById('studentListContainer');
-    if (!container) {
-        console.error('studentListContainer nenalezen');
-        return;
+    const iframe = document.getElementById('studentIframe');
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Pokud iframe ještě není zobrazeno, nastavíme ho na 'display: block'
+    if (iframe.style.display === 'none') {
+        iframe.style.display = 'block';
     }
 
-    container.innerHTML = '';  
-    container.style.display = 'block';  
-
+    // Vymažeme předchozí obsah
+    iframeDocument.body.innerHTML = '';
+    
     fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
         .then(response => response.json())
         .then(data => {
             if (!Array.isArray(data.students) || data.students.length === 0) {
-                container.innerHTML = '<div style="text-align: center;">Žádní studenti nenalezeni.</div>';
+                iframeDocument.body.innerHTML = '<div style="text-align: center;">Žádní studenti nenalezeni.</div>';
                 return;
             }
 
+            // Vytváříme HTML obsah pro studenty
+            const container = iframeDocument.createElement('div');
+            container.style.display = 'block';
+
             data.students.forEach((student, index) => {
-                const row = document.createElement('div');
+                const row = iframeDocument.createElement('div');
                 row.style.display = 'flex';
-                row.style.alignItems = 'center';
-                row.style.justifyContent = 'center';
+                row.style.alignItems = 'left';
+                row.style.justifyContent = 'left';
                 row.style.cursor = 'pointer';
                 row.style.padding = '5px';
                 row.style.borderBottom = '1px solid #ddd';
 
-                const checkbox = document.createElement('input');
+                const checkbox = iframeDocument.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.value = student.id;
                 checkbox.checked = data.present.includes(student.id);
                 checkbox.style.cursor = 'pointer';
                 checkbox.onclick = (e) => e.stopPropagation();
 
-                const studentInfo = document.createElement('span');
+                const studentInfo = iframeDocument.createElement('span');
                 studentInfo.innerHTML = `${index + 1}. ${student.name}`;
                 studentInfo.style.margin = '0 5px';
 
-                const timeInfo = document.createElement('span');
+                const timeInfo = iframeDocument.createElement('span');
                 timeInfo.textContent = student.time;
                 timeInfo.style.fontWeight = 'bold';
                 timeInfo.style.color = student.time === 'nepřítomen' ? 'red' : 'green';
@@ -609,12 +616,41 @@ function loadStudents(idattendances_list_parlament) {
                 container.appendChild(row);
             });
 
-            const saveButton = document.createElement('button');
-            saveButton.textContent = 'Uložit prezenční listinu';
-            saveButton.style.width = '100%';
-            saveButton.style.marginTop = '5px';
-            saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
-            container.appendChild(saveButton);
+            iframeDocument.body.appendChild(container);
+
+          // Kontejner pro tlačítko
+          const buttonContainer = iframeDocument.createElement('div');
+                buttonContainer.classList.add('button-container');
+
+                // Tlačítko pro uložení
+                const saveButton = iframeDocument.createElement('button');
+                saveButton.textContent = 'Uložit prezenční listinu';
+                saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+
+                // Přidání tlačítka do kontejneru
+                buttonContainer.appendChild(saveButton);
+                container.appendChild(buttonContainer);
+
+                // Přidání CSS pro tlačítko
+                const style = iframeDocument.createElement('style');
+                style.innerHTML = `
+                    .button-container button {
+                        background-color: #5481aa;
+                        color: white;
+                        padding: 12px 18px;
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        width: 100%;
+                        transition: background-color 0.3s ease, transform 0.2s ease;
+                    }
+                    .button-container button:hover {
+                        background-color: #77afe0;
+                        transform: scale(1.05);
+                        font-weight: bold;
+                    }
+                `;
+                iframeDocument.head.appendChild(style);
         })
         .catch(err => {
             console.error('Chyba při načítání studentů:', err);
@@ -622,9 +658,10 @@ function loadStudents(idattendances_list_parlament) {
         });
 }
 
-
 function saveAttendanceList(idattendances_list_parlament) {
-    const checkboxes = document.querySelectorAll('#studentListContainer input[type="checkbox"]');
+    const iframe = document.getElementById('studentIframe');
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    const checkboxes = iframeDocument.querySelectorAll('input[type="checkbox"]');
     const attendanceData = [];
 
     checkboxes.forEach(checkbox => {
@@ -647,7 +684,6 @@ function saveAttendanceList(idattendances_list_parlament) {
     .then(response => response.json())
     .then(result => {
         if (result.success) {
-            // Posíláme HTML zprávu přes URL
             const encodedMessage = encodeURIComponent(result.message);
             window.location.href = `./?message=${encodedMessage}&message_type=success-message`;
         } else {
@@ -660,6 +696,7 @@ function saveAttendanceList(idattendances_list_parlament) {
         window.location.href = `./?message=Nepodařilo se uložit prezenční listinu.&message_type=error-message`;
     });
 }
+
 
 
 </script>
