@@ -530,6 +530,33 @@ die("Chyba při přípravě dotazu: " . $conn->error);
 <script src="../assets/js/script.js">
 </script>
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selects = document.querySelectorAll("select[name^='notes']");
+
+    selects.forEach(select => {
+        select.addEventListener("change", function () {
+            const selectedValue = this.value;
+            
+            if (selectedValue !== "") {
+                let duplicate = false;
+                selects.forEach(otherSelect => {
+                    if (otherSelect !== this && otherSelect.value === selectedValue) {
+                        duplicate = true;
+                    }
+                });
+
+                if (duplicate) {
+                    alert("Tento zápis je již přiřazen k jiné prezenční listině!");
+                    this.value = this.dataset.previous || ""; // Vrátí původní hodnotu
+                }
+            }
+
+            this.dataset.previous = this.value; // Uloží aktuální hodnotu pro případ vrácení
+        });
+    });
+});
+
 function loadStudents(idattendances_list_parlament) {
     const container = document.getElementById('studentListContainer');
 
