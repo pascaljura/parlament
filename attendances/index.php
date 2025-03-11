@@ -31,7 +31,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
-        header("Location: ../logout.php");
+        header("Location: ./logout.php");
         exit();
     }
 
@@ -428,7 +428,7 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                             <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
                         </form>
 
-                        <iframe id="studentIframe" src="" style="display: none; width: 100%; height: 400px; border: none;"></iframe>
+                        <iframe id="studentIframe" src="" style="display: block; height: 400px; border: medium;"></iframe>
 <div class="student-list-container" id="studentListContainer" style="display: none; max-width: 40%; overflow-x: auto;">
     <!-- Tento obsah bude zobrazen v rámci iframe -->
 </div>
@@ -573,8 +573,12 @@ function loadStudents(idattendances_list_parlament) {
 
     // Vymažeme předchozí obsah
     iframeDocument.body.innerHTML = '';
-    
-    fetch('fetch_students.php?idattendances_list_parlament=' + idattendances_list_parlament)
+
+    // Přidáme timestamp pro zajištění, že požadavek nebude z cache
+    const timestamp = new Date().getTime();
+    const url = `fetch_students.php?idattendances_list_parlament=${idattendances_list_parlament}&timestamp=${timestamp}`;
+
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             if (!Array.isArray(data.students) || data.students.length === 0) {
@@ -582,9 +586,12 @@ function loadStudents(idattendances_list_parlament) {
                 return;
             }
 
-            // Vytváříme HTML obsah pro studenty
-            const container = iframeDocument.createElement('div');
-            container.style.display = 'block';
+// Vytváříme HTML obsah pro studenty
+const container = iframeDocument.createElement('div');
+container.style.display = 'block';
+container.style.backgroundColor = 'white';
+container.style.borderRadius = '8px';
+
 
             data.students.forEach((student, index) => {
                 const row = iframeDocument.createElement('div');
@@ -618,39 +625,39 @@ function loadStudents(idattendances_list_parlament) {
 
             iframeDocument.body.appendChild(container);
 
-          // Kontejner pro tlačítko
-          const buttonContainer = iframeDocument.createElement('div');
-                buttonContainer.classList.add('button-container');
+            // Kontejner pro tlačítko
+            const buttonContainer = iframeDocument.createElement('div');
+            buttonContainer.classList.add('button-container');
 
-                // Tlačítko pro uložení
-                const saveButton = iframeDocument.createElement('button');
-                saveButton.textContent = 'Uložit prezenční listinu';
-                saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
+            // Tlačítko pro uložení
+            const saveButton = iframeDocument.createElement('button');
+            saveButton.textContent = 'Uložit prezenční listinu';
+            saveButton.onclick = () => saveAttendanceList(idattendances_list_parlament);
 
-                // Přidání tlačítka do kontejneru
-                buttonContainer.appendChild(saveButton);
-                container.appendChild(buttonContainer);
+            // Přidání tlačítka do kontejneru
+            buttonContainer.appendChild(saveButton);
+            container.appendChild(buttonContainer);
 
-                // Přidání CSS pro tlačítko
-                const style = iframeDocument.createElement('style');
-                style.innerHTML = `
-                    .button-container button {
-                        background-color: #5481aa;
-                        color: white;
-                        padding: 12px 18px;
-                        border: none;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        width: 100%;
-                        transition: background-color 0.3s ease, transform 0.2s ease;
-                    }
-                    .button-container button:hover {
-                        background-color: #77afe0;
-                        transform: scale(1.05);
-                        font-weight: bold;
-                    }
-                `;
-                iframeDocument.head.appendChild(style);
+            // Přidání CSS pro tlačítko
+            const style = iframeDocument.createElement('style');
+            style.innerHTML = `
+                .button-container button {
+                    background-color: #5481aa;
+                    color: white;
+                    padding: 12px 18px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    width: 100%;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+                .button-container button:hover {
+                    background-color: #77afe0;
+                    transform: scale(1.05);
+                    font-weight: bold;
+                }
+            `;
+            iframeDocument.head.appendChild(style);
         })
         .catch(err => {
             console.error('Chyba při načítání studentů:', err);

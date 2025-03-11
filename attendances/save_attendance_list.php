@@ -84,19 +84,19 @@ $message = "Prezenční listina byla uložena.<br>";
 
 if (!empty($toAdd) || !empty($toRemove)) {
     if (!empty($toAdd)) {
-        $message .= "<p><strong>Přidáni:</strong></p><ol>";
+        $message .= "<p><strong>Přidáni:</strong><ol>";
         foreach ($toAdd as $id) {
-            $message .= "<li>" . htmlspecialchars($changedStudents[$id]) . "</li>";
+            $message .= "<br>" . htmlspecialchars($changedStudents[$id]) . "";
         }
-        $message .= "</ol>";
+        $message .= "</ol></p>";
     }
 
     if (!empty($toRemove)) {
-        $message .= "<p><strong>Odebráni:</strong></p><ol>";
+        $message .= "<p><strong>Odebráni:</strong><ol>";
         foreach ($toRemove as $id) {
-            $message .= "<li>" . htmlspecialchars($changedStudents[$id]) . "</li>";
+            $message .= "<br>" . htmlspecialchars($changedStudents[$id]) . "";
         }
-        $message .= "</ol>";
+        $message .= "</ol></p>";
     }
 }
 
