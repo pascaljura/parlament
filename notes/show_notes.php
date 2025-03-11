@@ -256,7 +256,7 @@ if (isset($_SESSION['idusers_parlament'])) {
         
         // Ověření, zda má uživatel admin přístup
         if (isset($parlament_access_admin) && $parlament_access_admin == '1') {
-            echo "<h4>Seznam žáků pro zápis ID: {$idnotes_parlament}</h4>";
+            echo "<h4>Prezenční listina</h4>";
 
             $query = "
         SELECT u.username, u.email, a.time
