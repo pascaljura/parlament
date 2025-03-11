@@ -65,77 +65,89 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     if (isset($_GET['idnotes_parlament']) && is_numeric($_GET['idnotes_parlament'])) {
         $idnotes_parlament = $_GET['idnotes_parlament'];
-        // Získání záznamu ze schůze
-        $result = "SELECT z.*, u.username 
-     FROM notes_alba_rosa_parlament z
-     LEFT JOIN users_alba_rosa_parlament u ON z.idusers_parlament = u.idusers_parlament
-     WHERE z.idnotes_parlament = ?";
 
-        // Příprava připraveného dotazu
-        $stmt = $conn->prepare($result);
-
-        // Bind parametr (parametr typu i = integer, s = string)
+        // Kontrola, zda je zápis již přiřazen jiné prezenční listině
+        $check_attendance = "SELECT COUNT(*) as count FROM attendances_list_alba_rosa_parlament WHERE idnotes_parlament = ?";
+        $stmt = $conn->prepare($check_attendance);
         $stmt->bind_param("i", $idnotes_parlament);
-
-        // Vykonání dotazu
         $stmt->execute();
-        // Výsledek dotazu
-        $result = $stmt->get_result();
+        $result_check = $stmt->get_result();
+        $row_attendance = $result_check->fetch_assoc();
+
+        // Získání záznamu ze schůze
+        $sql = "SELECT z.*, u.username 
+            FROM notes_alba_rosa_parlament z
+            LEFT JOIN users_alba_rosa_parlament u ON z.idusers_parlament = u.idusers_parlament
+            WHERE z.idnotes_parlament = ?";
+
+        $stmt2 = $conn->prepare($sql); // Použití nového statementu pro nový dotaz
+        $stmt2->bind_param("i", $idnotes_parlament);
+        $stmt2->execute();
+        $result = $stmt2->get_result();
+
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $date = date('d.m.Y', strtotime($row['date']));
-            $directoryName = date('d_m_Y', strtotime($row['date']));
-            $idusers_parlament = $row['idusers_parlament'];
-            $notes = $row['notes'];
-            $username = $row['username'];
-            $document_number = $row['document_number'];
 
+            // Debugging
+            if (!$row) {
+                echo "⚠️ Chyba: Žádná data nebyla nalezena pro idnotes_parlament = $idnotes_parlament";
+                exit();
+            }
+
+            // Kontrola, zda pole existují
+            $date = isset($row['date']) ? date('d.m.Y', strtotime($row['date'])) : 'Neznámé datum';
+            $directoryName = isset($row['date']) ? date('d_m_Y', strtotime($row['date'])) : 'unknown';
+            $idusers_parlament = isset($row['idusers_parlament']) ? $row['idusers_parlament'] : 0;
+            $notes = isset($row['notes']) ? $row['notes'] : 'Žádné poznámky';
+            $username = isset($row['username']) ? $row['username'] : 'Neznámý uživatel';
+            $document_number = isset($row['document_number']) ? $row['document_number'] : 'Neznámý dokument';
+
+            // Formátování textu
             $notes = str_replace("=", "<br>", $notes);
             $notes = preg_replace('/(?<=^|<br>)(?![\w])--/', '&#160;&#160;&#9702;', $notes);
             $notes = preg_replace('/(?<=^|<br>)(?![\w])-(?!-)/', '&#8226;', $notes);
 
-
-
-
-
-            function getSklonovanyText($text)
-            {
-                $posledniZnak = mb_substr($text, -1);
-                switch ($posledniZnak) {
-                    case 'a':
-                    case 'í':
-                        return $text;
-                    default:
-                        return $text;
-                }
-            }
             function ziskatTextVLomitkach($notes)
             {
-                $textInLomitka = "";
                 if (preg_match('/\/\/([^\/]+)\/\//', $notes, $matches)) {
-                    $textInLomitka = $matches[1];
+                    return $matches[1];
                 }
-                return $textInLomitka;
+                return "";
             }
             $textInLomitkach = ziskatTextVLomitkach($notes);
-            $notes = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px">$1</div>', $notes); // custom style
-            $notes = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $notes); // bold italics
-            $notes = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $notes); // bold
-            $notes = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $notes); // italics
-            $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes); // strikeout
-            $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes); // underline
-    
-            $resultUser = $conn->query("SELECT username FROM users_alba_rosa_parlament WHERE idusers_parlament = $idusers_parlament");
-            if ($resultUser->num_rows > 0) {
-                $rowUser = $resultUser->fetch_assoc();
-                $userName = $rowUser['username'];
+            $notes = preg_replace('/\/\/([^\/]+)\/\//', '<div style="color: #3e6181; font-weight: bold; font-size: 20px">$1</div>', $notes);
+            $notes = preg_replace('/\*\*\*([^*]+)\*\*\*/', '<b><i>$1</i></b>', $notes);
+            $notes = preg_replace('/\*\*([^*]+)\*\*/', '<b>$1</b>', $notes);
+            $notes = preg_replace('/\*([^*]+)\*/', '<i>$1</i>', $notes);
+            $notes = preg_replace('/~~([^~]+)~~/', '<strike>$1</strike>', $notes);
+            $notes = preg_replace('/__([^_]+)__/', '<u>$1</u>', $notes);
+
+            // Kontrola existence ID uživatele před SQL dotazem
+            if ($idusers_parlament > 0) {
+                $stmt3 = $conn->prepare("SELECT username FROM users_alba_rosa_parlament WHERE idusers_parlament = ?");
+                $stmt3->bind_param("i", $idusers_parlament);
+                $stmt3->execute();
+                $resultUser = $stmt3->get_result();
+
+                if ($resultUser->num_rows > 0) {
+                    $rowUser = $resultUser->fetch_assoc();
+                    $userName = $rowUser['username'];
+                } else {
+                    $userName = 'Neznámý uživatel';
+                }
+                $stmt3->close();
             } else {
                 $userName = 'Neznámý uživatel';
             }
+
         } else {
-            echo "Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
+            echo "⚠️ Chyba: Záznam s idnotes_parlament $idnotes_parlament nebyl nalezen.";
             exit();
         }
+
+        // Zavření statementů
+        $stmt->close();
+        $stmt2->close();
     } else {
         echo "Chybějící nebo neplatné idnotes_parlament v URL.";
         exit();
@@ -197,7 +209,14 @@ if (isset($_SESSION['idusers_parlament'])) {
                 <td>Číslo dokumentu: <?php echo "$document_number / " . date('dmY', strtotime($row['date'])); ?>
                 </td>
                 <td style="text-align: center;"></td>
-                <td style="text-align: right;">Počet příloh: 0</td>
+                <td style="text-align: right;">Počet příloh:
+                    <?php
+                    if ($row_attendance['count'] > 0) {
+                        echo $row_attendance['count'];
+                    } else {
+                        echo "0";
+                    } ?>
+                </td>
             </tr>
             <tr>
                 <td>Dokument</td>
