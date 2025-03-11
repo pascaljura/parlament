@@ -81,6 +81,7 @@ nav {
 .nav-links a:hover {
   background-color: #77afe0;
   transform: scale(1.05); /* Efekt zvětšení na hover */
+  font-weight: bold;
 }
 
 /* Efekt pro aktivní odkaz */
@@ -113,6 +114,7 @@ nav {
 .mobile-menu a:hover {
   background-color: #77afe0;
   transform: scale(1.05);
+  font-weight: bold;
 }
 
 .user-icon,
@@ -298,7 +300,7 @@ a {
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 8px;
 }
 
 .button-container button {
@@ -314,6 +316,7 @@ a {
 .button-container button:hover {
   background-color: #77afe0;
   transform: scale(1.05);
+  font-weight: bold;
 }
 
 iframe {
