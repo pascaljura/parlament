@@ -241,6 +241,65 @@ if (isset($_SESSION['idusers_parlament'])) {
                 <td style="text-align: right;"></td>
             </tr>
         </table>
+        <h3 style="font-size: 25px;padding: unset;margin: unset;">
+            Přílohy
+        </h3>
+        <?php
+
+        // Ověření, zda je nastaven GET parametr
+        if (!isset($_GET['idnotes_parlament']) || empty($_GET['idnotes_parlament'])) {
+            echo "<p>Chyba: Nebyl zadán platný idnotes_parlament.</p>";
+            exit;
+        }
+
+        $idnotes_parlament = intval($_GET['idnotes_parlament']); // Ochrana proti SQL injection
+        
+        // Ověření, zda má uživatel admin přístup
+        if (isset($parlament_access_admin) && $parlament_access_admin == '1') {
+            echo "<h4>Seznam žáků pro zápis ID: {$idnotes_parlament}</h4>";
+
+            $query = "
+        SELECT u.username, u.email, a.time
+        FROM users_alba_rosa_parlament u
+        JOIN attendances_alba_rosa_parlament a ON u.idusers_parlament = a.idusers_parlament
+        JOIN attendances_list_alba_rosa_parlament al ON a.idattendances_list_parlament = al.idattendances_list_parlament
+        WHERE al.idnotes_parlament = ?
+        ORDER BY a.time DESC
+    ";
+
+            if ($stmt = $conn->prepare($query)) {
+                $stmt->bind_param("i", $idnotes_parlament);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    echo "<table border='1' style='width:100%; border-collapse: collapse;text-align: center;'>
+                    <tr>
+                        <th>Jméno</th>
+                        <th>Email</th>
+                        <th>Čas docházky</th>
+                    </tr>";
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                        <td>{$row['username']}</td>
+                        <td>{$row['email']}</td>
+                        <td>{$row['time']}</td>
+                      </tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<p>Pro tento zápis nebyly nalezeny žádné docházky.</p>";
+                }
+                $stmt->close();
+            } else {
+                echo "<p>Chyba při dotazu do databáze.</p>";
+            }
+        } else {
+            echo "<p>Nemáte oprávnění zobrazit tuto sekci.</p>";
+        }
+
+        ?>
+
         <br>
         <div style="display: flex; justify-content: space-between;">
             <div class="table-heading button-container">
