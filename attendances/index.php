@@ -494,7 +494,7 @@ die("Chyba při přípravě dotazu: " . $conn->error);
             }
         } else {
             echo '<div class="info-message">
-            <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Nemáme u tebe žádnou účats :(.
+            <i class="fa fa-info-circle" style="margin-right: 5px;"></i> Nemáme u tebe žádnou účast :(.
         </div>';
         }
         
