@@ -254,18 +254,18 @@ if (isset($_SESSION['idusers_parlament'])) {
 
         $idnotes_parlament = intval($_GET['idnotes_parlament']); // Ochrana proti SQL injection
         
-        // Ověření, zda má uživatel admin přístup
+
         if (isset($parlament_access_admin) && $parlament_access_admin == '1') {
             echo "<h4>Prezenční listina</h4>";
 
             $query = "
-        SELECT u.username, u.email, a.time
-        FROM users_alba_rosa_parlament u
-        JOIN attendances_alba_rosa_parlament a ON u.idusers_parlament = a.idusers_parlament
-        JOIN attendances_list_alba_rosa_parlament al ON a.idattendances_list_parlament = al.idattendances_list_parlament
-        WHERE al.idnotes_parlament = ?
-        ORDER BY a.time DESC
-    ";
+            SELECT u.username, u.email, a.time
+            FROM users_alba_rosa_parlament u
+            JOIN attendances_alba_rosa_parlament a ON u.idusers_parlament = a.idusers_parlament
+            JOIN attendances_list_alba_rosa_parlament al ON a.idattendances_list_parlament = al.idattendances_list_parlament
+            WHERE al.idnotes_parlament = ?
+            ORDER BY a.time DESC
+            ";
 
             if ($stmt = $conn->prepare($query)) {
                 $stmt->bind_param("i", $idnotes_parlament);
@@ -281,10 +281,18 @@ if (isset($_SESSION['idusers_parlament'])) {
                     </tr>";
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
-                        <td>{$row['username']}</td>
-                        <td>{$row['email']}</td>
-                        <td>{$row['time']}</td>
-                      </tr>";
+                        <td>" . htmlspecialchars($row['username']) . "</td>
+                        <td>" . htmlspecialchars($row['email']) . "</td>";
+
+                        $datetime = strtotime($row['time']);
+                        if ($datetime !== false) {
+                            echo "<td>" . date('d.m.Y H:i:s', $datetime) . "</td>";
+                        } else {
+                            echo "<td>Chyba při parsování času</td>";
+                        }
+
+
+                        echo "</tr>";
                     }
                     echo "</table>";
                 } else {
