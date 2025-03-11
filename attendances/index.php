@@ -592,38 +592,55 @@ container.style.display = 'block';
 container.style.backgroundColor = 'white';
 container.style.borderRadius = '8px';
 
+data.students.forEach((student, index) => {
+    const row = iframeDocument.createElement('div');
+    row.style.display = 'block';  // Změna na block, aby byly všechny prvky pod sebou
+    row.style.padding = '10px';
+    row.style.borderBottom = '1px solid #ddd';
+    row.style.cursor = 'pointer';
 
-            data.students.forEach((student, index) => {
-                const row = iframeDocument.createElement('div');
-                row.style.display = 'flex';
-                row.style.alignItems = 'left';
-                row.style.justifyContent = 'left';
-                row.style.cursor = 'pointer';
-                row.style.padding = '5px';
-                row.style.borderBottom = '1px solid #ddd';
+    const checkbox = iframeDocument.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.value = student.id;
+    checkbox.checked = data.present.includes(student.id);
+    checkbox.style.marginRight = '10px';
+    checkbox.onclick = (e) => e.stopPropagation();  // Zabráníme propagačnímu kliknutí
 
-                const checkbox = iframeDocument.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = student.id;
-                checkbox.checked = data.present.includes(student.id);
-                checkbox.style.cursor = 'pointer';
-                checkbox.onclick = (e) => e.stopPropagation();
+    const studentInfo = iframeDocument.createElement('div');
+    studentInfo.style.marginBottom = '5px'; // Vytvoříme mezery mezi jednotlivými řádky
 
-                const studentInfo = iframeDocument.createElement('span');
-                studentInfo.innerHTML = `${index + 1}. ${student.name}`;
-                studentInfo.style.margin = '0 5px';
+    const username = iframeDocument.createElement('span');
+    username.innerHTML = `${index + 1}. <strong>${student.name}</strong>`;
+    username.style.display = 'block';  // Nastavíme jako block, aby byl pod jménem
+    username.style.fontSize = '14px';
+    username.style.color = '#333';
 
-                const timeInfo = iframeDocument.createElement('span');
-                timeInfo.textContent = student.time;
-                timeInfo.style.fontWeight = 'bold';
-                timeInfo.style.color = student.time === 'nepřítomen' ? 'red' : 'green';
+    const email = iframeDocument.createElement('span');
+    email.innerHTML = `<em>(${student.email})</em>`;
+    email.style.display = 'block';  // Nastavíme jako block pro zobrazení pod jménem
+    email.style.fontSize = '12px';
+    email.style.color = '#777';
 
-                row.onclick = () => checkbox.checked = !checkbox.checked;
-                row.append(checkbox, studentInfo, timeInfo);
-                container.appendChild(row);
-            });
+    const timeInfo = iframeDocument.createElement('span');
+    timeInfo.textContent = student.time;
+    timeInfo.style.fontWeight = 'bold';
+    timeInfo.style.color = student.time === 'nepřítomen' ? 'red' : 'green';
+    timeInfo.style.display = 'block';  // Nastavíme jako block pro zobrazení pod emailem
 
-            iframeDocument.body.appendChild(container);
+    // Přidáme všechny části do divu studentInfo
+    studentInfo.append(username, email, timeInfo);
+
+    // Při kliknutí na řádek změníme stav checkboxu
+    row.onclick = () => checkbox.checked = !checkbox.checked;
+
+    // Přidáme checkbox a studentInfo (kde jsou všechny informace o studentovi)
+    row.append(checkbox, studentInfo);
+    container.appendChild(row);
+});
+
+// Přidáme obsah do těla iframe
+iframeDocument.body.appendChild(container);
+
 
             // Kontejner pro tlačítko
             const buttonContainer = iframeDocument.createElement('div');

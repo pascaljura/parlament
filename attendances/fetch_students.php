@@ -9,7 +9,7 @@ $present_students = [];
 // Jeden optimalizovaný dotaz pro studenty i přítomné
 $sql = "
     SELECT u.idusers_parlament, 
-           u.username, 
+           u.username, u.email,
            a.time IS NOT NULL AS is_present, 
            COALESCE(a.time, 'nepřítomen') AS time
     FROM users_alba_rosa_parlament u
@@ -28,6 +28,7 @@ while ($row = $result->fetch_assoc()) {
     $students[] = [
         'id' => (int) $row['idusers_parlament'],
         'name' => $row['username'],
+        'email' => $row['email'],
         'time' => $row['time']
     ];
     if ($row['is_present']) {
