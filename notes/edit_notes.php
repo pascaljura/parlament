@@ -30,7 +30,7 @@ if (isset($_SESSION['idusers_parlament'])) {
         $show_attendances = $userData['show_attendances'];
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
-        header("Location: ./logout.php");
+        header("Location: ../logout.php");
         exit();
     }
 

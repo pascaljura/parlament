@@ -32,7 +32,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
-        header("Location: ./logout.php");
+        header("Location: ../logout.php");
         exit();
     }
 
