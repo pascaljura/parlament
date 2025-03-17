@@ -196,10 +196,12 @@ ob_start();
                 // Hlavičky pro HTML e-mail
                 $headers = "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-                $headers .= "From: noreply@alba-rosa.cz" . "\r\n";
+                $headers .= "From: NoReply Alba-Rosa.cz <noreply@alba-rosa.cz>" . "\r\n";
+                $headers .= "Reply-To: noreply@alba-rosa.cz" . "\r\n";
+                $headers .= "X-Mailer: PHP/" . phpversion();
 
                 // Odeslání e-mailu
-                if (mail($email, $subject, $message, $headers)) {
+                if (mail($email, $subject, $message, $headers, "-f noreply@alba-rosa.cz")) {
                     echo "<h2>E-mail s potvrzením byl odeslán.</h2>";
                 } else {
                     echo "<h2>Chyba při odesílání e-mailu.</h2>";
