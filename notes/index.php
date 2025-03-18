@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Získání vstupů od uživatele
     $date = $_POST["date"];
     $notes = $_POST["notes"];
-    $notes = str_replace(array("\n", "\r"), '=', $notes);
+    $notes = str_replace(["\r\n", "\r", "\n"], "=", $notes);
 
     // Načtení posledního čísla dokumentu podle data
     $sql_last_doc = "SELECT document_number FROM notes_alba_rosa_parlament ORDER BY date DESC LIMIT 1";
@@ -208,7 +208,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p> main title = //main title// (Tučný modrý text na středu stránky) <br>
                     odrížka = -odrážka <br>
                     pododrážka = --podorážka<br>
-                    header = /header/ (Tučný modrý nadpis uprostřed a zároveň zápatí)<br>
                     italics = *italics* (kurzíva)<br>
                     bold = **bold** (tučný text)<br>
                     bold italics = ***bold italics*** (tučný text + kurzíva)<br>
