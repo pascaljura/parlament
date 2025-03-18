@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("isss", $_SESSION['idusers_parlament'], $date, $notes, $document_number);
 
         if ($stmt->execute()) {
-            header("Location: ./?message=Zápis byl uloženo&message_type=success-message");
+            header("Location: ./?message=Zápis byl uložen&message_type=success-message");
             exit();
         } else {
             header("Location: ./?message=CHyba při vkládání zápisu&message_type=error-message");
