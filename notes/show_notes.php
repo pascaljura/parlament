@@ -273,7 +273,7 @@ if (isset($_SESSION['idusers_parlament'])) {
                 $result = $stmt->get_result();
 
                 if ($result->num_rows > 0) {
-                    echo "<table border='1' style='width:100%; border-collapse: collapse;text-align: center;'>
+                    echo "<div style='overflow-x: auto; max-width: 100%;'><table border='1' style='width:100%; border-collapse: collapse;text-align: center; white-space: nowrap;'>
                     <tr>
                         <th>Jméno</th>
                         <th>Email</th>
@@ -294,7 +294,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
                         echo "</tr>";
                     }
-                    echo "</table>";
+                    echo "</table></div>";
                 } else {
                     echo "<p>Pro tento zápis nebyly nalezeny žádné docházky.</p>";
                 }
