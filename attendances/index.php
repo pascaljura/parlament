@@ -221,13 +221,21 @@ if (isset($_SESSION['idusers_parlament'])) {
 $attendances = [];
 $sqlattendances = "
     SELECT 
-        idattendances_list_parlament, 
-        DATE_FORMAT(datetime, '%d.%m.%Y %H:%i:%s') AS datetime, 
-        idnotes_parlament,
-        active
+        alrp.idattendances_list_parlament, 
+        DATE_FORMAT(alrp.datetime, '%d.%m.%Y %H:%i:%s') AS datetime, 
+        alrp.idnotes_parlament,
+        alrp.active,
+        COUNT(aarp.idusers_parlament) AS student_count
     FROM 
-        attendances_list_alba_rosa_parlament 
-    ORDER BY idattendances_list_parlament ASC";
+        attendances_list_alba_rosa_parlament AS alrp
+    LEFT JOIN 
+        attendances_alba_rosa_parlament AS aarp 
+        ON alrp.idattendances_list_parlament = aarp.idattendances_list_parlament
+    GROUP BY 
+        alrp.idattendances_list_parlament, alrp.datetime, alrp.idnotes_parlament, alrp.active
+    ORDER BY 
+        alrp.idattendances_list_parlament ASC";
+
 
 $resultattendances = $conn->query($sqlattendances);
 if ($resultattendances) {
@@ -350,11 +358,12 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                                         <tr>
                                             <th>ID<br>Prezenční<br>listiny</th>
                                             <th style="white-space: nowrap;">Datum a čas</th>
+                                            <th style="white-space: nowrap;">Počet studentů</th>
+                                            <th style="white-space: nowrap;">Stav</th>
                                             <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
                                                 ?>
                                                 <th style="white-space: nowrap;">Přiřazený zápis</th>
                                             <?php } ?>
-                                            <th style="white-space: nowrap;">Stav</th>
                                             <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
                                                 ?>
                                                 <th style="white-space: nowrap;">Akce</th>
@@ -372,26 +381,29 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                                                 <td style="white-space: nowrap;">
                                                     <?= htmlspecialchars($attendance['datetime']) ?>
                                                 </td>
-                                                <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
-                                                    ?>
-                                                    <td style="white-space: nowrap;">
-                                                        <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]"
-                                                            onclick="event.stopPropagation();">
-                                                            <option value="" selected disabled>-- Vyberte zápis --</option>
-                                                            <?php foreach ($notes as $note): ?>
-                                                                <option value="<?= $note['idnotes_parlament'] ?>"
-                                                                    <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
-                                                                    <?= htmlspecialchars($note['date']) ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    </td>
-                                                <?php } ?>
+                                                <td style="white-space: nowrap;">
+                                                    <?= htmlspecialchars($attendance['student_count']) ?>
+                                                </td>
                                                 <td style="white-space: nowrap;">
                                                     <?= $attendance['active'] == '1' ?
                                                         '<span style="color: black; background-color: #70B95E; border-radius: 5px; padding: 5px 10px;">Probíhá</span>' :
                                                         '<span style="background-color: #ff4848; color: white; border-radius: 5px; padding: 5px 10px;">Ukončeno</span>' ?>
                                                 </td>
+                                                        <?php if (isset($select_idnotes_parlament) && $select_idnotes_parlament == '1') {
+                                                            ?>
+                                                            <td style="white-space: nowrap;">
+                                                                <select name="notes[<?= $attendance['idattendances_list_parlament'] ?>]"
+                                                                    onclick="event.stopPropagation();">
+                                                                    <option value="" selected disabled>-- Vyberte zápis --</option>
+                                                                    <?php foreach ($notes as $note): ?>
+                                                                        <option value="<?= $note['idnotes_parlament'] ?>"
+                                                                            <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
+                                                                            <?= htmlspecialchars($note['date']) ?>
+                                                                        </option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                            </td>
+                                                        <?php } ?>
                                                 <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
                                                     ?>
                                                     <td style="white-space: nowrap;">
