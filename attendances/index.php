@@ -246,7 +246,14 @@ if ($resultattendances) {
 
 // Načtení všech zápisů pro dropdown (také formátování data)
 $notes = [];
-$sql = "SELECT idnotes_parlament, DATE_FORMAT(date, '%d.%m.%Y') AS date FROM notes_alba_rosa_parlament";
+$sql = "
+    SELECT 
+        idnotes_parlament, 
+        DATE_FORMAT(`date`, '%d.%m.%Y') AS formatted_date 
+    FROM 
+        notes_alba_rosa_parlament 
+    ORDER BY `date` DESC";
+
 $result = $conn->query($sql);
 if ($result) {
     while ($row = $result->fetch_assoc()) {
@@ -398,7 +405,7 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                                                                     <?php foreach ($notes as $note): ?>
                                                                         <option value="<?= $note['idnotes_parlament'] ?>"
                                                                             <?= ($note['idnotes_parlament'] == $attendance['idnotes_parlament']) ? 'selected' : '' ?>>
-                                                                            <?= htmlspecialchars($note['date']) ?>
+                                                                            <?= htmlspecialchars($note['formatted_date']) ?>
                                                                         </option>
                                                                     <?php endforeach; ?>
                                                                 </select>
