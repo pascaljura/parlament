@@ -8,15 +8,14 @@ $present_students = [];
 
 // Jeden optimalizovaný dotaz pro studenty i přítomné
 $sql = "
-    SELECT u.idusers_parlament, 
-           u.username, u.email,
+    SELECT u.*,
            a.time IS NOT NULL AS is_present, 
            COALESCE(a.time, 'nepřítomen') AS time
     FROM users_alba_rosa_parlament u
     LEFT JOIN attendances_alba_rosa_parlament a 
         ON u.idusers_parlament = a.idusers_parlament 
         AND a.idattendances_list_parlament = ?
-    ORDER BY u.username
+    ORDER BY u.last_name ASC
 ";
 
 $stmt = $conn->prepare($sql);
@@ -27,7 +26,8 @@ $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
     $students[] = [
         'id' => (int) $row['idusers_parlament'],
-        'name' => $row['username'],
+        'name' => $row['name'],
+        'last_name' => $row['last_name'],
         'email' => $row['email'],
         'time' => $row['time']
     ];

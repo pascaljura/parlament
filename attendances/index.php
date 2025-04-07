@@ -631,7 +631,7 @@ data.students.forEach((student, index) => {
     studentInfo.style.marginBottom = '5px'; // Vytvoříme mezery mezi jednotlivými řádky
 
     const username = iframeDocument.createElement('span');
-    username.innerHTML = `${index + 1}. <strong>${student.name}</strong>`;
+    username.innerHTML = `${index + 1}. <strong>${student.last_name} ${student.name}</strong>`;
     username.style.display = 'block';  // Nastavíme jako block, aby byl pod jménem
     username.style.fontSize = '20px';
     username.style.fontWeight = 'bold';
