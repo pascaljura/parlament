@@ -13,7 +13,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }, 1000);
 });
+document.querySelectorAll(".popup-trigger").forEach((button) => {
+  button.addEventListener("click", function () {
+    const link = this.getAttribute("data-link");
+    const overlay = document.getElementById("popupOverlay");
+    const iframe = document.getElementById("popupIframe");
+    iframe.src = link;
+    overlay.style.display = "flex";
+  });
+});
 
+document.getElementById("popupClose").addEventListener("click", function () {
+  const overlay = document.getElementById("popupOverlay");
+  const iframe = document.getElementById("popupIframe");
+  iframe.src = "";
+  overlay.style.display = "none";
+});
 function downloadAndRedirect(id) {
   // Přesměrování na soubor.php s ID
   window.location.href = "./soubor.php?id=" + id;

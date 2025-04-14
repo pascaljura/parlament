@@ -118,11 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
             <div class="user-icon" onclick="toggleUserMenu(event)">
-                                <?php if (!empty($username_parlament)) { ?>
-<i class="fa fa-user" style="color: #5481aa;"></i>
-  <?php } else { ?>
-<i class="fa fa-user" style="color: #3C3C3B;"></i>
-  <?php } ?>
+                <?php if (!empty($username_parlament)) { ?>
+                    <i class="fa fa-user" style="color: #5481aa;"></i>
+                <?php } else { ?>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                <?php } ?>
             </div>
 
             <!-- Navigation Links (vlevo na PC) -->
@@ -222,52 +222,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php } ?>
         <div class="button-container" id="buttonContainer">
             <?php
-            // Inicializujeme prázdné pole pro seskupení dat podle roků
             $grouped_data = [];
-
-            // Načteme data z databáze
             $result = $conn->query("SELECT idnotes_parlament, date FROM notes_alba_rosa_parlament ORDER BY date DESC");
 
             if ($result->num_rows > 0) {
-                // Projdeme všechny záznamy
                 while ($row = $result->fetch_assoc()) {
                     $idnotes_parlament = $row['idnotes_parlament'];
                     $date = $row['date'];
-                    $year = date('Y', strtotime($date)); // Extrahujeme rok
-            
-                    // Vytvoříme skupiny podle roku
+                    $year = date('Y', strtotime($date));
+
                     if (!isset($grouped_data[$year])) {
-                        $grouped_data[$year] = []; // Pokud rok ještě neexistuje, vytvoříme prázdné pole
+                        $grouped_data[$year] = [];
                     }
 
-                    // Přidáme záznam do pole příslušného roku
                     $grouped_data[$year][] = [
                         'idnotes_parlament' => $idnotes_parlament,
                         'date' => date('d.m.Y', strtotime($date))
                     ];
                 }
 
-                // Vypíšeme data podle roku
                 foreach ($grouped_data as $year => $items) {
                     echo '<div class="year-container">';
                     echo '<div class="table-heading"><h2>';
                     echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
                     echo '</h2></div>';
-                    echo '<div class="button-container">'; // Používáme tvůj existující styl pro tlačítka
+                    echo '<div class="button-container">';
                     foreach ($items as $item) {
-                        echo '<a href="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '" target="_blank">';
-                        echo '<button>';
+                        echo '<button class="popup-trigger" data-link="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '">';
                         echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['date'];
                         echo '</button>';
-                        echo '</a>';
                     }
-                    echo '</div>'; // Uzavřeme kontejner pro tlačítka
-                    echo '</div>'; // Uzavřeme kontejner pro rok
+                    echo '</div>';
+                    echo '</div>';
                 }
             } else {
                 echo "Žádná data nebyla nalezena.";
             }
             ?>
+        </div>
+
+        <!-- Popup struktura -->
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose">&times;</button>
+                <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
+            </div>
         </div>
         <br>
 
