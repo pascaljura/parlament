@@ -66,270 +66,281 @@ if (isset($_SESSION['idusers_parlament'])) {
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <?php
+    $headerText1 = '<i class="fa fa-heart blue"></i>・Nový zápis';
+    ?>
+
 </head>
-<h2?php $sql="" ; if ($_SERVER["REQUEST_METHOD"]=="POST" ) { // Získání vstupů od uživatele $date=$_POST["date"];
-    $notes=$_POST["notes"]; $notes=str_replace(["\r\n", "\r" , "\n" ], "=" , $notes); // Načtení posledního čísla
-    dokumentu podle data
-    $sql_last_doc="SELECT document_number FROM notes_alba_rosa_parlament ORDER BY date DESC LIMIT 1" ; $result=$conn->
-    query($sql_last_doc);
+<?php
+
+$sql = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Získání vstupů od uživatele
+    $date = $_POST["date"];
+    $notes = $_POST["notes"];
+    $notes = str_replace(["\r\n", "\r", "\n"], "=", $notes);
+
+    // Načtení posledního čísla dokumentu podle data
+    $sql_last_doc = "SELECT document_number FROM notes_alba_rosa_parlament ORDER BY date DESC LIMIT 1";
+    $result = $conn->query($sql_last_doc);
 
     if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    // Extrahuje poslední část čísla dokumentu (poslední dvě číslice)
-    $last_number = (int) substr($row['document_number'], -2);
-    $new_number = str_pad($last_number + 1, 2, "0", STR_PAD_LEFT); // Zvýší o 1 a doplní nuly
-    $document_number = "18.02." . $new_number;
+        $row = $result->fetch_assoc();
+        // Extrahuje poslední část čísla dokumentu (poslední dvě číslice)
+        $last_number = (int) substr($row['document_number'], -2);
+        $new_number = str_pad($last_number + 1, 2, "0", STR_PAD_LEFT);  // Zvýší o 1 a doplní nuly
+        $document_number = "18.02." . $new_number;
     } else {
-    $document_number = "18.02.01"; // První záznam, pokud není žádný předchozí
+        $document_number = "18.02.01"; // První záznam, pokud není žádný předchozí
     }
 
     // Připravení SQL dotazu s parametry
-    $sql = "INSERT INTO notes_alba_rosa_parlament (idusers_parlament, date, notes, document_number) VALUES (?, ?, ?,
-    ?)";
+    $sql = "INSERT INTO notes_alba_rosa_parlament (idusers_parlament, date, notes, document_number) VALUES (?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param("isss", $_SESSION['idusers_parlament'], $date, $notes, $document_number);
+        $stmt->bind_param("isss", $_SESSION['idusers_parlament'], $date, $notes, $document_number);
 
-    if ($stmt->execute()) {
-    header("Location: ./?message=Zápis byl uložen&message_type=success-message");
-    exit();
+        if ($stmt->execute()) {
+            header("Location: ./?message=Zápis byl uložen&message_type=success-message");
+            exit();
+        } else {
+            header("Location: ./?message=CHyba při vkládání zápisu&message_type=error-message");
+            exit();
+        }
+        $stmt->close();
     } else {
-    header("Location: ./?message=CHyba při vkládání zápisu&message_type=error-message");
-    exit();
+        header("Location: ./?message=Chyba při přípravě dotazu&message_type=error-message");
+        exit();
     }
-    $stmt->close();
-    } else {
-    header("Location: ./?message=Chyba při přípravě dotazu&message_type=error-message");
-    exit();
-    }
-    }
+}
 
 
-    ?>
-    <div id="loading-overlay">
-        <div class="loader"></div>
-    </div>
+?>
+<div id="loading-overlay">
+    <div class="loader"></div>
+</div>
 
-    <body>
-        <div id="calendar">
-            <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+<body>
+    <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
 
-            <nav>
+        <nav>
 
-                <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-                <div class="user-icon" onclick="toggleUserMenu(event)">
-                    <?php if (!empty($username_parlament)) { ?>
-                        <i class="fa fa-user" style="color: #5481aa;"></i>
-                    <?php } else { ?>
-                        <i class="fa fa-user" style="color: #3C3C3B;"></i>
-                    <?php } ?>
-                </div>
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
+                <?php if (!empty($username_parlament)) { ?>
+                    <i class="fa fa-user" style="color: #5481aa;"></i>
+                <?php } else { ?>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                <?php } ?>
+            </div>
 
-                <!-- Navigation Links (vlevo na PC) -->
-                <div class="nav-links">
-                    <a href="../">Domů</a>
-                    <a href="../notes" class="active">Zápisy</a>
-                    <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                        <a href="../attendances">Prezenční listiny</a>
-                    <?php } ?>
-                </div>
+            <!-- Navigation Links (vlevo na PC) -->
+            <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
+                    <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
+            </div>
 
-                <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-                <div class="hamburger" onclick="toggleMobileMenu(event)">
-                    <i class="fa fa-bars"></i>
-                </div>
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
 
-                <!-- User Dropdown Menu -->
-                <div class="user-dropdown" id="userDropdown">
-                    <?php if (!empty($username_parlament)) { ?>
-                        <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
-                        <a href="../logout.php">Odhlásit se</a>
-                    <?php } else { ?>
-                        <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
-                    <?php } ?>
-                </div>
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="../logout.php">Odhlásit se</a>
+                <?php } else { ?>
+                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
+                <?php } ?>
+            </div>
 
-                <!-- Mobile Menu -->
-                <div class="mobile-menu" id="mobileMenu">
-                    <a href="../">Domů</a>
-                    <a href="../notes" class="active">Zápisy</a>
-                    <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                        <a href="../attendances">Prezenční listiny</a>
-                    <?php } ?>
-                </div>
-            </nav>
-            <?php
-            if (isset($_GET['message']) && isset($_GET['message_type'])) {
-                $message = $_GET['message'];
-                $message_type = $_GET['message_type'];
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">Domů</a>
+                <a href="../notes" class="active">Zápisy</a>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
+                    <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
+            </div>
+        </nav>
+        <?php
+        if (isset($_GET['message']) && isset($_GET['message_type'])) {
+            $message = $_GET['message'];
+            $message_type = $_GET['message_type'];
 
-                // Určení třídy a ikony podle typu zprávy
-                if ($message_type == 'success-message') {
-                    $message_class = 'success-message';
-                    $message_icon = 'fa-check';
-                } elseif ($message_type == 'error-message') {
-                    $message_class = 'error-message';
-                    $message_icon = 'fa-times';
-                } elseif ($message_type == 'info-message') {
-                    $message_class = 'info-message';
-                    $message_icon = 'fa-info-circle';
-                }
-
-                // Výstup zprávy s ikonou a třídou
-                echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
-                echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
-                echo '</div>';
+            // Určení třídy a ikony podle typu zprávy
+            if ($message_type == 'success-message') {
+                $message_class = 'success-message';
+                $message_icon = 'fa-check';
+            } elseif ($message_type == 'error-message') {
+                $message_class = 'error-message';
+                $message_icon = 'fa-times';
+            } elseif ($message_type == 'info-message') {
+                $message_class = 'info-message';
+                $message_icon = 'fa-info-circle';
             }
-            if (isset($add_notes) && $add_notes == '1') { ?>
-                <div class="table-heading">
-                    <h2> <i class="fa fa-heart blue"></i>・Nový zápis </h2>
-                </div>
-                <?php
-                $currentDate = date('Y-m-d');
-                ?>
-                <div style="display: flex; flex-direction: column;">
-                    <form method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px;">
-                        <label for="date" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
-                        <input type="date" name="date" id="dateInput"
-                            style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
-                            value="<?php echo $currentDate; ?>" required>
-                        <label for="notes" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
-                        <div style="display: flex; flex-direction: column;">
-                            <textarea name="notes" id="notesInput" rows="10"
-                                style="padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
-                                required></textarea>
-                        </div>
-                        <div class="button-container" id="buttonContainer">
-                            <button type="submit" onclick="smazatZLocalStorage()">
-                                <i class="fa fa-save"></i> Uložit
-                            </button>
-                        </div>
-                    </form>
-                    <p> main title = //main title// (Tučný modrý text na středu stránky) <br>
-                        odrížka = -odrážka <br>
-                        pododrážka = --podorážka<br>
-                        italics = *italics* (kurzíva)<br>
-                        bold = **bold** (tučný text)<br>
-                        bold italics = ***bold italics*** (tučný text + kurzíva)<br>
-                        strikeout = ~~strikeout~~ (přešktrnuté)<br>
-                        underline = __underline__ (podtržený text)<br>
-                        underline italics = __*underline italics*__ (podtržený text + kurzíva)<br>
-                        underline bold = __**underline bold**__ (podtržený text + tučný text)<br>
-                        underline bold italics = __***underline bold italics***__ (podtržený text + tučný text +
-                        kurzíva)
-                    </p>
-                </div>
-            <?php } ?>
-            <div class="button-container" id="buttonContainer">
-                <?php
-                $grouped_data = [];
-                $result = $conn->query("SELECT idnotes_parlament, date FROM notes_alba_rosa_parlament ORDER BY date DESC");
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $idnotes_parlament = $row['idnotes_parlament'];
-                        $date = $row['date'];
-                        $year = date('Y', strtotime($date));
-
-                        if (!isset($grouped_data[$year])) {
-                            $grouped_data[$year] = [];
-                        }
-
-                        $grouped_data[$year][] = [
-                            'idnotes_parlament' => $idnotes_parlament,
-                            'date' => date('d.m.Y', strtotime($date))
-                        ];
-                    }
-
-                    foreach ($grouped_data as $year => $items) {
-                        echo '<div class="year-container">';
-                        echo '<div class="table-heading"><h2>';
-                        echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
-                        echo '</h2></div>';
-                        echo '<div class="button-container">';
-                        foreach ($items as $item) {
-                            echo '<button class="popup-trigger" data-link="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '">';
-                            echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['date'];
-                            echo '</button>';
-                        }
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo "Žádná data nebyla nalezena.";
-                }
-                ?>
+            // Výstup zprávy s ikonou a třídou
+            echo '<div onclick="removeQueryString()" class="' . $message_class . '" style="cursor: pointer;">';
+            echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . htmlspecialchars($message);
+            echo '</div>';
+        }
+        if (isset($add_notes) && $add_notes == '1') { ?>
+            <div class="table-heading">
+                <h2> <i class="fa fa-heart blue"></i>・Nový zápis </h2>
             </div>
-
-            <!-- Popup struktura -->
-            <div class="popup-overlay" id="popupOverlay">
-                <div class="popup-content">
-                    <button class="popup-close" id="popupClose">&times;</button>
-                    <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
-                </div>
-            </div>
-            <br>
-
             <?php
+            $currentDate = date('Y-m-d');
+            ?>
+            <div style="display: flex; flex-direction: column;">
+                <form method="post" id="myForm" style="max-width: 100%; margin-bottom: 5px;">
+                    <label for="date" style="font-size: 16px; margin-bottom: 8px;">Datum:</label>
+                    <input type="date" name="date" id="dateInput"
+                        style="width: 100%; padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;"
+                        value="<?php echo $currentDate; ?>" required>
+                    <label for="notes" style="font-size: 16px; margin-bottom: 8px;">Záznam:</label>
+                    <div style="display: flex; flex-direction: column;">
+                        <textarea name="notes" id="notesInput" rows="10"
+                            style="padding: 10px; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
+                            required></textarea>
+                    </div>
+                    <div class="button-container" id="buttonContainer">
+                        <button type="submit" onclick="smazatZLocalStorage()">
+                            <i class="fa fa-save"></i> Uložit
+                        </button>
+                    </div>
+                </form>
+                <p> main title = //main title// (Tučný modrý text na středu stránky) <br>
+                    odrížka = -odrážka <br>
+                    pododrážka = --podorážka<br>
+                    italics = *italics* (kurzíva)<br>
+                    bold = **bold** (tučný text)<br>
+                    bold italics = ***bold italics*** (tučný text + kurzíva)<br>
+                    strikeout = ~~strikeout~~ (přešktrnuté)<br>
+                    underline = __underline__ (podtržený text)<br>
+                    underline italics = __*underline italics*__ (podtržený text + kurzíva)<br>
+                    underline bold = __**underline bold**__ (podtržený text + tučný text)<br>
+                    underline bold italics = __***underline bold italics***__ (podtržený text + tučný text +
+                    kurzíva)
+                </p>
+            </div>
+        <?php } ?>
+        <div class="button-container" id="buttonContainer">
+            <?php
+            $grouped_data = [];
+            $result = $conn->query("SELECT idnotes_parlament, date FROM notes_alba_rosa_parlament ORDER BY date DESC");
 
-            // Získání dat z tabulky
-            $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
-            $result = mysqli_query($conn, $query);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $idnotes_parlament = $row['idnotes_parlament'];
+                    $date = $row['date'];
+                    $year = date('Y', strtotime($date));
 
-            if ($result) {
-                $row = mysqli_fetch_assoc($result);
-                $text = $row['text'];
+                    if (!isset($grouped_data[$year])) {
+                        $grouped_data[$year] = [];
+                    }
 
-                // Výpis HTML s dynamickým obsahem
-                echo "$text";
+                    $grouped_data[$year][] = [
+                        'idnotes_parlament' => $idnotes_parlament,
+                        'date' => date('d.m.Y', strtotime($date))
+                    ];
+                }
+
+                foreach ($grouped_data as $year => $items) {
+                    echo '<div class="year-container">';
+                    echo '<div class="table-heading"><h2>';
+                    echo '<i class="fa fa-heart blue"></i>・Zápisy・' . $year;
+                    echo '</h2></div>';
+                    echo '<div class="button-container">';
+                    foreach ($items as $item) {
+                        echo '<button class="popup-trigger" data-link="./show_notes.php?idnotes_parlament=' . $item['idnotes_parlament'] . '">';
+                        echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> ' . $item['date'];
+                        echo '</button>';
+                    }
+                    echo '</div>';
+                    echo '</div>';
+                }
             } else {
-                echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
+                echo "Žádná data nebyla nalezena.";
             }
             ?>
         </div>
-    </body>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
-    <script src="../assets/js/script.js">
-    </script>
-    <script>
 
-        // Funkce pro ukládání dat do local storage
-        function ulozitDoLocalStorage() {
-            const date = document.getElementById('dateInput').value;
-            const notes = document.getElementById('notesInput').value;
-            if (date.trim() !== '') {
-                localStorage.setItem('date', date);
-            }
-            if (notes.trim() !== '') {
-                localStorage.setItem('notes', notes);
-            }
+        <!-- Popup struktura -->
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose">&times;</button>
+                <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
+            </div>
+        </div>
+        <br>
+
+        <?php
+
+        // Získání dat z tabulky
+        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
+        $result = mysqli_query($conn, $query);
+
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $text = $row['text'];
+
+            // Výpis HTML s dynamickým obsahem
+            echo "$text";
+        } else {
+            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
+        ?>
+    </div>
+</body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+<script src="../assets/js/script.js">
+</script>
+<script>
 
-        // Funkce pro mazání dat z local storage
-        function smazatZLocalStorage() {
-            localStorage.removeItem('date');
-            localStorage.removeItem('notes');
+    // Funkce pro ukládání dat do local storage
+    function ulozitDoLocalStorage() {
+        const date = document.getElementById('dateInput').value;
+        const notes = document.getElementById('notesInput').value;
+        if (date.trim() !== '') {
+            localStorage.setItem('date', date);
         }
+        if (notes.trim() !== '') {
+            localStorage.setItem('notes', notes);
+        }
+    }
 
-        // Zavolání funkce pro načtení dat při načtení stránky
-        window.onload = function () {
-            const date = localStorage.getItem('date');
-            const notes = localStorage.getItem('notes');
-            if (date) {
-                document.getElementById('dateInput').value = date;
-            }
-            if (notes) {
-                document.getElementById('notesInput').value = notes;
-            }
-        };
+    // Funkce pro mazání dat z local storage
+    function smazatZLocalStorage() {
+        localStorage.removeItem('date');
+        localStorage.removeItem('notes');
+    }
 
-        // Zavolání funkce pro ukládání dat při jakékoli změně v polích formuláře
-        document.getElementById('dateInput').addEventListener('input', ulozitDoLocalStorage);
-        document.getElementById('notesInput').addEventListener('input', ulozitDoLocalStorage);
+    // Zavolání funkce pro načtení dat při načtení stránky
+    window.onload = function () {
+        const date = localStorage.getItem('date');
+        const notes = localStorage.getItem('notes');
+        if (date) {
+            document.getElementById('dateInput').value = date;
+        }
+        if (notes) {
+            document.getElementById('notesInput').value = notes;
+        }
+    };
 
-        // Zavolání funkce pro uložení dat při načtení stránky
-        ulozitDoLocalStorage();
-    </script>
+    // Zavolání funkce pro ukládání dat při jakékoli změně v polích formuláře
+    document.getElementById('dateInput').addEventListener('input', ulozitDoLocalStorage);
+    document.getElementById('notesInput').addEventListener('input', ulozitDoLocalStorage);
+
+    // Zavolání funkce pro uložení dat při načtení stránky
+    ulozitDoLocalStorage();
+</script>
 
 </html>
 <?php
