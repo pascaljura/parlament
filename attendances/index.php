@@ -379,7 +379,7 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                                     </thead>
                                     <tbody>
                                         <?php foreach ($attendances as $attendance): ?>
-                                            <tr onclick="loadStudents(<?= $attendance['idattendances_list_parlament'] ?>)"
+                                            <tr class="popup-trigger" data-link="show_students.php?idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
                                                 style="cursor: pointer;">
                                                 <td
                                                     style="white-space: nowrap; color: white; background-color: #5481AA; border: 1px solid black;">
@@ -548,6 +548,12 @@ die("Chyba při přípravě dotazu: " . $conn->error);
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
         ?>
+             <div class="popup-overlay" id="popupOverlay">
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose">&times;</button>
+                <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
+            </div>
+        </div>
     </div>
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>

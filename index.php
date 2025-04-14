@@ -73,11 +73,11 @@ if (isset($_SESSION['idusers_parlament'])) {
 
 
             <div class="user-icon" onclick="toggleUserMenu(event)">
-                                <?php if (!empty($username_parlament)) { ?>
-<i class="fa fa-user" style="color: #5481aa;"></i>
-  <?php } else { ?>
-<i class="fa fa-user" style="color: #3C3C3B;"></i>
-  <?php } ?>
+                <?php if (!empty($username_parlament)) { ?>
+                    <i class="fa fa-user" style="color: #5481aa;"></i>
+                <?php } else { ?>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                <?php } ?>
             </div>
 
 
@@ -112,7 +112,7 @@ if (isset($_SESSION['idusers_parlament'])) {
                 <a href="./" class="active">Domů</a>
                 <a href="./notes">Zápisy</a>
                 <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                <a href="./attendances">Prezenční listiny</a>
+                    <a href="./attendances">Prezenční listiny</a>
                 <?php } ?>
             </div>
         </nav>
@@ -210,6 +210,13 @@ if (isset($_SESSION['idusers_parlament'])) {
             echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
         }
         ?>
+        <!-- Popup struktura -->
+        <div class="popup-overlay" id="popupOverlay">
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose">&times;</button>
+                <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
+            </div>
+        </div>
     </div>
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>

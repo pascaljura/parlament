@@ -63,50 +63,6 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
-        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-        <nav>
-            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-            <div class="user-icon" onclick="toggleUserMenu(event)">
-                                <?php if (!empty($username_parlament)) { ?>
-<i class="fa fa-user" style="color: #5481aa;"></i>
-  <?php } else { ?>
-<i class="fa fa-user" style="color: #3C3C3B;"></i>
-  <?php } ?>
-            </div>
-
-            <!-- Navigation Links (vlevo na PC) -->
-            <div class="nav-links">
-                <a href="../">Domů</a>
-                <a href="../notes" class="active">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="../attendances">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-
-            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-            <div class="hamburger" onclick="toggleMobileMenu(event)">
-                <i class="fa fa-bars"></i>
-            </div>
-
-            <!-- User Dropdown Menu -->
-            <div class="user-dropdown" id="userDropdown">
-                <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
-                    <a href="../logout.php">Odhlásit se</a>
-                <?php } else { ?>
-                    <a href="../login.php">Přihlásit se</a>
-                <?php } ?>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="../">Domů</a>
-                <a href="../notes" class="active">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="../attendances">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-        </nav>
         <?php
         // Pokud nemá uživatel oprávnění (parlament_access_admin != 1) nebo (edit_notes != 1), přesměrujeme ho nebo zobrazíme chybovou hlášku
         if ($parlament_access_admin != '1' || $edit_notes != '1') {
@@ -225,20 +181,9 @@ if (isset($_SESSION['idusers_parlament'])) {
             <?php
         }
 
-        // Získání dat z tabulky
-        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
-        $result = mysqli_query($conn, $query);
 
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $text = $row['text'];
-
-            // Výpis HTML s dynamickým obsahem
-            echo "$text";
-        } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-        }
         ?>
+        <div id="footer-text"></div>
     </div>
 </body>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>

@@ -156,7 +156,6 @@ if (isset($_SESSION['idusers_parlament'])) {
 
     <div id="calendar"
         style="width: 80%; background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin: 10px; height: 20%;">
-        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
 
         <div class="table-heading" style="text-align: center; margin: 1rem 0px -20px;">
             <?php echo '<img src="../assets/img/purkynka_logo.png" width="300px" height="auto" >'; ?>
