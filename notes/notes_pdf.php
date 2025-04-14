@@ -11,6 +11,7 @@ require_once '../vendor/autoload.php';
 
 use Mpdf\Mpdf;
 $mpdf = new Mpdf(['default_font' => 'calibri']);
+$mpdf->SetProtection(['print', 'print-highres'], '', '8b2U/0:eHa');
 
 // Check if idnotes_parlament is set and valid
 if (isset($_GET['idnotes_parlament']) && filter_var($_GET['idnotes_parlament'], FILTER_VALIDATE_INT)) {
@@ -122,7 +123,7 @@ $mpdf->Output('notes-ze-schuze-' . date('d-m-Y', strtotime($row['date'])) . '.pd
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
     <link rel="manifest" href="./assets/json/manifest.json">
@@ -131,8 +132,10 @@ $mpdf->Output('notes-ze-schuze-' . date('d-m-Y', strtotime($row['date'])) . '.pd
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
     <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
 </head>
+
 <body>
-<script src="./assets/js/script.js">    </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
+    <script src="./assets/js/script.js">    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
 </body>
+
 </html>
