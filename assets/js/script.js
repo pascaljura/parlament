@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (popupOverlay && popupIframe) {
         popupIframe.src = "";
         popupOverlay.style.display = "none";
+        location.reload();
       }
     });
   }
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupIframe.src = "";
       }
       popupOverlay.style.display = "none";
+      location.reload();
     });
   }
 
