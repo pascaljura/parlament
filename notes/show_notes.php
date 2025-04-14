@@ -47,12 +47,12 @@ if (isset($_SESSION['idusers_parlament'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-    <title>Alba-rosa.cz | Parlament na Purkyňce</title>
+    <title>Parlament na Purkyňce</title>
     <link rel="manifest" href="../assets/json/manifest.json">
     <link rel="stylesheet" href="../assets/css/style.css">
 
     <!-- OG Metadata -->
-    <meta property="og:title" content="Alba-rosa.cz | Parlament na Purkyňce" />
+    <meta property="og:title" content="Parlament na Purkyňce" />
     <meta property="og:url" content="https://www.alba-rosa.cz/parlament/" />
     <meta property="og:image" content="https://www.alba-rosa.cz/parlament/logo.png" />
     <meta property="og:description"

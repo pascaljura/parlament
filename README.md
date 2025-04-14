@@ -3,7 +3,7 @@
   <img src="https://www.alba-rosa.cz/parlament/logo.png" alt="Alba-rosa.cz Logo" width="100" height="100">
 </p>
 
-# Alba-rosa.cz | Parlament na Purkyňce Stránky
+# Parlament na Purkyňce Stránky
 
 Tento README poskytuje přehled kódu webové stránky Alba-rosa.cz věnované "Parlamentu na Purkyňce".
 
@@ -30,4 +30,4 @@ Tato stránka slouží k přístupu k dokumentům a informacím týkajícím se 
 3. Konfigurujte připojení k databázi v souboru `config.php`.
 4. Otevřete webovou stránku v prohlížeči.
 
-Nechte se inspirovat a přispějte do komunity Alba-rosa.cz | Parlament na Purkyňce!
+Nechte se inspirovat a přispějte do komunity Parlament na Purkyňce!
