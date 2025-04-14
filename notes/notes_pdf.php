@@ -113,7 +113,7 @@ $mpdf->SetHTMLFooter($footerHtml);
 $mpdf->WriteHTML($bodyHtml);
 
 // Output PDF
-$mpdf->Output('notes-ze-schuze-' . date('d-m-Y', strtotime($row['date'])) . '.pdf', 'I');
+$mpdf->Output('notes-ze-schuze-' . date('d-m-Y', strtotime($row['date'])) . '.pdf', 'D');
 ?>
 <!DOCTYPE html>
 <html lang="en">

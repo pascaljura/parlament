@@ -29,6 +29,12 @@ document.getElementById("popupClose").addEventListener("click", function () {
   iframe.src = "";
   overlay.style.display = "none";
 });
+document.getElementById("popupOverlay").addEventListener("click", function () {
+  const overlay = document.getElementById("popupOverlay");
+  const iframe = document.getElementById("popupIframe");
+  iframe.src = "";
+  overlay.style.display = "none";
+});
 function downloadAndRedirect(id) {
   // Přesměrování na soubor.php s ID
   window.location.href = "./soubor.php?id=" + id;
