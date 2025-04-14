@@ -53,7 +53,7 @@ $show_attendances = $userData['show_attendances'];
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
-    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+    <meta content="#5481aa" data-react-helmet="true" name="theme-color" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 

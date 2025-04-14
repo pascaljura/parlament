@@ -18,7 +18,7 @@ ob_start();
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
-    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+    <meta content="#5481aa" data-react-helmet="true" name="theme-color" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
 </head>
 

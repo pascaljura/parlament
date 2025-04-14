@@ -4,8 +4,8 @@
   "description": "Oficiální web školního parlamentu na Purkyňce.",
   "start_url": "/parlament",
   "display": "standalone",
-  "background_color": "#0f1523",
-  "theme_color": "#0f1523",
+  "background_color": "#5481aa",
+  "theme_color": "#5481aa",
   "display_override": ["window-controls-overlay"],
   "icons": [
     {

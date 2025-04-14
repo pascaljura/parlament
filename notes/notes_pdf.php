@@ -130,7 +130,7 @@ $mpdf->Output('notes-ze-schuze-' . date('d-m-Y', strtotime($row['date'])) . '.pd
     <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
     <meta content="https://www.alba-rosa.cz/" property="og:url" />
     <meta content="https://www.alba-rosa.cz/parlament/logo.png" property="og:image" />
-    <meta content="#0f1523" data-react-helmet="true" name="theme-color" />
+    <meta content="#5481aa" data-react-helmet="true" name="theme-color" />
 </head>
 
 <body>
