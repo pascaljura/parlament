@@ -44,17 +44,28 @@ if (isset($_SESSION['idusers_parlament'])) {
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <title>Alba-rosa.cz | Parlament na Purkyňce</title>
-    <link rel="manifest" href="./assets/json/manifest.json">
-    <meta content="Alba-rosa.cz | Parlament na Purkyňce" property="og:title" />
-    <meta content="https://www.alba-rosa.cz/" property="og:url" />
-    <meta content="#5481aa" data-react-helmet="true" name="theme-color" />
+    <link rel="manifest" href="../assets/json/manifest.json">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- OG Metadata -->
+    <meta property="og:title" content="Alba-rosa.cz | Parlament na Purkyňce" />
+    <meta property="og:url" content="https://www.alba-rosa.cz/parlament/" />
+    <meta property="og:image" content="https://www.alba-rosa.cz/parlament/logo.png" />
+    <meta property="og:description"
+        content="Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se na chodu školy. Organizuje akce, řeší problémy a komunikuje s vedením školy." />
+    <meta name="theme-color" content="#5481aa" data-react-helmet="true" />
+
+    <!-- Meta description pro SEO -->
+    <meta name="description"
+        content="Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se na chodu školy. Organizuje akce, řeší problémy a komunikuje s vedením školy. Zapojení rozvíjí komunikační a organizační dovednosti a umožňuje ovlivnit dění ve škole." />
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <div id="loading-overlay">
     <div class="loader"></div>
