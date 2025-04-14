@@ -102,54 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div id="calendar">
-        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-        <nav>
-
-
-            <div class="user-icon" onclick="toggleUserMenu(event)">
-                <?php if (!empty($email_parlament)) { ?>
-                    <i class="fa fa-user" style="color: #5481aa;"></i>
-                <?php } else { ?>
-                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
-                <?php } ?>
-            </div>
-
-
-
-            <!-- Navigation Links (vlevo na PC) -->
-            <div class="nav-links">
-                <a href="./" class="active">Domů</a>
-                <a href="./notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="./attendances">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-
-            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-            <div class="hamburger" onclick="toggleMobileMenu(event)">
-                <i class="fa fa-bars"></i>
-            </div>
-
-            <!-- User Dropdown Menu -->
-            <div class="user-dropdown" id="userDropdown">
-                <?php if (!empty($email_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $email_parlament; ?></b></p>
-                    <a href="./logout.php">Odhlásit se</a>
-                <?php } else { ?>
-                    <a href="./login.php">Přihlásit se</a>
-                <?php } ?>
-            </div>
-
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="./" class="active">Domů</a>
-                <a href="./notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="./attendances">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-        </nav>
         <?php
         if (isset($loginError)) {
             echo '<div class="error-message">';
@@ -178,23 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
             </form>
         </div>
-
-        <?php
-
-        // Získání dat z tabulky
-        $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
-        $result = mysqli_query($conn, $query);
-
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            $text = $row['text'];
-
-            // Výpis HTML s dynamickým obsahem
-            echo "$text";
-        } else {
-            echo 'Chyba při získávání dat z databáze: ' . mysqli_error($conn);
-        }
-        ?>
+        
     </div>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script src="./assets/js/script.js"></script>
