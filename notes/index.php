@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
                     <a href="../logout.php">Odhlásit se</a>
                 <?php } else { ?>
-                    <a class="popup-trigger" data-link="../login.php#popup">Přihlásit se</a>
+                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
 

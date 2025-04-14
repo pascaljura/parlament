@@ -301,7 +301,7 @@ if ($result) {
                     <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
                     <a href="../logout.php">Odhlásit se</a>
                 <?php } else { ?>
-                    <a class="popup-trigger" data-link="../login.php#popup">Přihlásit se</a>
+                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
 
@@ -446,11 +446,6 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
                             </div>
                             <button type="submit" style="margin: 10px 0 10px 0;">Uložit změny</button>
                         </form>
-
-                        <iframe id="studentIframe" src="" style="display: block; height: 400px; border: medium;"></iframe>
-<div class="student-list-container" id="studentListContainer" style="display: none; max-width: 40%; overflow-x: auto;">
-    <!-- Tento obsah bude zobrazen v rámci iframe -->
-</div>
 
 
                     </div>
