@@ -282,10 +282,11 @@ if (isset($_SESSION['idusers_parlament'])) {
                 echo '<button onclick="window.open(\'./notes_pdf.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
                 echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout PDF';
                 echo '</button>';
-                echo '<button onclick="window.open(\'./notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
-                echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
-                echo '</button>';
-                // Pokud není přístup povolen (parlament_access_admin != 1)
+                if (isset($parlament_access_admin) && $parlament_access_admin == '1') {
+                    echo '<button onclick="window.open(\'./notes_docx.php?idnotes_parlament=' . $idnotes_parlament . '\', \'_blank\')">';
+                    echo '<i class="fa fa-file-pdf-o pdf-icon" aria-hidden="true"></i> Stáhnout DOCX';
+                    echo '</button>';
+                }
                 if (isset($edit_notes) && $edit_notes == '1') {
                     echo '<button onclick="window.location.href=\'./edit_notes.php?idnotes_parlament=' . $idnotes_parlament . '\'">';
                     echo '<i class="fa fa-pencil" aria-hidden="true"></i> Upravit zápis';
