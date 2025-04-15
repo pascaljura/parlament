@@ -70,52 +70,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
 <body>
     <div id="calendar">
-        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
-        <nav>
-
-            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
-            <div class="user-icon" onclick="toggleUserMenu(event)">
-                <?php if (!empty($username_parlament)) { ?>
-                    <i class="fa fa-user" style="color: #5481aa;"></i>
-                <?php } else { ?>
-                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
-                <?php } ?>
-            </div>
-
-            <!-- Navigation Links (vlevo na PC) -->
-            <div class="nav-links">
-                <a href="../">Domů</a>
-                <a href="../notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="../attendances" class="active">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-
-            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
-            <div class="hamburger" onclick="toggleMobileMenu(event)">
-                <i class="fa fa-bars"></i>
-            </div>
-
-            <!-- User Dropdown Menu -->
-            <div class="user-dropdown" id="userDropdown">
-                <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
-                    <a href="../logout.php">Odhlásit se</a>
-                <?php } else { ?>
-                    <a href="../login.php">Přihlásit se</a>
-                <?php } ?>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="../">Domů</a>
-                <a href="../notes">Zápisy</a>
-                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
-                    <a href="../attendances" class="active">Prezenční listiny</a>
-                <?php } ?>
-            </div>
-        </nav>
-        <?php
+         <?php
         if (isset($start_attendances) && isset($parlament_access_admin) && $parlament_access_admin == '1' && $start_attendances == '1') {
             // Vygenerování unikátního tokenu schůze
             $token = bin2hex(random_bytes(32));
@@ -153,11 +108,6 @@ if (isset($_SESSION['idusers_parlament'])) {
             colorDark: "#000000",
             colorLight: "rgba(255, 255, 255, 0)"
         });
-
-        // Přizpůsobení velikosti pomocí CSS
-        document.getElementById("qrcode").style.width = "100%";
-        document.getElementById("qrcode").style.maxWidth = "100%"; // Maximální velikost
-        document.getElementById("qrcode").style.height = "auto";
 
     </script>
 </body>

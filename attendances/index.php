@@ -362,9 +362,12 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
             </div>
             <div class="button-container" id="buttonContainer">
             <?php if (isset($start_attendances) && $start_attendances == '1') { ?>                   
-                <form action="create_attendances_list.php" method="post">
-                    <button type="submit" style="margin: 10px 0 10px 0;">Zahájit schůzi</button>
-                </form>
+                <?php
+echo '<button class="popup-trigger" data-link="./create_attendances_list.php" style="margin: 10px 0 10px 0;">';
+echo '<i class="fa fa-play-circle" aria-hidden="true"></i> Zahájit schůzi';
+echo '</button>';
+?>
+
                 <?php } ?>
             </div>
             <?php if (count($attendances) > 0): ?>
