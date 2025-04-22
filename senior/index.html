@@ -44,6 +44,10 @@
             }
         }
 
+        p {
+            padding-bottom: 15px;
+        }
+
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -200,11 +204,35 @@
             cursor: pointer;
         }
 
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #3d6a90;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background-color: #3c3c3b;
+        }
+
+        .btn-download:hover {
+            background-color: #2a2a29;
+        }
+
         section {
             max-width: 1000px;
             margin: 2rem auto;
             padding: 0 1rem;
-            scroll-margin-top: 100px;
+            scroll-margin-top: 80px;
         }
 
         .schedule ul {
@@ -216,7 +244,7 @@
             list-style: none;
         }
 
-        .schedule.harmonogram li {
+        .schedule.program li {
             background: white;
             border: 1px solid var(--bg-light);
             border-left: 6px solid var(--primary);
@@ -226,7 +254,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .schedule.harmonogram li:hover {
+        .schedule.program li:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -236,17 +264,6 @@
             list-style: disc;
         }
 
-        .schedule.links li a {
-            color: var(--primary);
-            text-decoration: underline;
-        }
-
-        .schedule.links li a:hover {
-            color: var(--secondary);
-            text-decoration: none;
-        }
-
-
         footer {
             background-color: var(--primary);
             color: white;
@@ -254,6 +271,7 @@
             text-align: center;
             font-size: 0.9rem;
             margin-top: 3rem;
+            margin: 0 -1rem;
         }
 
         footer a {
@@ -324,6 +342,10 @@
                 display: none;
             }
 
+            section {
+                scroll-margin-top: 250px;
+            }
+
             .hamburger {
                 display: flex;
             }
@@ -342,7 +364,7 @@
         </div>
         <div class="nav-links">
             <a href="#o-akci">O akci</a>
-            <a href="#harmonogram">Harmonogram</a>
+            <a href="#program">Program</a>
             <a href="#soubory">Soubory & odkazy</a>
         </div>
         <div class="hamburger" onclick="toggleMenu()">
@@ -355,40 +377,136 @@
     <div class="mobile-menu" id="mobileMenu">
         <button class="close-btn" onclick="toggleMenu()">&times;</button>
         <a href="#o-akci" onclick="toggleMenu()">O akci</a>
-        <a href="#harmonogram" onclick="toggleMenu()">Harmonogram</a>
+        <a href="#program" onclick="toggleMenu()">Program</a>
         <a href="#soubory" onclick="toggleMenu()">Soubory & odkazy</a>
     </div>
 
     <section id="o-akci" class="fade-in">
         <h2>O akci</h2>
-        <p>Odpoledne se seniory pořádané <strong>Moudrou sítí</strong> je mezigeneračním setkáním...</p>
+        <p><strong>Generace by neměly stát proti sobě, ale vedle sebe</strong> a dnešní svět se mění rychleji než kdy
+            dřív. Je důležité,
+            <strong>abychom si navzájem rozuměli.</strong><br>
+            <strong>Dny seniorů ve školách</strong> jsou tak jedinečnou příležitostí, kdy se mohou potkat lidé napříč
+            generacemi,
+            <strong>popovídat si, něco se navzájem naučit a trávit spolu čas.</strong>
+        </p>
+
+        <p>
+            <strong>Senioři mají zkušenosti, příběhy a pohled na svět skrze prožité okamžiky.</strong> Studenti jim
+            mohou ukázat, že
+            <strong>technologie jsou pomocníky v každodenním životě.</strong> Studenti získají zkušenost, která je lepší
+            než běžná
+            výuka, <strong>kdo umí lépe mluvit o praxi než ten, kdo ji roky dělal.</strong><br>
+            Studenti taky vidí, že <strong>pomáhat se zvládnutím technologií má smysl.</strong> Senior může nahlédnout
+            do světa
+            mladé generace, vyzkoušet věci s mobilem, internetem nebo aplikacemi.
+        </p>
+
+        <p>
+            <strong>Za Dnem seniorů stojí školní parlament Purkyňka</strong> ve spolupráci s <strong>Moudrou
+                Sítí</strong>, která vyrostla z dlouholetých
+            zkušeností spolku <strong>Moudrá Sovička</strong>. Ten od roku 2015 <strong>pomohl více než 15 000
+                seniorům</strong> lépe se zorientovat ve
+            světě technologií.<br>
+            Na Moudré Síti se podíleli dobrovolníci z komunity <strong>Česko.Digital, středoškoláci i
+                samotní senioři.</strong>
+        </p>
     </section>
 
-    <section id="harmonogram" class="schedule harmonogram fade-in">
-        <h2>Harmonogram</h2>
+    <section id="program" class="schedule program fade-in">
+        <h2>Program</h2>
         <ul id="timeline">
-            <li data-start="09:00" data-end="09:15"><span class="text"><b>9:00</b><br> – Zahájení, přivítání
+            <li data-start="09:00" data-end="09:15"><span class="text"><b>9:00</b><br>Zahájení, přivítání
                     hostů</span><span class="status-label"></span></li>
-            <li data-start="09:15" data-end="10:00"><span class="text"><b>9:15 - 10:00</b><br> – Přednášky
-                    studentů</span><span class="status-label"></span></li>
-            <li data-start="10:00" data-end="10:20"><span class="text"><b>10:00 - 10:20</b><br> – Překvapení pro
+            <li data-start="09:15" data-end="10:00"><span class="text"><b>9:15 - 10:00</b><br>Přednášky
+                    studentů<br>
+                    - QR kódy: Matěj Kořalka, Lukáš Jarolím<br>
+                    - AI: Ondřej Novák<br>
+                    - Bezkontaktní platby: Matěj Kořalka, Lukáš Jarolím</span><span class="status-label"></span></li>
+            <li data-start="10:00" data-end="10:20"><span class="text"><b>10:00 - 10:20</b><br>Překvapení pro
                     zájemce, jinak
                     přestávka</span><span class="status-label"></span></li>
-            <li data-start="10:20" data-end="11:00"><span class="text"><b>10:20 - 11:00</b><br> – Přednášky
-                    studentů</span><span class="status-label"></span></li>
-            <li data-start="11:00" data-end="12:00"><span class="text"><b>11:00 - 12:00</b><br> – Pomoc
+            <li data-start="10:20" data-end="11:00"><span class="text"><b>10:20 - 11:00</b><br>Přednášky
+                    studentů<br>
+                    - Dopravní aplikace: Tereza Lokajová, Jan Jelínek<br>
+                    - Obchodní aplikace: Ondřej Novák</span><span class="status-label"></span></li>
+            <li data-start="11:00" data-end="12:00"><span class="text"><b>11:00 - 12:00</b><br>Pomoc
                     seniorům od studentů</span><span class="status-label"></span></li>
         </ul>
     </section>
 
     <section id="soubory" class="schedule links fade-in">
-        <h2>Seznam prezentací</h2>
-        <ul>
-            <li><a href="#" target="_blank">QR kódy - Matěj Kořalka, Lukáš Jarolím</a></li>
-            <li><a href="#" target="_blank">AI - Ondřej Novák</a></li>
-            <li><a href="#" target="_blank">Bezkontaktní platby - Matěj Kořalka, Lukáš Jarolím</a></li>
-            <li><a href="#" target="_blank">Dopravní aplikace - Tereza Lokajová, Jan Jelínek</a></li>
-            <li><a href="#" target="_blank">Obchodní aplikace - Ondřej Novák</a></li>
+        <h2>Seznam souborů k přednáškám</h2>
+        <ul style="display: flex; flex-direction: column; gap: 1rem; padding: 0; list-style: none;">
+            <li>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <strong>QR kódy – Matěj Kořalka, Lukáš Jarolím</strong>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EaEjiXSi6W1Mnso9zIeh1m4BLHfyBwcbO68mE0DP5iGuFQ?e=oYOwxr"
+                            target="_blank" class="btn">
+                            Zobrazit online &#x1F5D7;
+                        </a>
+                        <a href="#" download class="btn btn-download">
+                            Stáhnout .pptx &#x2B07;
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <strong>AI – Ondřej Novák</strong>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="https://my.visme.co/view/019ygxy1-ai" target="_blank" class="btn">
+                            Zobrazit online &#x1F5D7;
+                        </a>
+                        <a href="#" download class="btn btn-download">
+                            Stáhnout .pptx &#x2B07;
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <strong>Bezkontaktní platby – Matěj Kořalka, Lukáš Jarolím</strong>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EVVYBcyU-axFhT7dQdQYERkBRuG-zdTIwZ4FOWgLiQz4hQ?e=PUAt2Z"
+                            target="_blank" class="btn">
+                            Zobrazit online &#x1F5D7;
+                        </a>
+                        <a href="#" download class="btn btn-download">
+                            Stáhnout .pptx &#x2B07;
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <strong>Dopravní aplikace – Tereza Lokajová, Jan Jelínek</strong>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EXFGbEReWaNGgSSKn5Qh71YBOVZ1VaRtoGyCUyxO5120HA?e=qKwr8D"
+                            target="_blank" class="btn">
+                            Zobrazit online &#x1F5D7;
+                        </a>
+                        <a href="#" download class="btn btn-download">
+                            Stáhnout .pptx &#x2B07;
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                    <strong>Obchodní aplikace – Ondřej Novák</strong>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="https://my.visme.co/view/4d6v3myy-technology-company-presentation" target="_blank"
+                            class="btn">
+                            Zobrazit online &#x1F5D7;
+                        </a>
+                        <a href="#" download class="btn btn-download">
+                            Stáhnout .pptx &#x2B07;
+                        </a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </section>
 
@@ -445,7 +563,7 @@
 
             fadeEls.forEach(el => observer.observe(el));
 
-            // Harmonogram
+            // Program
             const parseTime = str => {
                 const [h, m] = str.split(':').map(Number);
                 const now = new Date();
