@@ -25,6 +25,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&family=Roboto:wght@300;500&display=swap"
         rel="stylesheet">
+    <script src="https://kit.fontawesome.com/18441cd380.js" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary: #5088B5;
@@ -336,23 +337,52 @@
             align-items: center;
             gap: 0.3rem;
             margin-left: 15px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            color: white;
+            /* obecná barva textu, přepíše se u potřeby */
         }
 
+        /* Výchozí vzhled (např. pro future) */
         .status-label::before {
-            content: '⏱️';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            content: "\f017";
+            /* fa-clock */
+            margin-right: 5px;
+        }
+
+        /* HOTOVO */
+        .done .status-label {
+            background-color: #3C3C3B;
+            color: #F0F2F2;
         }
 
         .done .status-label::before {
-            content: '✅';
+            content: "\f00d";
+            /* fa-xmark */
+        }
+
+        /* PROBÍHÁ */
+        .now .status-label {
+            background-color: #70B95E;
         }
 
         .now .status-label::before {
-            content: '🔴';
+            content: "\f00c";
+            /* fa-check */
+        }
+
+        /* BUDOUCNOST */
+        .future .status-label {
+            background-color: #FAB400;
         }
 
         .future .status-label::before {
-            content: '🕒';
+            content: "\f017";
+            /* fa-clock */
         }
+
 
         @media (max-width: 768px) {
             .nav-links {
@@ -381,9 +411,10 @@
         </div>
         <div class="nav-links">
             <a href="#o-akci">O akci</a>
-            <a href="https://forms.office.com/e/1YGn9Y9L1p" target="_blank">Hodnocení akce</a>
             <a href="#program">Program</a>
             <a href="#soubory">Soubory & odkazy</a>
+            <a href="https://forms.office.com/e/1YGn9Y9L1p" target="_blank"><i class="fa fa-up-right-from-square"></i>
+                Ohodnotit akci!!</a>
         </div>
         <div class="hamburger" onclick="toggleMenu()">
             <div></div>
@@ -395,10 +426,28 @@
     <div class="mobile-menu" id="mobileMenu">
         <button class="close-btn" onclick="toggleMenu()">&times;</button>
         <a href="#o-akci" onclick="toggleMenu()">O akci</a>
-        <a href="https://forms.office.com/e/1YGn9Y9L1p" onclick="toggleMenu()" target="_blank">Hodnocení akce</a>
         <a href="#program" onclick="toggleMenu()">Program</a>
         <a href="#soubory" onclick="toggleMenu()">Soubory & odkazy</a>
+        <a href="https://forms.office.com/e/1YGn9Y9L1p" onclick="toggleMenu()" target="_blank"><i
+                class="fa fa-up-right-from-square"></i> Ohodnotit akci!!</a>
     </div>
+    <section class="fade-in"
+        style="background-color: var(--primary); color: white; padding: 4rem 1rem; margin-top: 1rem; border-radius: 12px; text-align: center;">
+        <h1 style="font-family: var(--font-title); font-size: 2.5rem; margin-bottom: 1rem;">Mezigenerační setkání</h1>
+        <h2 style="font-family: var(--font-title); font-size: 2rem; margin-bottom: 1rem; color: white">7.5.2025 | sborovna na Purkyňce | 9:00 - 12:00 </h2>
+        <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto 2rem;">
+            Propojujeme studenty a seniory pomocí technologií. Významná akce, která bourá bariéry mezi generacemi a
+            pomáhá vytvářet nová přátelství i dovednosti.
+        </p>
+        <a href="https://forms.office.com/e/1YGn9Y9L1p" class="btn"
+            style="background-color: white; color: var(--primary); font-weight: bold;" target="_blank">
+            Ohodnotit akci!! <i class="fa fa-up-right-from-square"></i>
+        </a> <a href="#program" class="btn"
+        style="background-color: white; color: var(--primary); font-weight: bold;">
+        Přejít na program! <i class="fa fa-arrow-down"></i>
+    </a>
+    </section>
+
     <section id="o-akci" class="fade-in">
         <h2>O akci</h2>
         <p><strong>Generace by neměly stát proti sobě, ale vedle sebe</strong> a dnešní svět se mění rychleji než kdy
@@ -432,26 +481,26 @@
     </section>
 
     <section class="fade-in" id="hodnoceni">
-        <h2>Ohodnoťte akci</h2>
+        <h2>Ohodnotit akci!</h2>
         <p>
             Budeme moc rádi, když nám zanecháte zpětnou vazbu. Pomůže nám to akci dál vylepšovat!
         </p>
         <a href="https://forms.office.com/e/1YGn9Y9L1p" target="_blank" class="btn">
-            Otevřít formulář &#x1F5D7;
+            Ohodnotit akci!! <i class="fa fa-up-right-from-square"></i>
         </a>
     </section>
 
     <section id="program" class="schedule program fade-in">
         <h2>Program</h2>
         <ul id="timeline">
-            <li data-start="09:00" data-end="09:15"><span class="text"><b>9:00</b><br>Zahájení, přivítání
+            <li data-start="09:00" data-end="09:15"><span class="text"><b>9:00 - 9:15</b><br>Zahájení, přivítání
                     hostů</span><span class="status-label"></span></li>
-            <li data-start="09:15" data-end="10:00"><span class="text"><b>9:15 - 10:00</b><br>Přednášky
+            <li data-start="18:15" data-end="20:00"><span class="text"><b>9:15 - 10:00</b><br>Přednášky
                     studentů<br>
                     - QR kódy: Matěj Kořalka, Lukáš Jarolím<br>
                     - AI: Ondřej Novák<br>
                     - Bezkontaktní platby: Matěj Kořalka, Lukáš Jarolím</span><span class="status-label"></span></li>
-            <li data-start="10:00" data-end="10:20"><span class="text"><b>10:00 - 10:20</b><br>Překvapení pro
+            <li data-start="20:00" data-end="22:20"><span class="text"><b>10:00 - 10:20</b><br>Překvapení pro
                     zájemce, jinak
                     přestávka</span><span class="status-label"></span></li>
             <li data-start="10:20" data-end="11:00"><span class="text"><b>10:20 - 11:00</b><br>Přednášky
@@ -473,10 +522,10 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EaEjiXSi6W1Mnso9zIeh1m4BLHfyBwcbO68mE0DP5iGuFQ?e=oYOwxr"
                             target="_blank" class="btn">
-                            Zobrazit online &#x1F5D7;
+                            Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
                         <a href="#" download class="btn btn-download">
-                            Stáhnout .pptx &#x2B07;
+                            Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </div>
@@ -486,10 +535,10 @@
                     <strong>AI – Ondřej Novák</strong>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="https://my.visme.co/view/019ygxy1-ai" target="_blank" class="btn">
-                            Zobrazit online &#x1F5D7;
+                            Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
                         <a href="#" download class="btn btn-download">
-                            Stáhnout .pptx &#x2B07;
+                            Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </div>
@@ -500,10 +549,10 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EVVYBcyU-axFhT7dQdQYERkBRuG-zdTIwZ4FOWgLiQz4hQ?e=PUAt2Z"
                             target="_blank" class="btn">
-                            Zobrazit online &#x1F5D7;
+                            Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
                         <a href="#" download class="btn btn-download">
-                            Stáhnout .pptx &#x2B07;
+                            Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </div>
@@ -514,10 +563,10 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="https://sspbrno-my.sharepoint.com/:p:/g/personal/boucnik_jiri_purkynka_cz/EXFGbEReWaNGgSSKn5Qh71YBOVZ1VaRtoGyCUyxO5120HA?e=qKwr8D"
                             target="_blank" class="btn">
-                            Zobrazit online &#x1F5D7;
+                            Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
                         <a href="#" download class="btn btn-download">
-                            Stáhnout .pptx &#x2B07;
+                            Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </div>
@@ -528,10 +577,10 @@
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="https://my.visme.co/view/4d6v3myy-technology-company-presentation" target="_blank"
                             class="btn">
-                            Zobrazit online &#x1F5D7;
+                            Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
                         <a href="#" download class="btn btn-download">
-                            Stáhnout .pptx &#x2B07;
+                            Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
                 </div>
