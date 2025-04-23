@@ -632,51 +632,43 @@
         const navLinks = document.querySelectorAll('.nav-links a');
         const mobileLinks = document.querySelectorAll('.mobile-menu a');
 
-        function setActiveLink() {
-            navLinks.forEach(link => link.classList.remove('active'));
-            mobileLinks.forEach(link => link.classList.remove('active'));
-            const hash = window.location.hash;
-            const activeNavLink = document.querySelector(`.nav-links a[href="${hash}"]`);
-            const activeMobileLink = document.querySelector(`.mobile-menu a[href="${hash}"]`);
-            if (activeNavLink) activeNavLink.classList.add('active');
-            if (activeMobileLink) activeMobileLink.classList.add('active');
+        function setActiveById(id) {
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
+            mobileLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
         }
 
-        window.addEventListener('hashchange', setActiveLink);
         window.addEventListener('DOMContentLoaded', () => {
-            setActiveLink();
-
+            // FADE-IN
             const fadeEls = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver(entries => {
+            const fadeObserver = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
+                        fadeObserver.unobserve(entry.target);
                     }
                 });
             }, {
                 threshold: 0.1
             });
+            fadeEls.forEach(el => fadeObserver.observe(el));
 
-            fadeEls.forEach(el => observer.observe(el));
-
-            // Program
+            // STATUS PROGRAMU
             const parseTime = str => {
                 const [h, m] = str.split(':').map(Number);
                 const now = new Date();
-                const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
-                return d;
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
             };
 
             const now = new Date();
             const items = document.querySelectorAll('#timeline li');
-
             items.forEach(li => {
                 const start = parseTime(li.dataset.start);
                 const end = parseTime(li.dataset.end);
-
                 li.classList.add('time-status');
-
                 const label = li.querySelector('.status-label');
                 if (now < start) {
                     li.classList.add('future');
@@ -689,14 +681,36 @@
                     label.textContent = 'Ukončeno';
                 }
             });
+
+            // DYNAMIC HASH & MENU ACTIVE
+            const sections = document.querySelectorAll("section[id]");
+            const sectionObserver = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const sectionId = entry.target.id;
+                            history.replaceState(null, null, `#${sectionId}`);
+                            setActiveById(sectionId);
+                        }
+                    });
+                },
+                {
+                    rootMargin: "0px 0px -60% 0px",
+                    threshold: 0.3
+                }
+            );
+            sections.forEach(section => sectionObserver.observe(section));
         });
 
+        // MOBILE ACTIVE LINK ON CLICK
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
             });
         });
+
+
     </script>
 </body>
 
