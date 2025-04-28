@@ -105,7 +105,7 @@ if (isset($_SESSION['idusers_parlament'])) {
             <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
                 <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen jako: <b><?php echo $username_parlament; ?></b></p>
+                    <p>Přihlášen/a jako: <b><?php echo $username_parlament; ?></b></p>
                     <a href="./logout.php">Odhlásit se</a>
                 <?php } else { ?>
                     <a class="popup-trigger" data-link="./login.php">Přihlásit se</a>
