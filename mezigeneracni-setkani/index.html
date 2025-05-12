@@ -406,9 +406,9 @@
 
     <div class="navbar">
         <div class="logo-group">
-            <img src="./img/logo-parlament.png" alt="Logo Parlament">
-            <img src="./img/logo-purkynka.png" alt="Logo Purkyňka">
-            <img src="./img/logo-moudra-sit.png" alt="Logo Moudrá síť">
+            <img src="./img/logo-parlament.png" alt="Logo Parlament" loading="lazy">
+            <img src="./img/logo-purkynka.png" alt="Logo Purkyňka" loading="lazy">
+            <img src="./img/logo-moudra-sit.png" alt="Logo Moudrá síť" loading="lazy">
         </div>
         <div class="nav-links">
             <a href="#o-akci">O akci</a>
@@ -497,20 +497,21 @@
         <h2>Program</h2>
         <ul id="timeline">
             <li data-start="09:00" data-end="09:15"><span class="text"><b>9:00 - 9:15</b><br>Zahájení, přivítání
-                    hostů</span><span class="status-label"></span></li>
+                    hostů</span><span class="status-label" style="margin: 0px;"></span></li>
             <li data-start="09:15" data-end="10:00"><span class="text"><b>9:15 - 10:00</b><br>Přednášky
                     studentů:<br>
                     - QR kódy: Matěj Kořalka, Lukáš Jarolím<br>
                     - AI: Ondřej Novák<br>
-                    - Bezkontaktní platby: Matěj Kořalka, Lukáš Jarolím</span><span class="status-label"></span></li>
+                    - Bezkontaktní platby: Matěj Kořalka, Lukáš Jarolím</span><span class="status-label"
+                    style="margin: 0px;"></span></li>
             <li data-start="10:00" data-end="10:20"><span class="text"><b>10:00 - 10:20</b><br>Překvapení pro
-                    zájemce, přestávka</span><span class="status-label"></span></li>
+                    zájemce, přestávka</span><span class="status-label" style="margin: 0px;"></span></li>
             <li data-start="10:20" data-end="11:00"><span class="text"><b>10:20 - 11:00</b><br>Přednášky
                     studentů:<br>
                     - Dopravní aplikace: Tereza Lokajová, Jan Jelínek<br>
-                    - Obchodní aplikace: Ondřej Novák</span><span class="status-label"></span></li>
+                    - Obchodní aplikace: Ondřej Novák</span><span class="status-label" style="margin: 0px;"></span></li>
             <li data-start="11:00" data-end="12:00"><span class="text"><b>11:00 - 12:00</b><br>Individuální pomoc
-                    seniorům</span><span class="status-label"></span></li>
+                    seniorům</span><span class="status-label" style="margin: 0px;"></span></li>
         </ul>
     </section>
 
@@ -540,7 +541,8 @@
                         <a href="https://my.visme.co/view/019ygxy1-ai" target="_blank" class="btn">
                             Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
-                        <a href="./prezentace/ai_ondrej_novak.pptx" download="AI – Ondřej Novák" class="btn btn-download">
+                        <a href="./prezentace/ai_ondrej_novak.pptx" download="AI – Ondřej Novák"
+                            class="btn btn-download">
                             Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
@@ -584,8 +586,8 @@
                             class="btn">
                             Zobrazit prezentaci <i class="fa fa-up-right-from-square"></i>
                         </a>
-                        <a href="./prezentace/obchodni_aplikace_ondrej_novak.pptx" download="Obchodní aplikace – Ondřej Novák"
-                            class="btn btn-download">
+                        <a href="./prezentace/obchodni_aplikace_ondrej_novak.pptx"
+                            download="Obchodní aplikace – Ondřej Novák" class="btn btn-download">
                             Stáhnout prezentaci <i class="fa-solid fa-download"></i>
                         </a>
                     </div>
@@ -643,7 +645,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // FADE-IN
+            // FADE-IN efekt
             const fadeEls = document.querySelectorAll('.fade-in');
             const fadeObserver = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
@@ -652,67 +654,81 @@
                         fadeObserver.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
             fadeEls.forEach(el => fadeObserver.observe(el));
 
-            // STATUS PROGRAMU
+            // === STAV AKCE ===
+            const eventDate = new Date('2025-05-07');
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            const eventStr = eventDate.toISOString().split('T')[0];
+
+            const items = document.querySelectorAll('#timeline li');
             const parseTime = str => {
                 const [h, m] = str.split(':').map(Number);
-                const now = new Date();
-                return new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
+                return new Date(today.getFullYear(), today.getMonth(), today.getDate(), h, m);
             };
 
-            const now = new Date();
-            const items = document.querySelectorAll('#timeline li');
-            items.forEach(li => {
-                const start = parseTime(li.dataset.start);
-                const end = parseTime(li.dataset.end);
-                li.classList.add('time-status');
-                const label = li.querySelector('.status-label');
-                if (now < start) {
-                    li.classList.add('future');
-                    label.textContent = 'Následuje';
-                } else if (now >= start && now <= end) {
-                    li.classList.add('now');
-                    label.textContent = 'Právě probíhá';
-                } else {
+            if (todayStr < eventStr) {
+                // Akce teprve bude
+                items.forEach(li => {
+                    const label = li.querySelector('.status-label');
+                    label.textContent = "📅 Akce se teprve chystá – těšíme se na vás 7. května 2025!";
+                    li.classList.add('');
+                });
+            } else if (todayStr > eventStr) {
+                // Akce už proběhla
+                items.forEach(li => {
+                    const label = li.querySelector('.status-label');
+                    label.textContent = "✅ Děkujeme, že jste dorazili – akce již proběhla.";
                     li.classList.add('done');
-                    label.textContent = 'Ukončeno';
-                }
-            });
+                });
+            } else {
+                // Dnes je den akce (7. 5. 2025)
+                const now = new Date();
+                items.forEach(li => {
+                    const start = parseTime(li.dataset.start);
+                    const end = parseTime(li.dataset.end);
+                    const label = li.querySelector('.status-label');
+                    if (now < start) {
+                        label.textContent = "Následuje";
+                        li.classList.add('future');
+                    } else if (now >= start && now <= end) {
+                        label.textContent = "Právě probíhá";
+                        li.classList.add('now');
+                    } else {
+                        label.textContent = "Ukončeno";
+                        li.classList.add('done');
+                    }
+                });
+            }
 
-            // DYNAMIC HASH & MENU ACTIVE
+            // === Dynamická aktivní sekce v menu ===
             const sections = document.querySelectorAll("section[id]");
-            const sectionObserver = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const sectionId = entry.target.id;
-                            history.replaceState(null, null, `#${sectionId}`);
-                            setActiveById(sectionId);
-                        }
-                    });
-                },
-                {
-                    rootMargin: "0px 0px -60% 0px",
-                    threshold: 0.3
-                }
-            );
+            const sectionObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        history.replaceState(null, null, `#${sectionId}`);
+                        setActiveById(sectionId);
+                    }
+                });
+            }, {
+                rootMargin: "0px 0px -60% 0px",
+                threshold: 0.3
+            });
             sections.forEach(section => sectionObserver.observe(section));
         });
 
-        // MOBILE ACTIVE LINK ON CLICK
+        // === Aktivace odkazu v mobilním menu ===
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
             });
         });
-
-
     </script>
+
 </body>
 
 </html>
