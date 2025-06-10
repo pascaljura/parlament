@@ -216,21 +216,17 @@ $idattendances_list_parlament = intval($_GET['idattendances_list_parlament']);
                     attendanceData: attendanceData
                 })
             })
-                .then(res => res.text()) // Získá odpověď jako text
-                .then(text => {
-                    console.log('Odpověď ze serveru:', text);
-                    try {
-                        const result = JSON.parse(text);
-                        const message = encodeURIComponent(result.message);
-                        const type = result.success ? 'success-message' : 'error-message';
-                        window.location.href = `./show_students.php?message=${message}&message_type=${type}&idattendances_list_parlament=${idListiny}`;
-                    } catch (e) {
-                        console.error('Chybný JSON:', e, 'Text:', text);
-                        const message = encodeURIComponent('Neplatná odpověď ze serveru.');
-                        window.location.href = `./show_students.php?message=${message}&message_type=error-message&idattendances_list_parlament=${idListiny}`;
-                    }
+                .then(res => res.json())
+                .then(result => {
+                    const message = encodeURIComponent(result.message);
+                    const type = result.success ? 'success-message' : 'error-message';
+                    window.location.href = `./show_students.php?message=${message}&message_type=${type}&idattendances_list_parlament=${idListiny}`;
+                })
+                .catch(err => {
+                    console.error('Chyba při ukládání:', err);
+                    const message = encodeURIComponent('Nepodařilo se uložit prezenční listinu.');
+                    window.location.href = `./show_students.php?message=${message}&message_type=error-message&idattendances_list_parlament=${idListiny}`;
                 });
-
         });
     </script>
 </body>
