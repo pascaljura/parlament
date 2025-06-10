@@ -138,6 +138,8 @@ $idattendances_list_parlament = intval($_GET['idattendances_list_parlament']);
             <button type="submit" class="save-button">Uložit prezenční listinu</button>
         </form>
     </div>
+    <script src="../assets/js/script.js"> </script>
+    </script>
     <script>
         const container = document.getElementById('studentContainer');
         const idListiny = <?= $idattendances_list_parlament ?>;

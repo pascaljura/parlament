@@ -100,12 +100,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function removeQueryString() {
-  if (window.location.href.indexOf("?") > -1) {
-    const newUrl = window.location.href.split("?")[0];
+  const url = new URL(window.location.href);
+  const params = new URLSearchParams(url.search);
+
+  // Odstranit nežádoucí parametry
+  params.delete('message');
+  params.delete('message_type');
+
+  // Vytvořit novou URL
+  const newQuery = params.toString();
+  const newUrl = `${url.origin}${url.pathname}${newQuery ? '?' + newQuery : ''}`;
+
+  if (newUrl !== window.location.href) {
     window.history.pushState({}, document.title, newUrl);
     location.reload();
   }
 }
+
 
 function downloadAndRedirect(id) {
   window.location.href = "./soubor.php?id=" + id;
