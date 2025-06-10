@@ -86,7 +86,7 @@ if (!empty($toAdd) || !empty($toRemove)) {
     if (!empty($toAdd)) {
         $message .= "<p><strong>Přidáni:</strong><ol>";
         foreach ($toAdd as $id) {
-            $message .= "<br>" . htmlspecialchars($changedStudents[$id]) . "";
+            $message .= "<li>" . htmlspecialchars($changedStudents[$id]) . "</li>";
         }
         $message .= "</ol></p>";
     }
@@ -94,10 +94,11 @@ if (!empty($toAdd) || !empty($toRemove)) {
     if (!empty($toRemove)) {
         $message .= "<p><strong>Odebráni:</strong><ol>";
         foreach ($toRemove as $id) {
-            $message .= "<br>" . htmlspecialchars($changedStudents[$id]) . "";
+            $message .= "<li>" . htmlspecialchars($changedStudents[$id]) . "</li>";
         }
         $message .= "</ol></p>";
     }
+
 }
 
 echo json_encode([
