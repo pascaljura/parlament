@@ -370,7 +370,16 @@ echo '</button>';
 
                 <?php } ?>
             </div>
-            <?php if (count($attendances) > 0): ?>
+            <?php if (count($attendances) > 0): 
+   
+$hasActiveAttendance = false;
+foreach ($attendances as $attendance) {
+    if ($attendance['active'] == '1') {
+        $hasActiveAttendance = true;
+        break;
+    }
+}
+?> 
                 <div class="button-container" id="buttonContainer">
                     <div class="layout-container">
                         <form action="save_attendances_links.php" method="post">
@@ -386,10 +395,15 @@ echo '</button>';
                                                 ?>
                                                 <th style="white-space: nowrap;">Přiřazený zápis</th>
                                             <?php } ?>
-                                            <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
-                                                ?>
-                                                <th style="white-space: nowrap;">Akce</th>
-                                            <?php } ?>
+<?php if (
+    (isset($delete_attendances) && $delete_attendances == '1') ||
+    (isset($end_attendances) && $end_attendances == '1') ||
+    (isset($qr_attendances) && $qr_attendances == '1')
+) { ?>
+
+<th style="white-space: nowrap;">Akce</th>
+<?php } ?>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -426,17 +440,17 @@ echo '</button>';
                                                                 </select>
                                                             </td>
                                                         <?php } ?>
-                                                <?php if ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1')) {
-                                                    ?>
+
                                                     <td style="white-space: nowrap;">
                                                         <div style="display: flex; gap: 10px; justify-content: center;">
-                                                        <?php } ?>
+                                                      
                                                         <?php if (isset($delete_attendances) && $delete_attendances == '1') { ?>
                                                             <a href="attendances_list_actions.php?action=delete&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
                                                                 onclick="event.stopPropagation();">
                                                                 <button type="button" class="delete">Smazat</button>
                                                             </a>
                                                         <?php }
+                                                                                               if ($attendance['active'] == '1' && ((isset($delete_attendances) && $delete_attendances == '1') || (isset($end_attendances) && $end_attendances == '1') || (isset($qr_attendances) && $qr_attendances == '1'))) { 
                                                         if (isset($end_attendances) && $end_attendances == '1') {
                                                             ?>
                                                             <a href="attendances_list_actions.php?action=end&idattendances_list_parlament=<?= $attendance['idattendances_list_parlament'] ?>"
@@ -455,6 +469,7 @@ echo '</button>';
                                                     </div>
                                                 </td>
                                             </tr>
+                                              <?php } ?>
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
