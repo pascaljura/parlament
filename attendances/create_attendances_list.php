@@ -28,7 +28,7 @@ if (isset($_SESSION['idusers_parlament'])) {
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
         $show_attendances = $userData['show_attendances'];
-
+        $admin = $userData['admin'];
 
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
@@ -70,7 +70,7 @@ if (isset($_SESSION['idusers_parlament'])) {
 
 <body>
     <div id="calendar">
-         <?php
+        <?php
         if (isset($start_attendances) && isset($parlament_access_admin) && $parlament_access_admin == '1' && $start_attendances == '1') {
             // Vygenerování unikátního tokenu schůze
             $token = bin2hex(random_bytes(32));

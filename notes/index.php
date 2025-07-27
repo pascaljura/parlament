@@ -27,7 +27,7 @@ if (isset($_SESSION['idusers_parlament'])) {
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
         $show_attendances = $userData['show_attendances'];
-
+        $admin = $userData['admin'];
 
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
@@ -143,6 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                     <a href="../attendances">Prezenční listiny</a>
                 <?php } ?>
+                <?php if (isset($admin) && $admin == '1') { ?>
+                    <a href="../admin">Admin</a>
+                <?php } ?>
             </div>
 
             <!-- Hamburger Menu Icon (vpravo na mobilu) -->
@@ -166,6 +169,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="../notes" class="active">Zápisy</a>
                 <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
                     <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
+                <?php if (isset($admin) && $admin == '1') { ?>
+                    <a href="../admin">Admin</a>
                 <?php } ?>
             </div>
         </nav>

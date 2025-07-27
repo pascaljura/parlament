@@ -28,6 +28,7 @@ if (isset($_SESSION['idusers_parlament'])) {
         $qr_attendances = $userData['qr_attendances'];
         $select_idnotes_parlament = $userData['select_idnotes_parlament'];
         $show_attendances = $userData['show_attendances'];
+        $admin = $userData['admin'];
     } else {
         // Uživatel nenalezen (může být smazán), odhlásíme ho
         header("Location: ../logout.php");
