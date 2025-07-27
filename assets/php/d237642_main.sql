@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Pon 07. dub 2025, 20:09
+-- Vytvořeno: Ned 27. čec 2025, 21:25
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -23,15 +23,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `actions_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `actions_alba_rosa_parlament` (
+  `idactions_parlament` int(11) NOT NULL,
+  `idusers_parlament` int(11) NOT NULL,
+  `section` varchar(100) NOT NULL,
+  `notes` text DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `attendances_alba_rosa_parlament`
 --
 
 CREATE TABLE IF NOT EXISTS `attendances_alba_rosa_parlament` (
   `idattendances_parlament` int(11) NOT NULL,
-  `idattendances_list_parlament` int(11) NOT NULL,
-  `idusers_parlament` int(11) NOT NULL,
-  `time` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+  `idattendances_list_parlament` int(11) DEFAULT NULL,
+  `idusers_parlament` int(11) DEFAULT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `attendances_alba_rosa_parlament`
@@ -129,7 +142,126 @@ INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idatt
 (160, 38, 89, '2025-03-18 14:43:29'),
 (162, 38, 121, '2025-03-18 14:44:51'),
 (163, 38, 126, '2025-03-18 14:45:02'),
-(164, 38, 104, '2025-03-18 14:45:02');
+(164, 38, 104, '2025-03-18 14:45:02'),
+(166, 39, 110, '2025-04-08 14:35:46'),
+(167, 39, 100, '2025-04-08 14:35:46'),
+(168, 39, 67, '2025-04-08 14:35:46'),
+(169, 39, 117, '2025-04-08 14:35:46'),
+(170, 39, 102, '2025-04-08 14:35:46'),
+(171, 39, 113, '2025-04-08 14:35:46'),
+(172, 39, 66, '2025-04-08 14:35:46'),
+(173, 39, 104, '2025-04-08 14:35:46'),
+(174, 39, 123, '2025-04-08 14:35:46'),
+(175, 39, 88, '2025-04-08 14:35:46'),
+(176, 39, 115, '2025-04-08 14:35:46'),
+(177, 39, 133, '2025-04-08 14:32:10'),
+(178, 41, 103, '2025-04-15 14:34:28'),
+(179, 41, 100, '2025-04-15 14:34:32'),
+(180, 41, 118, '2025-04-15 14:34:42'),
+(181, 41, 120, '2025-04-15 14:34:50'),
+(182, 41, 67, '2025-04-15 14:34:52'),
+(183, 41, 66, '2025-04-15 14:35:07'),
+(184, 41, 126, '2025-04-15 14:35:09'),
+(185, 41, 115, '2025-04-15 14:35:10'),
+(186, 41, 116, '2025-04-15 14:35:42'),
+(187, 41, 117, '2025-04-15 14:35:49'),
+(188, 41, 110, '2025-04-15 14:36:17'),
+(189, 41, 123, '2025-04-15 14:36:26'),
+(190, 41, 104, '2025-04-15 14:37:05'),
+(191, 41, 91, '2025-04-15 14:37:21'),
+(192, 41, 133, '2025-04-15 14:37:21'),
+(193, 41, 96, '2025-04-15 14:37:21'),
+(194, 41, 89, '2025-04-15 14:37:21'),
+(195, 41, 127, '2025-04-15 14:37:53'),
+(196, 41, 96, '2025-04-15 14:38:07'),
+(197, 41, 134, '2025-04-15 14:50:00'),
+(198, 41, 135, '2025-04-15 14:50:00'),
+(199, 41, 88, '2025-04-15 14:50:00'),
+(200, 44, 134, '2025-04-29 14:44:57'),
+(201, 44, 135, '2025-04-29 14:44:57'),
+(202, 44, 91, '2025-04-29 14:44:57'),
+(203, 44, 110, '2025-04-29 14:44:57'),
+(204, 44, 133, '2025-04-29 14:44:57'),
+(205, 44, 67, '2025-04-29 14:44:57'),
+(206, 44, 96, '2025-04-29 14:44:57'),
+(207, 44, 120, '2025-04-29 14:44:57'),
+(208, 44, 66, '2025-04-29 14:44:57'),
+(209, 44, 116, '2025-04-29 14:44:57'),
+(210, 44, 118, '2025-04-29 14:44:57'),
+(211, 44, 104, '2025-04-29 14:44:57'),
+(212, 44, 123, '2025-04-29 14:44:57'),
+(213, 44, 88, '2025-04-29 14:44:57'),
+(214, 44, 115, '2025-04-29 14:44:57'),
+(215, 44, 137, '2025-04-29 14:47:48'),
+(216, 44, 98, '2025-04-29 14:55:54'),
+(217, 38, 138, '2025-03-18 14:37:44'),
+(218, 46, 94, '2025-05-06 14:36:19'),
+(219, 46, 135, '2025-05-06 14:36:19'),
+(220, 46, 110, '2025-05-06 14:36:19'),
+(221, 46, 133, '2025-05-06 14:36:19'),
+(222, 46, 103, '2025-05-06 14:36:19'),
+(223, 46, 100, '2025-05-06 14:36:19'),
+(224, 46, 67, '2025-05-06 14:36:19'),
+(225, 46, 117, '2025-05-06 14:36:19'),
+(227, 46, 96, '2025-05-06 14:36:19'),
+(228, 46, 120, '2025-05-06 14:36:19'),
+(229, 46, 97, '2025-05-06 14:36:19'),
+(230, 46, 113, '2025-05-06 14:36:19'),
+(231, 46, 66, '2025-05-06 14:36:19'),
+(232, 46, 134, '2025-05-06 14:36:19'),
+(233, 46, 122, '2025-05-06 14:36:19'),
+(234, 46, 118, '2025-05-06 14:36:19'),
+(235, 46, 108, '2025-05-06 14:36:19'),
+(236, 46, 127, '2025-05-06 14:36:19'),
+(237, 46, 88, '2025-05-06 14:36:19'),
+(238, 46, 115, '2025-05-06 14:36:19'),
+(239, 46, 121, '2025-05-06 14:36:19'),
+(240, 46, 137, '2025-05-06 14:37:20'),
+(241, 46, 98, '2025-05-06 14:38:15'),
+(242, 46, 104, '2025-05-06 14:50:09'),
+(243, 46, 101, '2025-05-06 14:53:00'),
+(244, 48, 135, '2025-05-13 14:35:13'),
+(245, 48, 110, '2025-05-13 14:35:13'),
+(246, 48, 101, '2025-05-13 14:35:13'),
+(247, 48, 119, '2025-05-13 14:35:13'),
+(248, 48, 103, '2025-05-13 14:35:13'),
+(249, 48, 100, '2025-05-13 14:35:13'),
+(250, 48, 67, '2025-05-13 14:35:13'),
+(251, 48, 117, '2025-05-13 14:35:13'),
+(252, 48, 137, '2025-05-13 14:35:13'),
+(253, 48, 96, '2025-05-13 14:35:13'),
+(254, 48, 120, '2025-05-13 14:35:13'),
+(255, 48, 66, '2025-05-13 14:35:13'),
+(256, 48, 126, '2025-05-13 14:35:13'),
+(257, 48, 134, '2025-05-13 14:35:13'),
+(258, 48, 116, '2025-05-13 14:35:13'),
+(259, 48, 118, '2025-05-13 14:35:13'),
+(260, 48, 108, '2025-05-13 14:35:13'),
+(261, 48, 127, '2025-05-13 14:35:13'),
+(262, 48, 123, '2025-05-13 14:35:13'),
+(263, 48, 88, '2025-05-13 14:35:13'),
+(264, 48, 115, '2025-05-13 14:35:13'),
+(265, 48, 91, '2025-05-13 14:53:21'),
+(266, 48, 97, '2025-05-13 14:53:21'),
+(267, 48, 95, '2025-05-13 14:53:21'),
+(268, 52, 94, '2025-06-10 19:52:44'),
+(269, 52, 110, '2025-06-10 19:53:47'),
+(270, 52, 101, '2025-06-10 19:53:47'),
+(271, 52, 133, '2025-06-10 19:53:47'),
+(272, 52, 103, '2025-06-10 19:53:47'),
+(273, 52, 100, '2025-06-10 19:53:47'),
+(274, 52, 67, '2025-06-10 19:53:47'),
+(275, 52, 92, '2025-06-10 19:53:47'),
+(276, 52, 120, '2025-06-10 19:53:47'),
+(277, 52, 97, '2025-06-10 19:53:47'),
+(278, 52, 66, '2025-06-10 19:53:47'),
+(279, 52, 126, '2025-06-10 19:53:47'),
+(280, 52, 118, '2025-06-10 19:53:47'),
+(281, 52, 108, '2025-06-10 19:53:47'),
+(282, 52, 95, '2025-06-10 19:53:47'),
+(283, 52, 123, '2025-06-10 19:53:47'),
+(284, 52, 88, '2025-06-10 19:53:47'),
+(285, 52, 115, '2025-06-10 19:53:47');
 
 -- --------------------------------------------------------
 
@@ -139,11 +271,11 @@ INSERT INTO `attendances_alba_rosa_parlament` (`idattendances_parlament`, `idatt
 
 CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
   `idattendances_list_parlament` int(11) NOT NULL,
-  `idnotes_parlament` int(11) NOT NULL,
-  `datetime` datetime NOT NULL,
-  `token` varchar(256) NOT NULL,
+  `idnotes_parlament` int(11) DEFAULT NULL,
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  `token` varchar(256) DEFAULT NULL,
   `active` enum('0','1') NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `attendances_list_alba_rosa_parlament`
@@ -151,7 +283,38 @@ CREATE TABLE IF NOT EXISTS `attendances_list_alba_rosa_parlament` (
 
 INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlament`, `idnotes_parlament`, `datetime`, `token`, `active`) VALUES
 (27, 80, '2025-03-11 18:44:26', '56651e47bf7dbd463840f55ba7c0fcec3c0c765ed581b6b337abd033adb503c1', ''),
-(38, 81, '2025-03-18 14:34:41', '6a4405cc187fd92ccfa435ca245d002419f5d8a50cbe3fe17293ed3c0c90ce34', '');
+(38, 81, '2025-03-18 14:34:41', '6a4405cc187fd92ccfa435ca245d002419f5d8a50cbe3fe17293ed3c0c90ce34', ''),
+(39, 86, '2025-04-08 14:34:15', '3ea6a740190a97bd0d97ba5285954889890efa8df911759c562fabf71a8d89fb', ''),
+(41, 87, '2025-04-15 14:33:19', '1d84f883facccffd98f4941b200ac35995161c0dbfda13276f7d504f45d85861', ''),
+(44, 88, '2025-04-29 14:43:22', 'eb4d2116f53135ab6494fde670234f55aba8e168d92d00445f6247277b57865c', ''),
+(46, 90, '2025-05-06 14:34:40', 'e2a6a7f45ff86ab8370856a44dd744ae541cdbb145e1b75021e61b7da7837747', ''),
+(48, 91, '2025-05-13 14:33:58', '1f8d277c7c1b47cb2fe8c32ca334278c6a079718569c0fe0ef5e810307c82dfc', ''),
+(52, 92, '2025-06-10 11:50:06', 'a54b64fc994cd75ab7af63aa4328d5fb85a9a67454050ae7123bcfdf0128fa39', '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `customers_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `customers_alba_rosa_file_invoicing` (
+  `id` int(11) NOT NULL,
+  `invoice` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address_1` varchar(255) NOT NULL,
+  `address_2` varchar(255) NOT NULL,
+  `town` varchar(255) NOT NULL,
+  `county` varchar(255) NOT NULL,
+  `postcode` varchar(255) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `name_ship` varchar(255) NOT NULL,
+  `address_1_ship` varchar(255) NOT NULL,
+  `address_2_ship` varchar(255) NOT NULL,
+  `town_ship` varchar(255) NOT NULL,
+  `county_ship` varchar(255) NOT NULL,
+  `postcode_ship` varchar(255) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -167,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `files_alba_rosa_file_storage` (
   `startDate` datetime NOT NULL DEFAULT current_timestamp(),
   `endDate` date NOT NULL,
   `state` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=490 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `files_alba_rosa_file_storage`
@@ -200,7 +363,375 @@ INSERT INTO `files_alba_rosa_file_storage` (`idfile_file_storage`, `idusers`, `c
 (69, NULL, 'pKNTfqwKGIpUTzxPc6BT', '9 - Zkouška tahem zadání_2 .pdf', '2025-04-05 20:42:31', '2025-04-05', '0'),
 (70, NULL, 'K9UKe68eudnR49kW4Shs', 'Článek na webu - Egg Hunt + školní parlament.md', '2025-04-06 00:11:47', '2025-04-23', '0'),
 (71, NULL, 'K9UKe68eudnR49kW4Shs', 'Článek na webu - Egg Hunt + školní parlament.txt', '2025-04-06 00:11:47', '2025-04-23', '0'),
-(72, NULL, 'K9UKe68eudnR49kW4Shs', 'Článek na webu - Egg Hunt + školní parlament.zip', '2025-04-06 00:11:47', '2025-04-23', '0');
+(72, NULL, 'K9UKe68eudnR49kW4Shs', 'Článek na webu - Egg Hunt + školní parlament.zip', '2025-04-06 00:11:47', '2025-04-23', '0'),
+(73, NULL, 'UXWV7pOaZT2Fs8NI2iv2', 'kola_0.2mm_PETG_MK3_6h57m.gcode', '2025-04-07 20:38:03', '2025-04-30', '0'),
+(74, NULL, 'UXWV7pOaZT2Fs8NI2iv2', 'kola_0.2mm_PETG_MK3S_6h57m.gcode', '2025-04-07 20:38:03', '2025-04-30', '0'),
+(75, NULL, 's5S0BsSw2fkABIVBs54f', 'Petr Tomka web.zip', '2025-04-07 21:51:09', '2026-04-07', '0'),
+(76, NULL, '6UAlz6z3a64BIzWXyE3y', 'Valerie Fričková web.zip', '2025-04-09 11:08:42', '2026-04-09', '0'),
+(77, NULL, '1LMIK23oUBjeUJ9N11E6', '5. Zpracování Si a výroba monokrystalu (1).docx', '2025-04-14 15:28:08', '2025-04-17', '0'),
+(78, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_X1_HIGH_TEMP_PETG_2h38m.gcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(79, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_X1_LOW_TEMP_PETG_2h38m.gcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(80, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_X1C_LOW_TEMP_PETG_2h38m.gcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(81, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_X1C_HIGH_TEMP_PETG_2h38m.gcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(82, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_2_0.4n_0.2mm_PETG_MK4IS_3h1m.bgcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(83, NULL, 'Su7FsLbmntmy2KY0run1', 'predni naprava_2_0.2mm_PETG_MK3S_5h26m.gcode', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(84, NULL, 'Su7FsLbmntmy2KY0run1', 'přední náprava.3mf', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(85, NULL, 'Su7FsLbmntmy2KY0run1', 'přední náprava2 v13.step', '2025-04-14 20:49:06', '2025-04-18', '0'),
+(86, NULL, 'VIdILXDoV96WKFae0agg', 'IMG_20250415_080137_797.jpg', '2025-04-15 08:02:21', '2025-04-23', '0'),
+(87, NULL, 'VIdILXDoV96WKFae0agg', 'IMG_20250415_080122_261.jpg', '2025-04-15 08:02:21', '2025-04-23', '0'),
+(88, NULL, 'VIdILXDoV96WKFae0agg', 'IMG_20250415_080115_550.jpg', '2025-04-15 08:02:21', '2025-04-23', '0'),
+(89, NULL, 'QhqAdwYhdALNXM9fHtDD', 'circuitjs-20250416-121731.txt', '2025-04-16 12:33:26', '2025-04-30', '0'),
+(90, NULL, 'awXl1ayGuR8401R0d2G0', 'questions(1).pdf', '2025-04-16 13:03:02', '2025-04-30', '0'),
+(91, NULL, 'Ro84WvriuqCWt4R66Q0E', 'Fylogeneza_dychacej_sustavy_zivocichov druháci.pdf', '2025-04-16 14:30:43', '2025-04-17', '0'),
+(92, NULL, 'TlTfhweBHXJ1v46NdwuI', 'from-a-to-b.pdf', '2025-04-16 14:31:12', '2026-04-16', '0'),
+(93, NULL, 'Grwh7b7BsbQ3OHflgGbO', '2025-04-17-171718470.mp4', '2025-04-17 17:27:09', '2025-04-25', '0'),
+(94, NULL, 'tiNTDhzzGBg6O5gWnC7i', 'dopravni_aplikace_lokajova+jelinek.pptx', '2025-04-19 18:15:00', '2025-04-19', '0'),
+(95, NULL, 'tiNTDhzzGBg6O5gWnC7i', '', '2025-04-19 18:15:00', '2025-04-19', '0'),
+(96, NULL, 'jRGCdruMCqTWIoWFQe5e', 'dopravni_aplikace_lokajova+jelinek.pptx', '2025-04-19 18:15:22', '2025-05-30', '0'),
+(97, NULL, 'KrPdlLlZ4GZPiOPXCnTh', 'PURKYNKA - LOGO - manuál.pdf', '2025-04-23 13:33:47', '2025-05-01', '0'),
+(98, NULL, 'p6PC0D8y0bjjkTAieSxL', 'IMG_3922~3.jpg', '2025-04-24 22:34:39', '2026-04-24', '0'),
+(99, NULL, 'p6PC0D8y0bjjkTAieSxL', '20250422_172920~4.jpg', '2025-04-24 22:34:39', '2026-04-24', '0'),
+(100, NULL, 'p6PC0D8y0bjjkTAieSxL', '20250422_204638~3.jpg', '2025-04-24 22:34:39', '2026-04-24', '0'),
+(101, NULL, 'p6PC0D8y0bjjkTAieSxL', 'IMG_3923~2.jpg', '2025-04-24 22:34:39', '2026-04-24', '0'),
+(102, NULL, 'rjHFE7nqfPzSPqnz7Dx8', 'Mezigenerační setkání - BINGO!.pdf', '2025-04-27 19:45:19', '2026-04-27', '0'),
+(103, NULL, 'rjHFE7nqfPzSPqnz7Dx8', 'Program mezigeneračního setkání.pdf', '2025-04-27 19:45:19', '2026-04-27', '0'),
+(104, NULL, 'rjHFE7nqfPzSPqnz7Dx8', 'QR kód na stránky mezigeneračního setkání.pdf', '2025-04-27 19:45:19', '2026-04-27', '0'),
+(109, 65, 'm9Rc0Hga1AOlncMn0pLh', 'Držák na mobil na ovladač dily.stl_1.stl', '2025-04-29 21:16:34', '2025-05-07', '0'),
+(110, 65, 'm9Rc0Hga1AOlncMn0pLh', 'dily_X1C_PETG_3h36m.gcode', '2025-04-29 21:16:34', '2025-05-07', '0'),
+(111, 65, 'm9Rc0Hga1AOlncMn0pLh', 'dily_X1_PETG_3h36m.gcode', '2025-04-29 21:16:34', '2025-05-07', '0'),
+(112, 65, 'm9Rc0Hga1AOlncMn0pLh', 'dily_0.4n_0.2mm_PETG_MK4IS_5h4m.bgcode', '2025-04-29 21:16:34', '2025-05-07', '0'),
+(113, NULL, '4KIbDSeThF4rKbHxTupI', 'Drzak baterek v11_0.4n_0.15mm_PETG_MINIIS_4h56m.bgcode', '2025-05-02 07:30:32', '2025-05-11', '0'),
+(115, NULL, 'XLGD0dqGP51xXx2cZxe5', 'Drzak baterek MK3S PETG.gcode', '2025-05-06 06:21:52', '2025-05-18', '0'),
+(116, NULL, 'ESkvknY0LwoJnnfXV2QV', 'Drzak baterek MK4 PETG.bgcode', '2025-05-06 13:13:11', '2025-05-11', '0'),
+(124, NULL, 'rPrQjpDhswjPi5QR2l7N', 'inbound6032088509252155534.mp4', '2025-05-08 23:58:06', '2025-05-11', '0'),
+(129, 65, '75uNmWMbFktwT86VqN1d', 'tisk 13.5._0.4n_0.2mm_PETG_MK4IS_2h34m.bgcode', '2025-05-12 21:30:21', '2025-05-16', '0'),
+(130, 65, '75uNmWMbFktwT86VqN1d', 'tisk 13.5._0.2mm_PETG_MK3S_4h45m.gcode', '2025-05-12 21:30:21', '2025-05-16', '0'),
+(131, 65, '75uNmWMbFktwT86VqN1d', 'tisk 13.5..3mf', '2025-05-12 21:30:21', '2025-05-16', '0'),
+(132, 65, '75uNmWMbFktwT86VqN1d', 'tisk 13.5. X1C_PETG_1h55m.gcode', '2025-05-12 21:30:21', '2025-05-16', '0'),
+(133, NULL, 'toNHjnNzFySJ9eW5rG82', 'Boucník_Jiří_L2.pdf', '2025-05-13 18:47:07', '2025-05-16', '0'),
+(134, NULL, 'vFelxiUzrrm51sYV9gLm', 'Screenshot_20250513-162205.jpg', '2025-05-13 19:22:59', '2025-05-29', '0'),
+(142, 65, 'mJ7vCm8yRTCi8CeKd9nB', 'Tlačítka ICT.html', '2025-05-13 20:34:00', '2025-05-16', '0'),
+(143, NULL, 'bw08LA0QRgHeOGeiXVRy', 'tatra-815-truck-1.snapshot.3.zip', '2025-05-14 12:24:07', '2025-05-17', '0'),
+(144, NULL, 'tgh3ish8GrKN1gky4Usq', 'Tlačítka a jak je použít.pptx', '2025-05-14 12:41:14', '2025-05-17', '0'),
+(146, NULL, '4zP20eV3hgpoYl7DxmZd', 'prusa3d_win_2_9_2.exe', '2025-05-15 22:02:42', '2025-05-23', '0'),
+(147, NULL, 'OzzBTKpv3L8LDTiKf6Qw', 'plakat_7.zip', '2025-05-15 22:07:16', '2025-05-29', '0'),
+(148, NULL, 'DsoQByDEH9Tk1IDna9lx', 'Kniha NMR.pdf', '2025-05-16 06:47:50', '2025-05-31', '0'),
+(150, NULL, '2yg1Eq3bTqgY7OkW7eHF', 'Držák + spona na baterky v4_0.4n_0.2mm_PETG_MK4IS_2h55m.bgcode', '2025-05-17 17:09:37', '2025-05-24', '0'),
+(151, NULL, 'vzoRGXfMYeUfNvowBktE', 'web.png', '2025-05-18 14:07:22', '2025-05-22', '0'),
+(152, NULL, 'vzoRGXfMYeUfNvowBktE', '8995f66ab566f10df8e3e3f6061ecab7.png', '2025-05-18 14:07:22', '2025-05-22', '0'),
+(153, NULL, 'PZ8XmUauwwAuNhrqrofa', 'Logo_vyberu_Instagram.png', '2025-05-19 21:16:52', '2025-05-28', '0'),
+(154, NULL, 'PZ8XmUauwwAuNhrqrofa', '6.png', '2025-05-19 21:16:52', '2025-05-28', '0'),
+(155, NULL, 'PZ8XmUauwwAuNhrqrofa', '5.png', '2025-05-19 21:16:52', '2025-05-28', '0'),
+(178, 65, '1ftIPnjgwGIqADr1WSVg', 'AnotherRTSP.zip', '2025-05-26 13:01:31', '2025-06-26', '0'),
+(180, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_07.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(181, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_03.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(182, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_08.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(183, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Rohové razítko.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(184, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_09.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(185, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_11.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(186, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_12.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(187, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_02.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(188, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_01.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(189, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_06.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(190, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_04.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(191, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_05.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(192, 17, 'Q2qpp3sEAEdSIVe3rbVH', 'Výkres_10.dwg', '2025-05-27 13:14:21', '2026-05-27', '0'),
+(193, NULL, 'DuhkBA6GQP8HmfAD8CzF', 'B9F25373-C9A3-4CA7-8321-8897E18F1B98.jpeg', '2025-05-29 19:56:46', '2025-06-06', '0'),
+(194, NULL, '3Hymr9FwPUxGMOD68ak4', 'B9F25373-C9A3-4CA7-8321-8897E18F1B98.jpeg', '2025-05-29 19:57:41', '2025-06-06', '0'),
+(195, NULL, 'wh3WQDla6F7gAQynNM4E', '20250528_075041.jpg', '2025-05-30 13:47:26', '2025-05-31', '0'),
+(196, NULL, 'wh3WQDla6F7gAQynNM4E', '20250525_113741.heic', '2025-05-30 13:47:28', '2025-05-31', '0'),
+(197, NULL, 'wh3WQDla6F7gAQynNM4E', '20250525_152334.jpg', '2025-05-30 13:47:28', '2025-05-31', '0'),
+(198, NULL, 'PqWrrPvQUoimtbdm8gt2', 'IMG_6411.jpeg', '2025-05-30 18:23:41', '2025-06-30', '0'),
+(199, NULL, 'Nasmuncd6AO9zL1MxziH', 'IMG_8629.jpeg', '2025-05-30 18:41:56', '2025-06-30', '0'),
+(200, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1151.jpeg', '2025-05-31 12:17:37', '2025-06-30', '0'),
+(201, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1150.jpeg', '2025-05-31 12:17:45', '2025-06-30', '0'),
+(202, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1147.jpeg', '2025-05-31 12:17:45', '2025-06-30', '0'),
+(203, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1148.jpeg', '2025-05-31 12:17:46', '2025-06-30', '0'),
+(204, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1131.jpeg', '2025-05-31 12:17:48', '2025-06-30', '0'),
+(205, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1145.jpeg', '2025-05-31 12:17:49', '2025-06-30', '0'),
+(206, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1133.jpeg', '2025-05-31 12:17:50', '2025-06-30', '0'),
+(207, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1132.jpeg', '2025-05-31 12:17:50', '2025-06-30', '0'),
+(208, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1149.jpeg', '2025-05-31 12:17:50', '2025-06-30', '0'),
+(209, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1125.jpeg', '2025-05-31 12:17:51', '2025-06-30', '0'),
+(210, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1143.jpeg', '2025-05-31 12:17:52', '2025-06-30', '0'),
+(211, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1123.jpeg', '2025-05-31 12:17:53', '2025-06-30', '0'),
+(212, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1134.jpeg', '2025-05-31 12:17:53', '2025-06-30', '0'),
+(213, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1126.jpeg', '2025-05-31 12:17:54', '2025-06-30', '0'),
+(214, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1117.jpeg', '2025-05-31 12:17:54', '2025-06-30', '0'),
+(215, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1124.jpeg', '2025-05-31 12:17:56', '2025-06-30', '0'),
+(216, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1140.jpeg', '2025-05-31 12:17:56', '2025-06-30', '0'),
+(217, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1153.jpeg', '2025-05-31 12:17:56', '2025-06-30', '0'),
+(218, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1116.jpeg', '2025-05-31 12:17:57', '2025-06-30', '0'),
+(219, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1152.jpeg', '2025-05-31 12:17:57', '2025-06-30', '0'),
+(220, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1121.jpeg', '2025-05-31 12:17:59', '2025-06-30', '0'),
+(221, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1109.jpeg', '2025-05-31 12:18:00', '2025-06-30', '0'),
+(222, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1108.jpeg', '2025-05-31 12:18:02', '2025-06-30', '0'),
+(223, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1110.jpeg', '2025-05-31 12:18:03', '2025-06-30', '0'),
+(224, NULL, 'mfk3Wgxp0LDFnrq2E6Ob', 'IMG_1111.jpeg', '2025-05-31 12:18:06', '2025-06-30', '0'),
+(225, NULL, 'SQOp0mtanhcmugxMybXF', 'Domácí marlenkový řez.docx', '2025-06-01 18:07:42', '2025-06-04', '0'),
+(226, NULL, 'i1wDrS5xXPq8yA7SPQia', 'Photos-1-001.zip', '2025-06-04 21:08:43', '2025-06-19', '0'),
+(227, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193534.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(228, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193603.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(229, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193845.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(230, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193747.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(231, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193826.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(232, NULL, 'kgiNrKkorV4RyB4dB7IE', 'IMG_20250608_193805.jpg', '2025-06-08 19:39:51', '2025-06-10', '0'),
+(234, 17, 'iLw7tH49vo9tDvr527VQ', 'fyzika - pptx link.txt', '2025-06-09 21:02:44', '2025-06-17', '0'),
+(235, NULL, 'i1OHfuagq41q2d3Fk0EC', 'IMG_20250611_132632.jpg', '2025-06-11 13:41:40', '2025-06-15', '0'),
+(236, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131020.mp4', '2025-06-11 13:42:25', '2025-06-15', '0'),
+(237, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132109.mp4', '2025-06-11 13:42:48', '2025-06-15', '0'),
+(238, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131640.mp4', '2025-06-11 13:42:49', '2025-06-15', '0'),
+(239, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131625.mp4', '2025-06-11 13:42:51', '2025-06-15', '0'),
+(240, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132034.mp4', '2025-06-11 13:42:52', '2025-06-15', '0'),
+(241, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132637.mp4', '2025-06-11 13:42:55', '2025-06-15', '0'),
+(242, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132055.mp4', '2025-06-11 13:42:55', '2025-06-15', '0'),
+(243, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_130929.mp4', '2025-06-11 13:42:56', '2025-06-15', '0'),
+(244, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131717.mp4', '2025-06-11 13:43:02', '2025-06-15', '0'),
+(245, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131819.mp4', '2025-06-11 13:43:02', '2025-06-15', '0'),
+(246, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131004.mp4', '2025-06-11 13:43:09', '2025-06-15', '0'),
+(247, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131840.mp4', '2025-06-11 13:43:10', '2025-06-15', '0'),
+(248, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131747.mp4', '2025-06-11 13:43:11', '2025-06-15', '0'),
+(249, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_130941.mp4', '2025-06-11 13:43:14', '2025-06-15', '0'),
+(250, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_130953.mp4', '2025-06-11 13:43:15', '2025-06-15', '0'),
+(251, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131732.mp4', '2025-06-11 13:43:43', '2025-06-15', '0'),
+(252, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132203.mp4', '2025-06-11 13:43:45', '2025-06-15', '0'),
+(253, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131652.mp4', '2025-06-11 13:43:48', '2025-06-15', '0'),
+(254, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131537.mp4', '2025-06-11 13:43:55', '2025-06-15', '0'),
+(255, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132119.mp4', '2025-06-11 13:44:05', '2025-06-15', '0'),
+(256, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_131901.mp4', '2025-06-11 13:44:08', '2025-06-15', '0'),
+(257, NULL, 'i1OHfuagq41q2d3Fk0EC', 'VID_20250611_132217.mp4', '2025-06-11 13:44:38', '2025-06-15', '0'),
+(258, NULL, 'jK3AeUVSNP9iAiDDL9jP', 'VID_20250611_132045.mp4', '2025-06-11 13:45:47', '2025-06-15', '0'),
+(259, NULL, 'IjlidHmd0NUe7SK19E5N', 'VID_20250611_140620.mp4', '2025-06-11 14:10:26', '2025-06-15', '0'),
+(260, NULL, 'IjlidHmd0NUe7SK19E5N', 'VID_20250611_140754.mp4', '2025-06-11 14:10:27', '2025-06-15', '0'),
+(261, NULL, 'HSyJ2V0qpzgzmZXSE9ec', 'inbound5372958608517192945.jpg', '2025-06-11 14:47:45', '2025-06-11', '0'),
+(262, NULL, 'HSyJ2V0qpzgzmZXSE9ec', 'inbound2515839139042954160.png', '2025-06-11 14:47:45', '2025-06-11', '0'),
+(263, NULL, 'x4aw9oEmNWYJC5reiSJN', 'inbound7031213706703173400.png', '2025-06-11 14:49:23', '2025-06-11', '0'),
+(264, NULL, 'x4aw9oEmNWYJC5reiSJN', 'inbound3178525406140492208.jpg', '2025-06-11 14:49:23', '2025-06-11', '0'),
+(265, NULL, 'LcvZTn9Ppva8FjV7iwjT', 'Problémy při pečení.pdf', '2025-06-12 20:08:21', '2025-06-26', '0'),
+(266, NULL, 'LcvZTn9Ppva8FjV7iwjT', 'výrobní postupy pečiva.pdf', '2025-06-12 20:08:21', '2025-06-26', '0'),
+(267, NULL, 'LcvZTn9Ppva8FjV7iwjT', 'Suroviny pro pečení.pdf', '2025-06-12 20:08:21', '2025-06-26', '0'),
+(268, NULL, 'LcvZTn9Ppva8FjV7iwjT', 'Kypřidla a jejich funkce.pdf', '2025-06-12 20:08:21', '2025-06-26', '0'),
+(269, NULL, 'LcvZTn9Ppva8FjV7iwjT', 'Typy těst a jejich charakteristiky.pdf', '2025-06-12 20:08:21', '2025-06-26', '0'),
+(270, NULL, 'mRiXMktTiTw6sBbDPhpW', 'pneuracer.mp4', '2025-06-12 22:33:46', '2026-06-12', '0'),
+(271, 65, 'HMWgoqDajqFDqfq0D3aA', 'Kohout 1.zip', '2025-06-14 12:05:41', '2025-06-29', '0'),
+(272, 65, 'nHAUPGgtaG5nCxHt8M7C', '14. 6. 2025.zip', '2025-06-14 12:33:00', '2025-06-29', '0'),
+(273, 65, 'alShHLi6ORIsBn9mTXRp', '14. 6. 2025.zip', '2025-06-14 13:54:36', '2025-06-29', '0'),
+(274, 65, 'cbUaUbk2yjxGWFotn6FY', '14. 6. 2025.zip', '2025-06-14 14:19:04', '2025-06-29', '0'),
+(275, NULL, 'fh6aW8Xt4ESw2u8cEJfQ', 'fontánka.stl', '2025-06-16 12:51:35', '2025-06-27', '0'),
+(276, NULL, 'fh6aW8Xt4ESw2u8cEJfQ', 'fontanka_PLA_X1C_8h17m.gcode', '2025-06-16 12:52:19', '2025-06-27', '0'),
+(277, NULL, 'SOG5JD4cgE3tKNQegdVF', 'IMG_20250613_154921.jpg', '2025-06-16 12:53:25', '2025-06-19', '0'),
+(278, NULL, 'SOG5JD4cgE3tKNQegdVF', 'IMG_20250613_154649.jpg', '2025-06-16 12:53:29', '2025-06-19', '0'),
+(279, NULL, 'SOG5JD4cgE3tKNQegdVF', 'IMG_20250613_160520.jpg', '2025-06-16 12:53:34', '2025-06-19', '0'),
+(280, NULL, 'SOG5JD4cgE3tKNQegdVF', 'IMG_20250613_154842.jpg', '2025-06-16 12:53:34', '2025-06-19', '0'),
+(281, 17, 'xEAi0shZ1tLN6QJdyhO5', 'VIzitky.pdf', '2025-06-17 18:54:24', '2025-07-02', '0'),
+(282, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (9).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(283, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (10).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(284, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (7).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(285, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (4).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(286, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (5).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(287, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (3).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(288, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz.jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(289, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (8).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(290, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (2).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(291, 17, 'a80Ephuc18jLf1P1Pgrq', 'vsouladu.cz (6).jpg', '2025-06-17 20:40:03', '2026-06-17', '0'),
+(292, 17, 'a80Ephuc18jLf1P1Pgrq', '2025-06-17-201605627.mp4', '2025-06-17 20:40:05', '2026-06-17', '0'),
+(293, NULL, 'QQdnhRoiFZ5oQWvOx8iK', 'Výlet parlament(1).docx', '2025-06-19 08:18:21', '2025-06-27', '0'),
+(294, NULL, 'kESnXTl876Tp9rGhnTdw', 'Všechny módy.zip', '2025-06-23 17:43:25', '2025-06-29', '0'),
+(295, NULL, 'gALCxqqTqPHFB0T29DNa', 'LOGO FRICKOVA.png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(296, NULL, 'gALCxqqTqPHFB0T29DNa', 'Valerie Fričková web logo (1920 x 1080 px) (200 x 65 px).png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(297, NULL, 'gALCxqqTqPHFB0T29DNa', 'Nepojmenované.png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(298, NULL, 'gALCxqqTqPHFB0T29DNa', 'Nepojmenované.ico', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(299, NULL, 'gALCxqqTqPHFB0T29DNa', 'logo frickova.cz.png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(300, NULL, 'gALCxqqTqPHFB0T29DNa', 'enbed alice roštíková.png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(301, NULL, 'gALCxqqTqPHFB0T29DNa', 'alice roštíková ikonka.png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(302, NULL, 'gALCxqqTqPHFB0T29DNa', 'Blush Pink Typography Nail Artist Business Card (512 x 512 px).png', '2025-06-23 18:30:54', '2025-06-28', '0'),
+(303, NULL, 'gALCxqqTqPHFB0T29DNa', 'block-ab89.zip', '2025-06-23 18:30:55', '2025-06-28', '0'),
+(304, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (9).jpg', '2025-06-23 18:30:56', '2025-06-28', '0'),
+(305, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (5).jpg', '2025-06-23 18:30:56', '2025-06-28', '0'),
+(306, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (4).jpg', '2025-06-23 18:30:56', '2025-06-28', '0'),
+(307, NULL, 'gALCxqqTqPHFB0T29DNa', 'svatba.jpg', '2025-06-23 18:30:56', '2025-06-28', '0'),
+(308, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (2).jpg', '2025-06-23 18:30:57', '2025-06-28', '0'),
+(309, NULL, 'gALCxqqTqPHFB0T29DNa', 'Nepojmenovaná.png', '2025-06-23 18:30:57', '2025-06-28', '0'),
+(310, NULL, 'gALCxqqTqPHFB0T29DNa', 'miminka.jpg', '2025-06-23 18:30:57', '2025-06-28', '0'),
+(311, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz.jpg', '2025-06-23 18:30:57', '2025-06-28', '0'),
+(312, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (6).jpg', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(313, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (7).mp4', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(314, NULL, 'gALCxqqTqPHFB0T29DNa', 'par.jpg', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(315, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (10).jpg', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(316, NULL, 'gALCxqqTqPHFB0T29DNa', 'Bez názvu (1920 x 1080 px).png', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(317, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (8).jpg', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(318, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (6).mp4', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(319, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (4).mp4', '2025-06-23 18:30:58', '2025-06-28', '0'),
+(320, NULL, 'gALCxqqTqPHFB0T29DNa', 'Kopie návrhu Dárkový poukaz v hodnotě.jpg', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(321, NULL, 'gALCxqqTqPHFB0T29DNa', 'rodina.jpg', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(322, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (7).jpg', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(323, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (8).mp4', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(324, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (3).jpg', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(325, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (10).mp4', '2025-06-23 18:30:59', '2025-06-28', '0'),
+(326, NULL, 'gALCxqqTqPHFB0T29DNa', 'portrét.jpg', '2025-06-23 18:31:29', '2025-06-28', '0'),
+(327, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (5).mp4', '2025-06-23 18:31:29', '2025-06-28', '0'),
+(328, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (9).mp4', '2025-06-23 18:31:29', '2025-06-28', '0'),
+(329, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (2).mp4', '2025-06-23 18:31:29', '2025-06-28', '0'),
+(330, NULL, 'gALCxqqTqPHFB0T29DNa', 'focení s koňmi.jpg', '2025-06-23 18:31:29', '2025-06-28', '0'),
+(331, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz (3).mp4', '2025-06-23 18:31:30', '2025-06-28', '0'),
+(332, NULL, 'gALCxqqTqPHFB0T29DNa', 'recenze.PNG', '2025-06-23 18:31:30', '2025-06-28', '0'),
+(333, NULL, 'gALCxqqTqPHFB0T29DNa', 'vsouladu.cz.mp4', '2025-06-23 18:31:31', '2025-06-28', '0'),
+(334, NULL, 'gALCxqqTqPHFB0T29DNa', '82546742-0c76-48f9-a8b8-e618b6b241db.png', '2025-06-23 18:31:31', '2025-06-28', '0'),
+(335, NULL, 'gALCxqqTqPHFB0T29DNa', 'e0e772dc-a101-46fb-a6cc-34ac1dac021b.png', '2025-06-23 18:31:32', '2025-06-28', '0'),
+(336, NULL, 'gALCxqqTqPHFB0T29DNa', 'párové focení.jpg', '2025-06-23 18:31:32', '2025-06-28', '0'),
+(337, NULL, 'gALCxqqTqPHFB0T29DNa', 'VIzitky.pdf', '2025-06-23 18:31:35', '2025-06-28', '0'),
+(338, NULL, 'gALCxqqTqPHFB0T29DNa', 'alba rpogress.png', '2025-06-23 18:31:36', '2025-06-28', '0'),
+(339, NULL, 'gALCxqqTqPHFB0T29DNa', 'Kopie návrhu Kopie návrhu Kopie návrhu Mockupy.zip', '2025-06-23 18:31:36', '2025-06-28', '0'),
+(340, NULL, 'gALCxqqTqPHFB0T29DNa', '2025-06-17-201605627.mp4', '2025-06-23 18:31:39', '2025-06-28', '0'),
+(341, NULL, 'gALCxqqTqPHFB0T29DNa', 'V souladu video.mp4', '2025-06-23 18:31:47', '2025-06-28', '0'),
+(342, NULL, 'gALCxqqTqPHFB0T29DNa', 'CustomRP.1.18.5.exe', '2025-06-23 18:31:48', '2025-06-28', '0'),
+(343, NULL, 'gALCxqqTqPHFB0T29DNa', 'I1B.zip', '2025-06-23 18:31:50', '2025-06-28', '0'),
+(344, NULL, 'gALCxqqTqPHFB0T29DNa', 'S2C.zip', '2025-06-23 18:31:53', '2025-06-28', '0'),
+(345, NULL, 'gALCxqqTqPHFB0T29DNa', 'S2A.zip', '2025-06-23 18:31:57', '2025-06-28', '0'),
+(346, NULL, 'gALCxqqTqPHFB0T29DNa', 'S2B.zip', '2025-06-23 18:31:57', '2025-06-28', '0'),
+(347, NULL, 'gALCxqqTqPHFB0T29DNa', 'I1A.zip', '2025-06-23 18:32:02', '2025-06-28', '0'),
+(348, NULL, 'gALCxqqTqPHFB0T29DNa', 'S1B.zip', '2025-06-23 18:32:06', '2025-06-28', '0'),
+(349, NULL, 'gALCxqqTqPHFB0T29DNa', 'S1A.zip', '2025-06-23 18:32:08', '2025-06-28', '0'),
+(350, NULL, 'gALCxqqTqPHFB0T29DNa', 'I2.zip', '2025-06-23 18:32:09', '2025-06-28', '0'),
+(351, NULL, 'gALCxqqTqPHFB0T29DNa', 'jre-8u451-windows-x64.exe', '2025-06-23 18:32:20', '2025-06-28', '0'),
+(352, NULL, 'gALCxqqTqPHFB0T29DNa', 'purpur-1.21.5-2450.jar', '2025-06-23 18:32:25', '2025-06-28', '0'),
+(353, NULL, 'gALCxqqTqPHFB0T29DNa', 'jdk-24_windows-x64_bin.exe', '2025-06-23 18:33:12', '2025-06-28', '0'),
+(354, 17, 'kwiDunl8ie4dt08rxmxy', 'LOGO FRICKOVA.png', '2025-06-23 18:34:20', '2025-06-26', '0'),
+(355, 17, 'kwiDunl8ie4dt08rxmxy', 'Valerie Fričková web logo (1920 x 1080 px) (200 x 65 px).png', '2025-06-23 18:34:20', '2025-06-26', '0'),
+(356, 17, 'kwiDunl8ie4dt08rxmxy', 'Nepojmenované.png', '2025-06-23 18:34:20', '2025-06-26', '0'),
+(357, 17, 'kwiDunl8ie4dt08rxmxy', 'Nepojmenované.ico', '2025-06-23 18:34:20', '2025-06-26', '0'),
+(358, 17, 'kwiDunl8ie4dt08rxmxy', 'alice roštíková ikonka.png', '2025-06-23 18:34:20', '2025-06-26', '0'),
+(359, 17, 'kwiDunl8ie4dt08rxmxy', 'miminka.jpg', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(360, 17, 'kwiDunl8ie4dt08rxmxy', 'logo frickova.cz.png', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(361, 17, 'kwiDunl8ie4dt08rxmxy', 'block-ab89.zip', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(362, 17, 'kwiDunl8ie4dt08rxmxy', 'rodina.jpg', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(363, 17, 'kwiDunl8ie4dt08rxmxy', 'Bez názvu (1920 x 1080 px).png', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(364, 17, 'kwiDunl8ie4dt08rxmxy', 'Blush Pink Typography Nail Artist Business Card (512 x 512 px).png', '2025-06-23 18:34:21', '2025-06-26', '0'),
+(365, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (9).jpg', '2025-06-23 18:34:22', '2025-06-26', '0'),
+(366, 17, 'kwiDunl8ie4dt08rxmxy', 'enbed alice roštíková.png', '2025-06-23 18:34:22', '2025-06-26', '0'),
+(367, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (7).jpg', '2025-06-23 18:34:22', '2025-06-26', '0'),
+(368, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (3).jpg', '2025-06-23 18:34:23', '2025-06-26', '0'),
+(369, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz.jpg', '2025-06-23 18:34:23', '2025-06-26', '0'),
+(370, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (8).jpg', '2025-06-23 18:34:23', '2025-06-26', '0'),
+(371, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (2).jpg', '2025-06-23 18:34:24', '2025-06-26', '0'),
+(372, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (5).jpg', '2025-06-23 18:34:24', '2025-06-26', '0'),
+(373, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (4).jpg', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(374, 17, 'kwiDunl8ie4dt08rxmxy', 'par.jpg', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(375, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (6).jpg', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(376, 17, 'kwiDunl8ie4dt08rxmxy', 'Nepojmenovaná.png', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(377, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (7).mp4', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(378, 17, 'kwiDunl8ie4dt08rxmxy', 'svatba.jpg', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(379, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (8).mp4', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(380, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (10).jpg', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(381, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (9).mp4', '2025-06-23 18:34:33', '2025-06-26', '0'),
+(382, 17, 'kwiDunl8ie4dt08rxmxy', 'párové focení.jpg', '2025-06-23 18:34:34', '2025-06-26', '0'),
+(383, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (5).mp4', '2025-06-23 18:34:34', '2025-06-26', '0'),
+(384, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (2).mp4', '2025-06-23 18:34:34', '2025-06-26', '0'),
+(385, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz (3).mp4', '2025-06-23 18:34:34', '2025-06-26', '0'),
+(386, 17, 'kwiDunl8ie4dt08rxmxy', 'Kopie návrhu Dárkový poukaz v hodnotě.jpg', '2025-06-23 18:34:34', '2025-06-26', '0'),
+(387, 17, 'kwiDunl8ie4dt08rxmxy', 'recenze.PNG', '2025-06-23 18:34:35', '2025-06-26', '0'),
+(388, 17, 'kwiDunl8ie4dt08rxmxy', 'focení s koňmi.jpg', '2025-06-23 18:34:35', '2025-06-26', '0'),
+(389, 17, 'kwiDunl8ie4dt08rxmxy', 'portrét.jpg', '2025-06-23 18:34:35', '2025-06-26', '0'),
+(390, 17, 'kwiDunl8ie4dt08rxmxy', '82546742-0c76-48f9-a8b8-e618b6b241db.png', '2025-06-23 18:34:36', '2025-06-26', '0'),
+(391, 17, 'kwiDunl8ie4dt08rxmxy', 'vsouladu.cz.mp4', '2025-06-23 18:34:36', '2025-06-26', '0'),
+(392, 17, 'kwiDunl8ie4dt08rxmxy', 'e0e772dc-a101-46fb-a6cc-34ac1dac021b.png', '2025-06-23 18:34:37', '2025-06-26', '0'),
+(393, 17, 'kwiDunl8ie4dt08rxmxy', 'VIzitky.pdf', '2025-06-23 18:34:40', '2025-06-26', '0'),
+(394, 17, 'kwiDunl8ie4dt08rxmxy', 'alba rpogress.png', '2025-06-23 18:34:41', '2025-06-26', '0'),
+(395, 17, 'kwiDunl8ie4dt08rxmxy', 'Kopie návrhu Kopie návrhu Kopie návrhu Mockupy.zip', '2025-06-23 18:34:42', '2025-06-26', '0'),
+(396, 17, 'kwiDunl8ie4dt08rxmxy', '2025-06-17-201605627.mp4', '2025-06-23 18:34:45', '2025-06-26', '0'),
+(397, 17, 'kwiDunl8ie4dt08rxmxy', 'V souladu video.mp4', '2025-06-23 18:34:50', '2025-06-26', '0'),
+(398, 17, 'kwiDunl8ie4dt08rxmxy', 'CustomRP.1.18.5.exe', '2025-06-23 18:34:50', '2025-06-26', '0'),
+(399, 17, 'kwiDunl8ie4dt08rxmxy', 'I1B.zip', '2025-06-23 18:34:53', '2025-06-26', '0'),
+(400, 17, 'kwiDunl8ie4dt08rxmxy', 'S2C.zip', '2025-06-23 18:34:55', '2025-06-26', '0'),
+(401, 17, 'kwiDunl8ie4dt08rxmxy', 'S2A.zip', '2025-06-23 18:34:58', '2025-06-26', '0'),
+(402, 17, 'kwiDunl8ie4dt08rxmxy', 'I1A.zip', '2025-06-23 18:35:04', '2025-06-26', '0'),
+(403, 17, 'kwiDunl8ie4dt08rxmxy', 'S1B.zip', '2025-06-23 18:35:08', '2025-06-26', '0'),
+(404, 17, 'kwiDunl8ie4dt08rxmxy', 'S1A.zip', '2025-06-23 18:35:09', '2025-06-26', '0'),
+(405, 17, 'kwiDunl8ie4dt08rxmxy', 'I2.zip', '2025-06-23 18:35:10', '2025-06-26', '0'),
+(406, 17, 'kwiDunl8ie4dt08rxmxy', 'jre-8u451-windows-x64.exe', '2025-06-23 18:35:19', '2025-06-26', '0'),
+(407, 17, 'kwiDunl8ie4dt08rxmxy', 'purpur-1.21.5-2450.jar', '2025-06-23 18:35:24', '2025-06-26', '0'),
+(408, 17, 'kwiDunl8ie4dt08rxmxy', 'jdk-24_windows-x64_bin.exe', '2025-06-23 18:36:12', '2025-06-26', '0'),
+(409, 17, 'RmMPJVuEohjMAV0DATyF', 'LOGO FRICKOVA.png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(410, 17, 'RmMPJVuEohjMAV0DATyF', 'Valerie Fričková web logo (1920 x 1080 px) (200 x 65 px).png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(411, 17, 'RmMPJVuEohjMAV0DATyF', 'Nepojmenované.png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(412, 17, 'RmMPJVuEohjMAV0DATyF', 'Nepojmenované.ico', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(413, 17, 'RmMPJVuEohjMAV0DATyF', 'logo frickova.cz.png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(414, 17, 'RmMPJVuEohjMAV0DATyF', 'block-ab89.zip', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(415, 17, 'RmMPJVuEohjMAV0DATyF', 'miminka.jpg', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(416, 17, 'RmMPJVuEohjMAV0DATyF', 'enbed alice roštíková.png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(417, 17, 'RmMPJVuEohjMAV0DATyF', 'alice roštíková ikonka.png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(418, 17, 'RmMPJVuEohjMAV0DATyF', 'Blush Pink Typography Nail Artist Business Card (512 x 512 px).png', '2025-06-23 18:38:59', '2025-07-06', '0'),
+(419, 17, 'RmMPJVuEohjMAV0DATyF', 'Bez názvu (1920 x 1080 px).png', '2025-06-23 18:39:00', '2025-07-06', '0'),
+(420, 17, 'RmMPJVuEohjMAV0DATyF', 'rodina.jpg', '2025-06-23 18:39:00', '2025-07-06', '0'),
+(421, 17, 'RmMPJVuEohjMAV0DATyF', 'svatba.jpg', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(422, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (9).jpg', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(423, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (5).jpg', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(424, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (10).jpg', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(425, 17, 'RmMPJVuEohjMAV0DATyF', 'Nepojmenovaná.png', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(426, 17, 'RmMPJVuEohjMAV0DATyF', 'par.jpg', '2025-06-23 18:39:01', '2025-07-06', '0'),
+(427, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz.jpg', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(428, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (3).jpg', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(429, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (9).mp4', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(430, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (8).jpg', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(431, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (7).mp4', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(432, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (5).mp4', '2025-06-23 18:39:02', '2025-07-06', '0'),
+(433, 17, 'RmMPJVuEohjMAV0DATyF', 'párové focení.jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(434, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (4).jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(435, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (2).jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(436, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (8).mp4', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(437, 17, 'RmMPJVuEohjMAV0DATyF', 'focení s koňmi.jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(438, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (7).jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(439, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (6).jpg', '2025-06-23 18:39:03', '2025-07-06', '0'),
+(440, 17, 'RmMPJVuEohjMAV0DATyF', 'Kopie návrhu Dárkový poukaz v hodnotě.jpg', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(441, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (3).mp4', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(442, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (6).mp4', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(443, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (10).mp4', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(444, 17, 'RmMPJVuEohjMAV0DATyF', 'portrét.jpg', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(445, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (4).mp4', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(446, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz (2).mp4', '2025-06-23 18:39:04', '2025-07-06', '0'),
+(447, 17, 'RmMPJVuEohjMAV0DATyF', 'recenze.PNG', '2025-06-23 18:39:05', '2025-07-06', '0'),
+(448, 17, 'RmMPJVuEohjMAV0DATyF', 'vsouladu.cz.mp4', '2025-06-23 18:39:05', '2025-07-06', '0'),
+(449, 17, 'RmMPJVuEohjMAV0DATyF', '82546742-0c76-48f9-a8b8-e618b6b241db.png', '2025-06-23 18:39:06', '2025-07-06', '0'),
+(450, 17, 'RmMPJVuEohjMAV0DATyF', 'e0e772dc-a101-46fb-a6cc-34ac1dac021b.png', '2025-06-23 18:39:07', '2025-07-06', '0'),
+(451, 17, 'RmMPJVuEohjMAV0DATyF', 'VIzitky.pdf', '2025-06-23 18:39:10', '2025-07-06', '0'),
+(452, 17, 'RmMPJVuEohjMAV0DATyF', 'alba rpogress.png', '2025-06-23 18:39:10', '2025-07-06', '0'),
+(453, 17, 'RmMPJVuEohjMAV0DATyF', 'Kopie návrhu Kopie návrhu Kopie návrhu Mockupy.zip', '2025-06-23 18:39:12', '2025-07-06', '0'),
+(454, 17, 'RmMPJVuEohjMAV0DATyF', '2025-06-17-201605627.mp4', '2025-06-23 18:39:14', '2025-07-06', '0'),
+(455, 17, 'RmMPJVuEohjMAV0DATyF', 'CustomRP.1.18.5.exe', '2025-06-23 18:39:19', '2025-07-06', '0'),
+(456, 17, 'RmMPJVuEohjMAV0DATyF', 'V souladu video.mp4', '2025-06-23 18:39:20', '2025-07-06', '0'),
+(457, 17, 'RmMPJVuEohjMAV0DATyF', 'I1B.zip', '2025-06-23 18:39:21', '2025-07-06', '0'),
+(458, 17, 'RmMPJVuEohjMAV0DATyF', 'S2C.zip', '2025-06-23 18:39:24', '2025-07-06', '0'),
+(459, 17, 'RmMPJVuEohjMAV0DATyF', 'S2A.zip', '2025-06-23 18:39:28', '2025-07-06', '0'),
+(460, 17, 'RmMPJVuEohjMAV0DATyF', 'S2B.zip', '2025-06-23 18:39:28', '2025-07-06', '0'),
+(461, 17, 'RmMPJVuEohjMAV0DATyF', 'I1A.zip', '2025-06-23 18:39:34', '2025-07-06', '0'),
+(462, 17, 'RmMPJVuEohjMAV0DATyF', 'S1B.zip', '2025-06-23 18:39:36', '2025-07-06', '0'),
+(463, 17, 'RmMPJVuEohjMAV0DATyF', 'S1A.zip', '2025-06-23 18:39:38', '2025-07-06', '0'),
+(464, 17, 'RmMPJVuEohjMAV0DATyF', 'I2.zip', '2025-06-23 18:39:39', '2025-07-06', '0'),
+(465, 17, 'RmMPJVuEohjMAV0DATyF', 'jre-8u451-windows-x64.exe', '2025-06-23 18:39:49', '2025-07-06', '0'),
+(466, 17, 'RmMPJVuEohjMAV0DATyF', 'purpur-1.21.5-2450.jar', '2025-06-23 18:39:55', '2025-07-06', '0'),
+(467, 17, 'RmMPJVuEohjMAV0DATyF', 'jdk-24_windows-x64_bin.exe', '2025-06-23 18:40:37', '2025-07-06', '0'),
+(468, 17, 'x5dObogbz2lzRMFCHtSw', 'random data.txt', '2025-06-23 19:16:40', '2025-07-03', '0'),
+(469, 65, 'uMMH3LX9uXpZFjfHW3oZ', 'speedloader-complete_PLA_X1C_5h52m.gcode', '2025-06-23 21:33:30', '2025-06-30', '0'),
+(470, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_175558_037.webp', '2025-06-23 21:54:41', '2025-06-25', '0'),
+(471, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212521_430.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(472, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212552_976.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(473, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212458_546.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(474, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212512_468.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(475, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212511_696.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(476, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212510_657.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(477, NULL, 'siPm5VqXkC3oz7kTMRVx', 'IMG_20250623_212359_557.jpg', '2025-06-23 21:54:43', '2025-06-25', '0'),
+(478, NULL, 'BOP9yzDFjHfyfDDXrzXi', 'jura.zip', '2025-06-25 11:04:00', '2025-06-27', '0'),
+(479, NULL, 'HsUuvSJHMALTzXahWF19', 'Fanda tisk.mp4', '2025-06-25 22:47:47', '2025-07-03', '0'),
+(480, NULL, 'Vg6VjyNiuYOtG5AwLt01', 'konzultace intro image.jpg', '2025-06-26 13:38:26', '2025-06-27', '0'),
+(481, 17, 'CekvrqazWMDHyftkkrib', 'c-filip-sk-plugin.xml', '2025-06-27 12:21:53', '2026-06-27', '0'),
+(482, 17, 'CekvrqazWMDHyftkkrib', 'c-filip-sk-clanky.xml', '2025-06-27 12:22:26', '2026-06-27', '0'),
+(483, 17, 'CekvrqazWMDHyftkkrib', 'c-filip-sk-multimedia.xml', '2025-06-27 12:22:32', '2026-06-27', '0'),
+(484, 17, 'CekvrqazWMDHyftkkrib', 'c-filip-sk-stranky.xml', '2025-06-27 12:22:32', '2026-06-27', '0'),
+(485, 17, 'CekvrqazWMDHyftkkrib', 'c-filip-sk-vse.xml', '2025-06-27 12:22:44', '2026-06-27', '0'),
+(486, NULL, 'RpcWlVRVDrgC8Gn2l97D', 'ch36_20250627133221.mp4', '2025-07-01 10:59:08', '2025-07-08', '0'),
+(487, NULL, 'wdbFaC59VHFTycNYIJ0r', 'ch36_20250627133221.mp4', '2025-07-01 11:12:35', '2025-07-30', '0'),
+(488, NULL, 'qnCfVVUqjkMEKN95i0Tt', 'ch36_20250627133221.mp4', '2025-07-01 12:57:42', '2025-08-21', '0'),
+(489, NULL, '7kfdF8IXH6ZymOmVqWMr', 'VID-20250713-WA0000.mp4', '2025-07-13 18:24:25', '2025-07-31', '0');
 
 -- --------------------------------------------------------
 
@@ -281,6 +812,44 @@ INSERT INTO `help_alba_rosa_purkyn` (`idhelp_purkyn`, `idlog_purkyn`, `level`, `
 (10, 213, '4.2', 'Přece nemůžeš sčítat "text" a číslo.'),
 (11, 214, '5', 'Tobě se povedlo ztratit heslo!? Zkus znovu načíst stránku. A taky věz toto: ssh uzivatel@destinace'),
 (12, 215, '6', 'Mrkni na tento článek: https://networkhunt.com/how-to-add-repositories-in-linux/');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `invoices_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices_alba_rosa_file_invoicing` (
+  `id` int(11) NOT NULL,
+  `invoice` varchar(255) NOT NULL,
+  `custom_email` text NOT NULL,
+  `invoice_date` varchar(255) NOT NULL,
+  `invoice_due_date` varchar(255) NOT NULL,
+  `subtotal` decimal(10,0) NOT NULL,
+  `shipping` decimal(10,0) NOT NULL,
+  `discount` decimal(10,0) NOT NULL,
+  `vat` decimal(10,0) NOT NULL,
+  `total` decimal(10,0) NOT NULL,
+  `notes` text NOT NULL,
+  `invoice_type` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `invoice_items_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `invoice_items_alba_rosa_file_invoicing` (
+  `id` int(11) NOT NULL,
+  `invoice` varchar(255) NOT NULL,
+  `product` text NOT NULL,
+  `qty` int(11) NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `discount` varchar(255) NOT NULL,
+  `subtotal` varchar(255) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -4308,11 +4877,11 @@ INSERT INTO `log_alba_rosa_purkyn` (`idlog_purkyn`, `text`) VALUES
 
 CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
   `idnotes_parlament` int(11) NOT NULL,
-  `idusers_parlament` int(11) DEFAULT 1,
-  `date` date NOT NULL,
+  `idusers_parlament` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
   `document_number` varchar(255) DEFAULT NULL,
-  `notes` longtext NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+  `notes` longtext DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
@@ -4367,7 +4936,13 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers_parlament
 (79, 66, '2025-03-04', '18.02.15', '**Krajský studentský sněm**==- Roman Kačmařík, Sarah Buchtová=- sběr podnětů pro DPMB==**Řešení problémů na škole**=- nahlásit třídnímu učiteli, možnost i přes školskou radu==**Participativní rozpočet**=- vyhrála relax zóna v 1. patře=- můžeme lehce upravovat časem=- vyhlášení skrze rozhlas==**Velikonoce**=- budou, máme funkční program==**Školní inspekce**==- 17. 3. – 20. 3.=- mohou přijít ke komukoli'),
 (80, 66, '2025-03-11', '18.02.16', '**Prezence**=- zkušební provoz online prezenčky==**Odpoledne se seniory**=- 3. 4. 2025 12:00 - 16:00=- dobrovolníci se hlásí přes QR kód do tohoto pátku==**Sezení s panem ředitelem**=- 26. 3. 8:00 - 10:00 jídelna=- z každé třídy 1-2 zástupci=- sběr připomínek: Patrik Brandejs==**Velikonoce**=- ve škole 16. 4. =- hra egg-hunt (hledání vejcí)=- 1.- 2. místo dort, cupcake=- 3. místo pendreky=- otázky upravuje: Pokorná=='),
 (81, 88, '2025-03-18', '18.02.17', '**Testování nového docházkového systému**=-- skoro funkční==**Odpoledne se seniory**=- kontrola účasti==**Focení**=- velká kachna na skupinkových fotkách - poptat se ve třídách==**Velikonoce**=- 16.4.=- odměny - Pokorná Kateřina=-- výběr zákusku=-- 2. zbylé z 1. místa=-- 3.pendreky==- otázky - Pokorná - 13.4.=- místa + nápovědy - Zuzana Kaňáková==**Den seniorů u nás**=- 7.5. středa=- 9:00 - 12:00=- prezentace - cca 8=- plakáty - Sarah Buchtová=- Roman Kačmařík==**Podněty pro setkání s ředitelem**=- Gaudeamus celý den pro 4. ročníky=- stěny mezi pisoáry=- dveře na isic=- zprovoznit zámky na záchodech=- Den firem pro druhý ročník - pro 3. ročníky jsou praxe většinou praxe plné=- písničky místo zvonění (pouze velká přestávka)=- Sbírání podmětů přes zprávy na edupage třídním učitelům=- internet - výměna metaliky=- rychlovarka do jídelny k mikrovlnkám=- osa na bench presu==**Testování Egghuntu**'),
-(84, 66, '2025-03-26', '18.02.17', '//Sezení s panem ředitelem 26. 3. 2025//=- Stěny mezi pisoáry=-- **zamítnuto** =- příliš málo místa =- dveře na toaletách se budou během dubna (pravděpodobně) měnit na kovové, kvůli demolici některých žáků=- klíče na toaletách dostupné asi nebudou, z hlediska bezpečnosti, možné řešení - zabudované klíče ==- V krčku zpřístupnit bidet/učitelské wc pro dívky=-- **zamítnuto** =- moc lidí, učitelé mají právo rovněž na svoje wc==- Vstupní dveře na ISIC=-- **v jednání** =- dobrý nápad=- po domluvě s panem správcem==- Den firem pro 2. ročník=-- **zamítnuto** =- nestačila by kapacita budovy=-na dřívější zajištění praxe - možnost zajít za garanty praxí, kteří mají na firmy kontakty==- Písně místo zvonění=-- **zamítnuto (možná)** =- bylo by potřeba zařídit organizační zabezpečení, učitele by to pravděpodobně omrzelo (pan ředitel přislíbil, že se poptá pedagogů)=-- možnost udělat školní rádio/podcast==- Gaudeamus veletrh VŠ na celý den pro 4. ročníky=-- **v jednání** =- veliká šance, že žáci budou mít na Gaudeamus uvolněn celý den==- Metalika na optiku=-- **v řešení** =- máme projekt, peníze, ale čekáme na firmu, která vyhraje v soutěži=- realizace v létě==- Rychlovarná konvice v jídelně=-- **zamítnuto** =- příliš vysoká teplota, bezpečnost==- Začernění tyče na benchpress=- zajít za panem učitelem Krátkým - má na starost majetek v posilovně==- Inspekce=-- pochvala žáků a učitelů=- čeká se na veřejné vyjádření inspekce - na zprávu=- dotazníky pro žáky i učitele byly v souladu=- dostali jsme velmi dobré hodnocení ==Podněty od žáků:=** Kávovar na zrnkovou kávu ve 4. patře** =- prozatím provoz na 3měsíční zkušební dobu=- kompromis mezi normální kávou v Kofi Kofi a automaty (normální káva odlehčená o kofein)=- neustále chybí cukr - hlídat své spolužáky, je zde kamera (možná zachytí zloděje cukrů)=jelikož se jedná pouze o testovací provoz a servis provádí sama firma, pokud se firmě provozování tohoto automatu nevyplatí nebo jej budou studenti opakovaně ničit - firma automat odebere==**SOČ **=- Středoškolská odborná činnost u nás na škole je=- koordinátor: pan učitel Raus (zajít za ním a zeptat se)==**Pouze 1 učitel, který může podepsat smlouvy na praxe**=- zajít za za paní zástupkyní Řezáčovou==**Profukující okna v budově D/U31 **=- již v plánu rekonstrukcí, další požadavky hlásit správci učebny==** U37 nefungující zásuvky**=- ještě není dokončená rekonstrukce=- je plánováno slavnostní otevření se sponzorem a hejtmanem, celková cena se blíží k 1.000.000 Kč==**Úprava praktické maturity pro Sociální činnost**=- učitelé dávali teoretické otázky, je nutné řešit nějaký praktický úkol==**Obor M nemohou dělat odbornou práci**=- jedou ještě podle starých osnov==**Elektrotechnické veletrhy pro 2. ročník**=- účast podle zájmu žáků ve výuce a podle souhlasů vedoucích==**Změna opatření pro použití 3D tiskáren**=- opatření z důvodu bezpečnosti používání tiskáren');
+(84, 66, '2025-03-26', '18.02.17', '//Sezení s panem ředitelem 26. 3. 2025//=- Stěny mezi pisoáry=-- **zamítnuto** =- příliš málo místa =- dveře na toaletách se budou během dubna (pravděpodobně) měnit na kovové, kvůli demolici některých žáků=- klíče na toaletách dostupné asi nebudou, z hlediska bezpečnosti, možné řešení - zabudované klíče ==- V krčku zpřístupnit bidet/učitelské wc pro dívky=-- **zamítnuto** =- moc lidí, učitelé mají právo rovněž na svoje wc==- Vstupní dveře na ISIC=-- **v jednání** =- dobrý nápad=- po domluvě s panem správcem==- Den firem pro 2. ročník=-- **zamítnuto** =- nestačila by kapacita budovy=-na dřívější zajištění praxe - možnost zajít za garanty praxí, kteří mají na firmy kontakty==- Písně místo zvonění=-- **zamítnuto (možná)** =- bylo by potřeba zařídit organizační zabezpečení, učitele by to pravděpodobně omrzelo (pan ředitel přislíbil, že se poptá pedagogů)=-- možnost udělat školní rádio/podcast==- Gaudeamus veletrh VŠ na celý den pro 4. ročníky=-- **v jednání** =- veliká šance, že žáci budou mít na Gaudeamus uvolněn celý den==- Metalika na optiku=-- **v řešení** =- máme projekt, peníze, ale čekáme na firmu, která vyhraje v soutěži=- realizace v létě==- Rychlovarná konvice v jídelně=-- **zamítnuto** =- příliš vysoká teplota, bezpečnost==- Začernění tyče na benchpress=- zajít za panem učitelem Krátkým - má na starost majetek v posilovně==- Inspekce=-- pochvala žáků a učitelů=- čeká se na veřejné vyjádření inspekce - na zprávu=- dotazníky pro žáky i učitele byly v souladu=- dostali jsme velmi dobré hodnocení ==Podněty od žáků:=** Kávovar na zrnkovou kávu ve 4. patře** =- prozatím provoz na 3měsíční zkušební dobu=- kompromis mezi normální kávou v Kofi Kofi a automaty (normální káva odlehčená o kofein)=- neustále chybí cukr - hlídat své spolužáky, je zde kamera (možná zachytí zloděje cukrů)=jelikož se jedná pouze o testovací provoz a servis provádí sama firma, pokud se firmě provozování tohoto automatu nevyplatí nebo jej budou studenti opakovaně ničit - firma automat odebere==**SOČ **=- Středoškolská odborná činnost u nás na škole je=- koordinátor: pan učitel Raus (zajít za ním a zeptat se)==**Pouze 1 učitel, který může podepsat smlouvy na praxe**=- zajít za za paní zástupkyní Řezáčovou==**Profukující okna v budově D/U31 **=- již v plánu rekonstrukcí, další požadavky hlásit správci učebny==** U37 nefungující zásuvky**=- ještě není dokončená rekonstrukce=- je plánováno slavnostní otevření se sponzorem a hejtmanem, celková cena se blíží k 1.000.000 Kč==**Úprava praktické maturity pro Sociální činnost**=- učitelé dávali teoretické otázky, je nutné řešit nějaký praktický úkol==**Obor M nemohou dělat odbornou práci**=- jedou ještě podle starých osnov==**Elektrotechnické veletrhy pro 2. ročník**=- účast podle zájmu žáků ve výuce a podle souhlasů vedoucích==**Změna opatření pro použití 3D tiskáren**=- opatření z důvodu bezpečnosti používání tiskáren'),
+(86, 66, '2025-04-08', '18.02.18', '**Relax zóna**=- Napsat řád: Handlíř==**Velikonoce**=- 16. 4.=- Vyhlášení 23. 4. Studovna/Sborovna=- Vymyslet text do rozhlasu==**Odpoledne se seniory**=- 7. 5. 9:00 - 12:00 ?Sborovna=- Nachystat prezentace: Vaněk, Kořalka, Jelínek, Lokajová, Boucník =- Témata: Qr code, Bezkontaktní platba, Aplikace a nastavení, Dopravní aplikace, Kahoot, Senior karty=- Pomoc: Šmarda, Gažová, Friedl, Kolářová, Florián, Žáček, Kaňáková, Topinka, Handlíř=- RS Foto=- Prezence: Žáček, Kolářová=- Vodit: Friedl=- IT: Kořalka, Florián=- Bar: Kaňáková, Gottwaldová=- Vytvořit dotazníky + program=- Zvukotechnika'),
+(87, 66, '2025-04-15', '18.02.19', '**Relax zóna**=- Pravidla zóny=**Odpoledne se seniory**=- 7. 5. 8:00-13:00=- Rozvrh=- Vodič: Friedl, Topinka, Jankůj=**Egg hunt**=- Test=- Rozhlas: Vaněk=- Rozmístění QR kódů'),
+(88, 66, '2025-04-29', '18.02.20', '**Mezigenerační setkání**=- Školní tryčka=- Noví pomocníci=- Moderátoři=**Stránky parlamentu na školních stránkách**=- Máme zelenou od ředitele školy=- Bude revidováno školními techniky=**Výlet parlamentu za odměnu**=- 15 nejaktivnějších studentů=- 2 dny'),
+(90, 66, '2025-05-06', '18.02.21', '**Finishování seniorů**=- finishování pomocníků'),
+(91, 66, '2025-05-13', '18.02.22', '**Mezigenerační setkání**=- Formulář spokojenosti =- Návrhy na vylepšení =**Výlet za odměnu**=- Kdo jede + učitel=- Info o výletu='),
+(92, 110, '2025-06-10', '18.02.23', '**Proslov paní učitelky**=- Už se do konce roku neuvidíme=- Palament byl hodně vidět=- Poděkování=**Výlet za odměnu**=- Kontakt=- Hlavně vlakem=- Kam pojedeme + plán=-- Vlakem směr Tišnov=-- Hrad Perštejn=-- Restaurace v Nedvědicích=-- Cesta do Prudké=-- Večeře v Prudké=-- Volná zábava=-- Cesta do lomnice / Vlakem do tišnova=-- / Cesta na vyhlídku Krucanina=-- Směrem do Brna=- Dotazy=-- Návrat 15:00=-- Možnost dřívějšího odchodu');
 
 -- --------------------------------------------------------
 
@@ -4400,8 +4975,8 @@ INSERT INTO `other_alba_rosa` (`idother`, `icon`, `name`, `github`, `web`, `desc
 
 CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
   `idother_parlament` int(11) NOT NULL,
-  `text` longtext NOT NULL,
-  `active` int(11) NOT NULL
+  `text` longtext DEFAULT NULL,
+  `active` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -4409,9 +4984,8 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '<hr style="border-top: 1px solid black; border-bottom: none;">\n\n<div style="display: flex; justify-content: space-around; padding: 10px 0; flex-wrap: wrap;"  id="footer-text">\n\n    <!-- Levý sloupec - odkazy -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Odkazy</h4>\n        <a href="https://www.purkynka.cz/" target="_blank">Oficiální web Purkyňky</a><br>\n    </div> \n\n    <!-- Pravý sloupec - kontakty -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Mgr. Denisa Gottwaldová - koordinátorka školního Parlamentu</h4>\n   Telefon: <a href="tel:+420541649133">+420 541 649 133</a><br>\n   E-mail: <a href="mailto:denisa.gottwaldova@purkynka.cz">denisa.gottwaldova@purkynka.cz</a><br>\n  <h4>žák Boucník Jiří  - předseda školního Parlamentu</h4>\n   Telefon: <a href="tel:+420792952678">+420 792 952 678</a><br>\n   E-mail: <a href="mailto:boucnik.jiri@purkynka.cz">boucnik.jiri@purkynka.cz</a><br>\n    </div>\n\n</div>\n\n<!-- Spodní část - autor webu a grafiky -->\n<div style="text-align: center; padding: 10px 0;" id="footer-text">\n    Web: <a href="https://alba-rosa.cz/link-tree/pascal.jura/" target="_blank">Jiří Boucník</a> | Grafiku: <a href="https://www.instagram.com/kourimpiva/" target="_blank">Marcel Mikula</a> | &copy; 2025\n</div>', 1),
-(2, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n <a href="https://egg-hunt.sspbrno.cz" target="_blank">\n                <img src="./assets/img/plakat_6.png" id="responsive-image">\n            </a>\n   <a href="./assets/img/plakat_5.png" target="_blank">\n                <img src="./assets/img/plakat_5.png" id="responsive-image">\n            </a>\n            <a href="./assets/img/plakat_0.png" target="_blank">\n                <img src="./assets/img/plakat_0.png" id="responsive-image">\n            </a>\n        </div>', 1),
-(3, '        <div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n       </div>\n<div id="poster">\n <a href="https://egg-hunt.sspbrno.cz" target="_blank">\n                <img src="../assets/img/plakat_6.png" id="responsive-image">\n            </a>\n <a href="../assets/img/plakat_5.png" target="_blank">\n                <img src="../assets/img/plakat_5.png" id="responsive-image">\n            </a>\n            <a href="../assets/img/plakat_0.png" target="_blank">\n                <img src="../assets/img/plakat_0.png" id="responsive-image">\n            </a>\n       \n         \n        </div>', 1);
+(1, '<hr style="border-top: 1px solid black; border-bottom: none;">\n\n<div style="display: flex; justify-content: space-around; padding: 10px 0; flex-wrap: wrap;"  id="footer-text">\n\n    <!-- Levý sloupec - odkazy -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Odkazy</h4>\n        <a href="https://www.purkynka.cz/" target="_blank">Oficiální web Purkyňky</a><br>\n <a href="https://www.purkynka.cz/" target="_blank">Instagram školního Parlamentu</a><br>\n    </div> \n\n    <!-- Pravý sloupec - kontakty -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Mgr. Denisa Gottwaldová - koordinátorka školního Parlamentu</h4>\n   Telefon: <a href="tel:+420541649133">+420 541 649 133</a><br>\n   E-mail: <a href="mailto:denisa.gottwaldova@purkynka.cz">denisa.gottwaldova@purkynka.cz</a><br>\n  <h4>žák Boucník Jiří  - předseda školního Parlamentu</h4>\n   Telefon: <a href="tel:+420792952678">+420 792 952 678</a><br>\n   E-mail: <a href="mailto:boucnik.jiri@purkynka.cz">boucnik.jiri@purkynka.cz</a><br>\n    </div>\n\n</div>\n\n<!-- Spodní část - autor webu a grafiky -->\n<div style="text-align: center; padding: 10px 0;" id="footer-text">\n    Web: <a href="https://alba-rosa.cz/link-tree/pascal.jura/" target="_blank">Jiří Boucník</a> | Grafiku: <a href="https://www.instagram.com/kourimpiva/" target="_blank">Marcel Mikula</a> | &copy; 2025\n</div>', 1),
+(2, '<div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n</div>\n\n<div id="poster">\n  <a href="https://parlament.sspbrno.cz/mezigeneracni-setkani" style="cursor: pointer;" target="_blank">\n    <img src="./assets/img/plakat_7.png" id="responsive-image">\n  </a>\n\n  <a class="popup-trigger" data-link="./assets/img/plakat_5.png" style="cursor: pointer;">\n    <img src="./assets/img/plakat_5.png" id="responsive-image">\n  </a>\n\n  <a class="popup-trigger" data-link="./assets/img/plakat_0.png" style="cursor: pointer;">\n    <img src="./assets/img/plakat_0.png" id="responsive-image">\n  </a>\n</div>\n', 1);
 
 -- --------------------------------------------------------
 
@@ -4425,6 +4999,19 @@ CREATE TABLE IF NOT EXISTS `photos_alba_rosa_popclicker` (
   `photos_1` longblob NOT NULL,
   `photos_2` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `products_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `products_alba_rosa_file_invoicing` (
+  `product_id` int(11) NOT NULL,
+  `product_name` text NOT NULL,
+  `product_desc` text NOT NULL,
+  `product_price` varchar(255) DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=979 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -4446,9 +5033,33 @@ CREATE TABLE IF NOT EXISTS `school_alba_rosa` (
 --
 
 INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `description`) VALUES
-(1, '<img src="https://icons.iconarchive.com/icons/fa-team/fontawesome/128/FontAwesome-Egg-icon.png" width="25" height="25">', 'Egg Hunt!', 'https://github.com/pascaljura/egg-hunt/', 'https://velikonoce.sspbrno.cz/', 'Programme for the Easter event at Purkiňka High School in Brno from the school Parliament'),
+(1, '<img src="https://icons.iconarchive.com/icons/fa-team/fontawesome/128/FontAwesome-Egg-icon.png" width="25" height="25">', 'Egg Hunt!', 'https://github.com/pascaljura/egg-hunt/', 'https://velikonoce.sspbrno.cz/', 'Programme for the Easter event at Purkyňka High School in Brno from the school Parliament'),
 (2, '<i class="fa-solid fa-bezier-curve"></i>', 'Bezier''s curve!', 'https://github.com/matkolo1/bezier/', '../bezier/', 'A simple program to calculate a bezier''s curve with unlimited points.'),
 (3, '<i class="fa-solid fa-chalkboard-user"></i>', 'Parlament!', 'https://github.com/pascaljura/parlament', '../parlament/', 'Exclusive site for our school parliament to store all records.');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `store_customers_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `store_customers_alba_rosa_file_invoicing` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address_1` varchar(255) NOT NULL,
+  `address_2` varchar(255) NOT NULL,
+  `town` varchar(255) NOT NULL,
+  `county` varchar(255) NOT NULL,
+  `postcode` varchar(255) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `name_ship` varchar(255) NOT NULL,
+  `address_1_ship` varchar(255) NOT NULL,
+  `address_2_ship` varchar(255) NOT NULL,
+  `town_ship` varchar(255) NOT NULL,
+  `county_ship` varchar(255) NOT NULL,
+  `postcode_ship` varchar(255) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -4458,32 +5069,11 @@ INSERT INTO `school_alba_rosa` (`idschool`, `icon`, `name`, `github`, `web`, `de
 
 CREATE TABLE IF NOT EXISTS `tokens_alba_rosa_parlament` (
   `idtokens_parlament` int(11) NOT NULL,
-  `idusers_parlament` int(11) NOT NULL,
-  `idattendances_list_parlament` int(11) NOT NULL,
-  `token` varchar(256) NOT NULL,
-  `expires` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
-
---
--- Vypisuji data pro tabulku `tokens_alba_rosa_parlament`
---
-
-INSERT INTO `tokens_alba_rosa_parlament` (`idtokens_parlament`, `idusers_parlament`, `idattendances_list_parlament`, `token`, `expires`) VALUES
-(73, 110, 21, 'b594d23556b6d172af830296af428cb88202141ca10f7b96225bc81141a185cd', '2025-03-05 18:08:17'),
-(78, 114, 21, '9547c813825c0a26c8cc14d665ce8ad8b9ce6cb745d74150292283aad22bb850', '2025-03-05 18:33:07'),
-(80, 115, 21, 'd2ace5070ae0f2f800b396de3e30b0a1024e835f6c7e08a00e95422fa160c29c', '2025-03-05 18:33:46'),
-(81, 116, 21, '55ebdf28a41edfb5bd27571140c64c857233a7c6d9155b7b876fe6e2a507e6e3', '2025-03-05 18:39:45'),
-(82, 117, 21, 'e11a0a40b515100a28e1b28a77f5dcb2e948e8f8d737f43dceebeb46e97f4067', '2025-03-05 18:45:33'),
-(83, 17, 21, '1d3b96018b737abf719c5ae899900619d9024e58e0863c32a8a99812509f8fc7', '2025-03-05 18:47:46'),
-(86, 120, 21, '41ef7f19529ecd626ab8efc68d411fb89fba62174b5c0a918442e55d9a9fd57a', '2025-03-05 19:38:43'),
-(87, 92, 26, 'caaf55e9a16a92817fb4ef555a73e77f3840cb547c326f925227da07f0badc3a', '2025-03-12 14:34:00'),
-(89, 119, 26, 'fa1dfe886232cd1d6ef97a771208edcd662b482e7e7167625a0288b04cf23671', '2025-03-12 14:34:03'),
-(95, 101, 26, '6a759f76f176f3a71466bfe32aef6e1628b3563df989a2c4c72ff22a8f797d18', '2025-03-12 14:34:15'),
-(97, 94, 26, 'b8e01350572458d240f38952738494b26289d38647cfebfa324384b117af11ff', '2025-03-12 14:34:20'),
-(98, 104, 26, '92b7a6ec9799bd51e97fd2e73b0670806830146316cfa264a1461c3fc25266dc', '2025-03-12 14:34:25'),
-(99, 108, 26, '9e57280db0ebb14e6743453e4a38acc5358873a13b7675866758f9ac164799cc', '2025-03-12 14:34:25'),
-(107, 94, 26, '621c7281ffcd6d84c078f03764726000a5b2b930a12d0cec4b49da5001457712', '2025-03-12 14:37:02'),
-(108, 129, 30, 'cf6bc82912e1649218325d95f81d39b038a39d4cd7cb9b1a1568ad4d42ba3b94', '2025-03-12 19:25:26');
+  `idusers_parlament` int(11) DEFAULT NULL,
+  `idattendances_list_parlament` int(11) DEFAULT NULL,
+  `token` varchar(256) DEFAULT NULL,
+  `expires` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
 
@@ -4509,7 +5099,7 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa` (
   `purpix_level_8` int(11) NOT NULL DEFAULT 69,
   `purpix_level_9` int(11) NOT NULL DEFAULT 69,
   `popclicker_score` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa`
@@ -4525,15 +5115,29 @@ INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `game
 (48, 'FilipkovaVe@seznam.cz', 'Veronika', '$2y$10$1XvZAEPJU3yuwiSvktafleV0GedZ8Tfw/A/pNkzZ0UA8ilh.AY39G', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (65, 'vanek.fanda@centrum.cz', 'František Vaněk', '$2y$10$cYniwL.XO2O/76gOxBU4zuGb5SjdksdY0BQzh0sBk4gVHUA7rO3dK', '1', '1', '1', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
 (66, 'matej.kor@email.cz', 'Matěj Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', 1, 1, 3, 1, 1, 1, 1, 3, 96, 0),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '0', '1', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(72, 'admin@admin.admin', 'Admin', '$2y$10$tM6v.BDlrliN5gQjG9yxe.zTdbzjPQAgkLfguVIhZuwSLNUIDKXd2', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(85, 'karpsevplaton@gmail.com', 'Josephkaf', '$2y$10$NaCbvPdykgJLpbaXehcvweHOUCkKU1b4ChhEeNr9KzmC38G9IZE3S', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(86, 'jesterka07@gmail.com', 'Santi', '$2y$10$oDVDtjTmNnSOVxab53dZQe226uEJXHkv4JutrufWS3iONMAVbHt1S', '1', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(87, 'vypal420@proton.me', 'Adolf', '$2y$10$.bTATdLVjPIsCTbb/xIeOeqctb9/vzGu.VEy3.CHFM/n9qWdGJD3e', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(88, 'vhiaumyq@testing-your-form.info', 'Hello', '$2y$10$vi7sfGH7u7VtA8jzDkR/ZePjR6KAxzwgdk8SQaoNlDJbAIl1I.vUm', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(89, 'hsljabho@testing-your-form.info', 'Alice', '$2y$10$ybfruf6a/vrBYrWXfmKPAu83bJ1Zm76ew3Z/hGZRPPr/XdFb8DbkG', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(90, 'gcfjnocr@testing-your-form.info', 'John', '$2y$10$Al2zVKsIBS7cJp2OHsIp8OyKTrQ7.RLmoYRy2aWSsVwDUbnNKuQ8O', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0),
-(91, 'blobycz@gmail.com', 'Adm', '$2y$10$uFKIPmHyi7i3rnmYP3IDWue2nyJD2rkUoARHTVXKvIRPWgKj/cTuS', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+(92, 'j.s.boucnik@gmail.com', 'J.s.boucnik@gmail.com', '$2y$10$Q2yvwyPPUhl/crNztTRQpuGz9hlKCC1MArX5j4TgSrDccGWUD/Jui', '0', '0', '0', 96, 69, 69, 69, 69, 69, 69, 69, 69, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `users_alba_rosa_file_invoicing`
+--
+
+CREATE TABLE IF NOT EXISTS `users_alba_rosa_file_invoicing` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Vypisuji data pro tabulku `users_alba_rosa_file_invoicing`
+--
+
+INSERT INTO `users_alba_rosa_file_invoicing` (`id`, `name`, `username`, `email`, `phone`, `password`) VALUES
+(1, 'JiÅ™Ã­ BoucnÃ­k', 'boucnik.jiri@gmail.com', 'boucnik.jiri@gmail.com', '+420 792 952 678', 'cc2ef324288c9847cc33d4ce7175ae97');
 
 -- --------------------------------------------------------
 
@@ -4543,11 +5147,11 @@ INSERT INTO `users_alba_rosa` (`idusers`, `email`, `username`, `password`, `game
 
 CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `idusers_parlament` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `password` text NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `password` text DEFAULT NULL,
   `parlament_access_admin` enum('0','1') DEFAULT '0',
   `parlament_access_user` enum('0','1') NOT NULL DEFAULT '1',
   `add_notes` enum('0','1') NOT NULL DEFAULT '0',
@@ -4558,47 +5162,54 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `end_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `delete_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `qr_attendances` enum('0','1') NOT NULL DEFAULT '0',
-  `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+  `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0',
+  `admin` enum('0','1') NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_parlament`
 --
 
-INSERT INTO `users_alba_rosa_parlament` (`idusers_parlament`, `email`, `username`, `name`, `last_name`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`) VALUES
-(66, 'koralka.matej@purkynka.cz', 'Matěj Kořalka', 'Matěj', 'Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0'),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', 'Denisa', 'Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
-(88, 'vanek.frantisek@purkynka.cz', 'František Vaněk', 'František', 'Vaněk', '$2y$10$4CZfx4iSH2otCe.wMVKuheh0HGEOeuumtG13UbWo7hAEkVe7ipZ7C', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0'),
-(89, 'korcak.jiri@purkynka.cz', 'Jiří Korčák', 'Jiří', 'Korčák', '$2y$10$H3gbijTDVMO8Q.aLd0j8IeihQlHeNLJxLU6Rr8RJAWZ2l1MBu/4sa', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(90, 'prudil.frantisek@purkynka.cz', 'František Prudil', 'František', 'Prudil', '$2y$10$PVImTnZ8slKxdMOZzLFqKO2xGP6lI1eqpeTHjfuVBXXADYPC2XdcS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(91, 'bednarik.karel@purkynka.cz', 'Karel Bednařík', 'Karel', 'Bednařík', '$2y$10$fBstLy4Yc.WeobDklMeOBukcCCnm/QcRo.oH7Cc73BcHYqiqv0lQu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(92, 'hudcova.nikola@purkynka.cz', 'Nikola Hudcová', 'Nikola', 'Hudcová', '$2y$10$kZKrSfwbW4LWWUejZWzQpOK9LN9eUJWE.I3n5wyPCRAm0DPnlHgJS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(94, 'balejova.alena@purkynka.cz', 'Alena Balejová', 'Alena', 'Balejová', '$2y$10$EwqePk8ouLYSagRnYBxoze25AwVdV0g4F4qyyo.wuuCTd34Bc5DDS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(95, 'pokorna.katerina@purkynka.cz', 'Kateřina Pokorná', 'Kateřina', 'Pokorná', '$2y$10$4cpMqqr9H87F7v7N1TPCY.42TfFQyfgkbqnPVLkXp3BSK6UkFXmVe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(96, 'jankuj.ondrej@purkynka.cz', 'Ondřej Jankůj', 'Ondřej', 'Jankůj', '$2y$10$4D6YRq59SspjLcFn8mX9HOK20w7vOTvFqI9kVWQco8yTqi5inxa3C', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(97, 'kacmarik.roman@purkynka.cz', 'Roman Kačmařík', 'Roman', 'Kačmařík', '$2y$10$57iHXHnim6sqFqcoA5W4y.p4oJ3AvBYRCYaI0yy0undeWDhDW2L/m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(98, 'furmanskyi.tymofii@purkynka.cz', 'Tymofii Furmanskyi', 'Tymofii', 'Furmanskyi', '$2y$10$mS7VGo.9/ezwAjujHviyr.lFDKzdubiW96xMRtt3gCO0nwnfgDAkG', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(100, 'gazova.michaela@purkynka.cz', 'Michaela Gažová', 'Michaela', 'Gažová', '$2y$10$T42s0RulXC/LndiXBFUYiuth8dMazfyUy98B74t/O7fQyMdVR3z4a', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(101, 'brandejs.patrik@purkynka.cz', 'Patrik Brandejs', 'Patrik', 'Brandejs', '$2y$10$i3KgR8r6ICZE/gYMJSnfoeaT7LA1qBJTZJYwhIaKzWTcf8zpCscLO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(102, 'kanakova.zuzana@purkynka.cz', 'Zuzana Kaňáková ', 'Zuzana', 'Kaňáková', '$2y$10$N9pXDK0uW5URRv1973WC8e/3jB00aIiGhrN5FIwwiTDFNviVM5PL.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(103, 'friedl.daniel@purkynka.cz', 'Daniel Friedl', 'Daniel', 'Friedl', '$2y$10$7/.16pUX1SCq0a4uu3F3IeA6K6RITTlBAQhbQxK1Tt0awbxUUwKS2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(104, 'smarda.jaroslav@purkynka.cz', 'Jaroslav  Šmarda', 'Jaroslav', 'Šmarda', '$2y$10$Z.0Pdwx.t6pk9Nvqv.Bb9OofMmDRf6sXagp17y/W7G6xkjsM1ZaFu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(108, 'odehnal.lukas@purkynka.cz', 'Lukáš Odehnal', 'Lukáš', 'Odehnal', '$2y$10$WiGemhJaYh2mA65yJi56JeNA13mK6GlYmLw2vX9vtaqvVvfLrm/Wu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(110, 'boucnik.jiri@purkynka.cz', 'Jiří Boucník', 'Jiří', 'Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'),
-(113, 'kolarova.natalie@purkynka.cz', 'Natálie Kolářová', 'Natálie', 'Kolářová', '$2y$10$Ce7DcmW6KGdwjhPoajsKuOJCdSF9QWb2E78yDnLqzTKcNOqNeycM6', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(114, 'filip.brazda@purkynka.cz', 'Filip Brázda', 'Filip', 'Brázda', '$2y$10$0nfbCWDH.q1Xx0TOh4DZEuUC3tjeJIALZREpA4j0pGL2.iT4b.xVW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(115, 'zacek.richard@purkynka.cz', 'Richard Žáček', 'Richard', 'Žáček', '$2y$10$fNpq/k9JSF5Czgae.pkMqunQwcB0m0jHbG8RraM7D9vYF8Avwgkt.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(116, 'lokajova.tereza@purkynka.cz', 'Tereza Lokajová', 'Tereza', 'Lokajová', '$2y$10$GpoSzoHjmqNp9FNQ.rE5B.hPi1Toc0JNYawcKR23pt9p9qGjWkqoO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(117, 'handlir.david@purkynka.cz', 'David Handlíř', 'David', 'Handlíř', '$2y$10$hw9SwcicTyF6rT/fqWk9QOh09Bxli/YNhmY.AFFm2gNmRIVUyksrC', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(118, 'machackova.anezka@purkynka.cz', 'Anežka Macháčková', 'Anežka', 'Macháčková', '$2y$10$sMveGbyAkMZnDN/f2yMJT.gp7GbIlN.AEFM5dyNEalfZppEuRjB0m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(119, 'buchtova.sarah@purkynka.cz', 'Sarah Buchtová', 'Sarah', 'Buchtová', '$2y$10$.RmTGw1aKEDmpTLtIre9ius5P4s8FHMwOEoW7/8fovTv5TpJfGQRe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(120, 'jelinek.jan@purkynka.cz', 'Jan Jelínek', 'Jan', 'Jelínek', '$2y$10$GGaC1Mf5QRYHIGaUGtA3oODXJZASfafYeT/yBHNh7Wn6TPYRS4JaW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(121, 'zarska.izabela@purkynka.cz', 'Izabela Žárská', 'Izabela', 'Žárská', '$2y$10$xHxEHZQiGTEnN1l4xYQPfe3.1MxkDMRnSj3ffXVx6vorke/1AwKY2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(122, 'vasickova.linda@purkynka.cz', 'Linda Vašíčková', 'Vašíčková', 'Linda', '$2y$10$0Pn.kB6jk4C26NxURxxfz.U31X/iDRVM/6RTSo17lKNn4OAzIdjMS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(123, 'topinka.jindrich@purkynka.cz', 'Jindřich Topinka', 'Jindřich', 'Topinka', '$2y$10$WvRzBdosYOPE5McZwnTxUuhZr62n0TDRY1RR9kgVXJ4iFV9VlLMwu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(125, 'turecek.ondrej@purkynka.cz', 'Ondřej Tureček', 'Ondřej', 'Tureček', '$2y$10$KZxvmPOFzKaAAwGfww/XDexGM0m2L5eoeumtS5oOVfB69p2iciwlS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(126, 'kropacek.jakub@purkynka.cz', 'Jakub Kropáček', 'Jakub', 'Kropáček', '$2y$10$bVus/UO66OyS.55StKSmd.KrB9He3mX431E2eEeCqya6qghpYKLta', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0'),
-(127, 'pac.dominik@purkynka.cz', 'Dominik Páč', 'Dominik', 'Páč', '$2y$10$7/saQ8dDe0xmgKFMTKLNwe28tcQi5GhPX.0Mg9BxFP/MHomH7ODM.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0');
+INSERT INTO `users_alba_rosa_parlament` (`idusers_parlament`, `email`, `username`, `name`, `last_name`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`, `admin`) VALUES
+(66, 'koralka.matej@purkynka.cz', 'Matěj Kořalka', 'Matěj', 'Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', 'Denisa', 'Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
+(88, 'vanek.frantisek@purkynka.cz', 'František Vaněk', 'František', 'Vaněk', '$2y$10$4CZfx4iSH2otCe.wMVKuheh0HGEOeuumtG13UbWo7hAEkVe7ipZ7C', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
+(89, 'korcak.jiri@purkynka.cz', 'Jiří Korčák', 'Jiří', 'Korčák', '$2y$10$H3gbijTDVMO8Q.aLd0j8IeihQlHeNLJxLU6Rr8RJAWZ2l1MBu/4sa', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(90, 'prudil.frantisek@purkynka.cz', 'František Prudil', 'František', 'Prudil', '$2y$10$PVImTnZ8slKxdMOZzLFqKO2xGP6lI1eqpeTHjfuVBXXADYPC2XdcS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(91, 'bednarik.karel@purkynka.cz', 'Karel Bednařík', 'Karel', 'Bednařík', '$2y$10$fBstLy4Yc.WeobDklMeOBukcCCnm/QcRo.oH7Cc73BcHYqiqv0lQu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(92, 'hudcova.nikola@purkynka.cz', 'Nikola Hudcová', 'Nikola', 'Hudcová', '$2y$10$kZKrSfwbW4LWWUejZWzQpOK9LN9eUJWE.I3n5wyPCRAm0DPnlHgJS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(94, 'balejova.alena@purkynka.cz', 'Alena Balejová', 'Alena', 'Balejová', '$2y$10$EwqePk8ouLYSagRnYBxoze25AwVdV0g4F4qyyo.wuuCTd34Bc5DDS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(95, 'pokorna.katerina@purkynka.cz', 'Kateřina Pokorná', 'Kateřina', 'Pokorná', '$2y$10$4cpMqqr9H87F7v7N1TPCY.42TfFQyfgkbqnPVLkXp3BSK6UkFXmVe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(96, 'jankuj.ondrej@purkynka.cz', 'Ondřej Jankůj', 'Ondřej', 'Jankůj', '$2y$10$4D6YRq59SspjLcFn8mX9HOK20w7vOTvFqI9kVWQco8yTqi5inxa3C', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(97, 'kacmarik.roman@purkynka.cz', 'Roman Kačmařík', 'Roman', 'Kačmařík', '$2y$10$57iHXHnim6sqFqcoA5W4y.p4oJ3AvBYRCYaI0yy0undeWDhDW2L/m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(98, 'furmanskyi.tymofii@purkynka.cz', 'Tymofii Furmanskyi', 'Tymofii', 'Furmanskyi', '$2y$10$mS7VGo.9/ezwAjujHviyr.lFDKzdubiW96xMRtt3gCO0nwnfgDAkG', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(100, 'gazova.michaela@purkynka.cz', 'Michaela Gažová', 'Michaela', 'Gažová', '$2y$10$T42s0RulXC/LndiXBFUYiuth8dMazfyUy98B74t/O7fQyMdVR3z4a', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(101, 'brandejs.patrik@purkynka.cz', 'Patrik Brandejs', 'Patrik', 'Brandejs', '$2y$10$i3KgR8r6ICZE/gYMJSnfoeaT7LA1qBJTZJYwhIaKzWTcf8zpCscLO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(102, 'kanakova.zuzana@purkynka.cz', 'Zuzana Kaňáková ', 'Zuzana', 'Kaňáková', '$2y$10$N9pXDK0uW5URRv1973WC8e/3jB00aIiGhrN5FIwwiTDFNviVM5PL.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(103, 'friedl.daniel@purkynka.cz', 'Daniel Friedl', 'Daniel', 'Friedl', '$2y$10$7/.16pUX1SCq0a4uu3F3IeA6K6RITTlBAQhbQxK1Tt0awbxUUwKS2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(104, 'smarda.jaroslav@purkynka.cz', 'Jaroslav  Šmarda', 'Jaroslav', 'Šmarda', '$2y$10$Z.0Pdwx.t6pk9Nvqv.Bb9OofMmDRf6sXagp17y/W7G6xkjsM1ZaFu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(108, 'odehnal.lukas@purkynka.cz', 'Lukáš Odehnal', 'Lukáš', 'Odehnal', '$2y$10$WiGemhJaYh2mA65yJi56JeNA13mK6GlYmLw2vX9vtaqvVvfLrm/Wu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(110, 'boucnik.jiri@purkynka.cz', 'Jiří Boucník', 'Jiří', 'Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
+(113, 'kolarova.natalie@purkynka.cz', 'Natálie Kolářová', 'Natálie', 'Kolářová', '$2y$10$Ce7DcmW6KGdwjhPoajsKuOJCdSF9QWb2E78yDnLqzTKcNOqNeycM6', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(114, 'filip.brazda@purkynka.cz', 'Filip Brázda', 'Filip', 'Brázda', '$2y$10$0nfbCWDH.q1Xx0TOh4DZEuUC3tjeJIALZREpA4j0pGL2.iT4b.xVW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(115, 'zacek.richard@purkynka.cz', 'Richard Žáček', 'Richard', 'Žáček', '$2y$10$fNpq/k9JSF5Czgae.pkMqunQwcB0m0jHbG8RraM7D9vYF8Avwgkt.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(116, 'lokajova.tereza@purkynka.cz', 'Tereza Lokajová', 'Tereza', 'Lokajová', '$2y$10$GpoSzoHjmqNp9FNQ.rE5B.hPi1Toc0JNYawcKR23pt9p9qGjWkqoO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(117, 'handlir.david@purkynka.cz', 'David Handlíř', 'David', 'Handlíř', '$2y$10$hw9SwcicTyF6rT/fqWk9QOh09Bxli/YNhmY.AFFm2gNmRIVUyksrC', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(118, 'machackova.anezka@purkynka.cz', 'Anežka Macháčková', 'Anežka', 'Macháčková', '$2y$10$sMveGbyAkMZnDN/f2yMJT.gp7GbIlN.AEFM5dyNEalfZppEuRjB0m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(119, 'buchtova.sarah@purkynka.cz', 'Sarah Buchtová', 'Sarah', 'Buchtová', '$2y$10$.RmTGw1aKEDmpTLtIre9ius5P4s8FHMwOEoW7/8fovTv5TpJfGQRe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(120, 'jelinek.jan@purkynka.cz', 'Jan Jelínek', 'Jan', 'Jelínek', '$2y$10$GGaC1Mf5QRYHIGaUGtA3oODXJZASfafYeT/yBHNh7Wn6TPYRS4JaW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(121, 'zarska.izabela@purkynka.cz', 'Izabela Žárská', 'Izabela', 'Žárská', '$2y$10$xHxEHZQiGTEnN1l4xYQPfe3.1MxkDMRnSj3ffXVx6vorke/1AwKY2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(122, 'vasickova.linda@purkynka.cz', 'Linda Vašíčková', 'Vašíčková', 'Linda', '$2y$10$0Pn.kB6jk4C26NxURxxfz.U31X/iDRVM/6RTSo17lKNn4OAzIdjMS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(123, 'topinka.jindrich@purkynka.cz', 'Jindřich Topinka', 'Jindřich', 'Topinka', '$2y$10$WvRzBdosYOPE5McZwnTxUuhZr62n0TDRY1RR9kgVXJ4iFV9VlLMwu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(125, 'turecek.ondrej@purkynka.cz', 'Ondřej Tureček', 'Ondřej', 'Tureček', '$2y$10$KZxvmPOFzKaAAwGfww/XDexGM0m2L5eoeumtS5oOVfB69p2iciwlS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(126, 'kropacek.jakub@purkynka.cz', 'Jakub Kropáček', 'Jakub', 'Kropáček', '$2y$10$bVus/UO66OyS.55StKSmd.KrB9He3mX431E2eEeCqya6qghpYKLta', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(127, 'pac.dominik@purkynka.cz', 'Dominik Páč', 'Dominik', 'Páč', '$2y$10$7/saQ8dDe0xmgKFMTKLNwe28tcQi5GhPX.0Mg9BxFP/MHomH7ODM.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(133, 'florian.ondrej@purkynka.cz', 'Ondřej Florián ', 'Ondřej', 'Florián', '$2y$10$F2OY0la/h/zd6yzHwgw2suLoPfVGT9duXo/S7Cj6X8rwtNFyru1na', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(134, 'kunes.vincent@purkynka.cz', 'Vincent Kuneš', 'Vincent', 'Kuneš', '$2y$10$3Oee3Csu2ktVunjfN8DqUO828Ym0gOPWMcG9nnavyOmmo63Hx9O8O', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(135, 'bana.vojtech@purkynka.cz', 'Vojtěch Báňa', 'Vojtěch', 'Báňa', '$2y$10$agGgdCJsrbw0J2rGZid3iuQ1k7EJysJyHjRFB0BSsWpPf.auedZdK', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(136, 'jakub.zimandl@purkynka.cz', 'Jakub Zimandl', 'Jakub', 'Zimandl', '$2y$10$MaJIAsf5gsbplsDVVWeGpudTtJUdNndEP0Wj0KQkn0b3QblmhkaVK', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
+(137, 'havelka.petr@Purkynka.cz', 'Petr Havelka', 'Petr', 'Havelka', '$2y$10$RabvL7b0diEzhI6JFbuvfOMgOAitPW9eNLQ3SllJnFP2o5Ba5Kvae', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
+(138, 'raichynets.oleh@purkynka.cz', 'Oleh Raichynets ', 'Oleh ', 'Raichynets', '$2y$10$mkTcpiuGEtP51UaHWWJQTO/rgeA5TOL9XK4Pt2huTb7b2IgeaL0qK', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -4705,6 +5316,13 @@ INSERT INTO `users_alba_rosa_purkiada` (`idusers_purkiada`, `username`, `name`, 
 --
 
 --
+-- Klíče pro tabulku `actions_alba_rosa_parlament`
+--
+ALTER TABLE `actions_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idactions_parlament`),
+  ADD KEY `idusers_parlament` (`idusers_parlament`);
+
+--
 -- Klíče pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
@@ -4717,6 +5335,12 @@ ALTER TABLE `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_list_parlament`);
+
+--
+-- Klíče pro tabulku `customers_alba_rosa_file_invoicing`
+--
+ALTER TABLE `customers_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Klíče pro tabulku `files_alba_rosa_file_storage`
@@ -4741,6 +5365,18 @@ ALTER TABLE `gamehub_public_alba_rosa`
 --
 ALTER TABLE `help_alba_rosa_purkyn`
   ADD PRIMARY KEY (`idhelp_purkyn`);
+
+--
+-- Klíče pro tabulku `invoices_alba_rosa_file_invoicing`
+--
+ALTER TABLE `invoices_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Klíče pro tabulku `invoice_items_alba_rosa_file_invoicing`
+--
+ALTER TABLE `invoice_items_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Klíče pro tabulku `logins_alba_rosa_purpix`
@@ -4797,11 +5433,23 @@ ALTER TABLE `other_alba_rosa_parlament`
   ADD PRIMARY KEY (`idother_parlament`);
 
 --
+-- Klíče pro tabulku `products_alba_rosa_file_invoicing`
+--
+ALTER TABLE `products_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`product_id`);
+
+--
 -- Klíče pro tabulku `school_alba_rosa`
 --
 ALTER TABLE `school_alba_rosa`
   ADD UNIQUE KEY `idschool` (`idschool`),
   ADD KEY `idschool_2` (`idschool`);
+
+--
+-- Klíče pro tabulku `store_customers_alba_rosa_file_invoicing`
+--
+ALTER TABLE `store_customers_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Klíče pro tabulku `tokens_alba_rosa_parlament`
@@ -4817,6 +5465,12 @@ ALTER TABLE `tokens_alba_rosa_parlament`
 ALTER TABLE `users_alba_rosa`
   ADD PRIMARY KEY (`idusers`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Klíče pro tabulku `users_alba_rosa_file_invoicing`
+--
+ALTER TABLE `users_alba_rosa_file_invoicing`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Klíče pro tabulku `users_alba_rosa_parlament`
@@ -4838,20 +5492,30 @@ ALTER TABLE `users_alba_rosa_purkiada`
 --
 
 --
+-- AUTO_INCREMENT pro tabulku `actions_alba_rosa_parlament`
+--
+ALTER TABLE `actions_alba_rosa_parlament`
+  MODIFY `idactions_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT pro tabulku `attendances_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_alba_rosa_parlament`
-  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=166;
+  MODIFY `idattendances_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=286;
 --
 -- AUTO_INCREMENT pro tabulku `attendances_list_alba_rosa_parlament`
 --
 ALTER TABLE `attendances_list_alba_rosa_parlament`
-  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+  MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
+--
+-- AUTO_INCREMENT pro tabulku `customers_alba_rosa_file_invoicing`
+--
+ALTER TABLE `customers_alba_rosa_file_invoicing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
 ALTER TABLE `files_alba_rosa_file_storage`
-  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
+  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=490;
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_private_alba_rosa`
 --
@@ -4862,6 +5526,16 @@ ALTER TABLE `gamehub_private_alba_rosa`
 --
 ALTER TABLE `gamehub_public_alba_rosa`
   MODIFY `idgamehub_public` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT pro tabulku `invoices_alba_rosa_file_invoicing`
+--
+ALTER TABLE `invoices_alba_rosa_file_invoicing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+--
+-- AUTO_INCREMENT pro tabulku `invoice_items_alba_rosa_file_invoicing`
+--
+ALTER TABLE `invoice_items_alba_rosa_file_invoicing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=86;
 --
 -- AUTO_INCREMENT pro tabulku `logins_alba_rosa_purpix`
 --
@@ -4886,37 +5560,62 @@ ALTER TABLE `logs_alba_rosa_purkyn`
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=86;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
 ALTER TABLE `other_alba_rosa`
   MODIFY `idother` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT pro tabulku `products_alba_rosa_file_invoicing`
+--
+ALTER TABLE `products_alba_rosa_file_invoicing`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=979;
+--
 -- AUTO_INCREMENT pro tabulku `school_alba_rosa`
 --
 ALTER TABLE `school_alba_rosa`
   MODIFY `idschool` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT pro tabulku `store_customers_alba_rosa_file_invoicing`
+--
+ALTER TABLE `store_customers_alba_rosa_file_invoicing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+--
 -- AUTO_INCREMENT pro tabulku `tokens_alba_rosa_parlament`
 --
 ALTER TABLE `tokens_alba_rosa_parlament`
-  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=130;
+  MODIFY `idtokens_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=150;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa`
 --
 ALTER TABLE `users_alba_rosa`
-  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=92;
+  MODIFY `idusers` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+--
+-- AUTO_INCREMENT pro tabulku `users_alba_rosa_file_invoicing`
+--
+ALTER TABLE `users_alba_rosa_file_invoicing`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_parlament`
 --
 ALTER TABLE `users_alba_rosa_parlament`
-  MODIFY `idusers_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=133;
+  MODIFY `idusers_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=139;
 --
 -- AUTO_INCREMENT pro tabulku `users_alba_rosa_purkiada`
 --
 ALTER TABLE `users_alba_rosa_purkiada`
   MODIFY `idusers_purkiada` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
+--
+-- Omezení pro exportované tabulky
+--
+
+--
+-- Omezení pro tabulku `actions_alba_rosa_parlament`
+--
+ALTER TABLE `actions_alba_rosa_parlament`
+  ADD CONSTRAINT `actions_alba_rosa_parlament_ibfk_1` FOREIGN KEY (`idusers_parlament`) REFERENCES `users_alba_rosa_parlament` (`idusers_parlament`) ON DELETE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
