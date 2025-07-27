@@ -217,62 +217,70 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             echo '<i class="fa ' . $message_icon . '" style="margin-right: 5px;"></i> ' . $decoded_message;
             echo '</div>';
         } ?>
-
-        <div class="table-heading">
-            <h2><i class="fa fa-heart blue"></i>・Seznam uživatelů parlamentu</h2>
-        </div>
-        <?php while ($user = $users->fetch_assoc()): ?>
-            <div class="user-box">
-                <strong><?= htmlspecialchars($user['name'] . ' ' . $user['last_name']) ?></strong><br>
-                <em><?= htmlspecialchars($user['email']) ?></em>
-
-                <!-- Formulář pro přidání záznamu -->
-                <form method="POST" style="margin-top:10px;">
-                    <input type="hidden" name="action" value="add">
-                    <input type="hidden" name="idusers_parlament" value="<?= $user['idusers_parlament'] ?>">
-                    <label>Sekce:</label>
-                    <select name="section" required>
-                        <option value="">-- Vyber --</option>
-                        <option value="Účast na akci">Účast na akci</option>
-                        <option value="Organizátor akce">Organizátor akce</option>
-                        <option value="Focení akce">Focení akce</option>
-                        <option value="Výbor">Výbor</option>
-                    </select><br><br>
-
-                    <label>Poznámka:</label><br>
-                    <textarea name="notes" rows="2" cols="50" placeholder="Poznámka..."
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea><br><br>
-                    <div class="button-container" id="buttonContainer">
-                        <button type="submit">Přidat záznam</button>
-                    </div>
-                </form>
-
-                <!-- Seznam akcí -->
-                <div class="note-list">
-                    <strong>Záznamy:</strong>
-                    <?php
-                    $id = (int) $user['idusers_parlament'];
-                    $result = $conn->query("SELECT idactions_parlament, section, notes FROM actions_alba_rosa_parlament WHERE idusers_parlament = $id ORDER BY idactions_parlament DESC");
-                    if ($result->num_rows === 0): ?>
-                        <p><em>Žádné záznamy</em></p>
-                    <?php else:
-                        while ($row = $result->fetch_assoc()): ?>
-                            <div class="note-item">
-                                <div class="note-content">
-                                    <strong><?= htmlspecialchars($row['section']) ?>:</strong>
-                                    <?= nl2br(htmlspecialchars($row['notes'])) ?>
-                                </div>
-                                <form method="POST" class="inline" onsubmit="event.preventDefault(); confirmDelete(this);">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="idactions_parlament" value="<?= $row['idactions_parlament'] ?>">
-                                    <button class="delete-btn" type="submit">Odstranit</button>
-                                </form>
-                            </div>
-                        <?php endwhile;
-                    endif; ?>
-                </div>
+        <?php if (isset($admin) && $admin == '1') { ?>
+            <div class="table-heading">
+                <h2><i class="fa fa-heart blue"></i>・Seznam uživatelů parlamentu</h2>
             </div>
-        <?php endwhile;
+            <?php while ($user = $users->fetch_assoc()): ?>
+                <div class="user-box">
+                    <strong><?= htmlspecialchars($user['name'] . ' ' . $user['last_name']) ?></strong><br>
+                    <em><?= htmlspecialchars($user['email']) ?></em>
+
+                    <!-- Formulář pro přidání záznamu -->
+                    <form method="POST" style="margin-top:10px;">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="idusers_parlament" value="<?= $user['idusers_parlament'] ?>">
+                        <label>Sekce:</label>
+                        <select name="section" required>
+                            <option value="">-- Vyber --</option>
+                            <option value="Účast na akci">Účast na akci</option>
+                            <option value="Organizátor akce">Organizátor akce</option>
+                            <option value="Focení akce">Focení akce</option>
+                            <option value="Výbor">Výbor</option>
+                        </select><br><br>
+
+                        <label>Poznámka:</label><br>
+                        <textarea name="notes" rows="2" cols="50" placeholder="Poznámka..."
+                            style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea><br><br>
+                        <div class="button-container" id="buttonContainer">
+                            <button type="submit">Přidat záznam</button>
+                        </div>
+                    </form>
+
+                    <!-- Seznam akcí -->
+                    <div class="note-list">
+                        <strong>Záznamy:</strong>
+                        <?php
+                        $id = (int) $user['idusers_parlament'];
+                        $result = $conn->query("SELECT idactions_parlament, section, notes FROM actions_alba_rosa_parlament WHERE idusers_parlament = $id ORDER BY idactions_parlament DESC");
+                        if ($result->num_rows === 0): ?>
+                            <p><em>Žádné záznamy</em></p>
+                        <?php else:
+                            while ($row = $result->fetch_assoc()): ?>
+                                <div class="note-item">
+                                    <div class="note-content">
+                                        <strong><?= htmlspecialchars($row['section']) ?>:</strong>
+                                        <?= nl2br(htmlspecialchars($row['notes'])) ?>
+                                    </div>
+                                    <form method="POST" class="inline" onsubmit="event.preventDefault(); confirmDelete(this);">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="idactions_parlament" value="<?= $row['idactions_parlament'] ?>">
+                                        <button class="delete-btn" type="submit">Odstranit</button>
+                                    </form>
+                                </div>
+                            <?php endwhile;
+                        endif; ?>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+
+
+        <?php } else {
+            echo ' <div class="error-message">
+         <i class="fa fa-times" style="margin-right: 5px;"></i> Chybí oprávnění.
+     </div>';
+
+        }
         // Získání dat z tabulky
         $query = "SELECT text FROM other_alba_rosa_parlament WHERE idother_parlament = 1";
         $result = mysqli_query($conn, $query);
