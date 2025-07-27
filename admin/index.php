@@ -71,12 +71,14 @@ if (isset($_SESSION['idusers_parlament'])) {
             border: 1px solid #ccc;
             padding: 10px;
             margin-bottom: 20px;
+            border-radius: 8px;
         }
 
         .note-list {
             margin-top: 10px;
             background: #f9f9f9;
             padding: 10px;
+            border-radius: 8px;
         }
 
         .note-item {
@@ -95,12 +97,33 @@ if (isset($_SESSION['idusers_parlament'])) {
             margin: 0;
         }
 
-        button.delete-btn {
-            background: #e74c3c;
+        .button-container button {
+            background-color: #5481aa;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #77afe0;
+            transform: scale(1.05);
+            font-weight: bold;
+        }
+
+        button.delete {
+            background-color: #ff4848;
             color: white;
             border: none;
-            padding: 4px 8px;
+            padding: 5px 10px;
             cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button.delete:hover {
+            background-color: rgb(255, 0, 0);
         }
     </style>
     <script>
@@ -113,6 +136,14 @@ if (isset($_SESSION['idusers_parlament'])) {
 </head>
 <?php
 
+// Přesměrování po úspěšném nebo neúspěšném zpracování
+function redirectWithMessage($message, $type = 'info-message')
+{
+    $message = urlencode($message);
+    header("Location: ./?message=$message&message_type=$type");
+    exit();
+}
+
 // Zpracování přidání záznamu
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'add') {
     $id = (int) $_POST['idusers_parlament'];
@@ -121,16 +152,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
 
     if (!empty($section)) {
         $stmt = $conn->prepare("INSERT INTO actions_alba_rosa_parlament (idusers_parlament, section, notes) VALUES (?, ?, ?)");
-        $stmt->bind_param("iss", $id, $section, $notes);
-        $stmt->execute();
+        if ($stmt) {
+            $stmt->bind_param("iss", $id, $section, $notes);
+            if ($stmt->execute()) {
+                redirectWithMessage("Záznam byl úspěšně přidán.", "success-message");
+            } else {
+                redirectWithMessage("Nepodařilo se přidat záznam.", "error-message");
+            }
+        } else {
+            redirectWithMessage("Chyba v dotazu.", "error-message");
+        }
+    } else {
+        redirectWithMessage("Musíte vybrat sekci.", "info-message");
     }
 }
 
 // Zpracování odstranění záznamu
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'delete') {
     $delete_id = (int) $_POST['idactions_parlament'];
-    $conn->query("DELETE FROM actions_alba_rosa_parlament WHERE idactions_parlament = $delete_id");
+    if ($conn->query("DELETE FROM actions_alba_rosa_parlament WHERE idactions_parlament = $delete_id")) {
+        redirectWithMessage("Záznam byl úspěšně odstraněn.", "success-message");
+    } else {
+        redirectWithMessage("Chyba při mazání záznamu.", "error-message");
+    }
 }
+
 
 // Načtení uživatelů
 $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_name, name");
@@ -223,7 +269,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             </div>
             <?php while ($user = $users->fetch_assoc()): ?>
                 <div class="user-box">
-                    <strong><?= htmlspecialchars($user['name'] . ' ' . $user['last_name']) ?></strong><br>
+                    <strong><?= htmlspecialchars($user['name'] . ' ' . $user['last_name']) ?></strong> |
                     <em><?= htmlspecialchars($user['email']) ?></em>
 
                     <!-- Formulář pro přidání záznamu -->
@@ -232,7 +278,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                         <input type="hidden" name="idusers_parlament" value="<?= $user['idusers_parlament'] ?>">
                         <label>Sekce:</label>
                         <select name="section" required>
-                            <option value="">-- Vyber --</option>
+                            <option value="" disabled selected>-- Vyberte sekci --</option>
                             <option value="Účast na akci">Účast na akci</option>
                             <option value="Organizátor akce">Organizátor akce</option>
                             <option value="Focení akce">Focení akce</option>
@@ -241,7 +287,8 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
                         <label>Poznámka:</label><br>
                         <textarea name="notes" rows="2" cols="50" placeholder="Poznámka..."
-                            style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"></textarea><br><br>
+                            style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; white-space: nowrap;"
+                            required></textarea><br><br>
                         <div class="button-container" id="buttonContainer">
                             <button type="submit">Přidat záznam</button>
                         </div>
@@ -249,7 +296,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
                     <!-- Seznam akcí -->
                     <div class="note-list">
-                        <strong>Záznamy:</strong>
+                        <h4>Záznamy:</h4>
                         <?php
                         $id = (int) $user['idusers_parlament'];
                         $result = $conn->query("SELECT idactions_parlament, section, notes FROM actions_alba_rosa_parlament WHERE idusers_parlament = $id ORDER BY idactions_parlament DESC");
@@ -262,11 +309,13 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                         <strong><?= htmlspecialchars($row['section']) ?>:</strong>
                                         <?= nl2br(htmlspecialchars($row['notes'])) ?>
                                     </div>
-                                    <form method="POST" class="inline" onsubmit="event.preventDefault(); confirmDelete(this);">
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="idactions_parlament" value="<?= $row['idactions_parlament'] ?>">
-                                        <button class="delete-btn" type="submit">Odstranit</button>
-                                    </form>
+                                    <div class="button-container" id="buttonContainer">
+                                        <form method="POST" class="inline" onsubmit="event.preventDefault(); confirmDelete(this);">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="idactions_parlament" value="<?= $row['idactions_parlament'] ?>">
+                                            <button class="delete" type="submit">Odstranit</button>
+                                        </form>
+                                    </div>
                                 </div>
                             <?php endwhile;
                         endif; ?>
