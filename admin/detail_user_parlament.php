@@ -277,10 +277,6 @@ $q->close();
             gap: 8px;
         }
 
-        .title {
-            font-weight: 700;
-        }
-
         .email {
             opacity: .9;
         }
@@ -299,7 +295,6 @@ $q->close();
             border: 1px solid var(--border);
             border-radius: 999px;
             padding: 6px 10px;
-            font-size: 13px;
         }
 
         .grid {
@@ -331,7 +326,7 @@ $q->close();
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 10px;
-            width: 100%;
+            width: 95%;
             background: #fff;
         }
 
@@ -371,7 +366,6 @@ $q->close();
             border-radius: 999px;
             border: 1px solid var(--border);
             background: var(--chip);
-            font-size: 12px;
         }
 
         /* Vodorovný seznam karet (záznamy) */
@@ -440,12 +434,7 @@ $q->close();
             margin: 6px 0;
         }
 
-        .class-row .txt .year {
-            font-weight: 700;
-        }
-
         .role-badge {
-            font-weight: 600;
             letter-spacing: .2px;
             padding: 4px 8px;
             border-radius: 999px;
@@ -499,7 +488,7 @@ $q->close();
                 <div class="card">
                     <h4><i class="fa fa-id-badge"></i> Role</h4>
                     <form method="POST" class="form-row"
-                        style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;">
+                        style="display: grid;;gap:8px;align-items:flex-end;flex-wrap:wrap;">
                         <input type="hidden" name="action" value="set_role">
                         <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
                         <input class="select" name="role" list="roles-list"
@@ -513,7 +502,7 @@ $q->close();
                             <option value="Organizátor">
                             <option value="Fotograf">
                             <option value="Host">
-                        </datalist>
+                        </datalist><br>
                         <button class="btn" type="submit"><i class="fa fa-save"></i> Uložit roli</button>
                     </form>
                 </div>
@@ -521,23 +510,23 @@ $q->close();
                 <div class="card">
                     <h4><i class="fa fa-graduation-cap"></i> Třídy</h4>
                     <form method="POST" class="form-row"
-                        style="align-items:flex-end; gap:10px; display:flex; flex-wrap:wrap;">
+                        style="align-items:flex-end; gap:10px; display: grid; flex-wrap:wrap;">
                         <input type="hidden" name="action" value="add_class">
                         <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
 
                         <div style="min-width:160px">
-                            <label for="school_year" style="font-weight:600">Školní rok</label>
+                            <label for="school_year">Školní rok</label>
                             <input id="school_year" class="select school-year" type="text" name="school_year"
                                 inputmode="numeric" placeholder="2024/2025" pattern="\\d{4}\\s*/\\s*\\d{4}"
                                 title="Zadejte ve formátu 2024/2025" required>
                         </div>
 
                         <div style="min-width:160px; flex:1">
-                            <label for="class_name" style="font-weight:600">Třída</label>
+                            <label for="class_name">Třída</label>
                             <input id="class_name" class="select" type="text" name="class_name" maxlength="50"
                                 placeholder="např. 9.A" required>
                         </div>
-
+                        <br>
                         <button class="btn" type="submit"><i class="fa fa-plus"></i> Přidat třídu</button>
                     </form>
 
@@ -565,7 +554,7 @@ $q->close();
 
                 <div class="card" style="grid-column: 1 / -1;">
                     <h4><i class="fa fa-plus-circle"></i> Přidat záznam</h4>
-                    <form method="POST" class="form-row" style="align-items:flex-end">
+                    <form method="POST" class="form-row" style="align-items:flex-end; display: grid;">
                         <input type="hidden" name="action" value="add">
                         <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
                         <select class="select" name="section" required style="min-width:220px">
