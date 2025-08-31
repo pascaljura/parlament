@@ -4,7 +4,8 @@ session_start();
 ob_start();
 
 if (!function_exists('roleColors')) {
-    function roleColors(string $role): array {
+    function roleColors(string $role): array
+    {
         if ($role === '') {
             // neutrální "bez role"
             return ['#f3f4f6', '#e5e7eb', '#111827'];
@@ -12,20 +13,20 @@ if (!function_exists('roleColors')) {
 
         // stabilní hash z textu (diakritika nevadí)
         $source = function_exists('mb_strtolower') ? mb_strtolower($role, 'UTF-8') : strtolower($role);
-        $hash   = crc32($source);
+        $hash = crc32($source);
 
         // 1) rozprostření přes "zlatý úhel" + 2) kvantizace na kroky (větší rozestup odstínů)
         $golden = 0.61803398875;                                  // zlatý poměr (konjugát)
-        $base   = fmod(($hash * $golden) * 360.0, 360.0);         // rozprostřený hue
+        $base = fmod(($hash * $golden) * 360.0, 360.0);           // rozprostřený hue
         $STEP_DEG = 20;                                           // krok kvantizace (čím větší, tím víc rozdílné barvy)
         $bucket = (int) round($base / $STEP_DEG);
         $h = ($bucket * $STEP_DEG) % 360;
 
         // Jemné obměny saturace/světlosti, ale pořád pastel
         $satChoices = [70, 78, 85, 90];
-        $lightBg    = [92, 94, 96];
+        $lightBg = [92, 94, 96];
 
-        $s   = $satChoices[$hash & 3];
+        $s = $satChoices[$hash & 3];
         $lBg = $lightBg[($hash >> 2) % 3];
 
         // okraj o něco tmavší a s mírně vyšší saturací
@@ -33,7 +34,7 @@ if (!function_exists('roleColors')) {
         $sBd = min(95, $s + 6);
 
         // text necháme tmavý – na pastelu čitelný
-        $tx  = '#0f172a';
+        $tx = '#0f172a';
 
         // Použijeme čárkovou syntaxi kvůli široké kompatibilitě
         $bg = "hsl($h, {$s}%, {$lBg}%)";
@@ -134,9 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
         $role = mb_substr($role, 0, 50);
     }
 
-    // volitelné: můžeš nedovolit čistě prázdný řetězec, já ponechávám prázdné = „bez role“
-    // if ($role === '') { redirectWithMessage("Role nesmí být prázdná.", "error-message"); }
-
     $stmt = $conn->prepare("UPDATE users_alba_rosa_parlament SET role = ? WHERE idusers_parlament = ?");
     if ($stmt) {
         $stmt->bind_param("si", $role, $id);
@@ -144,6 +142,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
             redirectWithMessage("Role uložena.", "success-message");
         } else {
             redirectWithMessage("Nepodařilo se uložit roli.", "error-message");
+        }
+    } else {
+        redirectWithMessage("Chyba v dotazu.", "error-message");
+    }
+}
+
+// ---------- Add class ----------
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'add_class') {
+    $id = (int) ($_POST['idusers_parlament'] ?? 0);
+    $school_year_raw = trim($_POST['school_year'] ?? '');  // očekáváme "YYYY/YYYY"
+    $class_name = trim($_POST['class_name'] ?? '');
+
+    // validace formátu YYYY/YYYY
+    if (!preg_match('/^\\d{4}\\s*\\/\\s*\\d{4}$/', $school_year_raw)) {
+        redirectWithMessage("Zadejte školní rok ve formátu RRRR/RRRR (např. 2024/2025).", "info-message");
+    }
+
+    // rozpad + sanity check (druhý rok = první + 1)
+    list($startY, $endY) = preg_split('/\\s*\\/\\s*/', $school_year_raw);
+    $startY = (int) $startY;
+    $endY = (int) $endY;
+
+    if ($endY !== $startY + 1 || $startY < 2000 || $startY > 2100) {
+        redirectWithMessage("Neplatný školní rok. Zadejte např. 2024/2025.", "info-message");
+    }
+
+    if ($id > 0 && $class_name !== '') {
+        if (mb_strlen($class_name) > 50)
+            $class_name = mb_substr($class_name, 0, 50);
+
+        // do DB ukládáme pouze počáteční rok (startY) do sloupce class_year (INT)
+        $stmt = $conn->prepare("INSERT INTO classes_alba_rosa_parlament (idusers_parlament, class_year, class_name) VALUES (?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("iis", $id, $startY, $class_name);
+            if ($stmt->execute()) {
+                redirectWithMessage("Třída přidána.", "success-message");
+            } else {
+                redirectWithMessage("Nepodařilo se přidat třídu.", "error-message");
+            }
+        } else {
+            redirectWithMessage("Chyba v dotazu.", "error-message");
+        }
+    } else {
+        redirectWithMessage("Vyplňte název třídy.", "info-message");
+    }
+}
+
+// ---------- Delete class ----------
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'delete_class') {
+    $delete_id = (int) ($_POST['idclass_parlament'] ?? 0);
+    $stmt = $conn->prepare("DELETE FROM classes_alba_rosa_parlament WHERE idclass_parlament = ?");
+    if ($stmt) {
+        $stmt->bind_param("i", $delete_id);
+        if ($stmt->execute()) {
+            redirectWithMessage("Třída byla odstraněna.", "success-message");
+        } else {
+            redirectWithMessage("Chyba při mazání třídy.", "error-message");
         }
     } else {
         redirectWithMessage("Chyba v dotazu.", "error-message");
@@ -195,6 +250,30 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             /* oranžová */
         }
 
+        .class-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .class-chip {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            padding: 4px 8px;
+            font-size: 12.5px;
+            white-space: nowrap;
+        }
+
+        .class-chip .year {
+            font-weight: 700;
+        }
+
+        .class-chip .sep {
+            padding: 0 4px;
+            opacity: .6;
+        }
+
         body {
             background: #f6f8fb;
             color: var(--text);
@@ -234,7 +313,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            min-width: 940px;
+            min-width: 1050px;
         }
 
         .users th,
@@ -251,6 +330,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             background: #5481aa;
             color: #fafafa;
             font-weight: 700;
+            z-index: 1;
         }
 
         .users tbody tr:hover {
@@ -275,7 +355,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             color: #fafafa;
         }
 
-        /* Akce v tabulce */
+        /* Akce v tabulce (posledních 5) */
         .acts {
             display: grid;
             gap: 8px;
@@ -342,15 +422,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             background: var(--brand-2);
         }
 
-        .btn.ghost {
-            background: #fff;
-            color: #355170;
-        }
-
-        .btn.danger {
-            background: var(--danger);
-        }
-
         .actions {
             display: flex;
             gap: 8px;
@@ -384,148 +455,8 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             color: #1e40af
         }
 
-        /* Modal */
-        .modal {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(15, 23, 42, .45);
-            z-index: 1000;
-        }
 
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-card {
-            width: min(860px, 94vw);
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, .25);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-head {
-            padding: 14px 16px;
-            background: #355170;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            color: #fafafa;
-        }
-
-        .modal-title {
-            font-weight: 700;
-        }
-
-        .modal-body {
-            padding: 16px;
-            display: grid;
-            gap: 14px;
-        }
-
-        .modal-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 820px) {
-            .modal-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px;
-        }
-
-        .card h4 {
-            margin: 0 0 8px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .select,
-        textarea {
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-            width: 100%;
-        }
-
-        textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        .note {
-            display: flex;
-            gap: 10px;
-            justify-content: space-between;
-            align-items: flex-start;
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-        }
-
-        .note .left {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .badge._ucast {
-            background: #ecfdf5;
-            border-color: #bbf7d0;
-        }
-
-        .badge._org {
-            background: #eff6ff;
-            border-color: #bfdbfe;
-        }
-
-        .badge._foto {
-            background: #fdf4ff;
-            border-color: #f5d0fe;
-        }
-
-        .badge._vybor {
-            background: #fff7ed;
-            border-color: #fed7aa;
-        }
-
-        .kpis {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .kpis .chip {
-            background: var(--chip);
-            border: 1px solid var(--border);
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 12.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
+        /* ---- /EXISTUJÍCÍ POPUP STYL ---- */
 
         .users th.sortable {
             cursor: pointer;
@@ -534,7 +465,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         }
 
         .users th.sortable:after {
-            content: '\f0dc';
+            content: '\\f0dc';
             /* fa-sort ikonka */
             font-family: FontAwesome;
             font-size: 12px;
@@ -544,13 +475,13 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         }
 
         .users th.sortable.asc:after {
-            content: '\f0de';
+            content: '\\f0de';
             /* fa-sort-up */
             opacity: 0.9;
         }
 
         .users th.sortable.desc:after {
-            content: '\f0dd';
+            content: '\\f0dd';
             /* fa-sort-down */
             opacity: 0.9;
         }
@@ -564,25 +495,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             const banners = document.querySelectorAll('.success-message, .error-message, .info-message');
             banners.forEach(b => b.style.display = 'none');
         }
-
-        // Modal helpers
-        function openDetail(uid) {
-            const modal = document.getElementById('personModal');
-            const slot = document.getElementById('modalContentSlot');
-            const tpl = document.getElementById('tpl-' + uid);
-            if (!tpl) { return; }
-            slot.innerHTML = tpl.innerHTML;
-            modal.classList.add('open');
-            const first = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            if (first) first.focus();
-        }
-        function closeDetail() {
-            const modal = document.getElementById('personModal');
-            const slot = document.getElementById('modalContentSlot');
-            modal.classList.remove('open');
-            slot.innerHTML = '';
-        }
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
     </script>
 </head>
 
@@ -638,6 +550,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                 <th class="sortable">Jméno</th>
                                 <th class="sortable">Přijmení</th>
                                 <th class="sortable">E-mail</th>
+                                <th class="sortable">Třídy</th>
                                 <th class="sortable">Role</th>
                                 <th>Akce (posledních 5)</th>
                                 <th>Detail</th>
@@ -666,11 +579,43 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                     }
                                     $st->close();
                                 }
+                                $classes = [];
+                                $latestYear = 0;
+                                if ($stc = $conn->prepare("SELECT idclass_parlament, class_year, class_name FROM classes_alba_rosa_parlament WHERE idusers_parlament = ? ORDER BY class_year DESC, idclass_parlament DESC")) {
+                                    $stc->bind_param("i", $uid);
+                                    $stc->execute();
+                                    $rc = $stc->get_result();
+                                    while ($c = $rc->fetch_assoc()) {
+                                        $classes[] = $c;
+                                        $y = (int) $c['class_year'];
+                                        if ($y > $latestYear)
+                                            $latestYear = $y;
+                                    }
+                                    $stc->close();
+                                }
                                 ?>
                                 <tr>
                                     <td><strong><?= htmlspecialchars($Name) ?></strong></td>
                                     <td><strong><?= htmlspecialchars($lastName) ?></strong></td>
                                     <td><?= htmlspecialchars($email) ?></td>
+                                    <td data-sort="<?= $latestYear > 0 ? $latestYear : 0 ?>">
+                                        <?php if (empty($classes)): ?>
+                                            <span class="muted">—</span>
+                                        <?php else: ?>
+                                            <div class="class-list">
+                                                <?php foreach ($classes as $c):
+                                                    $y = (int) $c['class_year']; ?>
+                                                    <span class="class-chip"
+                                                        title="<?= htmlspecialchars(($y . '/' . ($y + 1)) . ', ' . $c['class_name']) ?>">
+                                                        <span class="year"><?= $y ?>/<?= $y + 1 ?></span>
+                                                        <span class="sep">–</span>
+                                                        <span class="cls"><?= htmlspecialchars($c['class_name']) ?></span>
+                                                    </span>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+
                                     <td>
                                         <span class="badge role-badge"
                                             style="background: <?= htmlspecialchars($roleBg) ?>; border-color: <?= htmlspecialchars($roleBd) ?>; color: <?= htmlspecialchars($roleTx) ?>;">
@@ -705,130 +650,12 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                         <?php endif; ?>
                                     </td>
                                     <td class="actions">
-                                        <button class="btn" onclick="openDetail(<?= $uid ?>)"><i class="fa fa-user"></i>
-                                            Detail</button>
+                                        <button class="btn popup-trigger"
+                                            data-link="detail_user_parlament.php?idusers_parlament=<?= $uid ?>">
+                                            <i class="fa fa-user"></i> Detail
+                                        </button>
                                     </td>
                                 </tr>
-
-                                <!-- Template obsahu modalu pro tohoto uživatele -->
-                                <template id="tpl-<?= $uid ?>">
-                                    <div class="modal-head">
-                                        <div class="modal-title"><i class="fa fa-user"></i> <?= htmlspecialchars($fullName) ?>
-                                            <span class="email">• <?= htmlspecialchars($email) ?></span>
-                                        </div>
-                                        <div><button class="btn ghost" onclick="closeDetail()"><i class="fa fa-times"></i>
-                                                Zavřít</button></div>
-                                    </div>
-                                    <div class="modal-body">
-                                        <?php
-                                        // Souhrny pro modal (počty)
-                                        $counts = ['Účast na akci' => 0, 'Organizátor akce' => 0, 'Focení akce' => 0, 'Výbor' => 0];
-                                        if ($stmtC = $conn->prepare("SELECT section, COUNT(*) AS c FROM actions_alba_rosa_parlament WHERE idusers_parlament = ? GROUP BY section")) {
-                                            $stmtC->bind_param("i", $uid);
-                                            $stmtC->execute();
-                                            $rC = $stmtC->get_result();
-                                            while ($rc = $rC->fetch_assoc()) {
-                                                $counts[$rc['section']] = (int) $rc['c'];
-                                            }
-                                            $stmtC->close();
-                                        }
-                                        ?>
-                                        <div class="kpis">
-                                            <span class="chip"><i class="fa fa-users"></i> Účast:
-                                                <?= (int) ($counts['Účast na akci'] ?? 0) ?></span>
-                                            <span class="chip"><i class="fa fa-cogs"></i> Organizátor:
-                                                <?= (int) ($counts['Organizátor akce'] ?? 0) ?></span>
-                                            <span class="chip"><i class="fa fa-camera"></i> Focení:
-                                                <?= (int) ($counts['Focení akce'] ?? 0) ?></span>
-                                            <span class="chip"><i class="fa fa-university"></i> Výbor:
-                                                <?= (int) ($counts['Výbor'] ?? 0) ?></span>
-                                        </div>
-
-                                        <div class="modal-grid">
-                                            <div class="card">
-                                                <h4><i class="fa fa-id-badge"></i> Role</h4>
-                                                <form method="POST" class="form-row">
-                                                    <input type="hidden" name="action" value="set_role">
-                                                    <input type="hidden" name="idusers_parlament" value="<?= $uid ?>">
-                                                    <input class="select" name="role" list="roles-list-<?= $uid ?>"
-                                                        value="<?= htmlspecialchars($currentRole) ?>"
-                                                        placeholder="Napište roli nebo vyberte…"
-                                                        aria-label="Zvolte nebo napište roli" />
-                                                    <datalist id="roles-list-<?= $uid ?>">
-                                                        <option value="Člen">
-                                                        <option value="Vedoucí">
-                                                        <option value="Místopředseda">
-                                                        <option value="Organizátor">
-                                                        <option value="Fotograf">
-                                                        <option value="Host">
-                                                    </datalist>
-
-                                                    <button class="btn" type="submit"><i class="fa fa-save"></i> Uložit
-                                                        roli</button>
-                                                </form>
-                                            </div>
-
-                                            <div class="card">
-                                                <h4><i class="fa fa-plus-circle"></i> Přidat záznam</h4>
-                                                <form method="POST">
-                                                    <input type="hidden" name="action" value="add">
-                                                    <input type="hidden" name="idusers_parlament" value="<?= $uid ?>">
-                                                    <div class="form-row">
-                                                        <select class="select" name="section" required>
-                                                            <option value="" disabled selected>-- Vyberte sekci --</option>
-                                                            <option value="Účast na akci">Účast na akci</option>
-                                                            <option value="Organizátor akce">Organizátor akce</option>
-                                                            <option value="Focení akce">Focení akce</option>
-                                                            <option value="Výbor">Výbor</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <textarea name="notes" placeholder="Poznámka..." required></textarea>
-                                                    </div>
-                                                    <button class="btn" type="submit"><i class="fa fa-plus"></i> Přidat</button>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                        <div class="card">
-                                            <h4><i class="fa fa-list-ul"></i> Záznamy</h4>
-                                            <div class="notes">
-                                                <?php
-                                                $q = $conn->prepare("SELECT idactions_parlament, section, notes FROM actions_alba_rosa_parlament WHERE idusers_parlament = ? ORDER BY idactions_parlament DESC");
-                                                $q->bind_param("i", $uid);
-                                                $q->execute();
-                                                $qr = $q->get_result();
-                                                if ($qr->num_rows === 0) {
-                                                    echo '<div class="email"><em>Žádné záznamy</em></div>';
-                                                } else {
-                                                    while ($row = $qr->fetch_assoc()) {
-                                                        $sec = $row['section'];
-                                                        $cls = '_ucast';
-                                                        if ($sec === 'Organizátor akce')
-                                                            $cls = '_org';
-                                                        elseif ($sec === 'Focení akce')
-                                                            $cls = '_foto';
-                                                        elseif ($sec === 'Výbor')
-                                                            $cls = '_vybor';
-                                                        echo '<div class="note">
-                                <div class="left">
-                                  <span class="badge ' . $cls . '">' . htmlspecialchars($sec) . '</span>
-                                  <div>' . nl2br(htmlspecialchars($row['notes'])) . '</div>
-                                </div>
-                                <form method="POST" class="inline" onsubmit="if(!confirm(\'Opravdu chcete tento záznam odstranit?\')){event.preventDefault();}">
-                                  <input type="hidden" name="action" value="delete">
-                                  <input type="hidden" name="idactions_parlament" value="' . (int) $row['idactions_parlament'] . '">
-                                  <button class="btn danger" type="submit" title="Odstranit"><i class="fa fa-trash"></i></button>
-                                </form>
-                              </div>';
-                                                    }
-                                                }
-                                                $q->close();
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
                             <?php endwhile; ?>
                         </tbody>
                     </table>
@@ -850,19 +677,24 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" id="personModal" onclick="if(event.target===this) closeDetail();">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="personModalTitle">
-            <div id="modalContentSlot"></div>
+    <!-- EXISTUJÍCÍ POPUP OVERLAY (markup pouze jednou na stránce) -->
+    <!-- Popup struktura -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
         </div>
     </div>
+    <!-- /POPUP OVERLAY -->
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script src="../assets/js/script.js"></script>
-    <script>
 
+    <script>
+        // Řazení podle záhlaví
         document.addEventListener('DOMContentLoaded', () => {
             const table = document.querySelector('.users');
+            if (!table) return;
             const headers = table.querySelectorAll('th.sortable');
 
             headers.forEach((th, idx) => {
@@ -879,16 +711,32 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                     th.classList.add(newDir);
 
                     rows.sort((a, b) => {
-                        const A = a.cells[idx].innerText.trim().toLowerCase();
-                        const B = b.cells[idx].innerText.trim().toLowerCase();
+                        // na třídách preferujeme data-sort (poslední rok)
+                        const cellA = a.cells[idx];
+                        const cellB = b.cells[idx];
+                        const sortA = cellA?.getAttribute('data-sort');
+                        const sortB = cellB?.getAttribute('data-sort');
 
-                        if (!isNaN(A) && !isNaN(B)) {
-                            return newDir === 'asc' ? A - B : B - A;
+                        if (sortA !== null || sortB !== null) {
+                            const AA = parseInt(sortA || '0', 10);
+                            const BB = parseInt(sortB || '0', 10);
+                            return newDir === 'asc' ? AA - BB : BB - AA;
+                        }
+
+                        const A = (cellA?.innerText || '').trim().toLowerCase();
+                        const B = (cellB?.innerText || '').trim().toLowerCase();
+
+                        const numA = parseFloat(A.replace(',', '.'));
+                        const numB = parseFloat(B.replace(',', '.'));
+                        const bothNumbers = !isNaN(numA) && !isNaN(numB);
+
+                        if (bothNumbers) {
+                            return newDir === 'asc' ? numA - numB : numB - numA;
                         }
                         return newDir === 'asc' ? A.localeCompare(B, 'cs') : B.localeCompare(A, 'cs');
                     });
 
-                    // přidání zpět
+                    // Přidání zpět
                     rows.forEach(r => tbody.appendChild(r));
                 });
             });
