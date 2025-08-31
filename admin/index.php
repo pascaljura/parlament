@@ -465,7 +465,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         }
 
         .users th.sortable:after {
-            content: '\\f0dc';
+            content: '\f0dc';
             /* fa-sort ikonka */
             font-family: FontAwesome;
             font-size: 12px;
@@ -475,13 +475,13 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         }
 
         .users th.sortable.asc:after {
-            content: '\\f0de';
+            content: '\f0de';
             /* fa-sort-up */
             opacity: 0.9;
         }
 
         .users th.sortable.desc:after {
-            content: '\\f0dd';
+            content: '\f0dd';
             /* fa-sort-down */
             opacity: 0.9;
         }
