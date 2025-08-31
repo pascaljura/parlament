@@ -261,12 +261,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             border: 1px solid #e5e7eb;
             border-radius: 999px;
             padding: 4px 8px;
-            font-size: 12.5px;
             white-space: nowrap;
-        }
-
-        .class-chip .year {
-            font-weight: 700;
         }
 
         .class-chip .sep {
@@ -280,7 +275,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         }
 
         .badge.role-badge {
-            font-weight: 600;
             letter-spacing: .2px;
         }
 
@@ -294,7 +288,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         .table-heading h2 {
             margin: 0;
             font-family: "Roboto Slab", serif;
-            font-size: clamp(22px, 2.4vw, 28px);
         }
 
         .table-heading .blue {
@@ -329,7 +322,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             top: 0;
             background: #5481aa;
             color: #fafafa;
-            font-weight: 700;
             z-index: 1;
         }
 
@@ -343,11 +335,9 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             border-radius: 999px;
             background: var(--chip);
             border: 1px solid var(--border);
-            font-size: 12px;
         }
 
         .role {
-            font-weight: 600;
             color: #0f172a;
         }
 
@@ -379,7 +369,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
         .act .note {
             color: #374151;
-            font-size: 13px;
             margin: 6px 0 2px 0;
             line-height: 1.35;
         }
@@ -468,7 +457,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             content: '\f0dc';
             /* fa-sort ikonka */
             font-family: FontAwesome;
-            font-size: 12px;
             position: absolute;
             right: 8px;
             opacity: 0.5;
