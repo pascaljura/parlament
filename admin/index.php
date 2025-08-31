@@ -300,6 +300,9 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             border-radius: 12px;
             overflow: auto;
             box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
+            max-height: 70vh;
+            /* kvůli scrollu a sticky headeru */
+            position: relative;
         }
 
         table.users {
@@ -322,7 +325,11 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             top: 0;
             background: #5481aa;
             color: #fafafa;
-            z-index: 1;
+            z-index: 10;
+        }
+
+        .users thead tr:first-child th {
+            box-shadow: 0 2px 0 rgba(0, 0, 0, .05);
         }
 
         .users tbody tr:hover {
@@ -444,34 +451,64 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             color: #1e40af
         }
 
-
-        /* ---- /EXISTUJÍCÍ POPUP STYL ---- */
-
+        /* --- FIX: nepřebíjej sticky pozicí relative --- */
         .users th.sortable {
             cursor: pointer;
             user-select: none;
-            position: relative;
+            white-space: nowrap;
         }
 
         .users th.sortable:after {
             content: '\f0dc';
-            /* fa-sort ikonka */
+            /* fa-sort */
             font-family: FontAwesome;
             position: absolute;
             right: 8px;
-            opacity: 0.5;
+            opacity: 0.6;
+            top: 10px;
         }
 
-        .users th.sortable.asc:after {
+        .users thead th.sortable.asc:after {
             content: '\f0de';
             /* fa-sort-up */
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
-        .users th.sortable.desc:after {
+        .users thead th.sortable.desc:after {
             content: '\f0dd';
             /* fa-sort-down */
-            opacity: 0.9;
+            opacity: 0.95;
+        }
+
+        /* Přepínač režimu řazení v hlavičce TŘÍDY */
+        .th-flex {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-switch {
+            display: inline-flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 999px;
+            padding: 2px;
+        }
+
+        .sort-switch .sort-toggle {
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .sort-switch .sort-toggle.active {
+            background: rgba(255, 255, 255, .25);
+            font-weight: 700;
         }
     </style>
 
@@ -538,7 +575,17 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                 <th class="sortable">Jméno</th>
                                 <th class="sortable">Přijmení</th>
                                 <th class="sortable">E-mail</th>
-                                <th class="sortable">Třídy</th>
+                                <th class="sortable" data-sort-key="class">
+                                    <div class="th-flex">
+                                        <span>Třídy</span>
+                                        <span class="sort-switch" aria-label="Režim řazení tříd">
+                                            <button type="button" class="sort-toggle active" data-mode="year"
+                                                title="Řadit podle roku">rok</button>
+                                            <button type="button" class="sort-toggle" data-mode="name"
+                                                title="Řadit podle třídy">třída</button>
+                                        </span>
+                                    </div>
+                                </th>
                                 <th class="sortable">Role</th>
                                 <th>Akce (posledních 5)</th>
                                 <th>Detail</th>
@@ -569,6 +616,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                 }
                                 $classes = [];
                                 $latestYear = 0;
+                                $nameParts = [];
                                 if ($stc = $conn->prepare("SELECT idclass_parlament, class_year, class_name FROM classes_alba_rosa_parlament WHERE idusers_parlament = ? ORDER BY class_year DESC, idclass_parlament DESC")) {
                                     $stc->bind_param("i", $uid);
                                     $stc->execute();
@@ -578,15 +626,18 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                         $y = (int) $c['class_year'];
                                         if ($y > $latestYear)
                                             $latestYear = $y;
+                                        $nameParts[] = mb_strtolower(trim($c['class_name']), 'UTF-8');
                                     }
                                     $stc->close();
                                 }
+                                $sortName = !empty($nameParts) ? implode(';', $nameParts) : '';
                                 ?>
                                 <tr>
                                     <td><strong><?= htmlspecialchars($Name) ?></strong></td>
                                     <td><strong><?= htmlspecialchars($lastName) ?></strong></td>
                                     <td><?= htmlspecialchars($email) ?></td>
-                                    <td data-sort="<?= $latestYear > 0 ? $latestYear : 0 ?>">
+                                    <td data-sort-year="<?= $latestYear > 0 ? $latestYear : 0 ?>"
+                                        data-sort-name="<?= htmlspecialchars($sortName) ?>">
                                         <?php if (empty($classes)): ?>
                                             <span class="muted">—</span>
                                         <?php else: ?>
@@ -666,24 +717,46 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
     </div>
 
     <!-- EXISTUJÍCÍ POPUP OVERLAY (markup pouze jednou na stránce) -->
-    <!-- Popup struktura -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
             <button class="popup-close" id="popupClose">&times;</button>
             <iframe class="popup-iframe" id="popupIframe" src=""></iframe>
         </div>
     </div>
-    <!-- /POPUP OVERLAY -->
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script src="../assets/js/script.js"></script>
 
     <script>
-        // Řazení podle záhlaví
+        // Řazení podle záhlaví + přepínač pro sloupec TŘÍDY
         document.addEventListener('DOMContentLoaded', () => {
             const table = document.querySelector('.users');
             if (!table) return;
             const headers = table.querySelectorAll('th.sortable');
+            const classTh = table.querySelector('th[data-sort-key="class"]');
+            let classSortMode = 'year';        // 'year' | 'name'
+            let nextDirOverride = null;        // pokud měníme mód, nechceme prohodit směr
+
+            // napoj přepínače pro TŘÍDY
+            if (classTh) {
+                classTh.querySelectorAll('.sort-toggle').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // ať se nespustí click na TH
+                        const mode = btn.dataset.mode;
+                        if (!mode) return;
+                        classSortMode = mode;
+
+                        // active stav
+                        classTh.querySelectorAll('.sort-toggle').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        // zachovej směr a seřaď znovu
+                        const current = classTh.classList.contains('asc') ? 'asc' : classTh.classList.contains('desc') ? 'desc' : 'asc';
+                        nextDirOverride = current;
+                        classTh.click();
+                    });
+                });
+            }
 
             headers.forEach((th, idx) => {
                 th.addEventListener('click', () => {
@@ -695,22 +768,33 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                     headers.forEach(h => h.classList.remove('asc', 'desc'));
 
                     // určíme směr
-                    const newDir = current === 'asc' ? 'desc' : 'asc';
+                    let newDir = current === 'asc' ? 'desc' : 'asc';
+                    if (nextDirOverride) {
+                        newDir = nextDirOverride;
+                        nextDirOverride = null;
+                    }
                     th.classList.add(newDir);
 
+                    const sortKey = th.dataset.sortKey || '';
+
                     rows.sort((a, b) => {
-                        // na třídách preferujeme data-sort (poslední rok)
                         const cellA = a.cells[idx];
                         const cellB = b.cells[idx];
-                        const sortA = cellA?.getAttribute('data-sort');
-                        const sortB = cellB?.getAttribute('data-sort');
 
-                        if (sortA !== null || sortB !== null) {
-                            const AA = parseInt(sortA || '0', 10);
-                            const BB = parseInt(sortB || '0', 10);
-                            return newDir === 'asc' ? AA - BB : BB - AA;
+                        // speciální logika pro TŘÍDY
+                        if (sortKey === 'class') {
+                            if (classSortMode === 'year') {
+                                const Ay = parseInt(cellA?.getAttribute('data-sort-year') || '0', 10);
+                                const By = parseInt(cellB?.getAttribute('data-sort-year') || '0', 10);
+                                return newDir === 'asc' ? Ay - By : By - Ay;
+                            } else {
+                                const An = (cellA?.getAttribute('data-sort-name') || '').toLowerCase();
+                                const Bn = (cellB?.getAttribute('data-sort-name') || '').toLowerCase();
+                                return newDir === 'asc' ? An.localeCompare(Bn, 'cs') : Bn.localeCompare(An, 'cs');
+                            }
                         }
 
+                        // generické porovnání
                         const A = (cellA?.innerText || '').trim().toLowerCase();
                         const B = (cellB?.innerText || '').trim().toLowerCase();
 
