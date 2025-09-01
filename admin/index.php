@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     $endY = (int) $endY;
 
     if ($endY !== $startY + 1 || $startY < 2000 || $startY > 2100) {
-        redirectWithMessage("Neplatný školní rok. Zadejte např. 2024/2025.", "info-message");
+        redirectWithMessage("Neplatný školní rok. Zadejte např. 2024/2025).", "info-message");
     }
 
     if ($id > 0 && $class_name !== '') {
@@ -254,331 +254,109 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             --danger: #ef4444;
             --ok: #16a34a;
             --chip: #f3f4f6;
-            --ucast: #10b981;
-            --org: #3b82f6;
-            --foto: #a855f7;
-            --vybor: #f59e0b;
+
+            /* === sjednocení velikostí „bublin“ a textu === */
+            --chip-px: 8px;      /* horizontální padding */
+            --chip-py: 4px;      /* vertikální padding */
+            --chip-fs: 12px;     /* velikost písma uvnitř chipů */
+            --chip-lh: 1.25;     /* line-height chipů */
+            --chip-radius: 999px;
+            --chip-gap: 8px;
+
+            --row-gap: 6px;
+            --avatar-size: 32px;
         }
 
-        body {
-            background: #f6f8fb;
-            color: var(--text);
-        }
+        body { background: #f6f8fb; color: var(--text); }
+        .wrap { margin: 0 auto; padding: 14px; }
 
-        .wrap {
-            margin: 0 auto;
-            padding: 14px;
-        }
+        .table-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0 18px; }
+        .table-heading h2 { margin: 0; font-family: "Roboto Slab", serif }
+        .table-heading .blue { color: var(--brand); }
 
-        .table-heading {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin: 12px 0 18px;
-        }
+        .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center }
+        .input { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; background: #fff }
+        .input:focus { outline: none; border-color: #c8d7ee; box-shadow: 0 0 0 3px rgba(84, 129, 170, .15) }
 
-        .table-heading h2 {
-            margin: 0;
-            font-family: "Roboto Slab", serif
-        }
+        .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: auto; box-shadow: 0 6px 18px rgba(15, 23, 42, .06); max-height: 72vh; position: relative }
+        table.users { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 1100px }
 
-        .table-heading .blue {
-            color: var(--brand);
-        }
+        .users th, .users td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top }
+        .users thead th { position: sticky; top: 0; background: #5481aa; color: #ffffffff; z-index: 2; border-bottom: 1px solid #dbe3ef }
+        .users thead tr:first-child th { box-shadow: 0 1px 0 rgba(0, 0, 0, .03) }
+        .users tbody tr:hover { background: #f9fbff }
+        .users tbody tr:nth-child(even) { background: #fafbfc }
+        .users th:first-child, .users td:first-child { position: sticky; left: 0; background: inherit; z-index: 1 }
+        .users th:first-child { background: #5481aa; z-index: 3 }
 
-        .toolbar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center
-        }
+        .header-sub { font-size: 12px; color: #ffffffff; font-weight: 400 }
 
-        .input {
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 10px;
-            background: #fff
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: #c8d7ee;
-            box-shadow: 0 0 0 3px rgba(84, 129, 170, .15)
-        }
-
-        .table-wrap {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: auto;
-            box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
-            max-height: 72vh;
-            position: relative
-        }
-
-        table.users {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            min-width: 1100px
-        }
-
-        .users th,
-        .users td {
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            vertical-align: top
-        }
-
-        .users thead th {
-            position: sticky;
-            top: 0;
-            background: #5481aa;
-            color: #ffffffff;
-            z-index: 2;
-            border-bottom: 1px solid #dbe3ef
-        }
-
-        .users thead tr:first-child th {
-            box-shadow: 0 1px 0 rgba(0, 0, 0, .03)
-        }
-
-        .users tbody tr:hover {
-            background: #f9fbff
-        }
-
-        .users tbody tr:nth-child(even) {
-            background: #fafbfc
-        }
-
-        .users th:first-child,
-        .users td:first-child {
-            position: sticky;
-            left: 0;
-            background: inherit;
-            z-index: 1
-        }
-
-        .users th:first-child {
-            background: #5481aa;
-            z-index: 3
-        }
-
-        .header-sub {
-            font-size: 12px;
-            color: #ffffffff;
-            font-weight: 400
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 999px;
-            background: var(--chip);
-            border: 1px solid var(--border)
-        }
-
-        .badge.role-badge {
-            letter-spacing: .2px
-        }
-
-        .badge.small {
-            padding: 2px 6px;
-            font-size: 12px
-        }
-
-        .user-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px
-        }
-
-        .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #e5eef9;
-            color: #355170;
+        /* === Sjednocené „bubliny“ (badge, role-chip, class-chip, atd.) === */
+        .badge,
+        .role-chip,
+        .class-chip,
+        .acts .badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 700
-        }
-
-        .user-meta {
-            display: flex;
-            flex-direction: column
-        }
-
-        .user-meta .name {
-            font-weight: 700
-        }
-
-        .user-meta .email {
-            font-size: 12px;
-            color: #64748b
-        }
-
-        .class-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px
-        }
-
-        .class-chip {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 999px;
-            padding: 3px 8px;
-            white-space: nowrap
-        }
-
-        .class-chip .sep {
-            padding: 0 4px;
-            opacity: .6
-        }
-
-        .roles-line {
-            display: flex;
-            flex-wrap: wrap;
             gap: 6px;
-            margin-top: 6px
-        }
-
-        .role-chip {
-            border: 1px dashed #d7ddea;
-            border-radius: 999px;
-            padding: 3px 8px;
-            background: #fbfcff;
-            font-size: 12px
-        }
-
-        .actions {
-            display: flex;
-            gap: 8px
-        }
-
-        .btn {
-            border: none;
-            background: var(--brand);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background .2s
-        }
-
-        .btn:hover {
-            background: var(--brand-2)
-        }
-
-        .btn.icon {
-            padding: 6px 9px;
-            border-radius: 8px
-        }
-
-        .btn.ghost {
-            background: #fff;
-            color: #334155;
-            border: 1px solid var(--border)
-        }
-
-        .btn.copy {
-            background: #e9eef6;
-            color: #334155
-        }
-
-        .success-message,
-        .error-message,
-        .info-message {
-            margin: 12px 0;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid;
-            cursor: pointer
-        }
-
-        .success-message {
-            background: #ecfdf5;
-            border-color: #bbf7d0;
-            color: #065f46
-        }
-
-        .error-message {
-            background: #fef2f2;
-            border-color: #fecaca;
-            color: #991b1b
-        }
-
-        .info-message {
-            background: #eff6ff;
-            border-color: #bfdbfe;
-            color: #1e40af
-        }
-
-        .th-flex {
-            display: flex;
-            align-items: center;
-            gap: 8px
-        }
-
-        .sortable {
-            cursor: pointer;
-            user-select: none;
+            padding: var(--chip-py) var(--chip-px);
+            border-radius: var(--chip-radius);
+            font-size: var(--chip-fs);
+            line-height: var(--chip-lh);
             white-space: nowrap;
-            position: relative
+            background: var(--chip);
+            border: 1px solid var(--border);
+            vertical-align: middle;
         }
+        .badge.small { padding: calc(var(--chip-py) - 1px) calc(var(--chip-px) - 2px); font-size: var(--chip-fs); }
 
-        .sortable:after {
-            content: '\f0dc';
-            font-family: FontAwesome;
-            position: absolute;
-            right: 8px;
-            top: 10px;
-            opacity: .4
-        }
+        .badge.role-badge { letter-spacing: .2px; font-weight: 600; }
 
-        thead th.sortable.asc:after {
-            content: '\f0de';
-            opacity: .9
-        }
+        .user-cell { display: flex; align-items: center; gap: 10px }
+        .avatar { width: var(--avatar-size); height: var(--avatar-size); border-radius: 50%; background: #e5eef9; color: #355170; display: inline-flex; align-items: center; justify-content: center; font-weight: 700 }
+        .user-meta { display: flex; flex-direction: column }
+        .user-meta .name { font-weight: 700 }
+        .user-meta .email { font-size: 12px; color: #64748b; max-width: 340px; overflow: hidden; text-overflow: ellipsis; }
 
-        thead th.sortable.desc:after {
-            content: '\f0dd';
-            opacity: .9
-        }
+        .class-list { display: flex; flex-wrap: wrap; gap: var(--chip-gap); }
 
-        .quick-filters {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap
-        }
+        .roles-line { display: flex; flex-wrap: wrap; gap: var(--chip-gap); margin-top: var(--row-gap); }
 
-        .quick-filters .qf {
-            font-size: 12px;
-            padding: 4px 8px;
-            border-radius: 999px;
-            border: 1px solid #d9e1ee;
-            background: #fff;
-            cursor: pointer
-        }
+        .actions { display: flex; gap: 8px }
+        .btn { border: none; background: var(--brand); color: #fff; padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: background .2s }
+        .btn:hover { background: var(--brand-2) }
+        .btn.icon { padding: 6px 9px; border-radius: 8px }
+        .btn.ghost { background: #fff; color: #334155; border: 1px solid var(--border) }
+        .btn.copy { background: #e9eef6; color: #334155 }
 
-        .qf.active {
-            background: #e7f0ff;
-            border-color: #b5cff7
-        }
+        .success-message, .error-message, .info-message { margin: 12px 0; padding: 10px 12px; border-radius: 10px; border: 1px solid; cursor: pointer }
+        .success-message { background: #ecfdf5; border-color: #bbf7d0; color: #065f46 }
+        .error-message { background: #fef2f2; border-color: #fecaca; color: #991b1b }
+        .info-message { background: #eff6ff; border-color: #bfdbfe; color: #1e40af }
 
-        .copy-tip {
-            font-size: 11px;
-            color: #6b7280;
-            margin-left: 6px
-        }
+        .th-flex { display: flex; align-items: center; gap: 8px }
+        .sortable { cursor: pointer; user-select: none; white-space: nowrap; position: relative }
+        .sortable:after { content: '\f0dc'; font-family: FontAwesome; position: absolute; right: 8px; top: 10px; opacity: .4 }
+        thead th.sortable.asc:after { content: '\f0de'; opacity: .9 }
+        thead th.sortable.desc:after { content: '\f0dd'; opacity: .9 }
 
-        .muted {
-            color: #6b7280
-        }
+        .quick-filters { display: flex; gap: 6px; flex-wrap: wrap }
+        .quick-filters .qf { font-size: 12px; padding: 4px 8px; border-radius: 999px; border: 1px solid #d9e1ee; background: #fff; cursor: pointer }
+        .qf.active { background: #e7f0ff; border-color: #b5cff7 }
+
+        .copy-tip { font-size: 11px; color: #6b7280; margin-left: 6px }
+        .muted { color: #6b7280 }
+
+        /* === List „Akce“ – konzistentní rozvržení a text === */
+        .acts { max-height: 130px; overflow: auto; padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: var(--row-gap); }
+        .acts .act { display: flex; align-items: flex-start; gap: 8px; line-height: 1.35; }
+        .acts .note { display: inline; font-size: 13px; }
+
+        /* Barevné varianty štítků v Akcích – zůstávají, ale rozměry jsou stejné díky výše */
+        .acts ._ucast .badge { background: #ecfdf5; border-color:#bbf7d0; color:#065f46; }
+        .acts ._org   .badge { background: #eff6ff; border-color:#bfdbfe; color:#1e3a8a; }
+        .acts ._foto  .badge { background: #f5f3ff; border-color:#ddd6fe; color:#5b21b6; }
+        .acts ._vybor .badge { background: #fff7ed; border-color:#fed7aa; color:#9a3412; }
     </style>
 
     <script>
@@ -591,7 +369,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
         function initialAvatar(name) {
             if (!name) return '?';
-            const parts = name.trim().split(/\s+/).slice(0, 2);
+            const parts = name.trim().split(/\\s+/).slice(0, 2);
             return parts.map(s => s.charAt(0).toUpperCase()).join('');
         }
 
@@ -618,7 +396,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             const table = document.querySelector('.users');
             if (table) {
                 const headers = table.querySelectorAll('th.sortable');
-                const classTh = table.querySelector('th[data-sort-key="class"]');
+                const classTh = table.querySelector('th[data-sort-key=\"class\"]');
                 let classSortMode = 'year';
                 let nextDirOverride = null;
 
@@ -944,24 +722,21 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                         <?php if (empty($acts)): ?>
                                             <span class="muted"><em>Žádné záznamy</em></span>
                                         <?php else: ?>
-                                            <ul class="acts" style="max-height:130px;overflow:auto">
+                                            <ul class="acts">
                                                 <?php foreach ($acts as $a):
                                                     $sec = $a['section'] ?? '';
                                                     $cls = '_ucast';
-                                                    if ($sec === 'Organizátor akce')
-                                                        $cls = '_org';
-                                                    elseif ($sec === 'Focení akce')
-                                                        $cls = '_foto';
-                                                    elseif ($sec === 'Výbor')
-                                                        $cls = '_vybor';
+                                                    if ($sec === 'Organizátor akce') $cls = '_org';
+                                                    elseif ($sec === 'Focení akce') $cls = '_foto';
+                                                    elseif ($sec === 'Výbor') $cls = '_vybor';
                                                     ?>
                                                     <li class="act <?php echo $cls; ?>">
-                                                        <div class="row">
-                                                            <span
-                                                                class="badge <?php echo $cls; ?>"><?php echo htmlspecialchars($sec); ?>:</span>
-                                                            <span
-                                                                class="note"><?php echo nl2br(htmlspecialchars($a['notes'] ?? '')); ?></span>
-                                                        </div>
+                                                        <span class="badge <?php echo $cls; ?>">
+                                                            <?php echo htmlspecialchars($sec); ?>:
+                                                        </span>
+                                                        <span class="note">
+                                                            <?php echo nl2br(htmlspecialchars($a['notes'] ?? '')); ?>
+                                                        </span>
                                                     </li>
                                                 <?php endforeach; ?>
                                             </ul>
