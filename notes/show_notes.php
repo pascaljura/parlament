@@ -34,7 +34,28 @@ if (isset($_SESSION['idusers_parlament'])) {
         header("Location: ../logout.php");
         exit();
     }
-
+    $latestClassLabel = null;
+    if (!empty($idusers_parlament)) {
+        if (
+            $stc = $conn->prepare("
+        SELECT class_year, class_name
+        FROM classes_alba_rosa_parlament
+        WHERE idusers_parlament = ?
+        ORDER BY class_year DESC, idclass_parlament DESC
+        LIMIT 1
+    ")
+        ) {
+            $stc->bind_param("i", $idusers_parlament);
+            $stc->execute();
+            $rc = $stc->get_result();
+            if ($c = $rc->fetch_assoc()) {
+                $y = (int) $c['class_year'];
+                $className = trim((string) $c['class_name']);
+                $latestClassLabel = ($y > 0 ? ($y . '/' . ($y + 1)) : '') . ($className !== '' ? ' – ' . $className : '');
+            }
+            $stc->close();
+        }
+    }
     $stmt->close();
 }
 ?>

@@ -34,7 +34,28 @@ if (isset($_SESSION['idusers_parlament'])) {
         header("Location: ./logout.php");
         exit();
     }
-
+   $latestClassLabel = null;
+    if (!empty($idusers_parlament)) {
+        if (
+            $stc = $conn->prepare("
+        SELECT class_year, class_name
+        FROM classes_alba_rosa_parlament
+        WHERE idusers_parlament = ?
+        ORDER BY class_year DESC, idclass_parlament DESC
+        LIMIT 1
+    ")
+        ) {
+            $stc->bind_param("i", $idusers_parlament);
+            $stc->execute();
+            $rc = $stc->get_result();
+            if ($c = $rc->fetch_assoc()) {
+                $y = (int) $c['class_year'];
+                $className = trim((string) $c['class_name']);
+                $latestClassLabel = ($y > 0 ? ($y . '/' . ($y + 1)) : '') . ($className !== '' ? ' – ' . $className : '');
+            }
+            $stc->close();
+        }
+    }
     $stmt->close();
 }
 ?>
@@ -105,16 +126,21 @@ if (isset($_SESSION['idusers_parlament'])) {
                 <i class="fa fa-bars"></i>
             </div>
 
-            <!-- User Dropdown Menu -->
-            <div class="user-dropdown" id="userDropdown">
+           <div class="user-dropdown" id="userDropdown">
                 <?php if (!empty($username_parlament)) { ?>
-                    <p>Přihlášen/a jako: <b><?php echo $username_parlament; ?></b></p>
-                    <a href="./logout.php">Odhlásit se</a>
+                    <p style="margin-top: 0;">Přihlášen/a jako: <b><?php echo htmlspecialchars($username_parlament); ?></b><br>
+
+                    <?php if (!empty($latestClassLabel)) { ?>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                            <span>Nejnovější třída: <b><?php echo htmlspecialchars($latestClassLabel); ?></b></span>
+                        
+                    <?php } ?>
+</p>
+                    <a href="../logout.php">Odhlásit se</a>
                 <?php } else { ?>
-                    <a class="popup-trigger" data-link="./login.php">Přihlásit se</a>
+                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
-
 
             <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
