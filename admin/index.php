@@ -7,39 +7,28 @@ if (!function_exists('roleColors')) {
     function roleColors(string $role): array
     {
         if ($role === '') {
-            // neutrální "bez role"
             return ['#f3f4f6', '#e5e7eb', '#111827'];
         }
-
-        // stabilní hash z textu (diakritika nevadí)
         $source = function_exists('mb_strtolower') ? mb_strtolower($role, 'UTF-8') : strtolower($role);
         $hash = crc32($source);
-
-        // 1) rozprostření přes "zlatý úhel" + 2) kvantizace na kroky (větší rozestup odstínů)
-        $golden = 0.61803398875;                                  // zlatý poměr (konjugát)
-        $base = fmod(($hash * $golden) * 360.0, 360.0);           // rozprostřený hue
-        $STEP_DEG = 20;                                           // krok kvantizace (čím větší, tím víc rozdílné barvy)
+        $golden = 0.61803398875;
+        $base = fmod(($hash * $golden) * 360.0, 360.0);
+        $STEP_DEG = 20;
         $bucket = (int) round($base / $STEP_DEG);
         $h = ($bucket * $STEP_DEG) % 360;
 
-        // Jemné obměny saturace/světlosti, ale pořád pastel
         $satChoices = [70, 78, 85, 90];
         $lightBg = [92, 94, 96];
 
         $s = $satChoices[$hash & 3];
         $lBg = $lightBg[($hash >> 2) % 3];
 
-        // okraj o něco tmavší a s mírně vyšší saturací
         $lBd = max(65, $lBg - 18);
         $sBd = min(95, $s + 6);
 
-        // text necháme tmavý – na pastelu čitelný
         $tx = '#0f172a';
-
-        // Použijeme čárkovou syntaxi kvůli široké kompatibilitě
         $bg = "hsl($h, {$s}%, {$lBg}%)";
         $bd = "hsl($h, {$sBd}%, {$lBd}%)";
-
         return [$bg, $bd, $tx];
     }
 }
@@ -76,12 +65,12 @@ if (isset($_SESSION['idusers_parlament'])) {
     if (!empty($idusers_parlament)) {
         if (
             $stc = $conn->prepare("
-        SELECT class_year, class_name
-        FROM classes_alba_rosa_parlament
-        WHERE idusers_parlament = ?
-        ORDER BY class_year DESC, idclass_parlament DESC
-        LIMIT 1
-    ")
+            SELECT class_year, class_name
+            FROM classes_alba_rosa_parlament
+            WHERE idusers_parlament = ?
+            ORDER BY class_year DESC, idclass_parlament DESC
+            LIMIT 1
+        ")
         ) {
             $stc->bind_param("i", $idusers_parlament);
             $stc->execute();
@@ -144,24 +133,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     }
 }
 
-// ---------- Set role ----------
+// ---------- Set role (NOVĚ: zapisuje do roles_alba_rosa_parlament) ----------
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'set_role') {
     $id = (int) ($_POST['idusers_parlament'] ?? 0);
 
-    // dovolíme vlastní roli (free-text) + sanitizace a rozumné limity
     $role = trim($_POST['role'] ?? '');
-    // normalizace whitespace
     $role = preg_replace('/\s+/u', ' ', $role);
-    // oříznutí délky (match DB VARCHAR(50))
-    if (mb_strlen($role) > 50) {
+    if (function_exists('mb_strlen') && mb_strlen($role) > 50) {
         $role = mb_substr($role, 0, 50);
+    } elseif (strlen($role) > 50) {
+        $role = substr($role, 0, 50);
     }
 
-    $stmt = $conn->prepare("UPDATE users_alba_rosa_parlament SET role = ? WHERE idusers_parlament = ?");
+    if ($id <= 0 || $role === '') {
+        redirectWithMessage("Zadejte platnou roli i uživatele.", "info-message");
+    }
+
+    $stmt = $conn->prepare("INSERT INTO roles_alba_rosa_parlament (idusers_parlament, role, assigned_at) VALUES (?, ?, NOW())");
     if ($stmt) {
-        $stmt->bind_param("si", $role, $id);
+        $stmt->bind_param("is", $id, $role);
         if ($stmt->execute()) {
-            redirectWithMessage("Role uložena.", "success-message");
+            redirectWithMessage("Role byla přiřazena (uloženo do historie).", "success-message");
         } else {
             redirectWithMessage("Nepodařilo se uložit roli.", "error-message");
         }
@@ -173,16 +165,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
 // ---------- Add class ----------
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'add_class') {
     $id = (int) ($_POST['idusers_parlament'] ?? 0);
-    $school_year_raw = trim($_POST['school_year'] ?? '');  // očekáváme "YYYY/YYYY"
+    $school_year_raw = trim($_POST['school_year'] ?? '');
     $class_name = trim($_POST['class_name'] ?? '');
 
-    // validace formátu YYYY/YYYY
-    if (!preg_match('/^\\d{4}\\s*\\/\\s*\\d{4}$/', $school_year_raw)) {
+    if (!preg_match('/^\d{4}\s*\/\s*\d{4}$/', $school_year_raw)) {
         redirectWithMessage("Zadejte školní rok ve formátu RRRR/RRRR (např. 2024/2025).", "info-message");
     }
 
-    // rozpad + sanity check (druhý rok = první + 1)
-    list($startY, $endY) = preg_split('/\\s*\\/\\s*/', $school_year_raw);
+    list($startY, $endY) = preg_split('/\s*\/\s*/', $school_year_raw);
     $startY = (int) $startY;
     $endY = (int) $endY;
 
@@ -191,10 +181,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
     }
 
     if ($id > 0 && $class_name !== '') {
-        if (mb_strlen($class_name) > 50)
+        if (function_exists('mb_strlen') && mb_strlen($class_name) > 50) {
             $class_name = mb_substr($class_name, 0, 50);
+        } elseif (strlen($class_name) > 50) {
+            $class_name = substr($class_name, 0, 50);
+        }
 
-        // do DB ukládáme pouze počáteční rok (startY) do sloupce class_year (INT)
         $stmt = $conn->prepare("INSERT INTO classes_alba_rosa_parlament (idusers_parlament, class_year, class_name) VALUES (?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param("iis", $id, $startY, $class_name);
@@ -263,32 +255,9 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             --ok: #16a34a;
             --chip: #f3f4f6;
             --ucast: #10b981;
-            /* zelená */
             --org: #3b82f6;
-            /* modrá */
             --foto: #a855f7;
-            /* fialová */
             --vybor: #f59e0b;
-            /* oranžová */
-        }
-
-        .class-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .class-chip {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 999px;
-            padding: 4px 8px;
-            white-space: nowrap;
-        }
-
-        .class-chip .sep {
-            padding: 0 4px;
-            opacity: .6;
         }
 
         body {
@@ -296,24 +265,46 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             color: var(--text);
         }
 
-        .badge.role-badge {
-            letter-spacing: .2px;
+        .wrap {
+            margin: 0 auto;
+            padding: 14px;
         }
 
         .table-heading {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 12px;
             margin: 12px 0 18px;
         }
 
         .table-heading h2 {
             margin: 0;
-            font-family: "Roboto Slab", serif;
+            font-family: "Roboto Slab", serif
         }
 
         .table-heading .blue {
             color: var(--brand);
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .input {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 8px 10px;
+            background: #fff
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #c8d7ee;
+            box-shadow: 0 0 0 3px rgba(84, 129, 170, .15)
         }
 
         .table-wrap {
@@ -322,40 +313,63 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             border-radius: 12px;
             overflow: auto;
             box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
-            max-height: 70vh;
-            /* kvůli scrollu a sticky headeru */
-            position: relative;
+            max-height: 72vh;
+            position: relative
         }
 
         table.users {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            min-width: 1050px;
+            min-width: 1100px
         }
 
         .users th,
         .users td {
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border);
             text-align: left;
-            vertical-align: top;
+            vertical-align: top
         }
 
         .users thead th {
             position: sticky;
             top: 0;
             background: #5481aa;
-            color: #fafafa;
-            z-index: 1;
+            color: #ffffffff;
+            z-index: 2;
+            border-bottom: 1px solid #dbe3ef
         }
 
         .users thead tr:first-child th {
-            box-shadow: 0 2px 0 rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, .03)
         }
 
         .users tbody tr:hover {
-            background: #fafafa;
+            background: #f9fbff
+        }
+
+        .users tbody tr:nth-child(even) {
+            background: #fafbfc
+        }
+
+        .users th:first-child,
+        .users td:first-child {
+            position: sticky;
+            left: 0;
+            background: inherit;
+            z-index: 1
+        }
+
+        .users th:first-child {
+            background: #5481aa;
+            z-index: 3
+        }
+
+        .header-sub {
+            font-size: 12px;
+            color: #ffffffff;
+            font-weight: 400
         }
 
         .badge {
@@ -363,67 +377,87 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             padding: 3px 8px;
             border-radius: 999px;
             background: var(--chip);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border)
         }
 
-        .role {
-            color: #0f172a;
+        .badge.role-badge {
+            letter-spacing: .2px
         }
 
-        .email {
-            color: #fafafa;
+        .badge.small {
+            padding: 2px 6px;
+            font-size: 12px
         }
 
-        /* Akce v tabulce (posledních 5) */
-        .acts {
-            display: grid;
-            gap: 8px;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .act {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 10px;
-        }
-
-        .act .row {
+        .user-cell {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px
         }
 
-        .act .note {
-            color: #374151;
-            margin: 6px 0 2px 0;
-            line-height: 1.35;
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e5eef9;
+            color: #355170;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700
         }
 
-        .act._ucast {
-            background: #ecfdf5;
-            border-color: #bbf7d0;
-            box-shadow: inset 3px 0 0 0 var(--ucast);
+        .user-meta {
+            display: flex;
+            flex-direction: column
         }
 
-        .act._org {
-            background: #eff6ff;
-            border-color: #bfdbfe;
-            box-shadow: inset 3px 0 0 0 var(--org);
+        .user-meta .name {
+            font-weight: 700
         }
 
-        .act._foto {
-            background: #fdf4ff;
-            border-color: #f5d0fe;
-            box-shadow: inset 3px 0 0 0 var(--foto);
+        .user-meta .email {
+            font-size: 12px;
+            color: #64748b
         }
 
-        .act._vybor {
-            background: #fff7ed;
-            border-color: #fed7aa;
-            box-shadow: inset 3px 0 0 0 var(--vybor);
+        .class-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+
+        .class-chip {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            padding: 3px 8px;
+            white-space: nowrap
+        }
+
+        .class-chip .sep {
+            padding: 0 4px;
+            opacity: .6
+        }
+
+        .roles-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px
+        }
+
+        .role-chip {
+            border: 1px dashed #d7ddea;
+            border-radius: 999px;
+            padding: 3px 8px;
+            background: #fbfcff;
+            font-size: 12px
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px
         }
 
         .btn {
@@ -433,16 +467,27 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             padding: 8px 12px;
             border-radius: 10px;
             cursor: pointer;
-            transition: background .2s;
+            transition: background .2s
         }
 
         .btn:hover {
-            background: var(--brand-2);
+            background: var(--brand-2)
         }
 
-        .actions {
-            display: flex;
-            gap: 8px;
+        .btn.icon {
+            padding: 6px 9px;
+            border-radius: 8px
+        }
+
+        .btn.ghost {
+            background: #fff;
+            color: #334155;
+            border: 1px solid var(--border)
+        }
+
+        .btn.copy {
+            background: #e9eef6;
+            color: #334155
         }
 
         .success-message,
@@ -452,7 +497,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .success-message {
@@ -473,64 +518,66 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             color: #1e40af
         }
 
-        /* --- FIX: nepřebíjej sticky pozicí relative --- */
-        .users th.sortable {
-            cursor: pointer;
-            user-select: none;
-            white-space: nowrap;
-        }
-
-        .users th.sortable:after {
-            content: '\f0dc';
-            /* fa-sort */
-            font-family: FontAwesome;
-            position: absolute;
-            right: 8px;
-            opacity: 0.6;
-            top: 10px;
-        }
-
-        .users thead th.sortable.asc:after {
-            content: '\f0de';
-            /* fa-sort-up */
-            opacity: 0.95;
-        }
-
-        .users thead th.sortable.desc:after {
-            content: '\f0dd';
-            /* fa-sort-down */
-            opacity: 0.95;
-        }
-
-        /* Přepínač režimu řazení v hlavičce TŘÍDY */
         .th-flex {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 8px
         }
 
-        .sort-switch {
-            display: inline-flex;
-            gap: 4px;
-            background: rgba(255, 255, 255, .15);
-            border-radius: 999px;
-            padding: 2px;
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            position: relative
         }
 
-        .sort-switch .sort-toggle {
-            line-height: 1;
+        .sortable:after {
+            content: '\f0dc';
+            font-family: FontAwesome;
+            position: absolute;
+            right: 8px;
+            top: 10px;
+            opacity: .4
+        }
+
+        thead th.sortable.asc:after {
+            content: '\f0de';
+            opacity: .9
+        }
+
+        thead th.sortable.desc:after {
+            content: '\f0dd';
+            opacity: .9
+        }
+
+        .quick-filters {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .quick-filters .qf {
+            font-size: 12px;
             padding: 4px 8px;
             border-radius: 999px;
-            border: none;
-            cursor: pointer;
-            background: transparent;
-            color: #fff;
-            font-size: 12px;
+            border: 1px solid #d9e1ee;
+            background: #fff;
+            cursor: pointer
         }
 
-        .sort-switch .sort-toggle.active {
-            background: rgba(255, 255, 255, .25);
-            font-weight: 700;
+        .qf.active {
+            background: #e7f0ff;
+            border-color: #b5cff7
+        }
+
+        .copy-tip {
+            font-size: 11px;
+            color: #6b7280;
+            margin-left: 6px
+        }
+
+        .muted {
+            color: #6b7280
         }
     </style>
 
@@ -539,9 +586,116 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             const url = new URL(window.location);
             url.searchParams.delete('message'); url.searchParams.delete('message_type');
             window.history.replaceState({}, '', url);
-            const banners = document.querySelectorAll('.success-message, .error-message, .info-message');
-            banners.forEach(b => b.style.display = 'none');
+            document.querySelectorAll('.success-message,.error-message,.info-message').forEach(b => b.style.display = 'none');
         }
+
+        function initialAvatar(name) {
+            if (!name) return '?';
+            const parts = name.trim().split(/\s+/).slice(0, 2);
+            return parts.map(s => s.charAt(0).toUpperCase()).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fill avatar initials
+            document.querySelectorAll('[data-initials]').forEach(el => {
+                el.textContent = initialAvatar(el.getAttribute('data-initials'));
+            });
+
+            // Search
+            const search = document.getElementById('search');
+            const tbody = document.querySelector('table.users tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            function applyFilter() {
+                const q = (search.value || '').toLowerCase();
+                rows.forEach(tr => {
+                    const hay = (tr.getAttribute('data-haystack') || '').toLowerCase();
+                    tr.style.display = hay.includes(q) ? '' : 'none';
+                });
+            }
+            if (search) { search.addEventListener('input', applyFilter); }
+
+            // Sorting (incl. custom for classes)
+            const table = document.querySelector('.users');
+            if (table) {
+                const headers = table.querySelectorAll('th.sortable');
+                const classTh = table.querySelector('th[data-sort-key="class"]');
+                let classSortMode = 'year';
+                let nextDirOverride = null;
+
+                headers.forEach((th, idx) => {
+                    th.addEventListener('click', () => {
+                        const tbody = table.querySelector('tbody');
+                        const rs = Array.from(tbody.querySelectorAll('tr'));
+                        const current = th.classList.contains('asc') ? 'asc' : th.classList.contains('desc') ? 'desc' : null;
+                        headers.forEach(h => h.classList.remove('asc', 'desc'));
+                        let newDir = current === 'asc' ? 'desc' : 'asc';
+                        if (nextDirOverride) { newDir = nextDirOverride; nextDirOverride = null; }
+                        th.classList.add(newDir);
+
+                        const sortKey = th.dataset.sortKey || '';
+                        rs.sort((a, b) => {
+                            const cellA = a.cells[idx], cellB = b.cells[idx];
+                            if (sortKey === 'class') {
+                                if (classSortMode === 'year') {
+                                    const Ay = parseInt(cellA?.getAttribute('data-sort-year') || '0', 10);
+                                    const By = parseInt(cellB?.getAttribute('data-sort-year') || '0', 10);
+                                    return newDir === 'asc' ? Ay - By : By - Ay;
+                                } else {
+                                    const An = (cellA?.getAttribute('data-sort-name') || '').toLowerCase();
+                                    const Bn = (cellB?.getAttribute('data-sort-name') || '').toLowerCase();
+                                    return newDir === 'asc' ? An.localeCompare(Bn, 'cs') : Bn.localeCompare(An, 'cs');
+                                }
+                            }
+                            const A = (cellA?.innerText || '').trim().toLowerCase();
+                            const B = (cellB?.innerText || '').trim().toLowerCase();
+                            const numA = parseFloat(A.replace(',', '.'));
+                            const numB = parseFloat(B.replace(',', '.'));
+                            const bothNumbers = !isNaN(numA) && !isNaN(numB);
+                            if (bothNumbers) { return newDir === 'asc' ? numA - numB : numB - numA; }
+                            return newDir === 'asc' ? A.localeCompare(B, 'cs') : B.localeCompare(A, 'cs');
+                        });
+                        rs.forEach(r => tbody.appendChild(r));
+                    });
+                });
+
+                if (classTh) {
+                    classTh.querySelectorAll('.sort-toggle').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            classSortMode = btn.dataset.mode;
+                            classTh.querySelectorAll('.sort-toggle').forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                            const current = classTh.classList.contains('asc') ? 'asc' : classTh.classList.contains('desc') ? 'desc' : 'asc';
+                            nextDirOverride = current;
+                            classTh.click();
+                        });
+                    });
+                }
+            }
+
+            // Copy email
+            document.querySelectorAll('[data-copy]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const text = btn.getAttribute('data-copy');
+                    navigator.clipboard.writeText(text).then(() => {
+                        btn.textContent = 'Zkopírováno';
+                        setTimeout(() => { btn.textContent = 'Kopírovat e‑mail'; }, 1200);
+                    });
+                });
+            });
+
+            // Quick filters by role (click chip)
+            document.querySelectorAll('.qf').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    document.querySelectorAll('.qf').forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    const val = chip.getAttribute('data-val') || '';
+                    const search = document.getElementById('search');
+                    search.value = val;
+                    search.dispatchEvent(new Event('input'));
+                });
+            });
+        });
     </script>
 </head>
 
@@ -550,17 +704,14 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
 
         <nav>
-
-            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
             <div class="user-icon" onclick="toggleUserMenu(event)">
                 <?php if (!empty($username_parlament)) { ?>
-                    <i class="fa fa-user" style="color: #5481aa;"></i>
+                    <i class="fa fa-user" style="color:#5481aa;"></i>
                 <?php } else { ?>
-                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
+                    <i class="fa fa-user" style="color:#3C3C3B;"></i>
                 <?php } ?>
             </div>
 
-            <!-- Navigation Links (vlevo na PC) -->
             <div class="nav-links">
                 <a href="../">Domů</a>
                 <a href="../notes">Zápisy</a>
@@ -572,30 +723,25 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                 <?php } ?>
             </div>
 
-            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
             <div class="hamburger" onclick="toggleMobileMenu(event)">
                 <i class="fa fa-bars"></i>
             </div>
 
-            <!-- User Dropdown Menu -->
             <div class="user-dropdown" id="userDropdown">
                 <?php if (!empty($username_parlament)) { ?>
-                    <p style="margin-top: 0;">Přihlášen/a jako: <b><?php echo htmlspecialchars($username_parlament); ?></b><br>
-
-                    <?php if (!empty($latestClassLabel)) { ?>
+                    <p style="margin-top:0;">Přihlášen/a jako:
+                        <b><?php echo htmlspecialchars($username_parlament); ?></b><br>
+                        <?php if (!empty($latestClassLabel)) { ?>
                             <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                             <span>Nejnovější třída: <b><?php echo htmlspecialchars($latestClassLabel); ?></b></span>
-                        
-                    <?php } ?>
-</p>
+                        <?php } ?>
+                    </p>
                     <a href="../logout.php">Odhlásit se</a>
                 <?php } else { ?>
                     <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
 
-
-            <!-- Mobile Menu -->
             <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
                 <a href="../notes">Zápisy</a>
@@ -629,44 +775,55 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             <?php if (isset($admin) && $admin == '1') { ?>
                 <div class="table-heading">
                     <h2><i class="fa fa-heart blue"></i>・Seznam uživatelů parlamentu</h2>
+                    <div class="toolbar">
+                        <input id="search" class="input" type="search" placeholder="🔎 Hledat jméno, e‑mail, roli, třídu…">
+                        <span class="quick-filters">
+                            <button class="qf" data-val="">Vše</button>
+                            <button class="qf" data-val="Vedoucí">Vedoucí</button>
+                            <button class="qf" data-val="Místopředseda">Místopředseda</button>
+                            <button class="qf" data-val="Organizátor">Organizátor</button>
+                            <button class="qf" data-val="Člen">Člen</button>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="table-wrap">
                     <table class="users">
                         <thead>
                             <tr>
-                                <th class="sortable">Jméno</th>
-                                <th class="sortable">Přijmení</th>
-                                <th class="sortable">E-mail</th>
+                                <th class="sortable">Osoba<br><span class="header-sub">jméno, e‑mail, aktuální role</span>
+                                </th>
                                 <th class="sortable" data-sort-key="class">
                                     <div class="th-flex">
                                         <span>Třídy</span>
-                                        <span class="sort-switch" aria-label="Režim řazení tříd">
+                                        <span class="sort-switch" aria-label="Režim řazení tříd"
+                                            style="display:inline-flex;gap:4px;background:#eef4ff;border-radius:999px;padding:2px 2px 2px 6px">
                                             <button type="button" class="sort-toggle active" data-mode="year"
-                                                title="Řadit podle roku">rok</button>
+                                                title="Řadit podle roku"
+                                                style="border:0;background:transparent;font-size:12px;cursor:pointer">rok</button>
                                             <button type="button" class="sort-toggle" data-mode="name"
-                                                title="Řadit podle třídy">třída</button>
+                                                title="Řadit podle třídy"
+                                                style="border:0;background:transparent;font-size:12px;cursor:pointer">třída</button>
                                         </span>
                                     </div>
+                                    <div class="header-sub">poslední záznamy</div>
                                 </th>
-                                <th class="sortable">Role</th>
+                                <th class="sortable">Role & historie<br><span class="header-sub">posledních 5 (RRRR –
+                                        role)</span></th>
                                 <th>Akce (posledních 5)</th>
                                 <th>Detail</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <?php while ($user = $users->fetch_assoc()): ?>
                                 <?php
                                 $uid = (int) $user['idusers_parlament'];
-                                $currentRole = $user['role'] ?? '';
                                 $Name = ($user['name'] ?? '');
                                 $lastName = ($user['last_name'] ?? '');
                                 $email = $user['email'] ?? '';
                                 $fullName = trim($Name . ' ' . $lastName);
-                                list($roleBg, $roleBd, $roleTx) = roleColors($currentRole);
 
-                                // Načti posledních 5 akcí s poznámkou
+                                // Akce (posledních 5)
                                 $acts = [];
                                 if ($st = $conn->prepare("SELECT section, notes FROM actions_alba_rosa_parlament WHERE idusers_parlament = ? ORDER BY idactions_parlament DESC LIMIT 5")) {
                                     $st->bind_param("i", $uid);
@@ -677,6 +834,8 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                     }
                                     $st->close();
                                 }
+
+                                // Třídy
                                 $classes = [];
                                 $latestYear = 0;
                                 $nameParts = [];
@@ -689,18 +848,63 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                         $y = (int) $c['class_year'];
                                         if ($y > $latestYear)
                                             $latestYear = $y;
-                                        $nameParts[] = mb_strtolower(trim($c['class_name']), 'UTF-8');
+                                        $nameParts[] = function_exists('mb_strtolower') ? mb_strtolower(trim($c['class_name']), 'UTF-8') : strtolower(trim($c['class_name']));
                                     }
                                     $stc->close();
                                 }
                                 $sortName = !empty($nameParts) ? implode(';', $nameParts) : '';
+
+                                // Role (posledních 5)
+                                $roleRows = [];
+                                if ($str = $conn->prepare("SELECT role, assigned_at FROM roles_alba_rosa_parlament WHERE idusers_parlament = ? ORDER BY assigned_at DESC, idrole DESC LIMIT 5")) {
+                                    $str->bind_param("i", $uid);
+                                    $str->execute();
+                                    $rr = $str->get_result();
+                                    while ($r = $rr->fetch_assoc()) {
+                                        $roleRows[] = $r;
+                                    }
+                                    $str->close();
+                                }
+
+                                $latestRoleText = '';
+                                if (!empty($roleRows)) {
+                                    $latestRoleText = (string) $roleRows[0]['role'];
+                                }
+                                list($roleBg, $roleBd, $roleTx) = roleColors($latestRoleText);
+
+                                // Haystack for search
+                                $hay = strtolower($fullName . ' ' . $email . ' ' . implode(' ', array_map(function ($c) {
+                                    return $c['class_name'];
+                                }, $classes)) . ' ' . implode(' ', array_map(function ($r) {
+                                    return $r['role'];
+                                }, $roleRows)));
                                 ?>
-                                <tr>
-                                    <td><strong><?= htmlspecialchars($Name) ?></strong></td>
-                                    <td><strong><?= htmlspecialchars($lastName) ?></strong></td>
-                                    <td><?= htmlspecialchars($email) ?></td>
-                                    <td data-sort-year="<?= $latestYear > 0 ? $latestYear : 0 ?>"
-                                        data-sort-name="<?= htmlspecialchars($sortName) ?>">
+                                <tr data-haystack="<?php echo htmlspecialchars($hay); ?>">
+                                    <td>
+                                        <div class="user-cell">
+                                            <span class="avatar" aria-hidden="true"
+                                                data-initials="<?php echo htmlspecialchars($fullName ?: $email); ?>"></span>
+                                            <div class="user-meta">
+                                                <span
+                                                    class="name"><?php echo htmlspecialchars($fullName ?: 'Neznámý'); ?></span>
+                                                <span class="email"><?php echo htmlspecialchars($email ?: '—'); ?></span>
+                                                <div class="roles-line">
+                                                    <span class="badge role-badge"
+                                                        style="background: <?php echo htmlspecialchars($roleBg) ?>; border-color: <?php echo htmlspecialchars($roleBd) ?>; color: <?php echo htmlspecialchars($roleTx) ?>;">
+                                                        <?php echo $latestRoleText !== '' ? htmlspecialchars($latestRoleText) : '— bez role —'; ?>
+                                                    </span>
+                                                    <?php if ($email): ?>
+                                                        <button class="btn icon ghost copy" type="button" title="Kopírovat e‑mail"
+                                                            data-copy="<?php echo htmlspecialchars($email); ?>">Kopírovat
+                                                            e‑mail</button>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
+                                        data-sort-name="<?php echo htmlspecialchars($sortName); ?>">
                                         <?php if (empty($classes)): ?>
                                             <span class="muted">—</span>
                                         <?php else: ?>
@@ -708,10 +912,10 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                                 <?php foreach ($classes as $c):
                                                     $y = (int) $c['class_year']; ?>
                                                     <span class="class-chip"
-                                                        title="<?= htmlspecialchars(($y . '/' . ($y + 1)) . ', ' . $c['class_name']) ?>">
-                                                        <span class="year"><?= $y ?>/<?= $y + 1 ?></span>
+                                                        title="<?php echo htmlspecialchars(($y . '/' . ($y + 1)) . ', ' . $c['class_name']); ?>">
+                                                        <span class="year"><?php echo $y; ?>/<?php echo $y + 1; ?></span>
                                                         <span class="sep">–</span>
-                                                        <span class="cls"><?= htmlspecialchars($c['class_name']) ?></span>
+                                                        <span class="cls"><?php echo htmlspecialchars($c['class_name']); ?></span>
                                                     </span>
                                                 <?php endforeach; ?>
                                             </div>
@@ -719,17 +923,28 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                     </td>
 
                                     <td>
-                                        <span class="badge role-badge"
-                                            style="background: <?= htmlspecialchars($roleBg) ?>; border-color: <?= htmlspecialchars($roleBd) ?>; color: <?= htmlspecialchars($roleTx) ?>;">
-                                            <?= $currentRole !== '' ? htmlspecialchars($currentRole) : '— bez role —' ?>
-                                        </span>
+                                        <?php if (empty($roleRows)): ?>
+                                            <span class="muted">— bez historie —</span>
+                                        <?php else: ?>
+                                            <div class="roles-line">
+                                                <?php foreach ($roleRows as $r):
+                                                    $year = '';
+                                                    if (!empty($r['assigned_at'])) {
+                                                        $ts = strtotime($r['assigned_at']);
+                                                        $year = $ts ? date('Y', $ts) : '';
+                                                    } ?>
+                                                    <span class="role-chip"><?php echo $year !== '' ? htmlspecialchars($year) : '—'; ?>
+                                                        – <?php echo htmlspecialchars($r['role']); ?></span>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </td>
 
                                     <td>
                                         <?php if (empty($acts)): ?>
-                                            <span class="email"><em>Žádné záznamy</em></span>
+                                            <span class="muted"><em>Žádné záznamy</em></span>
                                         <?php else: ?>
-                                            <ul class="acts">
+                                            <ul class="acts" style="max-height:130px;overflow:auto">
                                                 <?php foreach ($acts as $a):
                                                     $sec = $a['section'] ?? '';
                                                     $cls = '_ucast';
@@ -740,22 +955,23 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
                                                     elseif ($sec === 'Výbor')
                                                         $cls = '_vybor';
                                                     ?>
-                                                    <li class="act <?= $cls ?>">
+                                                    <li class="act <?php echo $cls; ?>">
                                                         <div class="row">
-                                                            <span class="badge <?= $cls ?>"><?= htmlspecialchars($sec) ?>:</span>
-                                                            <span class="note"><?= nl2br(htmlspecialchars($a['notes'] ?? '')) ?></span>
+                                                            <span
+                                                                class="badge <?php echo $cls; ?>"><?php echo htmlspecialchars($sec); ?>:</span>
+                                                            <span
+                                                                class="note"><?php echo nl2br(htmlspecialchars($a['notes'] ?? '')); ?></span>
                                                         </div>
                                                     </li>
-
                                                 <?php endforeach; ?>
                                             </ul>
                                         <?php endif; ?>
                                     </td>
+
                                     <td class="actions">
                                         <button class="btn popup-trigger"
-                                            data-link="detail_user_parlament.php?idusers_parlament=<?= $uid ?>">
-                                            <i class="fa fa-user"></i> Detail
-                                        </button>
+                                            data-link="detail_user_parlament.php?idusers_parlament=<?php echo $uid; ?>"><i
+                                                class="fa fa-user"></i> Detail</button>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -779,7 +995,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
         </div>
     </div>
 
-    <!-- EXISTUJÍCÍ POPUP OVERLAY (markup pouze jednou na stránce) -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
             <button class="popup-close" id="popupClose">&times;</button>
@@ -789,95 +1004,6 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3BL123NWSE"></script>
     <script src="../assets/js/script.js"></script>
-
-    <script>
-        // Řazení podle záhlaví + přepínač pro sloupec TŘÍDY
-        document.addEventListener('DOMContentLoaded', () => {
-            const table = document.querySelector('.users');
-            if (!table) return;
-            const headers = table.querySelectorAll('th.sortable');
-            const classTh = table.querySelector('th[data-sort-key="class"]');
-            let classSortMode = 'year';        // 'year' | 'name'
-            let nextDirOverride = null;        // pokud měníme mód, nechceme prohodit směr
-
-            // napoj přepínače pro TŘÍDY
-            if (classTh) {
-                classTh.querySelectorAll('.sort-toggle').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation(); // ať se nespustí click na TH
-                        const mode = btn.dataset.mode;
-                        if (!mode) return;
-                        classSortMode = mode;
-
-                        // active stav
-                        classTh.querySelectorAll('.sort-toggle').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        // zachovej směr a seřaď znovu
-                        const current = classTh.classList.contains('asc') ? 'asc' : classTh.classList.contains('desc') ? 'desc' : 'asc';
-                        nextDirOverride = current;
-                        classTh.click();
-                    });
-                });
-            }
-
-            headers.forEach((th, idx) => {
-                th.addEventListener('click', () => {
-                    const tbody = table.querySelector('tbody');
-                    const rows = Array.from(tbody.querySelectorAll('tr'));
-                    const current = th.classList.contains('asc') ? 'asc' : th.classList.contains('desc') ? 'desc' : null;
-
-                    // reset ikonek
-                    headers.forEach(h => h.classList.remove('asc', 'desc'));
-
-                    // určíme směr
-                    let newDir = current === 'asc' ? 'desc' : 'asc';
-                    if (nextDirOverride) {
-                        newDir = nextDirOverride;
-                        nextDirOverride = null;
-                    }
-                    th.classList.add(newDir);
-
-                    const sortKey = th.dataset.sortKey || '';
-
-                    rows.sort((a, b) => {
-                        const cellA = a.cells[idx];
-                        const cellB = b.cells[idx];
-
-                        // speciální logika pro TŘÍDY
-                        if (sortKey === 'class') {
-                            if (classSortMode === 'year') {
-                                const Ay = parseInt(cellA?.getAttribute('data-sort-year') || '0', 10);
-                                const By = parseInt(cellB?.getAttribute('data-sort-year') || '0', 10);
-                                return newDir === 'asc' ? Ay - By : By - Ay;
-                            } else {
-                                const An = (cellA?.getAttribute('data-sort-name') || '').toLowerCase();
-                                const Bn = (cellB?.getAttribute('data-sort-name') || '').toLowerCase();
-                                return newDir === 'asc' ? An.localeCompare(Bn, 'cs') : Bn.localeCompare(An, 'cs');
-                            }
-                        }
-
-                        // generické porovnání
-                        const A = (cellA?.innerText || '').trim().toLowerCase();
-                        const B = (cellB?.innerText || '').trim().toLowerCase();
-
-                        const numA = parseFloat(A.replace(',', '.'));
-                        const numB = parseFloat(B.replace(',', '.'));
-                        const bothNumbers = !isNaN(numA) && !isNaN(numB);
-
-                        if (bothNumbers) {
-                            return newDir === 'asc' ? numA - numB : numB - numA;
-                        }
-                        return newDir === 'asc' ? A.localeCompare(B, 'cs') : B.localeCompare(A, 'cs');
-                    });
-
-                    // Přidání zpět
-                    rows.forEach(r => tbody.appendChild(r));
-                });
-            });
-        });
-    </script>
-
 </body>
 
 </html>
