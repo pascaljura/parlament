@@ -325,7 +325,7 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
             top: 0;
             background: #5481aa;
             color: #fafafa;
-            z-index: 10;
+            z-index: 1;
         }
 
         .users thead tr:first-child th {
@@ -525,15 +525,48 @@ $users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_nam
 
 <body>
     <div id="calendar">
+        <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+
         <nav>
-            <div class="user-icon">
+
+            <!-- User Icon (vlevo na mobilu, vpravo na desktopu) -->
+            <div class="user-icon" onclick="toggleUserMenu(event)">
                 <?php if (!empty($username_parlament)) { ?>
-                    <i class="fa fa-user" style="color:#5481aa"></i>
+                    <i class="fa fa-user" style="color: #5481aa;"></i>
                 <?php } else { ?>
-                    <i class="fa fa-user" style="color:#3C3C3B"></i>
+                    <i class="fa fa-user" style="color: #3C3C3B;"></i>
                 <?php } ?>
             </div>
+
+            <!-- Navigation Links (vlevo na PC) -->
             <div class="nav-links">
+                <a href="../">Domů</a>
+                <a href="../notes">Zápisy</a>
+                <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
+                    <a href="../attendances">Prezenční listiny</a>
+                <?php } ?>
+                <?php if (isset($admin) && $admin == '1') { ?>
+                    <a href="../admin" class="active">Admin</a>
+                <?php } ?>
+            </div>
+
+            <!-- Hamburger Menu Icon (vpravo na mobilu) -->
+            <div class="hamburger" onclick="toggleMobileMenu(event)">
+                <i class="fa fa-bars"></i>
+            </div>
+
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <?php if (!empty($username_parlament)) { ?>
+                    <p>Přihlášen/a jako: <b><?php echo $username_parlament; ?></b></p>
+                    <a href="../logout.php">Odhlásit se</a>
+                <?php } else { ?>
+                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
+                <?php } ?>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
                 <a href="../">Domů</a>
                 <a href="../notes">Zápisy</a>
                 <?php if (isset($show_attendances) && $show_attendances == '1') { ?>
