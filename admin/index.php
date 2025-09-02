@@ -374,15 +374,11 @@ if (
             background: #f9fbff
         }
 
-        .users tbody tr:nth-child(even) {
-            background: #fafbfc
-        }
-
         .users th:first-child,
         .users td:first-child {
             position: sticky;
             left: 0;
-            background: inherit;
+            background: #fff;
             z-index: 1
         }
 
@@ -390,6 +386,25 @@ if (
             background: #5481aa;
             z-index: 3
         }
+/* Výchozí barva řádku */
+.users tbody tr { --row-bg: #fff; }
+/* Barva při hoveru */
+.users tbody tr:hover { --row-bg: #f9fbff; }
+/* Aplikuje se na všechny buňky v řádku */
+.users tbody tr > * { background: var(--row-bg); }
+
+/* Lepivý první sloupec – bez pevné barvy, aby převzalo var(--row-bg) */
+.users th:first-child,
+.users td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  /* žádný background zde */
+}
+
+/* Hlavička musí zůstat modrá */
+.users thead th { background: #5481aa; color: #fff; }
+.users thead th:first-child { z-index: 3; }
 
         .header-sub {
             font-size: 12px;
@@ -864,7 +879,8 @@ if (
                     <table class="users">
                         <thead>
                             <tr>
-                                <th class="sortable">Osoba<br><span class="header-sub">jméno, e‑mail, aktuální role</span>
+                                <th class="sortable" style="width: 1%;">Osoba<br><span class="header-sub">jméno, e‑mail,
+                                        aktuální role</span>
                                 </th>
                                 <th class="sortable" data-sort-key="class">
                                     <div class="th-flex">

@@ -286,7 +286,7 @@ $q->close();
         }
         body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:#f7f9fc; }
         .wrap { padding:14px; display:grid; gap:12px; }
-        .head { background: linear-gradient(180deg, #355170, #2c425a); color:#fff; border-radius:10px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .head { background: #5481aa; color:#fff; border-radius:10px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
         .email { opacity:.9; }
         .kpis-row { display:flex; gap:10px; flex-wrap:wrap; }
         .kpi { display:inline-flex; align-items:center; gap:8px; background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:6px 10px; }
@@ -339,7 +339,7 @@ $q->close();
             }
             ?>
             <div class="head">
-                <div class="title"><i class="fa fa-user"></i> <?php echo htmlspecialchars($fullName); ?> <span class="email">• <?php echo htmlspecialchars($email); ?></span></div>
+                <div class="title"><i class="fa fa-user"></i><b> <?php echo htmlspecialchars($fullName); ?></b> <span class="email">• <?php echo htmlspecialchars($email); ?></span></div>
                 <span class="role-badge">
                     <?php
                     echo $currentRole !== '' ? htmlspecialchars($currentRole) : '— bez role —';
