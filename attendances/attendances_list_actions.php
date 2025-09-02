@@ -91,8 +91,8 @@ if (isset($_SESSION['idusers_parlament'])) {
                         colorDark: "#000000",
                         colorLight: "rgba(255, 255, 255, 0)"
                     });
-                    document.getElementById("qrcode").style.width = "100%";
-                    document.getElementById("qrcode").style.maxWidth = "100%";
+                    document.getElementById("qrcode").style.width = "30%";
+                    document.getElementById("qrcode").style.maxWidth = "30%";
                     document.getElementById("qrcode").style.height = "auto";
                   </script>';
             }
@@ -102,17 +102,18 @@ if (isset($_SESSION['idusers_parlament'])) {
             $idattendances_list_parlament = isset($_GET['idattendances_list_parlament']) ? $_GET['idattendances_list_parlament'] : null;
 
             // Proveďte akci podle typu akce (delete, end nebo qr)
+            // Proveďte akci podle typu akce (create, delete, end nebo qr)
             if (($idattendances_list_parlament && $idattendances_list_parlament != null) && ($action && $action != null)) {
                 if ($action == 'delete' && $delete_attendances == '1') {
                     // SQL pro smazání záznamu
                     $stmt = $conn->prepare("DELETE FROM `attendances_list_alba_rosa_parlament` WHERE `idattendances_list_parlament` = ?");
-                    $stmt->bind_param("i", $idattendances_list_parlament); // "i" znamená, že id je integer
+                    $stmt->bind_param("i", $idattendances_list_parlament);
                     $stmt->execute();
                     $stmt->close();
 
-                    // Přesměrování s parametrem message a message_type=success-message
                     header("Location: ./?message=Záznam+byl+úspěšně+smazán&message_type=success-message");
                     exit();
+
                 } elseif ($action == 'end' && $end_attendances == '1') {
                     // SQL pro změnu stavu na 0 (Ukončeno)
                     $stmt = $conn->prepare("UPDATE `attendances_list_alba_rosa_parlament` SET `active` = 0 WHERE `idattendances_list_parlament` = ?");
@@ -120,9 +121,9 @@ if (isset($_SESSION['idusers_parlament'])) {
                     $stmt->execute();
                     $stmt->close();
 
-                    // Přesměrování s parametrem message a message_type=success-message
                     header("Location: ./?message=Stav+byl+úspěšně+změněn+na+Ukončeno&message_type=success-message");
                     exit();
+
                 } elseif ($action == 'qr' && $qr_attendances == '1') {
                     // Získání tokenu pro QR kód
                     $stmt = $conn->prepare("SELECT `token` FROM `attendances_list_alba_rosa_parlament` WHERE `idattendances_list_parlament` = ?");
@@ -132,21 +133,34 @@ if (isset($_SESSION['idusers_parlament'])) {
                     $stmt->fetch();
 
                     if ($token) {
-                        // URL pro QR kód
                         $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
                         generateQRCode($meeting_url);
                     } else {
-                        // Pokud není záznam, přesměrování s parametrem message a message_type=error-message
                         header("Location: ./?message=Záznam+s+tímto+ID+nebyl+nalezen&message_type=error-message");
                         exit();
                     }
                     $stmt->close();
+
                 } else {
-                    // Pokud uživatel nemá potřebná práva
                     header("Location: ./?message=Nemáte+povolení+k+této+akci&message_type=error-message");
                     exit();
                 }
+            } elseif ($action == 'create' && $start_attendances == '1') {
+                // Vytvoření nové schůze
+                $token = bin2hex(random_bytes(32));
+                $datetime = date('Y-m-d H:i:s');
+
+                $sql = "INSERT INTO attendances_list_alba_rosa_parlament (datetime, token) VALUES ('$datetime', '$token')";
+                if ($conn->query($sql) === TRUE) {
+                    $meeting_id = $conn->insert_id;
+                    $meeting_url = "https://alba-rosa.cz/parlament/attendance.php?token=" . $token;
+                    generateQRCode($meeting_url);
+                } else {
+                    echo "Chyba: " . $conn->error;
+                    exit();
+                }
             }
+
 
             // Uzavření připojení
             $conn->close();

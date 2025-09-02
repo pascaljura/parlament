@@ -396,11 +396,12 @@ if (isset($_GET['message']) && isset($_GET['message_type'])) {
             </div>
             <div class="button-container" id="buttonContainer">
             <?php if (isset($start_attendances) && $start_attendances == '1') { ?>                   
-                <?php
-echo '<button class="popup-trigger" data-link="./create_attendances_list.php" style="margin: 10px 0 10px 0;">';
-echo '<i class="fa fa-play-circle" aria-hidden="true"></i> Zahájit schůzi';
-echo '</button>';
-?>
+<a href="attendances_list_actions.php?action=create" onclick="event.stopPropagation();"target="_blank">
+    <button type="button" style="margin: 10px 0 10px 0;">
+        <i class="fa fa-play-circle" aria-hidden="true"></i> Zahájit schůzi
+    </button>
+</a>
+
 
                 <?php } ?>
             </div>
