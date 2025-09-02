@@ -136,9 +136,9 @@ if (isset($_SESSION['idusers_parlament'])) {
                         
                     <?php } ?>
 </p>
-                    <a href="../logout.php">Odhlásit se</a>
+                    <a href="./logout.php">Odhlásit se</a>
                 <?php } else { ?>
-                    <a class="popup-trigger" data-link="../login.php">Přihlásit se</a>
+                    <a class="popup-trigger" data-link="./login.php">Přihlásit se</a>
                 <?php } ?>
             </div>
 
