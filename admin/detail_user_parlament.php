@@ -605,8 +605,9 @@ $q->close();
                         <div style="min-width:160px">
                             <label for="school_year">Školní rok</label>
                             <input id="school_year" class="select school-year" type="text" name="school_year"
-                                inputmode="numeric" placeholder="2024/2025" pattern="\d{4}/\d{4}"
-                                title="Zadejte ve formátu 2024/2025" required>
+                                placeholder="2024/2025" pattern="[0-9]{4}/[0-9]{4}" title="Zadejte ve formátu 2024/2025"
+                                required>
+
 
                         </div>
 
