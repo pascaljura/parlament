@@ -213,7 +213,7 @@ if ($stR = $conn->prepare("SELECT role, assigned_at FROM roles_alba_rosa_parlame
     $stR->close();
 }
 if (!empty($roleHistory)) {
-    $currentRole = (string)$roleHistory[0]['role'];
+    $currentRole = (string) $roleHistory[0]['role'];
     $currentRoleAssignedAt = $roleHistory[0]['assigned_at'];
 } else {
     // fallback: pokud ještě není historie, vezmeme případnou starou hodnotu ze users (kvůli zpětné kompatibilitě)
@@ -259,6 +259,7 @@ $q->close();
 ?>
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -273,7 +274,8 @@ $q->close();
     <meta property="og:title" content="Parlament na Purkyňce" />
     <meta property="og:url" content="https://www.alba-rosa.cz/parlament/" />
     <meta property="og:image" content="https://www.alba-rosa.cz/parlament/logo.png" />
-    <meta property="og:description" content="Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se na chodu školy." />
+    <meta property="og:description"
+        content="Školní parlament na Purkyňce je skupina studentů z každé třídy, kteří zastupují zájmy žáků a podílejí se na chodu školy." />
     <meta name="theme-color" content="#5481aa" />
 
     <style>
@@ -284,44 +286,221 @@ $q->close();
             --brand: #5481aa;
             --danger: #ef4444;
         }
-        body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:#f7f9fc; }
-        .wrap { padding:14px; display:grid; gap:12px; }
-        .head { background: #5481aa; color:#fff; border-radius:10px; padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
-        .email { opacity:.9; }
-        .kpis-row { display:flex; gap:10px; flex-wrap:wrap; }
-        .kpi { display:inline-flex; align-items:center; gap:8px; background:var(--chip); border:1px solid var(--border); border-radius:999px; padding:6px 10px; }
-        .grid { display:grid; grid-template-columns: 1.2fr 1fr; gap:12px; }
-        @media (max-width: 820px) { .grid { grid-template-columns:1fr; } }
-        .card { background:#fff; border:1px solid var(--border); border-radius:10px; padding:12px; }
-        .card h4 { margin:0 0 8px; }
-        .select, textarea, input[type="text"] { border:1px solid var(--border); border-radius:10px; padding:10px; width:95%; background:#fff; }
-        textarea { min-height:90px; resize:vertical; }
-        .btn { border:none; background:var(--brand); color:#fff; padding:8px 12px; border-radius:10px; cursor:pointer; }
-        .btn:hover { filter:brightness(1.05); }
-        .btn.icon { padding:6px 8px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; }
-        .btn.danger { background:var(--danger); }
-        .badge { display:inline-block; padding:3px 8px; border-radius:999px; border:1px solid var(--border); background:var(--chip); }
-        .horizontal-cards { display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scroll-snap-type:x mandatory; }
-        .horizontal-cards .note { min-width:280px; max-width:360px; flex:0 0 auto; scroll-snap-align:start; }
-        .note { position:relative; display:flex; gap:10px; justify-content:space-between; align-items:flex-start; background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px; }
-        .note .left { display:flex; gap:8px; align-items:flex-start; }
-        .badge._ucast { background:#ecfdf5; border-color:#bbf7d0; }
-        .badge._org   { background:#eff6ff; border-color:#bfdbfe; }
-        .badge._foto  { background:#fdf4ff; border-color:#f5d0fe; }
-        .badge._vybor { background:#fff7ed; border-color:#fed7aa; }
-        .class-row { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px; border:1px solid var(--border); border-radius:10px; background:#fff; margin:6px 0; }
 
-        .role-badge {
-            letter-spacing:.2px; padding:4px 8px; border-radius:999px;
-            border: 1px solid <?php echo htmlspecialchars($roleBd); ?>;
-            background: <?php echo htmlspecialchars($roleBg); ?>;
-            color: <?php echo htmlspecialchars($roleTx); ?>;
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text);
+            background: #f7f9fc;
         }
 
-        .roles-history { margin-top:10px; }
-        .roles-history table { width:100%; border-collapse:collapse; }
-        .roles-history th, .roles-history td { padding:6px 8px; border-bottom:1px solid var(--border); text-align:left; }
-        .roles-history th { background:#f3f6fb; }
+        .wrap {
+            padding: 14px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .head {
+            background: #5481aa;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .email {
+            opacity: .9;
+        }
+
+        .kpis-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .kpi {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--chip);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 820px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .card h4 {
+            margin: 0 0 8px;
+        }
+
+        .select,
+        textarea,
+        input[type="text"] {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            width: 95%;
+            background: #fff;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .btn {
+            border: none;
+            background: var(--brand);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn.icon {
+            padding: 6px 8px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn.danger {
+            background: var(--danger);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--chip);
+        }
+
+        .horizontal-cards {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .horizontal-cards .note {
+            min-width: 280px;
+            max-width: 360px;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+        }
+
+        .note {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .note .left {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .badge._ucast {
+            background: #ecfdf5;
+            border-color: #bbf7d0;
+        }
+
+        .badge._org {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .badge._foto {
+            background: #fdf4ff;
+            border-color: #f5d0fe;
+        }
+
+        .badge._vybor {
+            background: #fff7ed;
+            border-color: #fed7aa;
+        }
+
+        .class-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            margin: 6px 0;
+        }
+
+        .role-badge {
+            letter-spacing: .2px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid
+                <?php echo htmlspecialchars($roleBd); ?>
+            ;
+            background:
+                <?php echo htmlspecialchars($roleBg); ?>
+            ;
+            color:
+                <?php echo htmlspecialchars($roleTx); ?>
+            ;
+        }
+
+        .roles-history {
+            margin-top: 10px;
+        }
+
+        .roles-history table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .roles-history th,
+        .roles-history td {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .roles-history th {
+            background: #f3f6fb;
+        }
     </style>
 </head>
 
@@ -333,13 +512,16 @@ $q->close();
                 $message = $_GET['message'];
                 $message_type = $_GET['message_type'];
                 $cls = 'background:#eef6ff;border:1px solid #cfe3ff;';
-                if ($message_type === 'success-message') $cls = 'background:#ecfdf5;border:1px solid #bbf7d0;';
-                elseif ($message_type === 'error-message') $cls = 'background:#fef2f2;border:1px solid #fecaca;';
-                echo '<div style="'.$cls.' padding:10px;border-radius:10px;">' . htmlspecialchars_decode($message) . '</div>';
+                if ($message_type === 'success-message')
+                    $cls = 'background:#ecfdf5;border:1px solid #bbf7d0;';
+                elseif ($message_type === 'error-message')
+                    $cls = 'background:#fef2f2;border:1px solid #fecaca;';
+                echo '<div style="' . $cls . ' padding:10px;border-radius:10px;">' . htmlspecialchars_decode($message) . '</div>';
             }
             ?>
             <div class="head">
-                <div class="title"><i class="fa fa-user"></i><b> <?php echo htmlspecialchars($fullName); ?></b> <span class="email">• <?php echo htmlspecialchars($email); ?></span></div>
+                <div class="title"><i class="fa fa-user"></i><b> <?php echo htmlspecialchars($fullName); ?></b> <span
+                        class="email">• <?php echo htmlspecialchars($email); ?></span></div>
                 <span class="role-badge">
                     <?php
                     echo $currentRole !== '' ? htmlspecialchars($currentRole) : '— bez role —';
@@ -352,22 +534,27 @@ $q->close();
             </div>
 
             <div class="kpis-row">
-                <span class="kpi"><i class="fa fa-users"></i> Účast: <?php echo (int) ($counts['Účast na akci'] ?? 0); ?></span>
-                <span class="kpi"><i class="fa fa-cogs"></i> Organizátor: <?php echo (int) ($counts['Organizátor akce'] ?? 0); ?></span>
-                <span class="kpi"><i class="fa fa-camera"></i> Focení: <?php echo (int) ($counts['Focení akce'] ?? 0); ?></span>
-                <span class="kpi"><i class="fa fa-university"></i> Výbor: <?php echo (int) ($counts['Výbor'] ?? 0); ?></span>
+                <span class="kpi"><i class="fa fa-users"></i> Účast:
+                    <?php echo (int) ($counts['Účast na akci'] ?? 0); ?></span>
+                <span class="kpi"><i class="fa fa-cogs"></i> Organizátor:
+                    <?php echo (int) ($counts['Organizátor akce'] ?? 0); ?></span>
+                <span class="kpi"><i class="fa fa-camera"></i> Focení:
+                    <?php echo (int) ($counts['Focení akce'] ?? 0); ?></span>
+                <span class="kpi"><i class="fa fa-university"></i> Výbor:
+                    <?php echo (int) ($counts['Výbor'] ?? 0); ?></span>
             </div>
 
             <div class="grid">
                 <div class="card">
                     <h4><i class="fa fa-id-badge"></i> Role</h4>
-                    <form method="POST" class="form-row" style="display:grid; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+                    <form method="POST" class="form-row"
+                        style="display:grid; gap:8px; align-items:flex-end; flex-wrap:wrap;">
                         <input type="hidden" name="action" value="set_role">
                         <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
                         <input class="select" name="role" list="roles-list"
-                               value="<?php echo htmlspecialchars($currentRole); ?>"
-                               placeholder="Napište roli nebo vyberte…" aria-label="Zvolte nebo napište roli"
-                               style="flex:1;min-width:220px;" />
+                            value="<?php echo htmlspecialchars($currentRole); ?>"
+                            placeholder="Napište roli nebo vyberte…" aria-label="Zvolte nebo napište roli"
+                            style="flex:1;min-width:220px;" />
                         <datalist id="roles-list">
                             <option value="Člen">
                             <option value="Vedoucí">
@@ -387,18 +574,21 @@ $q->close();
                         <?php else: ?>
                             <table>
                                 <thead>
-                                    <tr><th>Datum a čas</th><th>Role</th></tr>
+                                    <tr>
+                                        <th>Datum a čas</th>
+                                        <th>Role</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($roleHistory as $rh):
-                                    $t = strtotime($rh['assigned_at']);
-                                    $when = $t ? date('d.m.Y H:i', $t) : htmlspecialchars($rh['assigned_at']);
-                                ?>
-                                    <tr>
-                                        <td><?php echo $when; ?></td>
-                                        <td><?php echo htmlspecialchars($rh['role']); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                    <?php foreach ($roleHistory as $rh):
+                                        $t = strtotime($rh['assigned_at']);
+                                        $when = $t ? date('d.m.Y H:i', $t) : htmlspecialchars($rh['assigned_at']);
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $when; ?></td>
+                                            <td><?php echo htmlspecialchars($rh['role']); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         <?php endif; ?>
@@ -407,21 +597,23 @@ $q->close();
 
                 <div class="card">
                     <h4><i class="fa fa-graduation-cap"></i> Třídy</h4>
-                    <form method="POST" class="form-row" style="align-items:flex-end; gap:10px; display:grid; flex-wrap:wrap;">
+                    <form method="POST" class="form-row"
+                        style="align-items:flex-end; gap:10px; display:grid; flex-wrap:wrap;">
                         <input type="hidden" name="action" value="add_class">
                         <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
 
                         <div style="min-width:160px">
                             <label for="school_year">Školní rok</label>
                             <input id="school_year" class="select school-year" type="text" name="school_year"
-                                   inputmode="numeric" placeholder="2024/2025" pattern="\\d{4}\\s*/\\s*\\d{4}"
-                                   title="Zadejte ve formátu 2024/2025" required>
+                                inputmode="numeric" placeholder="2024/2025" pattern="\d{4}/\d{4}"
+                                title="Zadejte ve formátu 2024/2025" required>
+
                         </div>
 
                         <div style="min-width:160px; flex:1">
                             <label for="class_name">Třída</label>
                             <input id="class_name" class="select" type="text" name="class_name" maxlength="50"
-                                   placeholder="např. 9.A" required>
+                                placeholder="např. 9.A" required>
                         </div>
                         <br>
                         <button class="btn" type="submit"><i class="fa fa-plus"></i> Přidat třídu</button>
@@ -477,9 +669,12 @@ $q->close();
                         foreach ($notes as $row) {
                             $sec = $row['section'];
                             $cls = '_ucast';
-                            if ($sec === 'Organizátor akce')      $cls = '_org';
-                            elseif ($sec === 'Focení akce')       $cls = '_foto';
-                            elseif ($sec === 'Výbor')            $cls = '_vybor';
+                            if ($sec === 'Organizátor akce')
+                                $cls = '_org';
+                            elseif ($sec === 'Focení akce')
+                                $cls = '_foto';
+                            elseif ($sec === 'Výbor')
+                                $cls = '_vybor';
                             echo '<div class="note">
                                 <div class="left">
                                     <span class="badge ' . $cls . '">' . htmlspecialchars($sec) . '</span>
@@ -500,4 +695,5 @@ $q->close();
         </div>
     </div>
 </body>
+
 </html>
