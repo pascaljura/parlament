@@ -282,7 +282,6 @@ if (
             --avatar-size: 32px;
 
             --stack-max: 130px;
-            /* výška svislých seznamů (Role / Třídy / Akce) */
         }
 
         body {
@@ -386,25 +385,25 @@ if (
             background: #5481aa;
             z-index: 3
         }
-/* Výchozí barva řádku */
-.users tbody tr { --row-bg: #fff; }
-/* Barva při hoveru */
-.users tbody tr:hover { --row-bg: #f9fbff; }
-/* Aplikuje se na všechny buňky v řádku */
-.users tbody tr > * { background: var(--row-bg); }
 
-/* Lepivý první sloupec – bez pevné barvy, aby převzalo var(--row-bg) */
-.users th:first-child,
-.users td:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  /* žádný background zde */
-}
+        /* Výchozí barva řádku */
+        .users tbody tr { --row-bg: #fff; }
+        /* Barva při hoveru */
+        .users tbody tr:hover { --row-bg: #f9fbff; }
+        /* Aplikuje se na všechny buňky v řádku */
+        .users tbody tr > * { background: var(--row-bg); }
 
-/* Hlavička musí zůstat modrá */
-.users thead th { background: #5481aa; color: #fff; }
-.users thead th:first-child { z-index: 3; }
+        /* Lepivý první sloupec – bez pevné barvy, aby převzalo var(--row-bg) */
+        .users th:first-child,
+        .users td:first-child {
+          position: sticky;
+          left: 0;
+          z-index: 1;
+        }
+
+        /* Hlavička musí zůstat modrá */
+        .users thead th { background: #5481aa; color: #fff; }
+        .users thead th:first-child { z-index: 3; }
 
         .header-sub {
             font-size: 12px;
@@ -473,6 +472,15 @@ if (
             max-width: 340px;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        /* Role řádek – stejné chování desktop/mobil */
+        .roles-line {
+            display: flex;
+            gap: var(--chip-gap);
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 6px;
         }
 
         /* === svislé seznamy (stack) pro Třídy a Role, jako u Akcí === */
@@ -665,6 +673,85 @@ if (
             white-space: nowrap;
             vertical-align: top;
         }
+
+        /* === Responsivní zlepšení (mobily & tablety) === */
+        @media (max-width: 1024px) {
+          .wrap { padding: 10px; }
+          .table-heading { flex-direction: column; align-items: stretch; gap: 8px; }
+          .toolbar { gap: 8px; }
+          .toolbar .input { width: 100%; }            /* search na plnou šířku */
+          .quick-filters { 
+            overflow-x: auto; 
+            padding-bottom: 4px; 
+            -webkit-overflow-scrolling: touch;
+          }
+          .quick-filters .qf { flex: 0 0 auto; }
+        }
+
+        @media (max-width: 900px) {
+          /* Štítky tříd/rolí zarovnáme vedle sebe a necháme zalamovat */
+          .stack-list { 
+            flex-direction: row; 
+            flex-wrap: wrap; 
+            gap: 8px;
+          }
+          .stack-list li { display: inline-flex; }
+          /* z tabulky uděláme karty */
+          .table-wrap { 
+            max-height: none; 
+            overflow: visible; 
+            border: none; 
+            background: transparent; 
+            box-shadow: none; 
+          }
+          table.users { min-width: 0; border-collapse: collapse; }
+          .users thead { display: none; }             /* hlavičku skryjeme – název sloupce doplní ::before v každé buňce */
+          .users tbody tr { 
+            display: block; 
+            margin: 10px 0; 
+            padding: 12px; 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            box-shadow: 0 6px 18px rgba(15,23,42,.06); 
+          }
+          .users tbody tr > td { 
+            display: block; 
+            padding: 8px 0; 
+            border: 0; 
+            background: transparent; 
+          }
+          .users tbody tr > td:first-child { padding-top: 0; }
+          .users tbody tr > td + td { 
+            border-top: 1px dashed var(--border); 
+            margin-top: 10px; 
+            padding-top: 12px; 
+          }
+          .users tbody tr > td::before {
+            content: attr(data-label);
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+          }
+
+          /* zrušit lepivý 1. sloupec na mobilech */
+          .users th:first-child,
+          .users td:first-child { position: static; }
+
+          /* omezení výšky stacků už není potřeba na kartách */
+          .stack-list, .acts { max-height: none; }
+
+          .btn.detail-chip { padding: 6px 10px; border-radius: 8px; }
+          .user-meta .email { max-width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+          :root { --avatar-size: 36px; }
+          .user-meta .name { font-size: 15px; }
+          .badge, .role-chip, .class-chip, .acts .badge { font-size: 12px; }
+          .btn { width: auto; }   /* zachovat stejné tlačítko jako na desktopu */
+        }
     </style>
 
     <script>
@@ -677,7 +764,7 @@ if (
 
         function initialAvatar(name) {
             if (!name) return '?';
-            const parts = name.trim().split(/\\s+/).slice(0, 2);
+            const parts = name.trim().split(/\s+/).slice(0, 2);
             return parts.map(s => s.charAt(0).toUpperCase()).join('');
         }
 
@@ -765,7 +852,7 @@ if (
                     const text = btn.getAttribute('data-copy');
                     navigator.clipboard.writeText(text).then(() => {
                         btn.textContent = 'Zkopírováno';
-                        setTimeout(() => { btn.textContent = 'Kopírovat e‑mail'; }, 1200);
+                        setTimeout(() => { btn.textContent = 'Kopírovat e-mail'; }, 1200);
                     });
                 });
             });
@@ -862,7 +949,7 @@ if (
                 <div class="table-heading">
                     <h2><i class="fa fa-heart blue"></i>・Seznam uživatelů parlamentu</h2>
                     <div class="toolbar">
-                        <input id="search" class="input" type="search" placeholder="🔎 Hledat jméno, e‑mail, roli, třídu…">
+                        <input id="search" class="input" type="search" placeholder="🔎 Hledat jméno, e-mail, roli, třídu…">
                         <span class="quick-filters">
                             <button class="qf active" data-val="">Vše</button>
                             <?php foreach ($rolesDistinct as $r): ?>
@@ -879,7 +966,7 @@ if (
                     <table class="users">
                         <thead>
                             <tr>
-                                <th class="sortable" style="width: 1%;">Osoba<br><span class="header-sub">jméno, e‑mail,
+                                <th class="sortable" style="width: 1%;">Osoba<br><span class="header-sub">jméno, e-mail,
                                         aktuální role</span>
                                 </th>
                                 <th class="sortable" data-sort-key="class">
@@ -969,7 +1056,7 @@ if (
                                 }, $roleRows)));
                                 ?>
                                 <tr data-haystack="<?php echo htmlspecialchars($hay); ?>">
-                                    <td>
+                                    <td data-label="Osoba">
                                         <div class="user-cell">
                                             <span class="avatar" aria-hidden="true"
                                                 data-initials="<?php echo htmlspecialchars($fullName ?: $email); ?>"></span>
@@ -994,7 +1081,8 @@ if (
                                         </div>
                                     </td>
 
-                                    <td data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
+                                    <td data-label="Třídy"
+                                        data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
                                         data-sort-name="<?php echo htmlspecialchars($sortName); ?>">
                                         <?php if (empty($classes)): ?>
                                             <span class="muted">—</span>
@@ -1015,7 +1103,7 @@ if (
                                         <?php endif; ?>
                                     </td>
 
-                                    <td>
+                                    <td data-label="Role &amp; historie">
                                         <?php if (empty($roleRows)): ?>
                                             <span class="muted">— bez historie —</span>
                                         <?php else: ?>
@@ -1037,7 +1125,7 @@ if (
                                         <?php endif; ?>
                                     </td>
 
-                                    <td>
+                                    <td data-label="Akce">
                                         <?php if (empty($acts)): ?>
                                             <span class="muted"><em>Žádné záznamy</em></span>
                                         <?php else: ?>
