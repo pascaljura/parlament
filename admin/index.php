@@ -1201,7 +1201,7 @@ if (
                                     <td data-label="Třídy" data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
                                         data-sort-name="<?php echo htmlspecialchars($sortName); ?>">
                                         <?php if (empty($classes)): ?>
-                                            <span class="muted">—</span>
+                                            <span class="muted"><em>Žádné třídy</em></span>
                                         <?php else: ?>
                                             <ul class="stack-list">
                                                 <?php foreach ($classes as $c):
@@ -1221,7 +1221,7 @@ if (
 
                                     <td data-label="Role &amp; historie">
                                         <?php if (empty($roleRows)): ?>
-                                            <span class="muted">— bez historie —</span>
+                                            <span class="muted"><em>Žádné role</em></span>
                                         <?php else: ?>
                                             <ul class="stack-list">
                                                 <?php foreach ($roleRows as $r):
@@ -1269,17 +1269,20 @@ if (
                                         <?php endif; ?>
                                     </td>
                                     <td data-label="Akce">
-                                        <form method="post" style="display:inline;">
+                                        <form method="post" style="display:inline;"
+                                            onsubmit="return confirm('Opravdu student ukončil nebo absolvoval studium?');">
                                             <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
                                             <input type="hidden" name="action" value="graduate">
-                                            <button type="submit" class="btn ghost">Ukončil studium / Absolvoval
-                                                studium</button>
+                                            <button type="submit" class="btn detail-chip">Ukončil / Absolvoval studium</button>
                                         </form>
-                                        <form method="post" style="display:inline;margin-left:6 px;">
+
+                                        <form method="post" style="display:inline;margin-left:6px;"
+                                            onsubmit="return confirm('Opravdu chcete odebrat přístup studentovi?');">
                                             <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
                                             <input type="hidden" name="action" value="remove_student">
-                                            <button type="submit" class="btn danger">Odebrat přístup studentovi</button>
+                                            <button type="submit" class="btn detail-chip">Odebrat přístup studentovi</button>
                                         </form>
+
                                     </td>
 
                                 </tr>
