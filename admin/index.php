@@ -218,9 +218,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['
         redirectWithMessage("Chyba v dotazu.", "error-message");
     }
 }
+// ---------- Mark graduate ----------
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'graduate') {
+    $id = (int) ($_POST['idusers_parlament'] ?? 0);
+    if ($id > 0) {
+        $stmt = $conn->prepare("UPDATE users_alba_rosa_parlament SET graduate = '1' WHERE idusers_parlament = ?");
+        if ($stmt) {
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                redirectWithMessage("Student byl označen jako absolvent.", "success-message");
+            } else {
+                redirectWithMessage("Nepodařilo se změnit stav studenta.", "error-message");
+            }
+        }
+    }
+}
+
+// ---------- Remove student ----------
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === 'remove_student') {
+    $id = (int) ($_POST['idusers_parlament'] ?? 0);
+    if ($id > 0) {
+        $stmt = $conn->prepare("UPDATE users_alba_rosa_parlament SET active = '0' WHERE idusers_parlament = ?");
+        if ($stmt) {
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                redirectWithMessage("Student byl odebrán.", "success-message");
+            } else {
+                redirectWithMessage("Nepodařilo se odebrat studenta.", "error-message");
+            }
+        }
+    }
+}
 
 // ---------- Load users ----------
-$users = $conn->query("SELECT * FROM users_alba_rosa_parlament ORDER BY last_name, name");
+$users = $conn->query("
+    SELECT * 
+    FROM users_alba_rosa_parlament 
+    WHERE graduate = '0' AND active = '1' 
+    ORDER BY last_name, name
+");
+
 
 // ---------- Load distinct roles for quick filters ----------
 $rolesDistinct = [];
@@ -387,23 +424,37 @@ if (
         }
 
         /* Výchozí barva řádku */
-        .users tbody tr { --row-bg: #fff; }
+        .users tbody tr {
+            --row-bg: #fff;
+        }
+
         /* Barva při hoveru */
-        .users tbody tr:hover { --row-bg: #f9fbff; }
+        .users tbody tr:hover {
+            --row-bg: #f9fbff;
+        }
+
         /* Aplikuje se na všechny buňky v řádku */
-        .users tbody tr > * { background: var(--row-bg); }
+        .users tbody tr>* {
+            background: var(--row-bg);
+        }
 
         /* Lepivý první sloupec – bez pevné barvy, aby převzalo var(--row-bg) */
         .users th:first-child,
         .users td:first-child {
-          position: sticky;
-          left: 0;
-          z-index: 1;
+            position: sticky;
+            left: 0;
+            z-index: 1;
         }
 
         /* Hlavička musí zůstat modrá */
-        .users thead th { background: #5481aa; color: #fff; }
-        .users thead th:first-child { z-index: 3; }
+        .users thead th {
+            background: #5481aa;
+            color: #fff;
+        }
+
+        .users thead th:first-child {
+            z-index: 3;
+        }
 
         .header-sub {
             font-size: 12px;
@@ -676,81 +727,146 @@ if (
 
         /* === Responsivní zlepšení (mobily & tablety) === */
         @media (max-width: 1024px) {
-          .wrap { padding: 10px; }
-          .table-heading { flex-direction: column; align-items: stretch; gap: 8px; }
-          .toolbar { gap: 8px; }
-          .toolbar .input { width: 100%; }            /* search na plnou šířku */
-          .quick-filters { 
-            overflow-x: auto; 
-            padding-bottom: 4px; 
-            -webkit-overflow-scrolling: touch;
-          }
-          .quick-filters .qf { flex: 0 0 auto; }
+            .wrap {
+                padding: 10px;
+            }
+
+            .table-heading {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .toolbar {
+                gap: 8px;
+            }
+
+            .toolbar .input {
+                width: 100%;
+            }
+
+            /* search na plnou šířku */
+            .quick-filters {
+                overflow-x: auto;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .quick-filters .qf {
+                flex: 0 0 auto;
+            }
         }
 
         @media (max-width: 900px) {
-          /* Štítky tříd/rolí zarovnáme vedle sebe a necháme zalamovat */
-          .stack-list { 
-            flex-direction: row; 
-            flex-wrap: wrap; 
-            gap: 8px;
-          }
-          .stack-list li { display: inline-flex; }
-          /* z tabulky uděláme karty */
-          .table-wrap { 
-            max-height: none; 
-            overflow: visible; 
-            border: none; 
-            background: transparent; 
-            box-shadow: none; 
-          }
-          table.users { min-width: 0; border-collapse: collapse; }
-          .users thead { display: none; }             /* hlavičku skryjeme – název sloupce doplní ::before v každé buňce */
-          .users tbody tr { 
-            display: block; 
-            margin: 10px 0; 
-            padding: 12px; 
-            background: var(--card); 
-            border: 1px solid var(--border); 
-            border-radius: 12px; 
-            box-shadow: 0 6px 18px rgba(15,23,42,.06); 
-          }
-          .users tbody tr > td { 
-            display: block; 
-            padding: 8px 0; 
-            border: 0; 
-            background: transparent; 
-          }
-          .users tbody tr > td:first-child { padding-top: 0; }
-          .users tbody tr > td + td { 
-            border-top: 1px dashed var(--border); 
-            margin-top: 10px; 
-            padding-top: 12px; 
-          }
-          .users tbody tr > td::before {
-            content: attr(data-label);
-            display: block;
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 6px;
-          }
 
-          /* zrušit lepivý 1. sloupec na mobilech */
-          .users th:first-child,
-          .users td:first-child { position: static; }
+            /* Štítky tříd/rolí zarovnáme vedle sebe a necháme zalamovat */
+            .stack-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
 
-          /* omezení výšky stacků už není potřeba na kartách */
-          .stack-list, .acts { max-height: none; }
+            .stack-list li {
+                display: inline-flex;
+            }
 
-          .btn.detail-chip { padding: 6px 10px; border-radius: 8px; }
-          .user-meta .email { max-width: 100%; }
+            /* z tabulky uděláme karty */
+            .table-wrap {
+                max-height: none;
+                overflow: visible;
+                border: none;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            table.users {
+                min-width: 0;
+                border-collapse: collapse;
+            }
+
+            .users thead {
+                display: none;
+            }
+
+            /* hlavičku skryjeme – název sloupce doplní ::before v každé buňce */
+            .users tbody tr {
+                display: block;
+                margin: 10px 0;
+                padding: 12px;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
+            }
+
+            .users tbody tr>td {
+                display: block;
+                padding: 8px 0;
+                border: 0;
+                background: transparent;
+            }
+
+            .users tbody tr>td:first-child {
+                padding-top: 0;
+            }
+
+            .users tbody tr>td+td {
+                border-top: 1px dashed var(--border);
+                margin-top: 10px;
+                padding-top: 12px;
+            }
+
+            .users tbody tr>td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 12px;
+                color: var(--muted);
+                margin-bottom: 6px;
+            }
+
+            /* zrušit lepivý 1. sloupec na mobilech */
+            .users th:first-child,
+            .users td:first-child {
+                position: static;
+            }
+
+            /* omezení výšky stacků už není potřeba na kartách */
+            .stack-list,
+            .acts {
+                max-height: none;
+            }
+
+            .btn.detail-chip {
+                padding: 6px 10px;
+                border-radius: 8px;
+            }
+
+            .user-meta .email {
+                max-width: 100%;
+            }
         }
 
         @media (max-width: 480px) {
-          :root { --avatar-size: 36px; }
-          .user-meta .name { font-size: 15px; }
-          .badge, .role-chip, .class-chip, .acts .badge { font-size: 12px; }
-          .btn { width: auto; }   /* zachovat stejné tlačítko jako na desktopu */
+            :root {
+                --avatar-size: 36px;
+            }
+
+            .user-meta .name {
+                font-size: 15px;
+            }
+
+            .badge,
+            .role-chip,
+            .class-chip,
+            .acts .badge {
+                font-size: 12px;
+            }
+
+            .btn {
+                width: auto;
+            }
+
+            /* zachovat stejné tlačítko jako na desktopu */
         }
     </style>
 
@@ -947,7 +1063,7 @@ if (
 
             <?php if (isset($admin) && $admin == '1') { ?>
                 <div class="table-heading">
-                    <h2><i class="fa fa-heart blue"></i>・Seznam uživatelů parlamentu</h2>
+                    <h2><i class="fa fa-heart blue"></i>・Seznam aktuální studentů Parlemntu</h2>
                     <div class="toolbar">
                         <input id="search" class="input" type="search" placeholder="🔎 Hledat jméno, e-mail, roli, třídu…">
                         <span class="quick-filters">
@@ -986,7 +1102,8 @@ if (
                                 </th>
                                 <th class="sortable">Role & historie<br><span class="header-sub">posledních 5 (RRRR –
                                         role)</span></th>
-                                <th>Akce (posledních 5)</th>
+                                <th>Akce parlamentu</th>
+                                <th>Akce</th>
 
                             </tr>
                         </thead>
@@ -1081,8 +1198,7 @@ if (
                                         </div>
                                     </td>
 
-                                    <td data-label="Třídy"
-                                        data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
+                                    <td data-label="Třídy" data-sort-year="<?php echo $latestYear > 0 ? $latestYear : 0; ?>"
                                         data-sort-name="<?php echo htmlspecialchars($sortName); ?>">
                                         <?php if (empty($classes)): ?>
                                             <span class="muted">—</span>
@@ -1152,6 +1268,20 @@ if (
                                             </ul>
                                         <?php endif; ?>
                                     </td>
+                                    <td data-label="Akce">
+                                        <form method="post" style="display:inline;">
+                                            <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
+                                            <input type="hidden" name="action" value="graduate">
+                                            <button type="submit" class="btn ghost">Ukončil studium / Absolvoval
+                                                studium</button>
+                                        </form>
+                                        <form method="post" style="display:inline;margin-left:6 px;">
+                                            <input type="hidden" name="idusers_parlament" value="<?php echo $uid; ?>">
+                                            <input type="hidden" name="action" value="remove_student">
+                                            <button type="submit" class="btn danger">Odebrat přístup studentovi</button>
+                                        </form>
+                                    </td>
+
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
