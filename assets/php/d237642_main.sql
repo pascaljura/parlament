@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Počítač: md407.wedos.net:3306
--- Vytvořeno: Ned 27. čec 2025, 21:25
+-- Vytvořeno: Pon 08. zář 2025, 17:03
 -- Verze serveru: 10.4.34-MariaDB-log
 -- Verze PHP: 5.4.23
 
@@ -294,6 +294,119 @@ INSERT INTO `attendances_list_alba_rosa_parlament` (`idattendances_list_parlamen
 -- --------------------------------------------------------
 
 --
+-- Struktura tabulky `classes_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `classes_alba_rosa_parlament` (
+  `idclass_parlament` int(11) NOT NULL,
+  `idusers_parlament` int(11) NOT NULL,
+  `class_year` int(11) NOT NULL,
+  `class_name` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Vypisuji data pro tabulku `classes_alba_rosa_parlament`
+--
+
+INSERT INTO `classes_alba_rosa_parlament` (`idclass_parlament`, `idusers_parlament`, `class_year`, `class_name`, `created_at`) VALUES
+(5, 94, 2024, 'I1A', '2025-09-03 12:17:19'),
+(6, 135, 2024, 'M1', '2025-09-03 12:17:59'),
+(7, 91, 2023, 'M1', '2025-09-03 12:18:31'),
+(8, 91, 2024, 'M2', '2025-09-03 12:18:40'),
+(9, 91, 2025, 'M3', '2025-09-03 12:19:01'),
+(10, 135, 2025, 'M2', '2025-09-03 12:19:25'),
+(11, 94, 2025, 'I2A', '2025-09-03 12:19:49'),
+(12, 110, 2023, 'L1', '2025-09-03 12:20:09'),
+(13, 110, 2024, 'L2', '2025-09-03 12:20:23'),
+(14, 110, 2025, 'L3', '2025-09-03 12:20:33'),
+(15, 101, 2023, 'V1C', '2025-09-03 12:21:06'),
+(16, 101, 2024, 'V2C', '2025-09-03 12:21:13'),
+(17, 101, 2025, 'V3C', '2025-09-03 12:21:19'),
+(18, 114, 2022, 'EZ1', '2025-09-03 12:22:19'),
+(19, 114, 2023, 'EZ2', '2025-09-03 12:22:28'),
+(20, 114, 2024, 'EZ3', '2025-09-03 12:22:43'),
+(21, 114, 2025, 'EZ3', '2025-09-03 12:22:56'),
+(22, 119, 2022, 'L1', '2025-09-03 12:23:17'),
+(23, 119, 2023, 'L2', '2025-09-03 12:23:25'),
+(24, 119, 2024, 'L3', '2025-09-03 12:23:36'),
+(25, 119, 2025, 'L4', '2025-09-03 12:23:44'),
+(27, 133, 2023, 'KR1', '2025-09-03 12:24:30'),
+(28, 133, 2024, 'KR2', '2025-09-03 12:24:38'),
+(29, 133, 2025, 'KR3', '2025-09-03 12:24:56'),
+(30, 103, 2024, 'T1', '2025-09-03 19:40:01'),
+(31, 103, 2025, 'T2', '2025-09-03 19:40:07'),
+(32, 98, 2024, 'S1B', '2025-09-03 19:40:37'),
+(33, 98, 2025, 'S2B', '2025-09-03 19:40:45'),
+(34, 100, 2024, 'T1', '2025-09-03 19:40:57'),
+(35, 100, 2025, 'T2', '2025-09-03 19:41:05'),
+(36, 117, 2024, 'S1A', '2025-09-03 19:41:56'),
+(37, 117, 2025, 'S2A', '2025-09-03 19:42:03'),
+(38, 137, 2024, 'L1B', '2025-09-03 19:42:30'),
+(39, 137, 2025, 'L2B', '2025-09-03 19:42:41'),
+(40, 92, 2024, 'I1A', '2025-09-03 19:43:53'),
+(41, 92, 2025, 'I2A', '2025-09-03 19:43:59'),
+(42, 96, 2024, 'V1C', '2025-09-03 19:44:39'),
+(43, 96, 2025, 'V2C', '2025-09-03 19:44:45'),
+(44, 120, 2024, 'V1B', '2025-09-03 19:45:07'),
+(45, 120, 2025, 'V2B', '2025-09-03 19:45:12'),
+(47, 97, 2022, 'EZ1', '2025-09-03 19:46:28'),
+(48, 97, 2023, 'EZ2', '2025-09-03 19:46:35'),
+(50, 97, 2024, 'EZ3', '2025-09-03 19:46:51'),
+(51, 97, 2025, 'EZ4', '2025-09-03 19:46:57'),
+(52, 113, 2023, 'EZ1', '2025-09-03 19:47:54'),
+(53, 113, 2024, 'EZ2', '2025-09-03 19:48:01'),
+(54, 113, 2025, 'EZ3', '2025-09-03 19:48:07'),
+(55, 66, 2023, 'V1A', '2025-09-03 19:48:20'),
+(56, 66, 2024, 'V2A', '2025-09-03 19:48:29'),
+(57, 66, 2025, 'V3A', '2025-09-03 19:48:36'),
+(58, 126, 2023, 'P1', '2025-09-03 19:48:45'),
+(59, 126, 2024, 'P2', '2025-09-03 19:48:53'),
+(60, 126, 2025, 'P3', '2025-09-03 19:48:59'),
+(62, 134, 2024, 'M1', '2025-09-03 19:49:33'),
+(63, 134, 2025, 'M2', '2025-09-03 19:49:39'),
+(64, 122, 2024, 'V1A', '2025-09-03 19:50:58'),
+(65, 122, 2025, 'V2A', '2025-09-03 19:51:03'),
+(67, 116, 2025, 'V2B', '2025-09-03 19:51:36'),
+(68, 116, 2024, 'V1B', '2025-09-03 19:51:49'),
+(69, 118, 2023, 'I1B', '2025-09-03 19:52:22'),
+(70, 118, 2024, 'I2B', '2025-09-03 19:52:30'),
+(71, 118, 2025, 'I3B', '2025-09-03 19:52:40'),
+(72, 108, 2023, 'V1A', '2025-09-03 19:52:57'),
+(73, 108, 2024, 'V2A', '2025-09-03 19:53:05'),
+(74, 108, 2025, 'V3A', '2025-09-03 19:53:14'),
+(75, 127, 2022, 'P1', '2025-09-03 19:53:37'),
+(76, 127, 2023, 'P2', '2025-09-03 19:53:45'),
+(77, 127, 2024, 'P3', '2025-09-03 19:53:51'),
+(78, 127, 2025, 'P4', '2025-09-03 19:54:07'),
+(79, 95, 2023, 'V1C', '2025-09-03 19:54:30'),
+(80, 95, 2024, 'M2', '2025-09-03 19:54:59'),
+(81, 95, 2025, 'M3', '2025-09-03 19:55:10'),
+(82, 90, 2022, 'EZ1', '2025-09-03 19:55:39'),
+(83, 90, 2023, 'EZ2', '2025-09-03 19:55:45'),
+(84, 90, 2024, 'EZ3', '2025-09-03 19:55:52'),
+(85, 90, 2025, 'EZ4', '2025-09-03 19:55:57'),
+(86, 138, 2022, 'P1', '2025-09-03 19:56:29'),
+(87, 138, 2023, 'P2', '2025-09-03 19:56:35'),
+(88, 138, 2024, 'P3', '2025-09-03 19:56:44'),
+(89, 138, 2025, 'P4', '2025-09-03 19:56:55'),
+(90, 104, 2022, 'I1', '2025-09-03 19:57:26'),
+(91, 104, 2023, 'I2', '2025-09-03 19:57:35'),
+(92, 104, 2024, 'I3', '2025-09-03 19:57:42'),
+(93, 104, 2025, 'I4', '2025-09-03 19:57:49'),
+(94, 123, 2024, 'L1A', '2025-09-03 19:59:09'),
+(95, 123, 2025, 'L2A', '2025-09-03 19:59:14'),
+(96, 88, 2023, 'L1', '2025-09-03 19:59:25'),
+(97, 88, 2024, 'L2', '2025-09-03 19:59:31'),
+(98, 88, 2025, 'L3', '2025-09-03 19:59:39'),
+(99, 115, 2024, 'V1C', '2025-09-03 19:59:59'),
+(100, 115, 2025, 'V2C', '2025-09-03 20:00:06'),
+(101, 121, 2024, 'I1B', '2025-09-03 20:00:31'),
+(102, 121, 2025, 'I2B', '2025-09-03 20:00:37');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabulky `customers_alba_rosa_file_invoicing`
 --
 
@@ -330,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `files_alba_rosa_file_storage` (
   `startDate` datetime NOT NULL DEFAULT current_timestamp(),
   `endDate` date NOT NULL,
   `state` enum('0','1') NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=490 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=570 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Vypisuji data pro tabulku `files_alba_rosa_file_storage`
@@ -731,7 +844,87 @@ INSERT INTO `files_alba_rosa_file_storage` (`idfile_file_storage`, `idusers`, `c
 (486, NULL, 'RpcWlVRVDrgC8Gn2l97D', 'ch36_20250627133221.mp4', '2025-07-01 10:59:08', '2025-07-08', '0'),
 (487, NULL, 'wdbFaC59VHFTycNYIJ0r', 'ch36_20250627133221.mp4', '2025-07-01 11:12:35', '2025-07-30', '0'),
 (488, NULL, 'qnCfVVUqjkMEKN95i0Tt', 'ch36_20250627133221.mp4', '2025-07-01 12:57:42', '2025-08-21', '0'),
-(489, NULL, '7kfdF8IXH6ZymOmVqWMr', 'VID-20250713-WA0000.mp4', '2025-07-13 18:24:25', '2025-07-31', '0');
+(489, NULL, '7kfdF8IXH6ZymOmVqWMr', 'VID-20250713-WA0000.mp4', '2025-07-13 18:24:25', '2025-07-31', '0'),
+(490, NULL, 'YjfEmbiG4cxBS94mnFxD', 'hanačkovi.pdf', '2025-08-02 23:06:33', '2026-08-02', '0'),
+(491, NULL, 'Qkp1wIsIznZCUJHiwGDE', 'Webovky ????.mp4', '2025-08-03 09:43:28', '2025-08-21', '0'),
+(492, NULL, 'TRW3WNq7cpOO99BCVm6q', 'RESTAURACE U MINÁŘŮ.zip', '2025-08-03 10:46:02', '2025-08-21', '0'),
+(493, 17, 'hFkY91eOTmly8t32D9Oy', 'RESTAURACE U MINÁŘŮ.zip', '2025-08-03 18:05:01', '2025-08-25', '0'),
+(494, NULL, 'iqRgGkG0IOluaCcRcsfY', 'IMG_4782.mov', '2025-08-05 19:09:42', '2025-08-10', '0'),
+(495, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_202552.jpg', '2025-08-05 20:36:21', '2025-08-29', '0'),
+(496, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_202541.jpg', '2025-08-05 20:36:22', '2025-08-29', '0'),
+(497, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_203330.jpg', '2025-08-05 20:36:26', '2025-08-29', '0'),
+(498, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_203326_1.jpg', '2025-08-05 20:36:27', '2025-08-29', '0'),
+(499, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_203327.jpg', '2025-08-05 20:36:27', '2025-08-29', '0'),
+(500, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_203328.jpg', '2025-08-05 20:36:27', '2025-08-29', '0'),
+(501, NULL, 's9d1cUkuuzakUhd4r9PO', 'IMG_20250805_203326.jpg', '2025-08-05 20:36:27', '2025-08-29', '0'),
+(502, NULL, 'qfgXGeFibsuWzfP7Oyn8', 'IMG_4782.mov', '2025-08-07 10:39:41', '2025-08-11', '0'),
+(503, NULL, 'qfgXGeFibsuWzfP7Oyn8', 'IMG_4783.mov', '2025-08-07 10:40:07', '2025-08-11', '0'),
+(504, NULL, 'vRybIJzItVKTWsX6J3Wf', '00.png', '2025-08-10 07:56:49', '2025-08-29', '0'),
+(505, NULL, 'vRybIJzItVKTWsX6J3Wf', '02.png', '2025-08-10 07:56:49', '2025-08-29', '0'),
+(506, NULL, 'vRybIJzItVKTWsX6J3Wf', '01.png', '2025-08-10 07:56:49', '2025-08-29', '0'),
+(507, NULL, 'vRybIJzItVKTWsX6J3Wf', '03.png', '2025-08-10 07:56:52', '2025-08-29', '0'),
+(508, NULL, 'iijvYXm1EAEaa2ZrZ1Q3', '02.png', '2025-08-10 07:59:26', '2025-09-05', '0'),
+(509, NULL, 'iijvYXm1EAEaa2ZrZ1Q3', '00.png', '2025-08-10 07:59:26', '2025-09-05', '0'),
+(510, NULL, 'iijvYXm1EAEaa2ZrZ1Q3', '01.png', '2025-08-10 07:59:27', '2025-09-05', '0'),
+(511, NULL, 'iijvYXm1EAEaa2ZrZ1Q3', '03.png', '2025-08-10 07:59:27', '2025-09-05', '0'),
+(512, 17, 'NTUrZFMbLZrT9BO5OFPF', 'Screen_Recording_20250810_172556.mp4', '2025-08-10 17:36:04', '2025-08-29', '0'),
+(513, NULL, 'M6HHNt4p7imLmO9rbu68', 'IMG_20250811_193348_255.jpg', '2025-08-11 19:37:08', '2025-08-28', '0'),
+(514, NULL, 'M6HHNt4p7imLmO9rbu68', 'IMG_20250811_192321_606.jpg', '2025-08-11 19:37:09', '2025-08-28', '0'),
+(515, NULL, 'M6HHNt4p7imLmO9rbu68', 'IMG_20250811_193325_511.jpg', '2025-08-11 19:37:09', '2025-08-28', '0'),
+(516, 17, 'd1xxnXnOXxyQWpIME9Mi', '00.jpg', '2025-08-13 09:13:37', '2025-08-28', '0'),
+(517, 17, 'd1xxnXnOXxyQWpIME9Mi', '02.png', '2025-08-13 09:13:39', '2025-08-28', '0'),
+(518, 17, 'd1xxnXnOXxyQWpIME9Mi', '01.png', '2025-08-13 09:13:39', '2025-08-28', '0'),
+(519, 17, 'd1xxnXnOXxyQWpIME9Mi', '04.jpg', '2025-08-13 09:13:40', '2025-08-28', '0'),
+(520, 17, 'd1xxnXnOXxyQWpIME9Mi', '03.png', '2025-08-13 09:13:41', '2025-08-28', '0'),
+(521, 17, 'YdgsyZEoQdxTTgDYcFMa', '00.jpg', '2025-08-14 13:25:38', '2025-08-20', '0'),
+(522, 17, 'YdgsyZEoQdxTTgDYcFMa', '01.png', '2025-08-14 13:25:39', '2025-08-20', '0'),
+(523, 17, 'YdgsyZEoQdxTTgDYcFMa', '02.png', '2025-08-14 13:25:40', '2025-08-20', '0'),
+(524, 17, 'rcMqtMXiRNbJPTLNfsUm', '00.jpg', '2025-08-14 16:10:25', '2025-08-19', '0'),
+(525, NULL, 'MhA3rfcS3I2jQi4eJr6n', '1755200880704.png', '2025-08-15 08:23:31', '2025-08-20', '0'),
+(526, NULL, 'chmAuzVQLkAEBXMkZqLY', 'Bez názvu.png', '2025-08-15 11:38:56', '2025-08-29', '0'),
+(527, NULL, 'vtJ0AdyMGJKIXfd4CC8y', 'IMG_20250817_190516_506~2.jpg', '2025-08-17 19:13:21', '2025-08-21', '0'),
+(528, NULL, 'xbXZQHuesQV1kDcIJNed', 'Dojemne_rozlouceni_deti__co_se_nerozloucili.mp4', '2025-08-18 16:11:55', '2025-09-05', '0'),
+(529, NULL, 'LP3mwKR9YI1nxZf9fq6c', 'Dojemne_rozlouceni_deti__co_se_nerozloucili.mp4', '2025-08-18 16:19:01', '2025-09-05', '0'),
+(530, NULL, 'VHMNvyCxNpJUBOL7k8em', 'Novy_projekt_13.webp', '2025-08-28 21:03:45', '2025-09-02', '0'),
+(531, NULL, 'VHMNvyCxNpJUBOL7k8em', 'Novy_projekt_15.webp', '2025-08-28 21:03:45', '2025-09-02', '0'),
+(532, NULL, 'VHMNvyCxNpJUBOL7k8em', 'Novy_projekt_16.webp', '2025-08-28 21:03:45', '2025-09-02', '0'),
+(533, NULL, 'VHMNvyCxNpJUBOL7k8em', 'Novy_projekt_17.webp', '2025-08-28 21:03:45', '2025-09-02', '0'),
+(534, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_205111.jpg', '2025-09-02 20:53:50', '2025-09-03', '0'),
+(535, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_204918.jpg', '2025-09-02 20:54:11', '2025-09-03', '0'),
+(536, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_204943.jpg', '2025-09-02 20:54:11', '2025-09-03', '0'),
+(537, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_204852.jpg', '2025-09-02 20:54:11', '2025-09-03', '0'),
+(538, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_204936.jpg', '2025-09-02 20:54:11', '2025-09-03', '0'),
+(539, NULL, 'BMkuBvSOoeFW6eljFcWN', '20250902_204836.jpg', '2025-09-02 20:54:12', '2025-09-03', '0'),
+(540, NULL, 'eE30lBw9Cw02DfB08EtD', '20250902_210137.heic', '2025-09-02 21:12:55', '2025-09-17', '0'),
+(541, NULL, 'eE30lBw9Cw02DfB08EtD', '20250902_210855.heic', '2025-09-02 21:12:55', '2025-09-17', '0'),
+(542, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'ponderjs-1.20.1-1.4.0.jar', '2025-09-06 17:30:56', '2025-09-10', '0'),
+(543, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'ferritecore-6.0.1-forge.jar', '2025-09-06 17:30:58', '2025-09-10', '0'),
+(544, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'tinkersdelight-1.2.0-forge-1.20.1.jar', '2025-09-06 17:31:01', '2025-09-10', '0'),
+(545, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'FallingTree-1.20.1-4.3.4.jar', '2025-09-06 17:31:06', '2025-09-10', '0'),
+(546, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'farmersrespite-1.20.1-2.1.2.jar', '2025-09-06 17:31:09', '2025-09-10', '0'),
+(547, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'architectury-9.2.14-forge.jar', '2025-09-06 17:31:10', '2025-09-10', '0'),
+(548, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'tl_skin_cape_forge_1.20_1.20.1-1.32.jar', '2025-09-06 17:31:13', '2025-09-10', '0'),
+(549, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'warium_ponder-1.2.0.jar', '2025-09-06 17:31:15', '2025-09-10', '0'),
+(550, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'geckolib-forge-1.20.1-4.7.2.jar', '2025-09-06 17:31:19', '2025-09-10', '0'),
+(551, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'jei-1.20.1-forge-15.20.0.112.jar', '2025-09-06 17:31:26', '2025-09-10', '0'),
+(552, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'Mantle-1.20.1-1.11.79.jar', '2025-09-06 17:31:28', '2025-09-10', '0'),
+(553, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'Philips-Ruins1.20.1-5.5.jar', '2025-09-06 17:31:29', '2025-09-10', '0'),
+(554, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'kubejs-forge-2001.6.5-build.16.jar', '2025-09-06 17:31:30', '2025-09-10', '0'),
+(555, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'rhino-forge-2001.2.3-build.10.jar', '2025-09-06 17:31:33', '2025-09-10', '0'),
+(556, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'WariumVS 0.0.10.jar', '2025-09-06 17:31:45', '2025-09-10', '0'),
+(557, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'FarmersDelight-1.20.1-1.2.9.jar', '2025-09-06 17:31:47', '2025-09-10', '0'),
+(558, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'Terralith_1.20.x_v2.5.4.jar', '2025-09-06 17:31:49', '2025-09-10', '0'),
+(559, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'journeymap-1.20.1-5.10.3-forge.jar', '2025-09-06 17:32:27', '2025-09-10', '0'),
+(560, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'kotlinforforge-4.11.0-all.jar', '2025-09-06 17:32:27', '2025-09-10', '0'),
+(561, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'repurposed_structures-7.1.19+1.20.1-forge.jar', '2025-09-06 17:32:35', '2025-09-10', '0'),
+(562, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'Warium 1.1.0.jar', '2025-09-06 17:32:55', '2025-09-10', '0'),
+(563, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'valkyrienskies-120-2.3.0-beta.9.jar', '2025-09-06 17:33:05', '2025-09-10', '0'),
+(564, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'create-1.20.1-0.5.1.j.jar', '2025-09-06 17:33:11', '2025-09-10', '0'),
+(565, NULL, 'YdsrDuPy3VJFMGGUGYoU', 'TConstruct-1.20.1-3.10.2.92.jar', '2025-09-06 17:33:17', '2025-09-10', '0'),
+(566, NULL, '9GCwwCrJPjC9CwWfNJRa', '20250907_123428.jpg', '2025-09-07 12:37:55', '2025-09-10', '0'),
+(567, NULL, '9GCwwCrJPjC9CwWfNJRa', '20250907_123432.jpg', '2025-09-07 12:37:55', '2025-09-10', '0'),
+(568, NULL, '9GCwwCrJPjC9CwWfNJRa', '20250907_123424.jpg', '2025-09-07 12:37:55', '2025-09-10', '0'),
+(569, NULL, 'JvJuEU6mpSnhk45OjYw8', 'Screenshot_20250908-142007.png', '2025-09-08 14:20:34', '2025-09-24', '0');
 
 -- --------------------------------------------------------
 
@@ -4881,7 +5074,7 @@ CREATE TABLE IF NOT EXISTS `notes_alba_rosa_parlament` (
   `date` date DEFAULT NULL,
   `document_number` varchar(255) DEFAULT NULL,
   `notes` longtext DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT;
 
 --
 -- Vypisuji data pro tabulku `notes_alba_rosa_parlament`
@@ -4942,7 +5135,8 @@ INSERT INTO `notes_alba_rosa_parlament` (`idnotes_parlament`, `idusers_parlament
 (88, 66, '2025-04-29', '18.02.20', '**Mezigenerační setkání**=- Školní tryčka=- Noví pomocníci=- Moderátoři=**Stránky parlamentu na školních stránkách**=- Máme zelenou od ředitele školy=- Bude revidováno školními techniky=**Výlet parlamentu za odměnu**=- 15 nejaktivnějších studentů=- 2 dny'),
 (90, 66, '2025-05-06', '18.02.21', '**Finishování seniorů**=- finishování pomocníků'),
 (91, 66, '2025-05-13', '18.02.22', '**Mezigenerační setkání**=- Formulář spokojenosti =- Návrhy na vylepšení =**Výlet za odměnu**=- Kdo jede + učitel=- Info o výletu='),
-(92, 110, '2025-06-10', '18.02.23', '**Proslov paní učitelky**=- Už se do konce roku neuvidíme=- Palament byl hodně vidět=- Poděkování=**Výlet za odměnu**=- Kontakt=- Hlavně vlakem=- Kam pojedeme + plán=-- Vlakem směr Tišnov=-- Hrad Perštejn=-- Restaurace v Nedvědicích=-- Cesta do Prudké=-- Večeře v Prudké=-- Volná zábava=-- Cesta do lomnice / Vlakem do tišnova=-- / Cesta na vyhlídku Krucanina=-- Směrem do Brna=- Dotazy=-- Návrat 15:00=-- Možnost dřívějšího odchodu');
+(92, 110, '2025-06-10', '18.02.23', '**Proslov paní učitelky**=- Už se do konce roku neuvidíme=- Palament byl hodně vidět=- Poděkování=**Výlet za odměnu**=- Kontakt=- Hlavně vlakem=- Kam pojedeme + plán=-- Vlakem směr Tišnov=-- Hrad Perštejn=-- Restaurace v Nedvědicích=-- Cesta do Prudké=-- Večeře v Prudké=-- Volná zábava=-- Cesta do lomnice / Vlakem do tišnova=-- / Cesta na vyhlídku Krucanina=-- Směrem do Brna=- Dotazy=-- Návrat 15:00=-- Možnost dřívějšího odchodu'),
+(93, 88, '2025-09-04', '18.02.24', 'Volby předsedy a místopředsedy až přijdou čtvrťáci z praxí.==**Nábor prváků**=- rozvrhy Kačka a Martin=- 18.9. - čtvrtek=- do 15.9. dodělat rozpis=- 1. vyuč. hodina, 2 skupiny=- Skupiny=-- Gažová, Florián, Brandejs=-- Macháčková, Boucník, Žáček');
 
 -- --------------------------------------------------------
 
@@ -4984,8 +5178,8 @@ CREATE TABLE IF NOT EXISTS `other_alba_rosa_parlament` (
 --
 
 INSERT INTO `other_alba_rosa_parlament` (`idother_parlament`, `text`, `active`) VALUES
-(1, '<hr style="border-top: 1px solid black; border-bottom: none;">\n\n<div style="display: flex; justify-content: space-around; padding: 10px 0; flex-wrap: wrap;"  id="footer-text">\n\n    <!-- Levý sloupec - odkazy -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Odkazy</h4>\n        <a href="https://www.purkynka.cz/" target="_blank">Oficiální web Purkyňky</a><br>\n <a href="https://www.purkynka.cz/" target="_blank">Instagram školního Parlamentu</a><br>\n    </div> \n\n    <!-- Pravý sloupec - kontakty -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Mgr. Denisa Gottwaldová - koordinátorka školního Parlamentu</h4>\n   Telefon: <a href="tel:+420541649133">+420 541 649 133</a><br>\n   E-mail: <a href="mailto:denisa.gottwaldova@purkynka.cz">denisa.gottwaldova@purkynka.cz</a><br>\n  <h4>žák Boucník Jiří  - předseda školního Parlamentu</h4>\n   Telefon: <a href="tel:+420792952678">+420 792 952 678</a><br>\n   E-mail: <a href="mailto:boucnik.jiri@purkynka.cz">boucnik.jiri@purkynka.cz</a><br>\n    </div>\n\n</div>\n\n<!-- Spodní část - autor webu a grafiky -->\n<div style="text-align: center; padding: 10px 0;" id="footer-text">\n    Web: <a href="https://alba-rosa.cz/link-tree/pascal.jura/" target="_blank">Jiří Boucník</a> | Grafiku: <a href="https://www.instagram.com/kourimpiva/" target="_blank">Marcel Mikula</a> | &copy; 2025\n</div>', 1),
-(2, '<div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n</div>\n\n<div id="poster">\n  <a href="https://parlament.sspbrno.cz/mezigeneracni-setkani" style="cursor: pointer;" target="_blank">\n    <img src="./assets/img/plakat_7.png" id="responsive-image">\n  </a>\n\n  <a class="popup-trigger" data-link="./assets/img/plakat_5.png" style="cursor: pointer;">\n    <img src="./assets/img/plakat_5.png" id="responsive-image">\n  </a>\n\n  <a class="popup-trigger" data-link="./assets/img/plakat_0.png" style="cursor: pointer;">\n    <img src="./assets/img/plakat_0.png" id="responsive-image">\n  </a>\n</div>\n', 1);
+(1, '<hr style="border-top: 1px solid black; border-bottom: none;">\n\n<div style="display: flex; justify-content: space-around; padding: 10px 0; flex-wrap: wrap;"  id="footer-text">\n\n    <!-- Levý sloupec - odkazy -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Odkazy</h4>\n        <a href="https://www.purkynka.cz/" target="_blank">Oficiální web Purkyňky</a><br>\n <a href="https://www.purkynka.cz/" target="_blank">Instagram školního Parlamentu</a><br>\n    </div> \n\n    <!-- Pravý sloupec - kontakty -->\n    <div style="flex: 1; min-width: 200px; text-align: center;">\n        <h4>Mgr. Gottwaldová Denisa - koordinátorka školního Parlamentu</h4>\n   Telefon: <a href="tel:+420541649133">+420 541 649 133</a><br>\n   E-mail: <a href="mailto:denisa.gottwaldova@purkynka.cz">denisa.gottwaldova@purkynka.cz</a><br>\n  <h4>student Boucník Jiří  - předseda školního Parlamentu</h4>\n   Telefon: <a href="tel:+420792952678">+420 792 952 678</a><br>\n   E-mail: <a href="mailto:boucnik.jiri@purkynka.cz">boucnik.jiri@purkynka.cz</a><br>\n    </div>\n\n</div>\n\n<!-- Spodní část - autor webu a grafiky -->\n<div style="text-align: center; padding: 10px 0;" id="footer-text">\n    Web: <a href="https://alba-rosa.cz/link-tree/pascal.jura/" target="_blank">Jiří Boucník</a> | Grafiku: <a href="https://www.instagram.com/kourimpiva/" target="_blank">Marcel Mikula</a> | &copy; 2025\n</div>', 1),
+(2, '<div class="table-heading">\n  <h2><i class="fa fa-heart blue"></i>・Aktuálně</h2>\n</div>\n\n<div id="poster">\n\n  <a class="popup-trigger" data-link="./assets/img/plakat_0.png" style="cursor: pointer;">\n    <img src="./assets/img/plakat_0.png" id="responsive-image">\n  </a>\n</div>\n', 1);
 
 -- --------------------------------------------------------
 
@@ -5012,6 +5206,60 @@ CREATE TABLE IF NOT EXISTS `products_alba_rosa_file_invoicing` (
   `product_desc` text NOT NULL,
   `product_price` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM AUTO_INCREMENT=979 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `roles_alba_rosa_parlament`
+--
+
+CREATE TABLE IF NOT EXISTS `roles_alba_rosa_parlament` (
+  `idrole` int(11) NOT NULL,
+  `idusers_parlament` int(11) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `assigned_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
+
+--
+-- Vypisuji data pro tabulku `roles_alba_rosa_parlament`
+--
+
+INSERT INTO `roles_alba_rosa_parlament` (`idrole`, `idusers_parlament`, `role`, `assigned_at`) VALUES
+(1, 94, 'Student', '2025-09-03 22:04:57'),
+(2, 135, 'Student', '2025-09-03 22:04:57'),
+(3, 91, 'Student', '2025-09-03 22:04:57'),
+(4, 110, 'Student', '2025-09-03 22:04:57'),
+(5, 101, 'Student', '2025-09-03 22:04:57'),
+(6, 119, 'Student', '2025-09-03 22:04:57'),
+(8, 114, 'Student', '2025-09-03 22:04:57'),
+(9, 133, 'Student', '2025-09-03 22:04:57'),
+(10, 103, 'Student', '2025-09-03 22:04:57'),
+(11, 98, 'Student', '2025-09-03 22:04:57'),
+(12, 100, 'Student', '2025-09-03 22:04:57'),
+(13, 117, 'Student', '2025-09-03 22:04:57'),
+(14, 137, 'Student', '2025-09-03 22:04:57'),
+(15, 92, 'Student', '2025-09-03 22:04:57'),
+(16, 96, 'Student', '2025-09-03 22:04:57'),
+(17, 120, 'Student', '2025-09-03 22:04:57'),
+(18, 97, 'Student', '2025-09-03 22:04:57'),
+(19, 113, 'Student', '2025-09-03 22:04:57'),
+(20, 66, 'Student', '2025-09-03 22:04:57'),
+(21, 126, 'Student', '2025-09-03 22:04:57'),
+(22, 134, 'Student', '2025-09-03 22:04:57'),
+(23, 116, 'Student', '2025-09-03 22:04:57'),
+(24, 118, 'Student', '2025-09-03 22:04:57'),
+(25, 108, 'Student', '2025-09-03 22:04:57'),
+(26, 127, 'Student', '2025-09-03 22:04:57'),
+(27, 95, 'Student', '2025-09-03 22:04:57'),
+(28, 90, 'Student', '2025-09-03 22:04:57'),
+(29, 104, 'Student', '2025-09-03 22:04:57'),
+(30, 123, 'Student', '2025-09-03 22:04:57'),
+(31, 88, 'Student', '2025-09-03 22:04:57'),
+(32, 122, 'Student', '2025-09-03 22:04:57'),
+(33, 115, 'Student', '2025-09-03 22:04:57'),
+(34, 121, 'Student', '2025-09-03 22:04:57'),
+(64, 67, 'Koordinátorka', '2025-09-03 22:05:28'),
+(65, 95, 'Rozvrhy', '2025-09-04 18:24:57');
 
 -- --------------------------------------------------------
 
@@ -5153,6 +5401,8 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `last_name` varchar(255) DEFAULT NULL,
   `password` text DEFAULT NULL,
   `parlament_access_admin` enum('0','1') DEFAULT '0',
+  `graduate` enum('0','1') NOT NULL DEFAULT '0',
+  `active` enum('0','1') NOT NULL DEFAULT '1',
   `parlament_access_user` enum('0','1') NOT NULL DEFAULT '1',
   `add_notes` enum('0','1') NOT NULL DEFAULT '0',
   `delete_notes` enum('0','1') NOT NULL DEFAULT '0',
@@ -5163,53 +5413,49 @@ CREATE TABLE IF NOT EXISTS `users_alba_rosa_parlament` (
   `delete_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `qr_attendances` enum('0','1') NOT NULL DEFAULT '0',
   `select_idnotes_parlament` enum('0','1') NOT NULL DEFAULT '0',
-  `admin` enum('0','1') NOT NULL DEFAULT '0'
+  `admin` enum('0','1') NOT NULL DEFAULT '0',
+  `role` varchar(255) NOT NULL DEFAULT 'Člen'
 ) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 --
 -- Vypisuji data pro tabulku `users_alba_rosa_parlament`
 --
 
-INSERT INTO `users_alba_rosa_parlament` (`idusers_parlament`, `email`, `username`, `name`, `last_name`, `password`, `parlament_access_admin`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`, `admin`) VALUES
-(66, 'koralka.matej@purkynka.cz', 'Matěj Kořalka', 'Matěj', 'Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
-(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', 'Denisa', 'Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
-(88, 'vanek.frantisek@purkynka.cz', 'František Vaněk', 'František', 'Vaněk', '$2y$10$4CZfx4iSH2otCe.wMVKuheh0HGEOeuumtG13UbWo7hAEkVe7ipZ7C', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0'),
-(89, 'korcak.jiri@purkynka.cz', 'Jiří Korčák', 'Jiří', 'Korčák', '$2y$10$H3gbijTDVMO8Q.aLd0j8IeihQlHeNLJxLU6Rr8RJAWZ2l1MBu/4sa', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(90, 'prudil.frantisek@purkynka.cz', 'František Prudil', 'František', 'Prudil', '$2y$10$PVImTnZ8slKxdMOZzLFqKO2xGP6lI1eqpeTHjfuVBXXADYPC2XdcS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(91, 'bednarik.karel@purkynka.cz', 'Karel Bednařík', 'Karel', 'Bednařík', '$2y$10$fBstLy4Yc.WeobDklMeOBukcCCnm/QcRo.oH7Cc73BcHYqiqv0lQu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(92, 'hudcova.nikola@purkynka.cz', 'Nikola Hudcová', 'Nikola', 'Hudcová', '$2y$10$kZKrSfwbW4LWWUejZWzQpOK9LN9eUJWE.I3n5wyPCRAm0DPnlHgJS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(94, 'balejova.alena@purkynka.cz', 'Alena Balejová', 'Alena', 'Balejová', '$2y$10$EwqePk8ouLYSagRnYBxoze25AwVdV0g4F4qyyo.wuuCTd34Bc5DDS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(95, 'pokorna.katerina@purkynka.cz', 'Kateřina Pokorná', 'Kateřina', 'Pokorná', '$2y$10$4cpMqqr9H87F7v7N1TPCY.42TfFQyfgkbqnPVLkXp3BSK6UkFXmVe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(96, 'jankuj.ondrej@purkynka.cz', 'Ondřej Jankůj', 'Ondřej', 'Jankůj', '$2y$10$4D6YRq59SspjLcFn8mX9HOK20w7vOTvFqI9kVWQco8yTqi5inxa3C', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(97, 'kacmarik.roman@purkynka.cz', 'Roman Kačmařík', 'Roman', 'Kačmařík', '$2y$10$57iHXHnim6sqFqcoA5W4y.p4oJ3AvBYRCYaI0yy0undeWDhDW2L/m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(98, 'furmanskyi.tymofii@purkynka.cz', 'Tymofii Furmanskyi', 'Tymofii', 'Furmanskyi', '$2y$10$mS7VGo.9/ezwAjujHviyr.lFDKzdubiW96xMRtt3gCO0nwnfgDAkG', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(100, 'gazova.michaela@purkynka.cz', 'Michaela Gažová', 'Michaela', 'Gažová', '$2y$10$T42s0RulXC/LndiXBFUYiuth8dMazfyUy98B74t/O7fQyMdVR3z4a', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(101, 'brandejs.patrik@purkynka.cz', 'Patrik Brandejs', 'Patrik', 'Brandejs', '$2y$10$i3KgR8r6ICZE/gYMJSnfoeaT7LA1qBJTZJYwhIaKzWTcf8zpCscLO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(102, 'kanakova.zuzana@purkynka.cz', 'Zuzana Kaňáková ', 'Zuzana', 'Kaňáková', '$2y$10$N9pXDK0uW5URRv1973WC8e/3jB00aIiGhrN5FIwwiTDFNviVM5PL.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(103, 'friedl.daniel@purkynka.cz', 'Daniel Friedl', 'Daniel', 'Friedl', '$2y$10$7/.16pUX1SCq0a4uu3F3IeA6K6RITTlBAQhbQxK1Tt0awbxUUwKS2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(104, 'smarda.jaroslav@purkynka.cz', 'Jaroslav  Šmarda', 'Jaroslav', 'Šmarda', '$2y$10$Z.0Pdwx.t6pk9Nvqv.Bb9OofMmDRf6sXagp17y/W7G6xkjsM1ZaFu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(108, 'odehnal.lukas@purkynka.cz', 'Lukáš Odehnal', 'Lukáš', 'Odehnal', '$2y$10$WiGemhJaYh2mA65yJi56JeNA13mK6GlYmLw2vX9vtaqvVvfLrm/Wu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(110, 'boucnik.jiri@purkynka.cz', 'Jiří Boucník', 'Jiří', 'Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
-(113, 'kolarova.natalie@purkynka.cz', 'Natálie Kolářová', 'Natálie', 'Kolářová', '$2y$10$Ce7DcmW6KGdwjhPoajsKuOJCdSF9QWb2E78yDnLqzTKcNOqNeycM6', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(114, 'filip.brazda@purkynka.cz', 'Filip Brázda', 'Filip', 'Brázda', '$2y$10$0nfbCWDH.q1Xx0TOh4DZEuUC3tjeJIALZREpA4j0pGL2.iT4b.xVW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(115, 'zacek.richard@purkynka.cz', 'Richard Žáček', 'Richard', 'Žáček', '$2y$10$fNpq/k9JSF5Czgae.pkMqunQwcB0m0jHbG8RraM7D9vYF8Avwgkt.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(116, 'lokajova.tereza@purkynka.cz', 'Tereza Lokajová', 'Tereza', 'Lokajová', '$2y$10$GpoSzoHjmqNp9FNQ.rE5B.hPi1Toc0JNYawcKR23pt9p9qGjWkqoO', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(117, 'handlir.david@purkynka.cz', 'David Handlíř', 'David', 'Handlíř', '$2y$10$hw9SwcicTyF6rT/fqWk9QOh09Bxli/YNhmY.AFFm2gNmRIVUyksrC', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(118, 'machackova.anezka@purkynka.cz', 'Anežka Macháčková', 'Anežka', 'Macháčková', '$2y$10$sMveGbyAkMZnDN/f2yMJT.gp7GbIlN.AEFM5dyNEalfZppEuRjB0m', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(119, 'buchtova.sarah@purkynka.cz', 'Sarah Buchtová', 'Sarah', 'Buchtová', '$2y$10$.RmTGw1aKEDmpTLtIre9ius5P4s8FHMwOEoW7/8fovTv5TpJfGQRe', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(120, 'jelinek.jan@purkynka.cz', 'Jan Jelínek', 'Jan', 'Jelínek', '$2y$10$GGaC1Mf5QRYHIGaUGtA3oODXJZASfafYeT/yBHNh7Wn6TPYRS4JaW', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(121, 'zarska.izabela@purkynka.cz', 'Izabela Žárská', 'Izabela', 'Žárská', '$2y$10$xHxEHZQiGTEnN1l4xYQPfe3.1MxkDMRnSj3ffXVx6vorke/1AwKY2', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(122, 'vasickova.linda@purkynka.cz', 'Linda Vašíčková', 'Vašíčková', 'Linda', '$2y$10$0Pn.kB6jk4C26NxURxxfz.U31X/iDRVM/6RTSo17lKNn4OAzIdjMS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(123, 'topinka.jindrich@purkynka.cz', 'Jindřich Topinka', 'Jindřich', 'Topinka', '$2y$10$WvRzBdosYOPE5McZwnTxUuhZr62n0TDRY1RR9kgVXJ4iFV9VlLMwu', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(125, 'turecek.ondrej@purkynka.cz', 'Ondřej Tureček', 'Ondřej', 'Tureček', '$2y$10$KZxvmPOFzKaAAwGfww/XDexGM0m2L5eoeumtS5oOVfB69p2iciwlS', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(126, 'kropacek.jakub@purkynka.cz', 'Jakub Kropáček', 'Jakub', 'Kropáček', '$2y$10$bVus/UO66OyS.55StKSmd.KrB9He3mX431E2eEeCqya6qghpYKLta', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(127, 'pac.dominik@purkynka.cz', 'Dominik Páč', 'Dominik', 'Páč', '$2y$10$7/saQ8dDe0xmgKFMTKLNwe28tcQi5GhPX.0Mg9BxFP/MHomH7ODM.', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(133, 'florian.ondrej@purkynka.cz', 'Ondřej Florián ', 'Ondřej', 'Florián', '$2y$10$F2OY0la/h/zd6yzHwgw2suLoPfVGT9duXo/S7Cj6X8rwtNFyru1na', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(134, 'kunes.vincent@purkynka.cz', 'Vincent Kuneš', 'Vincent', 'Kuneš', '$2y$10$3Oee3Csu2ktVunjfN8DqUO828Ym0gOPWMcG9nnavyOmmo63Hx9O8O', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(135, 'bana.vojtech@purkynka.cz', 'Vojtěch Báňa', 'Vojtěch', 'Báňa', '$2y$10$agGgdCJsrbw0J2rGZid3iuQ1k7EJysJyHjRFB0BSsWpPf.auedZdK', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(136, 'jakub.zimandl@purkynka.cz', 'Jakub Zimandl', 'Jakub', 'Zimandl', '$2y$10$MaJIAsf5gsbplsDVVWeGpudTtJUdNndEP0Wj0KQkn0b3QblmhkaVK', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0'),
-(137, 'havelka.petr@Purkynka.cz', 'Petr Havelka', 'Petr', 'Havelka', '$2y$10$RabvL7b0diEzhI6JFbuvfOMgOAitPW9eNLQ3SllJnFP2o5Ba5Kvae', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0'),
-(138, 'raichynets.oleh@purkynka.cz', 'Oleh Raichynets ', 'Oleh ', 'Raichynets', '$2y$10$mkTcpiuGEtP51UaHWWJQTO/rgeA5TOL9XK4Pt2huTb7b2IgeaL0qK', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0');
+INSERT INTO `users_alba_rosa_parlament` (`idusers_parlament`, `email`, `username`, `name`, `last_name`, `password`, `parlament_access_admin`, `graduate`, `active`, `parlament_access_user`, `add_notes`, `delete_notes`, `edit_notes`, `show_attendances`, `start_attendances`, `end_attendances`, `delete_attendances`, `qr_attendances`, `select_idnotes_parlament`, `admin`, `role`) VALUES
+(66, 'koralka.matej@purkynka.cz', 'Matěj Kořalka', 'Matěj', 'Kořalka', '$2y$10$vQRDo.t8K8s3QLQvOnbdgelJDjPPbIXo4QklAn0JWEBefQCrVgTOu', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(67, 'denisa.gottwaldova@purkynka.cz', 'Denisa Gottwaldová', 'Denisa', 'Gottwaldová', '$2y$10$VRDEGaQ8QgsyIEO.n/Rqvu24fJqoOHoPA8.z3jyP/jzSZHAKQLIwG', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'Člen'),
+(88, 'vanek.frantisek@purkynka.cz', 'František Vaněk', 'František', 'Vaněk', '$2y$10$4CZfx4iSH2otCe.wMVKuheh0HGEOeuumtG13UbWo7hAEkVe7ipZ7C', '1', '0', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(90, 'prudil.frantisek@purkynka.cz', 'František Prudil', 'František', 'Prudil', '$2y$10$PVImTnZ8slKxdMOZzLFqKO2xGP6lI1eqpeTHjfuVBXXADYPC2XdcS', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(91, 'bednarik.karel@purkynka.cz', 'Karel Bednařík', 'Karel', 'Bednařík', '$2y$10$fBstLy4Yc.WeobDklMeOBukcCCnm/QcRo.oH7Cc73BcHYqiqv0lQu', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(92, 'hudcova.nikola@purkynka.cz', 'Nikola Hudcová', 'Nikola', 'Hudcová', '$2y$10$kZKrSfwbW4LWWUejZWzQpOK9LN9eUJWE.I3n5wyPCRAm0DPnlHgJS', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(94, 'balejova.alena@purkynka.cz', 'Alena Balejová', 'Alena', 'Balejová', '$2y$10$EwqePk8ouLYSagRnYBxoze25AwVdV0g4F4qyyo.wuuCTd34Bc5DDS', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(95, 'pokorna.katerina@purkynka.cz', 'Kateřina Pokorná', 'Kateřina', 'Pokorná', '$2y$10$4cpMqqr9H87F7v7N1TPCY.42TfFQyfgkbqnPVLkXp3BSK6UkFXmVe', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(96, 'jankuj.ondrej@purkynka.cz', 'Ondřej Jankůj', 'Ondřej', 'Jankůj', '$2y$10$4D6YRq59SspjLcFn8mX9HOK20w7vOTvFqI9kVWQco8yTqi5inxa3C', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(97, 'kacmarik.roman@purkynka.cz', 'Roman Kačmařík', 'Roman', 'Kačmařík', '$2y$10$57iHXHnim6sqFqcoA5W4y.p4oJ3AvBYRCYaI0yy0undeWDhDW2L/m', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(98, 'furmanskyi.tymofii@purkynka.cz', 'Tymofii Furmanskyi', 'Tymofii', 'Furmanskyi', '$2y$10$mS7VGo.9/ezwAjujHviyr.lFDKzdubiW96xMRtt3gCO0nwnfgDAkG', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(100, 'gazova.michaela@purkynka.cz', 'Michaela Gažová', 'Michaela', 'Gažová', '$2y$10$T42s0RulXC/LndiXBFUYiuth8dMazfyUy98B74t/O7fQyMdVR3z4a', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(101, 'brandejs.patrik@purkynka.cz', 'Patrik Brandejs', 'Patrik', 'Brandejs', '$2y$10$i3KgR8r6ICZE/gYMJSnfoeaT7LA1qBJTZJYwhIaKzWTcf8zpCscLO', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(103, 'friedl.daniel@purkynka.cz', 'Daniel Friedl', 'Daniel', 'Friedl', '$2y$10$7/.16pUX1SCq0a4uu3F3IeA6K6RITTlBAQhbQxK1Tt0awbxUUwKS2', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(104, 'smarda.jaroslav@purkynka.cz', 'Jaroslav  Šmarda', 'Jaroslav', 'Šmarda', '$2y$10$Z.0Pdwx.t6pk9Nvqv.Bb9OofMmDRf6sXagp17y/W7G6xkjsM1ZaFu', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(108, 'odehnal.lukas@purkynka.cz', 'Lukáš Odehnal', 'Lukáš', 'Odehnal', '$2y$10$WiGemhJaYh2mA65yJi56JeNA13mK6GlYmLw2vX9vtaqvVvfLrm/Wu', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(110, 'boucnik.jiri@purkynka.cz', 'Jiří Boucník', 'Jiří', 'Boucník', '$2y$10$WPWG/zy0b8uTLZLoGudAXuHeWEeDkUQXP8PF0aObhi2/vdlaO5Wlu', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'Člen'),
+(113, 'kolarova.natalie@purkynka.cz', 'Natálie Kolářová', 'Natálie', 'Kolářová', '$2y$10$Ce7DcmW6KGdwjhPoajsKuOJCdSF9QWb2E78yDnLqzTKcNOqNeycM6', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(114, 'filip.brazda@purkynka.cz', 'Filip Brázda', 'Filip', 'Brázda', '$2y$10$0nfbCWDH.q1Xx0TOh4DZEuUC3tjeJIALZREpA4j0pGL2.iT4b.xVW', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(115, 'zacek.richard@purkynka.cz', 'Richard Žáček', 'Richard', 'Žáček', '$2y$10$fNpq/k9JSF5Czgae.pkMqunQwcB0m0jHbG8RraM7D9vYF8Avwgkt.', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(116, 'lokajova.tereza@purkynka.cz', 'Tereza Lokajová', 'Tereza', 'Lokajová', '$2y$10$GpoSzoHjmqNp9FNQ.rE5B.hPi1Toc0JNYawcKR23pt9p9qGjWkqoO', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(117, 'handlir.david@purkynka.cz', 'David Handlíř', 'David', 'Handlíř', '$2y$10$hw9SwcicTyF6rT/fqWk9QOh09Bxli/YNhmY.AFFm2gNmRIVUyksrC', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(118, 'machackova.anezka@purkynka.cz', 'Anežka Macháčková', 'Anežka', 'Macháčková', '$2y$10$sMveGbyAkMZnDN/f2yMJT.gp7GbIlN.AEFM5dyNEalfZppEuRjB0m', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(119, 'buchtova.sarah@purkynka.cz', 'Sarah Buchtová', 'Sarah', 'Buchtová', '$2y$10$.RmTGw1aKEDmpTLtIre9ius5P4s8FHMwOEoW7/8fovTv5TpJfGQRe', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(120, 'jelinek.jan@purkynka.cz', 'Jan Jelínek', 'Jan', 'Jelínek', '$2y$10$GGaC1Mf5QRYHIGaUGtA3oODXJZASfafYeT/yBHNh7Wn6TPYRS4JaW', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(121, 'zarska.izabela@purkynka.cz', 'Izabela Žárská', 'Izabela', 'Žárská', '$2y$10$xHxEHZQiGTEnN1l4xYQPfe3.1MxkDMRnSj3ffXVx6vorke/1AwKY2', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(122, 'vasickova.linda@purkynka.cz', 'Linda Vašíčková', 'Vašíčková', 'Linda', '$2y$10$0Pn.kB6jk4C26NxURxxfz.U31X/iDRVM/6RTSo17lKNn4OAzIdjMS', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(123, 'topinka.jindrich@purkynka.cz', 'Jindřich Topinka', 'Jindřich', 'Topinka', '$2y$10$WvRzBdosYOPE5McZwnTxUuhZr62n0TDRY1RR9kgVXJ4iFV9VlLMwu', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(126, 'kropacek.jakub@purkynka.cz', 'Jakub Kropáček', 'Jakub', 'Kropáček', '$2y$10$bVus/UO66OyS.55StKSmd.KrB9He3mX431E2eEeCqya6qghpYKLta', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(127, 'pac.dominik@purkynka.cz', 'Dominik Páč', 'Dominik', 'Páč', '$2y$10$7/saQ8dDe0xmgKFMTKLNwe28tcQi5GhPX.0Mg9BxFP/MHomH7ODM.', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(133, 'florian.ondrej@purkynka.cz', 'Ondřej Florián ', 'Ondřej', 'Florián', '$2y$10$F2OY0la/h/zd6yzHwgw2suLoPfVGT9duXo/S7Cj6X8rwtNFyru1na', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(134, 'kunes.vincent@purkynka.cz', 'Vincent Kuneš', 'Vincent', 'Kuneš', '$2y$10$3Oee3Csu2ktVunjfN8DqUO828Ym0gOPWMcG9nnavyOmmo63Hx9O8O', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(135, 'bana.vojtech@purkynka.cz', 'Vojtěch Báňa', 'Vojtěch', 'Báňa', '$2y$10$agGgdCJsrbw0J2rGZid3iuQ1k7EJysJyHjRFB0BSsWpPf.auedZdK', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen'),
+(137, 'havelka.petr@Purkynka.cz', 'Petr Havelka', 'Petr', 'Havelka', '$2y$10$RabvL7b0diEzhI6JFbuvfOMgOAitPW9eNLQ3SllJnFP2o5Ba5Kvae', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', 'Člen');
 
 -- --------------------------------------------------------
 
@@ -5337,6 +5583,12 @@ ALTER TABLE `attendances_list_alba_rosa_parlament`
   ADD PRIMARY KEY (`idattendances_list_parlament`);
 
 --
+-- Klíče pro tabulku `classes_alba_rosa_parlament`
+--
+ALTER TABLE `classes_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idclass_parlament`);
+
+--
 -- Klíče pro tabulku `customers_alba_rosa_file_invoicing`
 --
 ALTER TABLE `customers_alba_rosa_file_invoicing`
@@ -5439,6 +5691,13 @@ ALTER TABLE `products_alba_rosa_file_invoicing`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Klíče pro tabulku `roles_alba_rosa_parlament`
+--
+ALTER TABLE `roles_alba_rosa_parlament`
+  ADD PRIMARY KEY (`idrole`),
+  ADD KEY `idusers_parlament` (`idusers_parlament`);
+
+--
 -- Klíče pro tabulku `school_alba_rosa`
 --
 ALTER TABLE `school_alba_rosa`
@@ -5507,6 +5766,11 @@ ALTER TABLE `attendances_alba_rosa_parlament`
 ALTER TABLE `attendances_list_alba_rosa_parlament`
   MODIFY `idattendances_list_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 --
+-- AUTO_INCREMENT pro tabulku `classes_alba_rosa_parlament`
+--
+ALTER TABLE `classes_alba_rosa_parlament`
+  MODIFY `idclass_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=103;
+--
 -- AUTO_INCREMENT pro tabulku `customers_alba_rosa_file_invoicing`
 --
 ALTER TABLE `customers_alba_rosa_file_invoicing`
@@ -5515,7 +5779,7 @@ ALTER TABLE `customers_alba_rosa_file_invoicing`
 -- AUTO_INCREMENT pro tabulku `files_alba_rosa_file_storage`
 --
 ALTER TABLE `files_alba_rosa_file_storage`
-  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=490;
+  MODIFY `idfile_file_storage` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=570;
 --
 -- AUTO_INCREMENT pro tabulku `gamehub_private_alba_rosa`
 --
@@ -5560,7 +5824,7 @@ ALTER TABLE `logs_alba_rosa_purkyn`
 -- AUTO_INCREMENT pro tabulku `notes_alba_rosa_parlament`
 --
 ALTER TABLE `notes_alba_rosa_parlament`
-  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+  MODIFY `idnotes_parlament` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=94;
 --
 -- AUTO_INCREMENT pro tabulku `other_alba_rosa`
 --
@@ -5571,6 +5835,11 @@ ALTER TABLE `other_alba_rosa`
 --
 ALTER TABLE `products_alba_rosa_file_invoicing`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=979;
+--
+-- AUTO_INCREMENT pro tabulku `roles_alba_rosa_parlament`
+--
+ALTER TABLE `roles_alba_rosa_parlament`
+  MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT pro tabulku `school_alba_rosa`
 --
@@ -5615,6 +5884,12 @@ ALTER TABLE `users_alba_rosa_purkiada`
 --
 ALTER TABLE `actions_alba_rosa_parlament`
   ADD CONSTRAINT `actions_alba_rosa_parlament_ibfk_1` FOREIGN KEY (`idusers_parlament`) REFERENCES `users_alba_rosa_parlament` (`idusers_parlament`) ON DELETE CASCADE;
+
+--
+-- Omezení pro tabulku `roles_alba_rosa_parlament`
+--
+ALTER TABLE `roles_alba_rosa_parlament`
+  ADD CONSTRAINT `fk_roles_user` FOREIGN KEY (`idusers_parlament`) REFERENCES `users_alba_rosa_parlament` (`idusers_parlament`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
