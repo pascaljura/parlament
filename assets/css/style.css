@@ -1,21 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
-:root {
-  --primary-color: #4a90e2;
-  --primary-hover: #357ab8;
-  --background-overlay: rgba(0, 0, 0, 0.6);
-  --border-radius: 8px;
-  --font-body: 'Inter', Calibri, sans-serif;
-  --font-heading: 'Inter', 'Roboto Slab', Calibri, sans-serif;
-  --text-color: #333;
-}
-
 body {
   display: flex;
   justify-content: center;
   min-height: 100vh;
   margin: 0;
-  font-family: var(--font-body);
+  font-family: "Roboto", Calibri, sans-serif;
   font-weight: 300;
   position: relative;
   font-size: 18px; /* Mírně menší pro lepší čitelnost */
@@ -33,7 +21,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--background-overlay);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
   justify-content: center;
   align-items: center;
@@ -41,32 +29,31 @@ a {
 }
 
 .popup-content {
-  background: #fff;
-  color: var(--text-color);
+  background: #2d2d2d;
+  color: white;
   width: 90%;
   max-width: 90%;
   height: 80%;
   position: relative;
-  border-radius: var(--border-radius);
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border: 5px solid var(--primary-color);
+  border: 5px solid #5481aa;
 }
 
 .popup-header {
   display: flex;
   justify-content: flex-end;
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #3a3a3a;
   padding: 10px;
 }
 
 .popup-close {
   font-size: 20px;
   cursor: pointer;
-  background: var(--primary-color);
+  background: #5481aa;
   color: white;
   border: none;
   padding: 4px 10px;
@@ -74,7 +61,7 @@ a {
 }
 
 .popup-close:hover {
-  background: var(--primary-hover);
+  background: #77afe0;
 }
 
 .popup-iframe {
@@ -90,7 +77,7 @@ tr {
 
 h1,
 h2 {
-  font-family: var(--font-heading);
+  font-family: "Roboto Slab", Calibri, sans-serif;
   font-weight: 700;
   padding: 0;
   margin: 0 0 1rem 0; /* Malý prostor pod nadpisy */
@@ -100,7 +87,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading);
+  font-family: "Roboto Slab", Calibri, sans-serif;
   font-weight: 400;
   padding: 0;
   margin: 0;
@@ -131,7 +118,7 @@ nav {
     0.9
   ); /* Poloprůhledné pozadí pro efekt */
   color: black;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   position: relative;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -147,13 +134,13 @@ nav {
   color: #ffffff;
   text-decoration: none;
   padding: 0.2rem 1rem;
-  background-color: var(--primary-color);
-  border-radius: var(--border-radius);
+  background-color: #5481aa;
+  border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-links a:hover {
-  background-color: var(--primary-hover);
+  background-color: #77afe0;
   transform: scale(1.05); /* Efekt zvětšení na hover */
   font-weight: bold;
 }
@@ -161,7 +148,7 @@ nav {
 /* Efekt pro aktivní odkaz */
 .nav-links a.active,
 .mobile-menu a.active {
-  background-color: var(--primary-hover); /* Světle modrá pro aktivní odkaz */
+  background-color: #77afe0; /* Světle modrá pro aktivní odkaz */
   transform: scale(1.05); /* Efekt zvětšení na aktivním odkazu */
   font-weight: bold; /* Zvýraznění textu */
   color: #fff; /* Bílé písmo pro lepší kontrast */
@@ -169,7 +156,7 @@ nav {
 
 .nav-links a:active,
 .mobile-menu a:active {
-  background-color: var(--primary-hover); /* Tmavší modrá pro kliknutý odkaz */
+  background-color: #77afe0; /* Tmavší modrá pro kliknutý odkaz */
   transform: scale(1.05); /* Efekt zvětšení při kliknutí */
 }
 
@@ -178,15 +165,15 @@ nav {
   color: #ffffff;
   text-decoration: none;
   padding: 0.6rem 1rem;
-  background-color: var(--primary-color);
-  border-radius: var(--border-radius);
+  background-color: #5481aa;
+  border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   margin: 0.3rem;
 }
 
 .user-dropdown a:hover,
 .mobile-menu a:hover {
-  background-color: var(--primary-hover);
+  background-color: #77afe0;
   transform: scale(1.05);
   font-weight: bold;
 }
@@ -206,7 +193,7 @@ nav {
   position: absolute;
   background-color: rgba(249, 249, 249, 0.95);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   width: 220px;
   top: 60px;
   left: 50%;
@@ -226,7 +213,7 @@ nav {
 .hamburger div {
   width: 30px;
   height: 4px;
-  background-color: var(--text-color);
+  background-color: #333;
 }
 
 .user-icon {
@@ -296,7 +283,7 @@ table {
 }
 
 .blue {
-  color: var(--primary-color);
+  color: #5481aa;
 }
 
 .success-message,
@@ -306,7 +293,7 @@ table {
   padding: 1rem;
   margin-bottom: 1.5rem;
   margin-top: 1.5rem;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   text-align: center;
 }
 
@@ -319,7 +306,7 @@ table {
 }
 
 .info-message {
-  background-color: var(--primary-color);
+  background-color: #5481aa;
 }
 
 #container {
@@ -348,16 +335,15 @@ select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   background-color: #fff;
   font-size: 16px;
-  transition: border-color 0.2s ease;
 }
 
 select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.6);
+  border-color: #5481aa;
+  box-shadow: 0 0 5px rgba(39, 161, 255, 0.6);
 }
 
 a {
@@ -368,7 +354,7 @@ a {
 
 .table-heading {
   font-size: 24px;
-  color: var(--text-color);
+  color: #333;
   margin: 1rem 0;
 }
 
@@ -379,17 +365,17 @@ a {
 }
 
 .button-container button {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #5481aa;
+  color: white;
   padding: 12px 18px;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .button-container button:hover {
-  background-color: var(--primary-hover);
+  background-color: #77afe0;
   transform: scale(1.05);
   font-weight: bold;
 }
@@ -400,7 +386,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(74, 144, 226, 0.8);
+  background-color: rgba(62, 97, 130, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -411,7 +397,7 @@ a {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: conic-gradient(#aad4f3 10%, var(--primary-color));
+  background: conic-gradient(#aad4f3 10%, #5481aa);
   animation: s3 1s infinite linear;
 }
 
